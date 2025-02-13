@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 07:03:36 by juduchar          #+#    #+#             */
-/*   Updated: 2025/01/20 09:02:03 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/13 10:39:31 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stddef.h>
 # include <unistd.h>
 # include <signal.h>
-# include "ft_printf.h"
+# include "./../ft_printf/includes/ft_printf.h"
 
 size_t	ft_strlen(const char *s);
 int		ft_isspace(int c);

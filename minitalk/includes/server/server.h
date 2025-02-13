@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 10:07:55 by juduchar          #+#    #+#             */
-/*   Updated: 2025/01/20 09:06:40 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/13 10:39:21 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <signal.h>
-# include "ft_printf.h"
+# include "./../ft_printf/includes/ft_printf.h"
 
 typedef struct s_signal_data
 {
