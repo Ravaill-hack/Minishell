@@ -13,7 +13,7 @@ LIBFT_DIR = ./libft
 LIBFT_HEADER_DIR = $(LIBFT_DIR)/includes
 LIBFT_SRCS_DIR = ./srcs
 
-INCLUDES = -I$(LIBFT_HEADER_DIR) -I$(HEADER_DIR)
+INCLUDES = -I$(HEADER_DIR) -I$(LIBFT_HEADER_DIR) 
 LIBRARIES = -L$(LIBFT_DIR)
 
 SRCS_FILES = \
@@ -39,7 +39,7 @@ clean:
 	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
-	rm -f $(FDF)
+	rm -f $(NAME)
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
