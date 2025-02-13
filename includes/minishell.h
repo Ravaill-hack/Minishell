@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/13 11:05:43 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/13 11:13:10 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,12 @@ typedef enum s_content_token
 	STAR,
 	SLSH,
 }	t_content_token;
+
+typedef struct s_minishell
+{
+	char	*line;
+	char	**env;
+}	t_minishell;
 
 
 #endif
