@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/13 10:47:37 by juduchar         ###   ########.fr       */
+/*   Created: 2024/11/04 14:59:01 by juduchar          #+#    #+#             */
+/*   Updated: 2024/11/05 09:21:16 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/minishell.h"
-#include "stdio.h"
+#include "libft.h"
 
-int	main(void)
+// checks for an alphanumeric character
+// it is equivalent to (ft_isalpha(c) || ft_isdigit(c))
+int	ft_isalnum(int c)
 {
-	printf("test\n");
+	return (ft_isalpha(c) || ft_isdigit(c));
 }

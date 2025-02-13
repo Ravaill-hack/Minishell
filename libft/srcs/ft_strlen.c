@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/13 10:47:37 by juduchar         ###   ########.fr       */
+/*   Created: 2024/11/04 16:57:41 by juduchar          #+#    #+#             */
+/*   Updated: 2025/01/22 11:17:22 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/minishell.h"
-#include "stdio.h"
+#include "libft.h"
 
-int	main(void)
+// calculate the length of a string
+size_t	ft_strlen(const char *s)
 {
-	printf("test\n");
+	size_t	i;
+
+	if (!s)
+		return (0);
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }

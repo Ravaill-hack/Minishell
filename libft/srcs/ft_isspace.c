@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/13 10:47:37 by juduchar         ###   ########.fr       */
+/*   Created: 2025/01/07 09:04:22 by juduchar          #+#    #+#             */
+/*   Updated: 2025/01/13 08:37:31 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/minishell.h"
-#include "stdio.h"
-
-int	main(void)
+// checks for white-space characters.
+// In "C" these are: space, form-feed ('\f'), newline ('\n'),
+// carriage return ('\r'), horizontal tab  ('\t'), 
+// and  vertical tab ('\v')
+int	ft_isspace(int c)
 {
-	printf("test\n");
+	return (c == 32 || (c >= 9 && c <= 13));
 }

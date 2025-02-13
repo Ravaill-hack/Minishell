@@ -1,19 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/13 10:47:37 by juduchar         ###   ########.fr       */
+/*   Created: 2024/11/04 14:56:37 by juduchar          #+#    #+#             */
+/*   Updated: 2024/11/05 09:22:21 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/minishell.h"
-#include "stdio.h"
-
-int	main(void)
+// checks for a digit (0 through 9)
+int	ft_isdigit(int c)
 {
-	printf("test\n");
+	return (c >= 48 && c <= 57);
 }

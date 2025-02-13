@@ -1,19 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/13 10:47:37 by juduchar         ###   ########.fr       */
+/*   Created: 2024/11/04 15:01:34 by juduchar          #+#    #+#             */
+/*   Updated: 2024/11/05 09:27:50 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/minishell.h"
-#include "stdio.h"
-
-int	main(void)
+// checks for any printable character except space
+int	ft_isprint(int c)
 {
-	printf("test\n");
+	return (c >= 32 && c <= 126);
 }

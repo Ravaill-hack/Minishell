@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/13 10:47:37 by juduchar         ###   ########.fr       */
+/*   Created: 2024/11/07 09:08:45 by juduchar          #+#    #+#             */
+/*   Updated: 2024/11/07 10:27:57 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/minishell.h"
-#include "stdio.h"
+#include <unistd.h>
 
-int	main(void)
+// Paramètres :
+// c: Le caractère à écrire.
+// fd: Le descripteur de fichier sur lequel écrire.
+
+// Valeur de retour :
+// Aucune
+
+// Description Écrit le caractère ’c’ sur le descripteur de fichier donné.
+void	ft_putchar_fd(char c, int fd)
 {
-	printf("test\n");
+	write(fd, &c, 1);
 }
