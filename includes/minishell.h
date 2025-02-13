@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/13 10:49:15 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/13 11:05:43 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@
 # include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "./libft/includes/libft.h"
-# include "./libft/includes/get_next_line.h"
-# include "./minitalk/includes/client/client.h"
-# include "./minitalk/includes/server/server.h"
+# include "libft.h"
+# include "get_next_line.h"
+
 
 typedef enum s_line_token
 {
