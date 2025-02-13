@@ -1,1 +1,3 @@
 NAME = minishell
+
+test makefile
