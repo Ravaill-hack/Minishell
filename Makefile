@@ -14,11 +14,13 @@ LIBFT_HEADER_DIR = $(LIBFT_DIR)/includes
 LIBFT_SRCS_DIR = ./srcs
 
 INCLUDES = -I$(HEADER_DIR) -I$(LIBFT_HEADER_DIR) 
-LIBRARIES = -L$(LIBFT_DIR)
+LIBRARIES = -L$(LIBFT_DIR) -lft
 
 SRCS_FILES = \
 	main.c \
-	parsing_01.c \
+	parsing.c \
+	token.c \
+	free.c \
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS_FILES:.c=.o))
 

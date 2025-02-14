@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/14 17:52:05 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/14 21:11:15 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,29 +30,30 @@ void	handle_signal(int sig)
 int	main(void)
 {
 	// user input
-	char	*str;
+	t_var	var;
 	//printf();
 	// handle signal CTRL + C
 	signal(SIGINT, handle_signal);
 	// get the user input
-	str = readline(PROMPT);
+	var.line = readline(PROMPT);
 	// while a user does not quit the shell
 	// TO DO : quit properly with a signal to quit
 	// do the signal handler and free all before quit
 	// clear history before quit ?
-	while (str)
+	while (var.line)
 	{
 		// TO DO : handle EOF and input from file later
 		// check if we have to free str or not if the input is from a file ?
 		// TO DO : parser
-		if (*str)
+		ft_parse_line(&var);
+		if (*(var.line))
 		{
 			// add the string to the history
-			add_history(str);
-			printf("You have entered %s\n", str);
-			free(str);
+			add_history(var.line);
+			printf("You have entered %s\n", var.line);
+			ft_free_line(var);
 		}
 		// read a new line from user input
-		str = readline(PROMPT);
+		var.line = readline(PROMPT);
 	}
 }

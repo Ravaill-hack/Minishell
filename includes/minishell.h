@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/14 18:04:48 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/14 21:11:35 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,33 @@ typedef struct	s_token_list
 	struct	s_token_list	*prev;
 	struct	s_token_list	*next;
 }	t_token_list;
+
+typedef struct	s_var
+{
+	char					*line;
+	char					**split_line;
+	t_token_list			**token_list;
+}	t_var;
+
+
+/*
+Initialisation
+*/
+void			ft_parse_line(t_var *var);
+/*
+Token management
+*/
+t_token_list	**ft_build_token_list(char **str);
+t_token_list	*ft_append_token(char *word, t_token_list **list);
+t_token_list	*ft_last_token(t_token_list *token);
+t_line_token	ft_find_token_type(char *str);
+/*
+Signal management
+*/
+
+/*
+Cleaning after a prompt
+*/
+int				ft_free_line(t_var var);
 
 #endif

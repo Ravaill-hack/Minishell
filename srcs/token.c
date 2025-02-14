@@ -1,23 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_01.c                                       :+:      :+:    :+:   */
+/*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:55:13 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/14 18:21:15 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/14 21:10:07 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_line_token	*ft_find_token_value(char *str, int *i)
+t_line_token	ft_find_token_type(char *str)
 {
-	while (str[*i] == ' ')
-		(*i)++;
-	if (ft_strncmp(&str[*i], ">", 1) == 0)
+	if (ft_strncmp(str, ">", 1) == 0)
 		return (S_GREAT);
+	else if (ft_strncmp(str, "<", 1) == 0)
+		return (S_LESS);
+	else if (ft_strncmp(str, ">>", 2) == 0)
+		return (D_GREAT);
+	else if (ft_strncmp(str, ">>", 2) == 0)
+		return (D_LESS);
+	else if (ft_strncmp(str, "|", 1) == 0)
+		return (PIPE);
+	else if (ft_strncmp(str, "(", 1) == 0)
+		return (O_PAR);
+	else if (ft_strncmp(str, ")", 1) == 0)
+		return (C_PAR);
+	else if (ft_strncmp(str, "||", 2) == 0)
+		return (OR);
+	else if (ft_strncmp(str, "&&", 2) == 0)
+		return (AND);
+	else
+		return (CONTENT);
 }
 
 t_token_list	*ft_last_token(t_token_list *token)
@@ -27,14 +43,14 @@ t_token_list	*ft_last_token(t_token_list *token)
 	return (token);
 }
 
-t_token_list	*ft_append_token(char *str, int *i, t_token_list **list)
+t_token_list	*ft_append_token(char *word, t_token_list **list)
 {
 	t_token_list	*token;
 
 	token = (t_token_list *)malloc(sizeof(t_token_list));
 	if (!token)
 		return (NULL);
-	token->val = ft_find_token_value(str, i);
+	token->token = ft_find_token_type(word);
 	token->next = NULL;
 	if (!(*list))
 	{
@@ -42,12 +58,14 @@ t_token_list	*ft_append_token(char *str, int *i, t_token_list **list)
 		token->prev = NULL;
 	}
 	else
-		token->prev = ft_last_token(list);
-		ft_last_token(list)->next = token;
+	{
+		token->prev = ft_last_token(*list);
+		ft_last_token(*list)->next = token;
+	}
 	return (token);
 }
 
-t_token_list	**ft_create_token_list(char *str)
+t_token_list	**ft_build_token_list(char **split_line)
 {
 	t_token_list	**list;
 	int				i;
@@ -56,7 +74,11 @@ t_token_list	**ft_create_token_list(char *str)
 	list = (t_token_list **)malloc(sizeof(t_token_list *));
 	if (!list)
 		return (NULL);
-	while (str[i] != '\0')
-		ft_append_token(str, &i, list);
+	*list = NULL;
+	while (split_line[i])
+	{
+		ft_append_token(split_line[i], list);
+		i++;
+	}
 	return (list);
 }
