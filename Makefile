@@ -18,6 +18,7 @@ LIBRARIES = -L$(LIBFT_DIR)
 
 SRCS_FILES = \
 	main.c \
+	parsing_01.c \
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS_FILES:.c=.o))
 

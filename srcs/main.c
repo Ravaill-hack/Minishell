@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/02/13 15:56:57 by lmatkows         ###   ########.fr       */
-=======
-/*   Updated: 2025/02/14 17:38:14 by juduchar         ###   ########.fr       */
->>>>>>> main
+/*   Updated: 2025/02/14 17:52:05 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +31,7 @@ int	main(void)
 {
 	// user input
 	char	*str;
-	printf();
+	//printf();
 	// handle signal CTRL + C
 	signal(SIGINT, handle_signal);
 	// get the user input

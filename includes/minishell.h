@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/14 17:46:08 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/14 18:04:48 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@
 # include "get_next_line.h"
 
 
-typedef enum s_line_token
+typedef enum	s_line_token
 {
 	S_LESS,
 	D_LESS,
@@ -69,7 +69,7 @@ typedef enum s_line_token
 	CONTENT,
 }	t_line_token;
 
-typedef enum s_content_token
+typedef enum	s_content_token
 {
 	STR,
 	CHAR,
@@ -78,5 +78,13 @@ typedef enum s_content_token
 	STAR,
 	SLSH,
 }	t_content_token;
+
+typedef struct	s_token_list
+{
+	t_line_token			token;
+	char					*val;
+	struct	s_token_list	*prev;
+	struct	s_token_list	*next;
+}	t_token_list;
 
 #endif
