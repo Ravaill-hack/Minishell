@@ -1,0 +1,97 @@
+////////////////////// READLINE //////////////////////////////////////////
+
+readline : get a line from user with editing
+char * readline(const char *prompt);
+read a line from the terminal and return it, using prompt as a prompt
+/!\ the line is allocated with malloc : the caller must free it when finished
+/!\ the line returned has the final newline (\n) removed (only the text
+of the line remains)
+
+/!\ a blank line returns the empty string (\0) : the caller must free it
+/!\ if EOF (End Of File) is encountered while
+reading a line and the line is empty, NULL is returned
+
+/!\ readline cause memory leaks, but we don't have to fix them
+
+use it to read a line from the prompt for the user
+
+rl_clear_history : clear the history list by deleting all of the entries
+void rl_clear_history(void);
+
+rl_on_new_line : tell the update functions that we have moved on a new empty line
+use it after that a result is displayed on the terminal to indicate to readline to
+not read that result
+int rl_on_new_line(void);
+
+use it after a printf in the terminal to indicate that a new line must be set after that
+and before rl_redisplay to restore the user input
+use it in signal handler in our case
+
+rl_replace_line :
+void rl_replace_line(const char *text, int clear_undo);
+replace the contents of rl_line_buffer with text
+if clear_undo is not 0, clears the unod list (removes the ability to undo changes with CTRL + _ )
+
+use it before displaying a new prompt
+exemple : if a signal interrupts an input and we wants to clear the current line
+or replace it with a new default value (or reset it)
+works well with rl_redisplay to refresh the prompt immediately
+with rl_on_new_line too, to ensures that Readline correctly recognized the modified input
+
+rl_redisplay : changes what's displayed on the screen (the content of rl_line_buffer)
+void rl_redisplay(void);
+
+add_history :
+void add_history(const char *line);
+adds a new entry to the history list
+allow the user to recall previous commands with the arrows
+or shortcuts like CTRL + R
+
+////////////////////// INPUT OUTPUT //////////////////////////////////////////
+
+printf : print a formatted output
+write : write in a file descriptor
+access : 
+open :
+read : 
+close :
+
+fork
+wait
+waitpid
+wait3
+wait4
+signal
+sigaction
+sigemptyset
+sigaddset
+kill
+exit
+getcwd
+chdir
+stat
+lstat
+fstat
+unlink
+execve
+dup
+dup2
+pipe
+opendir
+readdir
+closedir
+strerror
+perror
+isatty
+ttyname
+ttyslot
+ioctl
+getenv
+tcsetattr
+tcgetattr
+tgetent
+tgetflag
+tgetnum
+tgetstr
+tgoto
+tputs
