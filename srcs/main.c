@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/14 16:14:58 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/14 17:38:14 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	handle_signal(int sig)
 		rl_on_new_line();
 		// give back the terminal to the user
 		rl_redisplay();
-		access();
 	}
 }
 
