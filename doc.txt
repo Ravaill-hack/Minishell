@@ -49,49 +49,159 @@ or shortcuts like CTRL + R
 
 ////////////////////// INPUT OUTPUT //////////////////////////////////////////
 
-printf : print a formatted output
-write : write in a file descriptor
-access : 
-open :
-read : 
-close :
+printf : print a formatted output : int printf(const char *restrict format, ...);
 
-fork
-wait
-waitpid
-wait3
-wait4
-signal
-sigaction
-sigemptyset
-sigaddset
-kill
-exit
-getcwd
-chdir
-stat
-lstat
-fstat
-unlink
-execve
-dup
-dup2
-pipe
-opendir
-readdir
-closedir
-strerror
-perror
-isatty
-ttyname
-ttyslot
-ioctl
-getenv
-tcsetattr
-tcgetattr
-tgetent
-tgetflag
-tgetnum
-tgetstr
-tgoto
-tputs
+write : write in a file descriptor : ssize_t write(int fd, const void *buf, size_t n);
+
+access : check wether the calling process can access the file pathname
+int access(const char *name, int type);
+/!\ if pathname is a symbolic link, it is dereferenced
+On success (if all requested permissions are granted), retunr 0
+On error, return -1
+modes :
+	F_OK : check if the file exists
+	R_OK : check if the file is readable
+	W_OK : check if the file is writable
+	X_OK : check if the file is executable
+
+open : open or create a file
+int open(const char *pathname, int flags, mode_t mode)
+return a fd or -1 if the file cannot be opened
+use close to close the file after the operations on the file are done
+the position (curser) on the file is saved
+
+flags :
+O_RDONLY : read only
+O_WRONLY : write only
+O_RDWD : read and write
+
+other flags (to use with | (ex : O_RDWD | O_CREAT))
+O_CREAT : create the file if it doesn't exists (use with mode argument)
+O_EXCL : fail if the file already exists (use with O_CREAT)
+O_TRUNC : delete the content of the file (if there is already a content) before writing to the file
+	use with O_WRONLY or O_RDWR
+O_APPEND : write to the end of the file (without deleting its content)
+O_NONBLOCK : non blocking mode (?), use with special files, like pipes
+O_SYNC : force writing immediately to the disk
+O_ASYNC : send the signal SIGIO when the readinf or writing is possible in this fd
+O_DIRECTORY : fail if this is not a directory
+O_PATH : the fd returned indicates the localisation of the file on the system (the file is not open)
+O_TMPFILE : create a temporary file with the content of the file, 
+
+modes (use with O_CREAT) :
+S_IRWXU : 00700 L'utilisateur (propriétaire du fichier) a les autorisations de lecture, écriture, exécution.
+S_IRUSR : 00400 L'utilisateur a l'autorisation de lecture.
+S_IWUSR : 00200 L'utilisateur a l'autorisation d'écriture.
+S_IXUSR : 00100 L'utilisateur a l'autorisation d'exécution.
+S_IRWXG : 00070 Le groupe a les autorisations de lecture, écriture, exécution.
+S_IRGRP : 00040 Le groupe a l'autorisation de lecture.
+S_IWGRP : 00020 Le groupe a l'autorisation d'écriture.
+S_IXGRP : 00010 Le groupe a l'autorisation d'exécution.
+S_IRWXO : 00007 Tout le monde a les autorisations de lecture, écriture, exécution.
+S_IROTH : 00004 Tout le monde a l'autorisation de lecture.
+S_IWOTH : 00002 Tout le monde a l'autorisation d'écriture.
+S_IXOTH : 00001 Tout le monde a l'autorisation d'exécution.
+
+read : read count bytes of the fd and stock it in buf
+ssize_t read(int fd, void *buf, size_t count);
+returns the number of bytes read, 0 if the end of the file is obtained
+or -1 if there is an error
+
+close : close the fd
+int close(int fd);
+returns 0 on success, -1 if there is an error
+
+// unlink
+
+// isatty
+// ttyname
+// ttyslot
+
+
+// ioctl
+
+////////////////////// PROCESS MANAGEMENT //////////////////////////////////////////
+
+fork : creates a new process by duplicating the calling process
+pid_t fork(void);
+the new process is defined as the child process, the calling process is defined as the parent process
+they run in separate memory spaces
+both memory spaces have the same content
+the child process is an exact duplicate of the parent process, but the child has its own unique PID
+/!\ the child set of pending signals is initially empty
+return the pid of the child process to the parent on success
+0 is returned in the child
+on failure, -1 is returned to the parent, and no child process is created
+
+wait : suspend the execution of the parent process until one (the first) child process ends
+pid_t wait(int *status);
+set the status of the child when it's ended (in status)
+and the pid of the child ended (return value)
+/!\ : we can't chose which child wait
+
+
+waitpid : suspend the execution of the parent process until the child process specified ends
+pid_t waitpid(pid_t pid, int *status, int options);
+with the option WNOHANG : the waiting is non blocking
+with -1 instead of the pid : wait for all childs to finish
+
+options :
+	0 : blocking wait
+	WNOHANG : non blocking wait (returns always 0)
+	WUNTRACED : wait even a stopped child
+	WCONTINUED : wait until a child is rerun
+
+wait3 : like waitpid(-1)
+wait for all childs to end and returns stats (CPU usage, memory, etc)
+
+wait4 : like waitpid and wait3
+wait for the child specified to end and returns stats (CPU usage, memory, etc)
+
+
+// execve
+
+// exit
+
+////////////////////// SIGNAL HANDLING //////////////////////////////////////////
+
+// signal : 
+// sigaction
+// sigemptyset
+// sigaddset
+// kill
+
+////////////////////// FILE AND DIRECTORY MANAGEMENT //////////////////////////////////////////
+
+// getcwd
+// chdir
+// stat
+// lstat
+// fstat
+// opendir
+// readdir
+// closedir
+
+////////////////////// FILE DESCRIPTOR (fd) MANIPULATION //////////////////////////////////////////
+
+// dup
+// dup2
+// pipe
+
+
+////////////////////// ERROR HANDLING //////////////////////////////////////////
+
+// strerror
+// perror
+
+
+////////////////////// TERMINAL CONTROL AND ENVIRONMENT VARIABLES //////////////////////////////////////////
+
+// getenv
+// tcsetattr
+// tcgetattr
+// tgetent
+// tgetflag
+// tgetnum
+// tgetstr
+// tgoto
+// tputs
