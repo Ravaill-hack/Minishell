@@ -1,0 +1,38 @@
+Les fonctions a reproduire :
+	- echo et l'option -n
+	- cd (chemin relatif ou absolu)
+	- pwd sans les options
+	- export sans les options
+	- unset sans les options
+	- env sans option ni argument
+	- exit sans option
+
+Les operateurs a reproduire :
+	- <
+	- >
+	- <<
+	- >>
+	- |
+
+Les signaux a gerer :
+	- ctrl-c
+	- ctrl-d
+	- ctrl-\
+
+Et aussi :
+	- les variables d'environnement et leur adressage : $VARIABLES
+	- $?
+	- avoir un historique des commandes
+	- ne pas interpreter les caracteres speciaux \ et ;
+	- gerer les ' qui doivent empecher le shell d'interpreter les caracteres speciaux
+	- gerer les " qui doivent empecher le shell d'interpreter les caracteres speciaux sauf $
+
+Pour les bonus les operateurs :
+	- (
+	- )
+	- &&
+	- ||
+
+NB :
+- les commandes pourront etre appelees seules (a ce moment la le chemin sera cherche dans PATH)
+ou avec un chemin relatif ou absolu
