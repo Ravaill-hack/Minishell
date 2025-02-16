@@ -10,7 +10,7 @@ Les fonctions a reproduire :
 Les operateurs a reproduire :
 	- <
 	- >
-	- <<
+	- << equivalent du heredoc
 	- >>
 	- |
 
@@ -32,6 +32,7 @@ Pour les bonus les operateurs :
 	- )
 	- &&
 	- ||
+	- * pour le dossier courant
 
 NB :
 - les commandes pourront etre appelees seules (a ce moment la le chemin sera cherche dans PATH)
