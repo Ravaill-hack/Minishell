@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/14 21:11:15 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/16 10:44:06 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,17 @@ void	handle_signal(int sig)
 	}
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **env)
 {
 	// user input
 	t_var	var;
+	(void) argc;
+	(void) argv;
 	//printf();
 	// handle signal CTRL + C
 	signal(SIGINT, handle_signal);
 	// get the user input
+	var.env = ft_modify_shlvl(ft_chartab_dup(env), 1);
 	var.line = readline(PROMPT);
 	// while a user does not quit the shell
 	// TO DO : quit properly with a signal to quit
@@ -45,7 +48,7 @@ int	main(void)
 		// TO DO : handle EOF and input from file later
 		// check if we have to free str or not if the input is from a file ?
 		// TO DO : parser
-		ft_parse_line(&var);
+		ft_parse_line(&var, env);
 		if (*(var.line))
 		{
 			// add the string to the history

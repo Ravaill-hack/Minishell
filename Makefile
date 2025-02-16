@@ -21,6 +21,8 @@ SRCS_FILES = \
 	parsing.c \
 	token.c \
 	free.c \
+	utils.c \
+	env.c \
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS_FILES:.c=.o))
 

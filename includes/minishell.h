@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/14 21:11:35 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/16 10:34:33 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,18 @@ typedef struct	s_var
 	char					*line;
 	char					**split_line;
 	t_token_list			**token_list;
+	char					**env;
 }	t_var;
 
 
 /*
 Initialisation
 */
-void			ft_parse_line(t_var *var);
+void			ft_parse_line(t_var *var, char **env);
+/*
+Environnement
+*/
+char			**ft_modify_shlvl(char **matrix, int ind);
 /*
 Token management
 */
@@ -111,8 +116,14 @@ Signal management
 */
 
 /*
-Cleaning after a prompt
+Cleaning
 */
 int				ft_free_line(t_var var);
+/*
+Utils
+*/
+char			**ft_chartab_dup(char **matrix);
+int				ft_nb_lines(char **matrix);
+void			ft_free_tab(char **matrix, int ind);
 
 #endif
