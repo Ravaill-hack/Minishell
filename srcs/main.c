@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/17 17:04:44 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:46:26 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,6 @@ int	main(void)
 		free(str);
 		str = readline(PROMPT);
 	}
-	printf("bye\n");
-	if (str)
-		free(str);	
 	ft_clear_and_free_all();
 	exit(EXIT_SUCCESS);
 }
