@@ -287,6 +287,7 @@ sa_mask  specifies a mask of signals which should be blocked (i.e., added to the
        in which the signal handler is invoked) during execution of the signal handler.  In addition,  the  signal
        which triggered the handler will be blocked, unless the SA_NODEFER flag is used.
 
+sa_flags :
 SA_NOCLDSTOP
               If signum is SIGCHLD, do not receive notification when child processes stop (i.e.,  when  they  re‐
               ceive  one  of  SIGSTOP,  SIGTSTP, SIGTTIN, or SIGTTOU) or resume (i.e., they receive SIGCONT) (see
@@ -612,6 +613,7 @@ Many of the functions described here have a termios_p argument that is a pointer
            tcflag_t c_lflag;      /* local modes */
            cc_t     c_cc[NCCS];   /* special characters */
 
+see man tcgetattr for more infos
 
 tgetent : init the termcap database
 to get infos of the the capacity of the terminal
