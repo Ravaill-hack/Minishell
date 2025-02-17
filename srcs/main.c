@@ -6,15 +6,11 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/17 18:00:23 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:19:38 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// FOR VS CODE ONLY (TO REMOVE)
-#include <asm-generic/termbits.h>
-#include <asm-generic/signal-defs.h>
 
 void	ft_disable_echoctl(void)
 {
@@ -39,7 +35,6 @@ void	ft_handle_sigint_reception(int signum)
 	if (signum == SIGINT)
 	{
 		close(STDIN_FILENO);
-		// TO FIX
 		open("/dev/tty", O_RDONLY);
 		printf("\n");
 		rl_replace_line("", 0);

@@ -6,14 +6,13 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/17 15:50:33 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:19:30 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-// replace with ttyname ?
 # ifndef PROMPT
 #  define PROMPT "minishell$ "
 # endif
