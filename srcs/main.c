@@ -6,11 +6,15 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/17 17:46:26 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:50:16 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// FOR VS CODE ONLY (TO REMOVE)
+#include <asm-generic/termbits.h>
+#include <asm-generic/signal-defs.h>
 
 void	ft_disable_echoctl(void)
 {
