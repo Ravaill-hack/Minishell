@@ -1,3 +1,14 @@
+////////////////////// MACROS //////////////////////////////////////////
+
+fd :
+STDIN_FILENO	0	/* Standard input.  */
+STDOUT_FILENO	1	/* Standard output.  */
+STDERR_FILENO	2	/* Standard error output.  */
+
+exit :
+EXIT_SUCCESS 	0; usage : exit(EXIT_SUCCESS)
+EXIT_FAILURE 	1; usage : exit(EXIT_FAILURE)
+
 ////////////////////// READLINE //////////////////////////////////////////
 
 readline : get a line from user with editing
@@ -111,14 +122,24 @@ close : close the fd
 int close(int fd);
 returns 0 on success, -1 if there is an error
 
-// unlink
+unlink : remove the specified file
+int unlink(const char *pathname);  
+/!\ check if the file is not already opened before use unlink
+returns 0 if success, -1 if fail
 
-// isatty
-// ttyname
-// ttyslot
+isatty : test if a fd refers to a terminal
+int isatty(int fd);
+returns 1 if fd refers to a terminal, 0 if not
+
+ttyname : return the name of a terminal
+char *ttyname(int fd);
+
+ttyslot : return the slot of the current user's terminal
+
+ioctl : control device
+int ioctl(int fd, unsigned long request, ...);
 
 
-// ioctl
 
 ////////////////////// PROCESS MANAGEMENT //////////////////////////////////////////
 
@@ -157,51 +178,503 @@ wait for all childs to end and returns stats (CPU usage, memory, etc)
 wait4 : like waitpid and wait3
 wait for the child specified to end and returns stats (CPU usage, memory, etc)
 
+execve : execute a program (a command)
+int execve(const char *pathname, char *const argv[], char *const envp[]);
+pathname is the path to the script or the command or the binary file
+argv is an array of args passed to the program
+envp is an array of args (key=value) passed to the program as env
+argv and envp must end by NULL (argv[i] = NULL or envp[i] = NULL (i : last index of the array))
 
-// execve
-
-// exit
+exit : cause the shell to exit
+exit(0) on success (EXIT_SUCCESS)
+exit(1) on error (EXIT_FAILURE)
 
 ////////////////////// SIGNAL HANDLING //////////////////////////////////////////
 
-// signal : 
-// sigaction
-// sigemptyset
-// sigaddset
-// kill
+signal : C signal handling
+sighandler_t signal(int signum, sighandler_t handler);
+
+signal() sets the disposition of the signal signum to handler, which is
+the address of a programmer-defined  function (a "signal handler").
+returns the previous value of the signal handler, or SIG_ERR on error
+
+signum specifies the signal and can be any valid signal
+
+use it to handle a signal (execute the function when a signal is send)
+
+sigaction : examine and change a signal action
+int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact);
+
+used to change the action taken by a process on receipt of a specific signal
+signum 
+
+signum specifies the signal and can be any valid signal
+
+if act is non-NULL, the new action for the signal signum is installed from act
+if oldact is non-NULL, the previous action is saved in oldact
+
+The sigaction structure is defined as something like:
+    struct sigaction {
+        void     (*sa_handler)(int);
+        void     (*sa_sigaction)(int, siginfo_t *, void *);
+        sigset_t   sa_mask;
+        int        sa_flags;
+        void     (*sa_restorer)(void);
+};
+
+sa_handler specifies the action to be associated with signum and is one of the following :
+SIG_DFL : the default action
+SIG_IGN : ignore this signal
+or a pointer to a signal handling function
+/!\ this function receives the signal number as its only argument
+
+If SA_SIGINFO is specified in sa_flags, then use sa_sigaction instead of sa_handler
+to specifies  the  signal-handling function for signum.
+This function receives three arguments, as described below.
+
+sig    The number of the signal that caused invocation of the handler.
+
+info   A  pointer to a siginfo_t, which is a structure containing further information about the signal,
+ as described below.
+
+ucontext
+    This is a pointer to a ucontext_t structure, cast to void *.  The  structure  pointed  to  by  this
+    field contains signal context information that was saved on the user-space stack by the kernel; for
+    details, see sigreturn(2).  Further information about the ucontext_t structure can be found in get‐
+    context(3)  and  signal(7).  Commonly, the handler function doesn't make any use of the third argument.
+
+The siginfo_t data type is a structure with the following fields:
+
+           siginfo_t {
+               int      si_signo;     /* Signal number */
+               int      si_errno;     /* An errno value */
+               int      si_code;      /* Signal code */
+               int      si_trapno;    /* Trap number that caused
+                                         hardware-generated signal
+                                         (unused on most architectures) */
+               pid_t    si_pid;       /* Sending process ID */
+               uid_t    si_uid;       /* Real user ID of sending process */
+               int      si_status;    /* Exit value or signal */
+               clock_t  si_utime;     /* User time consumed */
+               clock_t  si_stime;     /* System time consumed */
+               union sigval si_value; /* Signal value */
+               int      si_int;       /* POSIX.1b signal */
+               void    *si_ptr;       /* POSIX.1b signal */
+               int      si_overrun;   /* Timer overrun count;
+                                         POSIX.1b timers */
+               int      si_timerid;   /* Timer ID; POSIX.1b timers */
+               void    *si_addr;      /* Memory location which caused fault */
+               long     si_band;      /* Band event (was int in
+                                         glibc 2.3.2 and earlier) */
+               int      si_fd;        /* File descriptor */
+               short    si_addr_lsb;  /* Least significant bit of address
+                                         (since Linux 2.6.32) */
+               void    *si_lower;     /* Lower bound when address violation
+                                         occurred (since Linux 3.19) */
+               void    *si_upper;     /* Upper bound when address violation
+                                         occurred (since Linux 3.19) */
+               int      si_pkey;      /* Protection key on PTE that caused
+                                         fault (since Linux 4.6) */
+               void    *si_call_addr; /* Address of system call instruction
+                                         (since Linux 3.5) */
+               int      si_syscall;   /* Number of attempted system call
+                                         (since Linux 3.5) */
+               unsigned int si_arch;  /* Architecture of attempted system call
+                                         (since Linux 3.5) */
+           }
+
+sa_mask  specifies a mask of signals which should be blocked (i.e., added to the signal mask of the thread
+       in which the signal handler is invoked) during execution of the signal handler.  In addition,  the  signal
+       which triggered the handler will be blocked, unless the SA_NODEFER flag is used.
+
+sa_flags :
+SA_NOCLDSTOP
+              If signum is SIGCHLD, do not receive notification when child processes stop (i.e.,  when  they  re‐
+              ceive  one  of  SIGSTOP,  SIGTSTP, SIGTTIN, or SIGTTOU) or resume (i.e., they receive SIGCONT) (see
+              wait(2)).  This flag is meaningful only when establishing a handler for SIGCHLD.
+
+       SA_NOCLDWAIT (since Linux 2.6)
+              If signum is SIGCHLD, do not transform children into zombies when they terminate.  See  also  wait‐
+              pid(2).  This flag is meaningful only when establishing a handler for SIGCHLD, or when setting that
+              signal's disposition to SIG_DFL.
+
+              If the SA_NOCLDWAIT flag is set when establishing a handler for SIGCHLD, POSIX.1 leaves it unspeci‐
+              fied  whether  a  SIGCHLD signal is generated when a child process terminates.  On Linux, a SIGCHLD
+              signal is generated in this case; on some other implementations, it is not.
+
+       SA_NODEFER
+              Do not add the signal to the thread's signal mask while the handler is executing, unless the signal
+              is  specified  in  act.sa_mask.  Consequently, a further instance of the signal may be delivered to
+              the thread while it is executing the handler.  This flag is meaningful  only  when  establishing  a
+              signal handler.
+
+              SA_NOMASK is an obsolete, nonstandard synonym for this flag.
+
+       SA_ONSTACK
+              Call  the  signal handler on an alternate signal stack provided by sigaltstack(2).  If an alternate
+              stack is not available, the default stack will be used.  This flag is meaningful only  when  estab‐
+              lishing a signal handler.
+
+       SA_RESETHAND
+              Restore the signal action to the default upon entry to the signal handler.  This flag is meaningful
+              only when establishing a signal handler.
+
+              SA_ONESHOT is an obsolete, nonstandard synonym for this flag.
+
+       SA_RESTART
+              Provide behavior compatible with BSD signal semantics by making certain  system  calls  restartable
+              across  signals.   This  flag is meaningful only when establishing a signal handler.  See signal(7)
+              for a discussion of system call restarting.
+
+       SA_RESTORER
+              Not intended for application use.  This flag is used by C libraries to  indicate  that  the  sa_re‐
+              storer field contains the address of a "signal trampoline".  See sigreturn(2) for more details.
+
+       SA_SIGINFO (since Linux 2.2)
+              The  signal  handler  takes three arguments, not one.  In this case, sa_sigaction should be set in‐
+              stead of sa_handler.  This flag is meaningful only when establishing a signal handler.
+
+
+sigemptyset :
+int sigemptyset(sigset_t *set);
+
+initializes the signal set given by set to empty, with all signals excluded from the set.
+
+sigaddset :
+int sigaddset(sigset_t *set, int signum);
+
+add the signal signum to the set
+
+kill : send a signal to a process
+int kill(pid_t pid, int sig);
+returns -1 if failde, 1 if success
 
 ////////////////////// FILE AND DIRECTORY MANAGEMENT //////////////////////////////////////////
 
-// getcwd
-// chdir
-// stat
-// lstat
-// fstat
-// opendir
-// readdir
-// closedir
+getcwd : get current working directory
+char *getcwd(char *buf, size_t size);
+
+return a null-terminating string containing an absolute pathname that is the current
+working directory of the calling process
+The pathname is returned as the function result and via  the  argument buf
+The getcwd() function copies an absolute pathname of the current working directory
+to the array pointed to by buf, which is of length size.
+
+If the length of the absolute pathname of the current working directory, including  the  terminating  null
+byte, exceeds  size  bytes, NULL is returned, and errno is set to ERANGE; an application should check for
+this error, and allocate a larger buffer if necessary.
+
+On success, this function return a pointer to a string containing the pathname of the current working
+directory. This is the same value as buf.
+
+chdir : change working directory
+int chdir(const char *path);
+chdir() changes the current working directory of the calling process to the directory specified in path.
+On success, zero is returned.  On error, -1 is returned
+
+stat : display file or file system status (size, permissions, etc)
+int stat(const char *path, struct stat *buf)
+
+example : stat(path, &fileStat);
+
+struct stat {
+    dev_t     st_dev;     // ID du périphérique contenant le fichier
+    ino_t     st_ino;     // Numéro d'inode
+    mode_t    st_mode;    // Permissions et type du fichier
+    nlink_t   st_nlink;   // Nombre de liens
+    uid_t     st_uid;     // ID du propriétaire
+    gid_t     st_gid;     // ID du groupe
+    dev_t     st_rdev;    // ID du périphérique (si fichier spécial)
+    off_t     st_size;    // Taille en octets
+    time_t    st_atime;   // Dernier accès
+    time_t    st_mtime;   // Dernière modification
+    time_t    st_ctime;   // Dernier changement d'état
+};
+
+Le champ st_mode contient le type du fichier et ses permissions.
+
+Macro	Vérification	Description
+S_ISREG(m)	Fichier régulier	Fichier normal
+S_ISDIR(m)	Répertoire	Dossier (ls -l d/)
+S_ISLNK(m)	Lien symbolique	(ls -l fichier -> cible)
+S_ISCHR(m)	Fichier caractère	(ex: /dev/tty)
+S_ISBLK(m)	Fichier bloc	(ex: /dev/sda1)
+S_ISFIFO(m)	Pipe nommée (FIFO)	Communication IPC
+S_ISSOCK(m)	Socket	Communication réseau
+
+Les permissions sont stockées dans st_mode. On peut les extraire avec les macros S_IRUSR, S_IWUSR, etc.
+
+if (fileStat.st_mode & S_IRUSR)
+    printf("Lecture autorisée (propriétaire).\n");
+if (fileStat.st_mode & S_IWUSR)
+    printf("Écriture autorisée (propriétaire).\n");
+if (fileStat.st_mode & S_IXUSR)
+    printf("Exécution autorisée (propriétaire).\n");
+
+Exemple :
+if (S_ISREG(fileStat.st_mode))
+    printf("Type : Fichier régulier\n");
+else if (S_ISDIR(fileStat.st_mode))
+    printf("Type : Répertoire\n");
+
+lstat :
+int lstat(const char *path, struct stat *buf);
+
+same as stat, but doesn't follow symbolic links
+
+fstat :
+int fstat(int fd, struct stat *buf);
+
+same as stat, but to use with an fd instead of a path
+
+opendir : open a directory
+DIR *opendir(const char *name);
+
+The opendir() function opens a directory stream corresponding to the directory name, and returns a pointer
+to the directory stream.  The stream is positioned at the first entry in the directory.
+
+return a pointer to the directory stream. On error, NULL is returned
+
+readdir : read a directory
+struct dirent *readdir(DIR *dirp);
+
+The  readdir()  function  returns a pointer to a dirent structure representing the next directory entry in
+the directory stream pointed to by dirp.  It returns NULL on reaching the end of the directory  stream  or
+if an error occurred.
+
+struct dirent {
+               ino_t          d_ino;       /* Inode number */
+               off_t          d_off;       /* Not an offset; see below */
+               unsigned short d_reclen;    /* Length of this record */
+               unsigned char  d_type;      /* Type of file; not supported
+                                              by all filesystem types */
+               char           d_name[256]; /* Null-terminated filename */
+           };
+
+d_ino  This is the inode number of the file.
+
+d_off  The value returned in d_off is the same as would be returned by calling telldir(3) at  the  current
+        position in the directory stream.  Be aware that despite its type and name, the d_off field is sel‐
+        dom any kind of directory offset on modern filesystems.  Applications should treat this field as an
+        opaque value, making no assumptions about its contents; see also telldir(3).
+
+d_reclen
+        This  is  the size (in bytes) of the returned record.  This may not match the size of the structure
+        definition shown above; see NOTES.
+
+d_type This field contains a value indicating the file type, making it possible to avoid  the  expense  of
+        calling lstat(2) if further actions depend on the type of the file.
+
+         When  a  suitable  feature  test macro is defined (_DEFAULT_SOURCE on glibc versions since 2.19, or
+        _BSD_SOURCE on glibc versions 2.19 and earlier), glibc defines the following  macro  constants  for
+        the value returned in d_type:
+
+              DT_BLK      This is a block device.
+
+              DT_CHR      This is a character device.
+
+              DT_DIR      This is a directory.
+
+              DT_FIFO     This is a named pipe (FIFO).
+
+              DT_LNK      This is a symbolic link.
+
+              DT_REG      This is a regular file.
+
+              DT_SOCK     This is a UNIX domain socket.
+
+              DT_UNKNOWN  The file type could not be determined
+
+d_name This field contains the null terminated filename.  See NOTES.
+
+The order in which filenames are read by successive calls to readdir() depends on the filesystem implemen‐
+       tation; it is unlikely that the names will be sorted in any fashion.
+
+closedir : close a directory
+int closedir(DIR *dirp);
+
+The closedir() function closes the directory stream associated with dirp.  A successful call to closedir()
+also closes the underlying file descriptor associated with dirp.  The directory stream descriptor dirp  is
+not available after this call.
 
 ////////////////////// FILE DESCRIPTOR (fd) MANIPULATION //////////////////////////////////////////
 
-// dup
-// dup2
-// pipe
+dup : duplicate a file descriptor
+int dup(int oldfd);
+
+The  dup()  system call creates a copy of the file descriptor oldfd, using the lowest-numbered unused file
+       descriptor for the new descriptor.
+
+       After a successful return, the old and new file descriptors may be used interchangeably.   They  refer  to
+       the  same  open file description (see open(2)) and thus share file offset and file status flags; for exam‐
+       ple, if the file offset is modified by using lseek(2) on one of the file descriptors, the offset  is  also
+       changed for the other.
+
+       The  two  file descriptors do not share file descriptor flags (the close-on-exec flag).  The close-on-exec
+       flag (FD_CLOEXEC; see fcntl(2)) for the duplicate descriptor is off.
+
+dup2 :
+       The dup2() system call performs the same task as dup(), but instead of using  the  lowest-numbered  unused
+       file  descriptor, it uses the file descriptor number specified in newfd.  If the file descriptor newfd was
+       previously open, it is silently closed before being reused.
+
+       The steps of closing and reusing the file descriptor newfd are performed atomically.  This  is  important,
+       because  trying  to  implement  equivalent functionality using close(2) and dup() would be subject to race
+       conditions, whereby newfd might be reused between the two steps.  Such reuse could happen because the main
+       program  is interrupted by a signal handler that allocates a file descriptor, or because a parallel thread
+       allocates a file descriptor.
+
+       Note the following points:
+
+       *  If oldfd is not a valid file descriptor, then the call fails, and newfd is not closed.
+
+       *  If oldfd is a valid file descriptor, and newfd has the same value as oldfd, then dup2()  does  nothing,
+          and returns newfd.
+
+pipe : create pipe
+struct fd_pair pipe();
+
+pipe() creates a pipe, a unidirectional data channel that can be used for interprocess communication.  The
+       array pipefd is used to return two file descriptors referring to the ends of the pipe.   pipefd[0]  refers
+       to  the  read  end of the pipe.  pipefd[1] refers to the write end of the pipe.  Data written to the write
+       end of the pipe is buffered by the kernel until it is read from the read end of the pipe.  For further de‐
+       tails, see pipe(7)
 
 
 ////////////////////// ERROR HANDLING //////////////////////////////////////////
 
-// strerror
-// perror
+strerror : return a string describing error number
+char *strerror(int errnum);
+
+The strerror() function returns a pointer to a string that describes the error code passed in the argument
+       errnum
+       (For example, if errnum is EINVAL, the returned description will be "Invalid argument".)
+	   This string must
+       not be modified by the application, but may be modified  by  a  subsequent  call  to  strerror()  or  str‐
+       error_l().  No other library function, including perror(3), will modify this string.
+
+perror : print a system error message
+void perror(const char *s);
+
+The  perror() function produces a message on standard error describing the last error encountered during a
+       call to a system or library function.
+
+       First (if s is not NULL and *s is not a null byte ('\0')), the argument string s is printed, followed by a
+       colon and a blank.  Then an error message corresponding to the current value of errno and a new-line.
+
+       To be of most use, the argument string should include the name of the function that incurred the error.
+
+       The  global  error list sys_errlist[], which can be indexed by errno, can be used to obtain the error mes‐
+       sage without the newline.  The largest message number provided in the table  is  sys_nerr-1.   Be  careful
+       when directly accessing this list, because new error values may not have been added to sys_errlist[].  The
+       use of sys_errlist[] is nowadays deprecated; use strerror(3) instead.
+
+       When a system call fails, it usually returns -1 and sets the variable errno to  a  value  describing  what
+       went  wrong.  (These values can be found in <errno.h>.)  Many library functions do likewise.  The function
+       perror() serves to translate this error code into human-readable form.  Note that errno is undefined after
+       a successful system call or library function call: this call may well change this variable, even though it
+       succeeds, for example because it internally used some other library function  that  failed.   Thus,  if  a
+       failing call is not immediately followed by a call to perror(), the value of errno should be saved.
 
 
 ////////////////////// TERMINAL CONTROL AND ENVIRONMENT VARIABLES //////////////////////////////////////////
 
-// getenv
-// tcsetattr
-// tcgetattr
-// tgetent
-// tgetflag
-// tgetnum
-// tgetstr
-// tgoto
-// tputs
+getenv : get an environment variable
+char *getenv(const char *name);
+
+The  getenv() function searches the environment list to find the environment variable name, and returns a
+pointer to the corresponding value string.
+
+The getenv() function returns a pointer to the value in the environment, or NULL if there is no match.
+
+The strings in the environment list are of the form name=value.
+
+/!\ As typically implemented, getenv() returns a pointer to a string within the environment list.
+The caller
+must take care not to modify this string, since that would change the environment of the process.
+
+tcsetattr : set terminal attributes (input and output mode)
+
+int tcsetattr(int fd, int optional_actions, const struct termios *termios_p);
+
+
+tcgetattr : get terminal attributes
+
+int tcgetattr(int fd, struct termios *termios_p);
+
+The termios functions describe a general terminal interface that is provided to control asynchronous communications ports.
+
+Many of the functions described here have a termios_p argument that is a pointer to a  termios  structure.
+       This structure contains at least the following members:
+
+           tcflag_t c_iflag;      /* input modes */
+           tcflag_t c_oflag;      /* output modes */
+           tcflag_t c_cflag;      /* control modes */
+           tcflag_t c_lflag;      /* local modes */
+           cc_t     c_cc[NCCS];   /* special characters */
+
+see man tcgetattr for more infos
+
+tgetent : init the termcap database
+to get infos of the the capacity of the terminal
+
+int tgetent(char *bp, const char *termtype);
+
+bp : NULL
+termtype : getenv("TERM");
+
+
+tgetflag : check a boolean value (0 or 1) (if a capacitiy is set or not)
+int tgetflag(const char *id);
+
+"bs"	Le terminal supporte la touche Backspace.
+"hc"	Terminal imprimante (hardcopy, pas interactif).
+"os"	Terminal ne supporte pas la mise en évidence (standout).
+"eo"	Terminal efface les caractères sur eux-mêmes (overwrite).
+"am"	Le curseur revient à la ligne automatiquement en fin de ligne.
+"bw"	Le curseur peut reculer en début de ligne.
+"nc"	Le terminal ne peut pas afficher en couleur.
+"xb"	Le terminal a un bug avec backspace (doit utiliser CTRL+H).
+
+tgetnum : get a numeric value (height or width of the terminal for example)
+int tgetnum(const char *id);
+
+"co"	Nombre de colonnes du terminal.
+"li"	Nombre de lignes du terminal.
+"it"	Taille des tabulations en caractères.
+"pb"	Vitesse du port série en bauds (si applicable).
+"sg"	Nombre de espaces pour la suppression d’une mise en évidence.
+"ug"	Nombre d’espaces pour supprimer un soulignement.
+"ws"	Largeur de l’écran en pixels (peu utilisé).
+"hs"	Hauteur de l’écran en pixels (peu utilisé).
+
+tgetstr : get a str value
+char *tgetstr(const char *id);
+
+"cl"	Effacer l’écran (clear screen).
+"cm"	Déplacer le curseur (tgoto()).
+"ce"	Effacer la ligne depuis la position du curseur.
+"cd"	Effacer jusqu’à la fin de l’écran.
+"ho"	Déplacer le curseur en haut à gauche (home).
+"so"	Activer le texte en surbrillance (standout).
+"se"	Désactiver la surbrillance.
+"us"	Activer le soulignement (underline).
+"ue"	Désactiver le soulignement.
+"md"	Activer le texte gras.
+"me"	Réinitialiser les styles (reset).
+"mb"	Activer le texte clignotant.
+"mr"	Activer l’inversion de couleurs (reverse).
+"ti"	Initialisation du terminal (mode plein écran).
+"te"	Sortie du mode terminal (inverse de "ti").
+"ks"	Activer le mode clavier spécial (pour les touches de fonction).
+"ke"	Désactiver le mode clavier spécial.
+
+tgoto : set the movement of the cursor in the terminal
+char *tgoto(const char *cm, int col, int row);
+
+cm : use "cm" (cursor motion capacity), get from tgetstr("cm", NULL);
+
+tputs : execute the movement of the cursor in the terminal
+use with tgoto
+
+int tputs(const char *str, int affcnt, int (*putc)(int));

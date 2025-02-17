@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/14 16:34:09 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:50:33 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@
 // tgetent tgetflag tgetnum tgetstr tgoto tputs
 # include <term.h>
 // tgetent tgetflag tgetnum tgetstr tgoto tputs
-// facultatif ?
 # include <curses.h>
 # include "libft.h"
 # include "get_next_line.h"
