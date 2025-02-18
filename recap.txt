@@ -24,8 +24,8 @@ Et aussi :
 	- $?
 	- avoir un historique des commandes
 	- ne pas interpreter les caracteres speciaux \ et ;
-	- gerer les ' qui doivent empecher le shell d'interpreter les caracteres speciaux
-	- gerer les " qui doivent empecher le shell d'interpreter les caracteres speciaux sauf $
+	- gerer les ' 
+	- gerer les " 
 
 Pour les bonus les operateurs :
 	- (
@@ -38,6 +38,159 @@ NB :
 - les commandes pourront etre appelees seules (a ce moment la le chemin sera cherche dans PATH)
 ou avec un chemin relatif ou absolu
 
+************************
+generalites sur les commandes
+************************
+
+l'appel a une commande est une chaine de caracteres qui se decompose de la maniere suivante (toujours dans cet ordre) :
+
+- un chemin (facultatif). S'il est present, il est immediatement suivi du nom de la commande
+ex : /usr/bin/cmd
+la fonction execve utilisera s'il existe ce chemin pour executer la commande
+si aucun chemin n'est specifie, le chemin sera cherche dans la variable PATH
+des variables d'environnement
+
+- le nom de la commande (obligatoire)
+
+- les options (facultatif) separees par un espace du nom de la commande.
+S'il y en a plusieurs elles sont elles memes separees par un espace
+
+- des arguments (facultatif). S'il y en a plusieurs ils sont eux memes separes par des espaces
+
+exemple:
+
+/usr/bin/cat -e txt.pdf test.txt texte.txt
+--> un chemin absolu, une commande, une option, plusieurs arguments
+
+ls -l -a
+--> une commande, deux options, pas d'arguments
+
+commandes/cmd_test test1.txt
+--> un chemin relatif, une commande, un argument, pas d'option
+
+ls
+-->une commande seule, sans chemin ni option ni argument
+
+NB : chaque commande renvoie un signal de sortie qui est habituellement stocke dans la variable 
+$? Cette variable n'est pas une variable d'environnement, mais peut quand meme etre Utilisee
+en argument d'autres commandes. au lancement du shell $? vaut 0 (= commande reussie)
+
+************************
+echo
+************************
+
+affiche l'argument dans le terminal suivi d'un retour a la ligne
+- doit pouvoir gerer les variables d'environnement
+- avec l'option -n n'affiche pas le retour a la ligne
+
+exemples:
+
+echo hello
+--> le terminal affiche hello
+
+echo $PATH
+--> le terminal affiche la ligne PATH (sans "PATH") de ENV
+
+
+************************
+cd
+************************
+
+change le repertoire courant et change la variable d'environnement PWD pour la faire
+pointer vers le nouveau repertoire courant. doit pouvoir fonctionner avec un chemin relatif ou
+un chemin absolu. cd sans argument ramene vers la racine. cd ~ ramene lui aussi vers la racine
+(mais legere difference si il est suivi d'un chemin : "cd test" ira chercher le dossier 
+"test" dans le repertoire courant alors que "cd ~test" ira chercher le dossier "test" a la racine)
+
+exemples:
+
+cd
+--> ramene au dossier $HOME
+
+cd ~
+--> ramene au dossier $HOME
+
+cd /
+-->ramene a la racine
+
+cd /test
+--> se dirige vers le dossier test du dossier racine
+
+cd ./test
+--> se dirige vers le dossier test dans le repertoire actuel
+
+cd test
+--> se dirige vers le dossier test dans le repertoire actuel
+
+cd ../test
+-->se dirige vers le dossier test dans le repertoire parent
+
+cd ../../test
+-->se dirige vers le dossier test dans le repertoire parent du repertoire parent
+
+cd ./
+--> ne fait rien (reste dans le meme dossier)
+
+
+************************
+pwd
+************************
+
+Affiche le chemin du repertoire actuel par rapport a la racine $HOME.
+NB : si cd est bien configure et met a jour la variable PWD a chaque fois
+au'on change de dossier, alors la commande pwd consiste a afficher la ligne PWD
+de la variable env.
+
+
+************************
+export
+************************
+
+Permet d'ajouter une variable d'environnement ou d'en modifier. Utilisee sans argument,
+elle affiche la liste de toutes les variables d'environnement et leur valeur comme
+la commande env SAUF QUE toutes les lignes commencent par "declare -x 
+
+exemples :
+
+export VARTEST="test01"
+--> cree une variable VARTEST et y ajoute la valeur "test01"
+
+export PATH=$PATH:/chemin/test
+--> ajoute le chemin /chemin/test a la variable PATH
+
+
+************************
+unset
+************************
+
+Permet de supprimer une variable d'environnement
+
+exemples :
+
+unset PATH
+-->supprime la variable $PATH
+
+
+************************
+env
+************************
+
+Permet d'afficher les variables d'environnement
+
+exemples (une seule utilisation possible) :
+
+env
+-->affiche la liste des variables d'environnement et leurs valeurs
+
+
+************************
+exit
+************************
+
+Quitte l'instance de minishell actuelle (et decremente la valeur de SHLVL). Des que SHLVL est
+egal au SHLVL su shell bash depuis lequel on a lance minishell, minishell se ferme et on retourne
+sur bash. 
+
 
 ************************
 Gestion des ' et "
@@ -45,8 +198,3 @@ Gestion des ' et "
 
 - les ' doivent empecher le shell d'interpreter les caracteres speciaux
 - les " doivent empecher le shell d'interpreter les caracteres speciaux sauf les $
-- si un seul ' ou " est tape, le shell doit attendre une 2eme ' ou " pour interpreter
-la commande, ce qui veut dire que si on fait "entree" avant d'avoir tape le
-2eme ' ou ", un 2eme prompt s'affiche et on peut continuer de rentrer du texte jusqu'a
-ce qu'on rentre le 2eme ' ou ". a ce moment la l'ensemble des caracteres rentres est
-interprete comme une seule commande
