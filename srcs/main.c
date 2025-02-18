@@ -6,57 +6,86 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/16 10:44:06 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/18 09:41:00 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// first test with signal handling
-
 #include "minishell.h"
 
-void	handle_signal(int sig)
+void	ft_disable_echoctl(void)
 {
-	if (sig == SIGINT)
+	struct termios	termios_p;
+
+	tcgetattr(STDIN_FILENO, &termios_p);
+	termios_p.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &termios_p);
+}
+
+void	ft_enable_echoctl(void)
+{
+	struct termios	termios_p;
+
+	tcgetattr(STDIN_FILENO, &termios_p);
+	termios_p.c_lflag |= ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &termios_p);
+}
+
+void	ft_handle_sigint_reception(int signum)
+{
+	if (signum == SIGINT)
 	{
-		printf("CTRL + C pressed\n");
-		// these functions always have to be together
-		// don't interpret the line before has a user input !
+		close(STDIN_FILENO);
+		open("/dev/tty", O_RDONLY);
+		printf("\n");
+		rl_replace_line("", 0);
 		rl_on_new_line();
-		// give back the terminal to the user
 		rl_redisplay();
 	}
 }
 
-int	main(int argc, char **argv, char **env)
+void	ft_set_sigint_reception_handler(void)
 {
-	// user input
-	t_var	var;
-	(void) argc;
-	(void) argv;
-	//printf();
-	// handle signal CTRL + C
-	signal(SIGINT, handle_signal);
-	// get the user input
-	var.env = ft_modify_shlvl(ft_chartab_dup(env), 1);
-	var.line = readline(PROMPT);
-	// while a user does not quit the shell
-	// TO DO : quit properly with a signal to quit
-	// do the signal handler and free all before quit
-	// clear history before quit ?
-	while (var.line)
+	struct	sigaction	sa;
+
+	sa.sa_handler = ft_handle_sigint_reception;
+	sa.sa_flags = SA_RESTART;
+	sigemptyset(&sa.sa_mask);
+	sigaddset(&sa.sa_mask, SIGTERM);
+	sigaddset(&sa.sa_mask, SIGINT);
+	sigaction(SIGINT, &sa, NULL);
+}
+
+void	ft_set_sigquit_reception_handler(void)
+{
+	struct	sigaction	sa;
+
+	sa.sa_handler = SIG_IGN;
+	sa.sa_flags = SA_RESTART;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGQUIT, &sa, NULL);
+}
+
+void	ft_clear_and_free_all(void)
+{
+	rl_clear_history();
+	ft_enable_echoctl();
+}
+
+int	main(void)
+{
+	char	*str;
+
+	ft_disable_echoctl();
+	ft_set_sigquit_reception_handler();
+	ft_set_sigint_reception_handler();
+	str = readline(PROMPT);
+	while (str)
 	{
-		// TO DO : handle EOF and input from file later
-		// check if we have to free str or not if the input is from a file ?
-		// TO DO : parser
-		ft_parse_line(&var, env);
-		if (*(var.line))
-		{
-			// add the string to the history
-			add_history(var.line);
-			printf("You have entered %s\n", var.line);
-			ft_free_line(var);
-		}
-		// read a new line from user input
-		var.line = readline(PROMPT);
+		if (*str)
+			add_history(str);
+		free(str);
+		str = readline(PROMPT);
 	}
+	ft_clear_and_free_all();
+	exit(EXIT_SUCCESS);
 }

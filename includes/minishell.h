@@ -6,14 +6,13 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/16 10:34:33 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/18 09:39:51 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-// replace with ttyname ?
 # ifndef PROMPT
 #  define PROMPT "minishell$ "
 # endif
@@ -49,7 +48,6 @@
 // tgetent tgetflag tgetnum tgetstr tgoto tputs
 # include <term.h>
 // tgetent tgetflag tgetnum tgetstr tgoto tputs
-// facultatif ?
 # include <curses.h>
 # include "libft.h"
 # include "get_next_line.h"
