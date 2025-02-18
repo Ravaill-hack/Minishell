@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/18 09:41:00 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/18 09:50:57 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,20 +71,24 @@ void	ft_clear_and_free_all(void)
 	ft_enable_echoctl();
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **env)
 {
-	char	*str;
+	t_var	var;
 
+	(void) argc;
+	(void) argv;
+	var.env = ft_modify_shlvl(ft_chartab_dup(env), 1);
 	ft_disable_echoctl();
 	ft_set_sigquit_reception_handler();
 	ft_set_sigint_reception_handler();
-	str = readline(PROMPT);
-	while (str)
+	var.line = readline(PROMPT);
+	while (var.line)
 	{
-		if (*str)
-			add_history(str);
-		free(str);
-		str = readline(PROMPT);
+		ft_parse_line(&var);
+		if (*(var.line))
+			add_history(var.line);
+		free(var.line);
+		var.line = readline(PROMPT);
 	}
 	ft_clear_and_free_all();
 	exit(EXIT_SUCCESS);

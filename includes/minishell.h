@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/18 09:39:51 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/18 09:45:23 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ typedef struct	s_var
 /*
 Initialisation
 */
-void			ft_parse_line(t_var *var, char **env);
+void			ft_parse_line(t_var *var);
 /*
 Environnement
 */
