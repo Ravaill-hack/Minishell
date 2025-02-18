@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/18 14:26:28 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/18 15:12:27 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ int	main(int argc, char **argv, char **env)
 
 	(void) argc;
 	(void) argv;
+	// NB : a la fin on pourra rassembler toutes ces lignes dans une fonction ft_init_var, mais pour l'instant c'est plus lisible
+	var.shlvl_0 = ft_atoi(&env[ft_get_line_env(env, "SHLVL=")][6]); //garde en memoire le niveau de shell au moment du demarrage
+	//ft_putnbr_fd(var.shlvl_0, 1);
+	var.exit_nb = 0; //le code d'exit est initialise a 0 (l'ouverture de minishell s'est bien deroulee)
 	var.env = ft_strsdup(env);
 	//ft_print_strs(var.env);
 	var.env = ft_modify_shlvl(var.env, 1);
