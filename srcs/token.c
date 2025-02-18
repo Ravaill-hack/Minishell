@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:55:13 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/18 14:17:33 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/18 14:35:42 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,21 @@ t_token_list	*ft_append_token(char *word, t_token_list **list)
 		ft_last_token(*list)->next = token;
 	}
 	return (token);
+}
+
+void	ft_free_list(t_token_list **list)
+{
+	t_token_list	*tmp;
+	t_token_list	**add;
+
+	add = list;
+	while (*list)
+	{
+		tmp = *list;
+		*list = (*list)->next;
+		free(tmp);
+	}
+	free(add);
 }
 
 t_token_list	**ft_build_token_list(char **split_line)
