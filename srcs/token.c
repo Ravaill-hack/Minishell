@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:55:13 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/18 14:35:42 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/18 17:44:23 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,24 @@ t_token_list	*ft_append_token(char *word, t_token_list **list)
 	// TODO
 	/*
 	token->content = ft_find_token_content(word);
-	if (token->content)
+	if (!token->content)
+		return (NULL);
+	if (token->token == CONTENT)
 	{
-		if (token->token == CONTENT && token->content == STR)
+		if (token->content == STR)
+		{
 			token->val = ft_strdup(word);
+			if (!token->val)
+				return (NULL);
+		}
 		else if (token->content == CHAR)
 			token->val = *word;
 		else if (token->content == INT)
+		{
 			token->val = ft_atoi(word);
+			if (!token->val)
+				return (NULL);
+		}
 		else if (token->content == DOL)
 			...
 	}
