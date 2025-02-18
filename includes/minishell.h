@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/18 09:45:23 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/18 10:24:43 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,19 @@ t_line_token	ft_find_token_type(char *str);
 /*
 Signal management
 */
-
+void			ft_set_sigquit_reception_handler(void);
+void			ft_set_sigint_reception_handler(void);
+void			ft_handle_sigint_reception(int signum);
+/*
+Termios
+*/
+void		ft_disable_echoctl(void);
+void		ft_enable_echoctl(void);
 /*
 Cleaning
 */
 int				ft_free_line(t_var var);
+void			ft_clear_and_free_all(t_var var);
 /*
 Utils
 */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 09:43:31 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/16 10:32:42 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/18 10:28:09 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,12 @@ char	**ft_chartab_dup(char **matrix)
 	}
 	res[i] = NULL;
 	return (res);
+}
+
+void	ft_clear_and_free_all(t_var var)
+{
+	if (var.env)
+		ft_free_strs(var.env);
+	rl_clear_history();
+	ft_enable_echoctl();
 }

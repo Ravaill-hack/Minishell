@@ -23,6 +23,8 @@ SRCS_FILES = \
 	free.c \
 	utils.c \
 	env.c \
+	signal_handling.c \
+	termios_utils.c \
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS_FILES:.c=.o))
 
