@@ -6,25 +6,28 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:01:37 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/18 13:55:02 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/18 17:27:09 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_free_line(t_var var)
+void	ft_free_line(t_var var)
 {
 	int	i;
 
 	i = 0;
-	free(var.line);
+	if (var.line)
+		free(var.line);
+	if (!var.split_line)
+		return ;
 	while (var.split_line[i])
 	{
 		free(var.split_line[i]);
 		i++;
 	}
 	free(var.split_line);
-	return (0);
+	return ;
 }
 
 void	ft_free_token_list_until(t_token_list **list, int n)
@@ -44,6 +47,7 @@ void	ft_clear_and_free_all(t_var var)
 {
 	if (var.env)
 		ft_free_strs(var.env);
+	ft_free_line(var);
 	rl_clear_history();
 	ft_enable_echoctl();
 }

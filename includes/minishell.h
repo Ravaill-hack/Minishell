@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/18 14:48:10 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/18 17:31:30 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ typedef struct	s_var
 	char					**split_line;
 	t_token_list			**token_list;
 	char					**env;
-	int						shlvl_0;
+	//int					shlvl_0;
 	int						exit_nb;
 }	t_var;
 
@@ -108,10 +108,11 @@ typedef struct	s_var
 /*
 Initialisation
 */
-int			ft_parse_line(t_var *var);
+int				ft_parse_line(t_var *var);
 /*
 Environnement
 */
+int				ft_get_line_env(char **env, char *title);
 char			**ft_modify_shlvl(char **matrix, int ind);
 /*
 Token management
