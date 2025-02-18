@@ -1,39 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_strsdup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/16 10:31:57 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/18 13:18:56 by julien           ###   ########.fr       */
+/*   Created: 2025/02/18 10:50:39 by julien            #+#    #+#             */
+/*   Updated: 2025/02/18 10:58:32 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-char	**ft_modify_shlvl(char **matrix, int ind)
+char	**ft_strsdup(char **strs)
 {
-	int 	i;
-	char	*shlvl;
-	char	*nb_str;
+	size_t	i;
+    size_t	strs_len;
+	char	**dup;
 
-	if (!matrix)
-		return (NULL);
 	i = 0;
-	while (ft_strncmp(matrix[i], "SHLVL=", 6) != 0)
+	if (!strs)
+		return (NULL);
+    strs_len = ft_strslen(strs);
+	dup = (char **)ft_calloc((strs_len + 1), sizeof(char *));
+	if (!dup)
+		return (NULL);
+	while (i < strs_len)
+	{
+		dup[i] = ft_strdup(strs[i]);
+		if (dup[i] == NULL)
+			return(ft_free_strs_until(dup, i));
 		i++;
-	if (!matrix[i])
-		return (NULL);
-	nb_str = ft_itoa(ft_atoi(&matrix[i][6]) + ind);
-	if (!nb_str)
-		return (NULL);
-	shlvl = ft_strjoin("SHLVL=", nb_str);
-	if (!shlvl)
-		return (free(nb_str), NULL);
-	free(nb_str);
-	free(matrix[i]);
-	matrix[i] = shlvl;
-	return (matrix);
+	}
+	dup[i] = NULL;
+	return (dup);
 }
-

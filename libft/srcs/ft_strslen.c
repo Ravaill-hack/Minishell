@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   ft_strslen.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/14 20:00:41 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/18 14:26:17 by julien           ###   ########.fr       */
+/*   Created: 2025/02/18 10:47:47 by julien            #+#    #+#             */
+/*   Updated: 2025/02/18 10:49:39 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	ft_parse_line(t_var *var)
+size_t  ft_strslen(char **strs)
 {
-	var->split_line = ft_split(var->line, ' ');
-	var->token_list = ft_build_token_list(var->split_line);
-	if (!var->token_list)
-		return (ft_free_line(*var), FAILURE);
-	return (SUCCESS);
+	size_t  i;
+
+	i = 0;
+	while (strs[i])
+		i++;
+	return (i);
 }

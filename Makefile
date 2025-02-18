@@ -21,7 +21,6 @@ SRCS_FILES = \
 	parsing.c \
 	token.c \
 	free.c \
-	utils.c \
 	env.c \
 	signal_handling.c \
 	termios_utils.c \

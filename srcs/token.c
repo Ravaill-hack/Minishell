@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:55:13 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/14 21:10:07 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:17:33 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_line_token	ft_find_token_type(char *str)
 		return (S_LESS);
 	else if (ft_strncmp(str, ">>", 2) == 0)
 		return (D_GREAT);
-	else if (ft_strncmp(str, ">>", 2) == 0)
+	else if (ft_strncmp(str, "<<", 2) == 0)
 		return (D_LESS);
 	else if (ft_strncmp(str, "|", 1) == 0)
 		return (PIPE);
@@ -38,7 +38,9 @@ t_line_token	ft_find_token_type(char *str)
 
 t_token_list	*ft_last_token(t_token_list *token)
 {
-	while (token && token->next)
+	if (!token)
+		return (NULL);
+	while (token->next)
 		token = token->next;
 	return (token);
 }
@@ -47,10 +49,25 @@ t_token_list	*ft_append_token(char *word, t_token_list **list)
 {
 	t_token_list	*token;
 
-	token = (t_token_list *)malloc(sizeof(t_token_list));
+	token = (t_token_list *)ft_calloc(1, sizeof(t_token_list));
 	if (!token)
 		return (NULL);
 	token->token = ft_find_token_type(word);
+	// TODO
+	/*
+	token->content = ft_find_token_content(word);
+	if (token->content)
+	{
+		if (token->token == CONTENT && token->content == STR)
+			token->val = ft_strdup(word);
+		else if (token->content == CHAR)
+			token->val = *word;
+		else if (token->content == INT)
+			token->val = ft_atoi(word);
+		else if (token->content == DOL)
+			...
+	}
+	*/
 	token->next = NULL;
 	if (!(*list))
 	{
@@ -71,13 +88,14 @@ t_token_list	**ft_build_token_list(char **split_line)
 	int				i;
 
 	i = 0;
-	list = (t_token_list **)malloc(sizeof(t_token_list *));
+	list = (t_token_list **)ft_calloc(1, sizeof(t_token_list *));
 	if (!list)
 		return (NULL);
 	*list = NULL;
 	while (split_line[i])
 	{
-		ft_append_token(split_line[i], list);
+		if (!ft_append_token(split_line[i], list))
+			return (ft_free_token_list_until(list, i), NULL);
 		i++;
 	}
 	return (list);

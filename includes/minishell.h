@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/18 10:24:43 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/18 14:24:23 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 
 # ifndef PROMPT
 #  define PROMPT "minishell$ "
+# endif
+
+# ifndef FAILURE
+#  define FAILURE 0
+# endif
+
+# ifndef SUCCESS
+#  define SUCCESS 1
 # endif
 
 // read write access close fork dup dup2 pipe isatty ttyname ttyslot chdir getcwd
@@ -80,6 +88,7 @@ typedef enum	s_content_token
 typedef struct	s_token_list
 {
 	t_line_token			token;
+	// t_content_token		content;
 	char					*val;
 	struct	s_token_list	*prev;
 	struct	s_token_list	*next;
@@ -97,7 +106,7 @@ typedef struct	s_var
 /*
 Initialisation
 */
-void			ft_parse_line(t_var *var);
+int			ft_parse_line(t_var *var);
 /*
 Environnement
 */
@@ -118,12 +127,13 @@ void			ft_handle_sigint_reception(int signum);
 /*
 Termios
 */
-void		ft_disable_echoctl(void);
-void		ft_enable_echoctl(void);
+void			ft_disable_echoctl(void);
+void			ft_enable_echoctl(void);
 /*
 Cleaning
 */
 int				ft_free_line(t_var var);
+void			ft_free_token_list_until(t_token_list **list, int n);
 void			ft_clear_and_free_all(t_var var);
 /*
 Utils

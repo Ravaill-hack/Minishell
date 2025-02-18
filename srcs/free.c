@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:01:37 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/14 21:06:41 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/18 13:55:02 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,25 @@ int	ft_free_line(t_var var)
 	}
 	free(var.split_line);
 	return (0);
+}
+
+void	ft_free_token_list_until(t_token_list **list, int n)
+{
+	t_token_list	*current;
+
+	while (n--)
+	{
+		current = *list;
+		*list = (*list)->next;
+		free(current);
+	}
+	free(list);
+}
+
+void	ft_clear_and_free_all(t_var var)
+{
+	if (var.env)
+		ft_free_strs(var.env);
+	rl_clear_history();
+	ft_enable_echoctl();
 }
