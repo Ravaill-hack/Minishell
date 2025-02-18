@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:55:13 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/14 21:10:07 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/18 10:21:49 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,21 @@ t_token_list	*ft_append_token(char *word, t_token_list **list)
 	return (token);
 }
 
+void	ft_free_list(t_token_list **list)
+{
+	t_token_list	*tmp;
+	t_token_list	**add;
+
+	add = list;
+	while (*list)
+	{
+		tmp = *list;
+		*list = (*list)->next;
+		free(tmp);
+	}
+	free(add);
+}
+
 t_token_list	**ft_build_token_list(char **split_line)
 {
 	t_token_list	**list;
@@ -77,7 +92,8 @@ t_token_list	**ft_build_token_list(char **split_line)
 	*list = NULL;
 	while (split_line[i])
 	{
-		ft_append_token(split_line[i], list);
+		if (!ft_append_token(split_line[i], list))
+			ft_free_list(list);
 		i++;
 	}
 	return (list);

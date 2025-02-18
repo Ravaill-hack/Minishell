@@ -37,3 +37,16 @@ Pour les bonus les operateurs :
 NB :
 - les commandes pourront etre appelees seules (a ce moment la le chemin sera cherche dans PATH)
 ou avec un chemin relatif ou absolu
+
+
+************************
+Gestion des ' et "
+************************
+
+- les ' doivent empecher le shell d'interpreter les caracteres speciaux
+- les " doivent empecher le shell d'interpreter les caracteres speciaux sauf les $
+- si un seul ' ou " est tape, le shell doit attendre une 2eme ' ou " pour interpreter
+la commande, ce qui veut dire que si on fait "entree" avant d'avoir tape le
+2eme ' ou ", un 2eme prompt s'affiche et on peut continuer de rentrer du texte jusqu'a
+ce qu'on rentre le 2eme ' ou ". a ce moment la l'ensemble des caracteres rentres est
+interprete comme une seule commande
