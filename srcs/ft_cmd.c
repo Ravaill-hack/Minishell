@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/02/19 16:50:58 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:20:00 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,40 +166,65 @@ int	ft_cmd_unset(t_var *var)
 	ft_remove_env_var(var, line);
 	return (SUCCESS);
 }
-/*
-int	ft_add_env_var(t_var *var, int line)
-{
-	char	**new_env;
-	int		i;
-	int		len;
 
-	len = ft_strslen(var->env);
-	new_env = ft_calloc(sizeof(char *), (len + 2));
-	if (!new_env)
-		return (FAILURE);
-	new_env[len + 1] = ;
-			if (!new_env[j])
-			{
-				ft_free_strs_until(new_env, j);
-				return (FAILURE);
-			}
-			j++;
-		}
+size_t	ft_strslcpy(char **dst, char *const *src, size_t size)
+{
+	size_t	i;
+	size_t	srcs_len;
+
+	if (!dst || !src)
+		return (0);
+	srcs_len = ft_strslen(src);
+	if (size == 0)
+		return (srcs_len);
+	i = 0;
+	while (src[i] && i < size - 1)
+	{
+		ft_strlcpy(dst[i], src[i], ft_strlen(src[i]));
 		i++;
 	}
-	new_env[j] = NULL;
-	ft_free_strs(var->env);
-	var->env = new_env;
+	dst[i] = NULL;
+	return (srcs_len);
+}
+
+char	**ft_strsjoinstr(char **strs, char *str)
+{
+	char	**new_strs;
+	int		strs_len;
+
+	strs_len = ft_strslen(strs);
+	new_strs = (char **)ft_calloc(sizeof(char *), (strs_len + 2));
+	if (!new_strs)
+		return (NULL);
+	ft_strslcpy(new_strs, strs, strs_len + 1);
+	new_strs[strs_len] = ft_strdup(str);
+	if (!new_strs[strs_len])
+		return (ft_free_strs(new_strs), NULL);
+	new_strs[strs_len + 1] = NULL;
+	free(strs);
+	return (new_strs);
+}
+
+int	ft_add_env_var(char **env, char *line)
+{
+	if (!ft_strsjoinstr(env, line))
+		return (FAILURE);
 	return (SUCCESS);
+}
+
+/*
+int	ft_replace_env_var()
+{
+	
 }
 */
 
-void	ft_cmd_export(t_var *var)
+int	ft_cmd_export(t_var *var)
 {
 	size_t	i;
 	size_t	len;
 
-	//char	**key_value;
+	char	**key_value;
 	char	*key;
 	char	*value;
 
@@ -214,8 +239,9 @@ void	ft_cmd_export(t_var *var)
 			printf("\n");
 			i++;
 		}
+		return (SUCCESS);
 	}
-	if (var->token_list[0]->next)
+	else
 	{
 		char	*eq_ptr;
 		
@@ -226,9 +252,22 @@ void	ft_cmd_export(t_var *var)
 		printf("value = %s\n", value);
 		// /!\ if the value contains an env var ($PATH for example)
 		// replace this by the value of the env var
-		//if (ft_get_line_env(var.env, var.token_list[0]) == -1)
-						
-	}
+		printf("ORIGINAL\n");
+		ft_print_strs(var->env);
+		if (ft_get_line_env(var->env, key) == -1)
+		{
+			if (ft_add_env_var(var->env, var->token_list[0]->next->val) == FAILURE)
+				return (FAILURE);
+			printf("\n");
+			printf("NEW\n");
+			ft_print_strs(var->env);
+			return (SUCCESS);
+		}
+		else
+		{
+			printf("var in env");
+			return (SUCCESS);	
+		}
 					// split with = (key=value)
 					
 					// add this value to env
@@ -242,4 +281,6 @@ void	ft_cmd_export(t_var *var)
 					// take the value of this env var
 					// concatenate with the string after this env var
 					// and replace the env var with this new string
+	}
+	return (SUCCESS);
 }

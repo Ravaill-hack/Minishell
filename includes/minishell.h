@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/19 16:30:36 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:16:44 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,5 +153,5 @@ int				exec_cmd(char *cmd, char **env);
 int 			ft_cmd_exit(t_var var);
 void 			ft_cmd_env(t_var var);
 int 			ft_cmd_unset(t_var *var);
-void			ft_cmd_export(t_var *var);
+int				ft_cmd_export(t_var *var);
 #endif
