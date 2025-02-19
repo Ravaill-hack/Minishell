@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cmd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/02/19 11:38:47 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/19 16:50:58 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,4 +165,81 @@ int	ft_cmd_unset(t_var *var)
 		return (FAILURE);
 	ft_remove_env_var(var, line);
 	return (SUCCESS);
+}
+/*
+int	ft_add_env_var(t_var *var, int line)
+{
+	char	**new_env;
+	int		i;
+	int		len;
+
+	len = ft_strslen(var->env);
+	new_env = ft_calloc(sizeof(char *), (len + 2));
+	if (!new_env)
+		return (FAILURE);
+	new_env[len + 1] = ;
+			if (!new_env[j])
+			{
+				ft_free_strs_until(new_env, j);
+				return (FAILURE);
+			}
+			j++;
+		}
+		i++;
+	}
+	new_env[j] = NULL;
+	ft_free_strs(var->env);
+	var->env = new_env;
+	return (SUCCESS);
+}
+*/
+
+void	ft_cmd_export(t_var *var)
+{
+	size_t	i;
+	size_t	len;
+
+	//char	**key_value;
+	char	*key;
+	char	*value;
+
+	if (!var->token_list[0]->next)
+	{
+		i = 0;
+		len = ft_strslen(var->env);
+		while (i < len)
+		{
+			printf("declare -x ");
+			printf("%s", var->env[i]);
+			printf("\n");
+			i++;
+		}
+	}
+	if (var->token_list[0]->next)
+	{
+		char	*eq_ptr;
+		
+		eq_ptr = ft_strchr(var->token_list[0]->next->val, '=');
+		key = ft_substr(var->token_list[0]->next->val, 0, eq_ptr - var->token_list[0]->next->val);
+		printf("key = %s\n", key);
+		value = ft_substr(eq_ptr + 1, 0, ft_strlen(var->token_list[0]->next->val));
+		printf("value = %s\n", value);
+		// /!\ if the value contains an env var ($PATH for example)
+		// replace this by the value of the env var
+		//if (ft_get_line_env(var.env, var.token_list[0]) == -1)
+						
+	}
+					// split with = (key=value)
+					
+					// add this value to env
+					// if key is an env var
+					// that is present in env
+					// update this value in env
+					// /!\ with a value of $var
+					// replace $var with the value of var in env
+					// example : export PATH=$PATH:/chemin/test
+					// check if the value after $ in uppercase is an env var
+					// take the value of this env var
+					// concatenate with the string after this env var
+					// and replace the env var with this new string
 }
