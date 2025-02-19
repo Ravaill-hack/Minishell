@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/18 14:48:10 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/19 10:19:20 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,16 @@ typedef enum	s_line_token
 	D_LESS,
 	S_GREAT,
 	D_GREAT,
-	O_PAR,
-	C_PAR,
-	AND,
-	OR,
+	//O_PAR, --> pour les bonus
+	//C_PAR, --> pour les bonus
+	//AND, --> pour les bonus
+	//OR, --> pour les bonus
 	PIPE,
+	NL,
 	CONTENT,
 }	t_line_token;
 
+/*
 typedef enum	s_content_token
 {
 	STR,
@@ -84,10 +86,11 @@ typedef enum	s_content_token
 	STAR,
 	SLSH,
 }	t_content_token;
+*/
 
 typedef struct	s_token_list
 {
-	t_line_token			token;
+	t_line_token			type;
 	// t_content_token		content;
 	char					*val;
 	struct	s_token_list	*prev;
