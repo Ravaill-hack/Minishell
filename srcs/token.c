@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:55:13 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/19 11:50:13 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:58:26 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 t_line_token	ft_find_token_type(char *str)
 {
-	if (ft_strncmp(str, ">", 1) == 0)
+	if (ft_strncmp(str, ">", 1) == 0 && *(str + 1) != '>')
 		return (S_GREAT);
-	else if (ft_strncmp(str, "<", 1) == 0)
+	else if (ft_strncmp(str, "<", 1) == 0 && *(str + 1) != '<')
 		return (S_LESS);
 	else if (ft_strncmp(str, ">>", 2) == 0)
 		return (D_GREAT);
@@ -115,20 +115,18 @@ t_token_list	**ft_build_token_list(char **split_line)
 	}
 	return (list);
 }
-*/
+
 
 int	ft_nb_char_lft(char *str, int i, char c)
 {
 	int	nb;
-	int	i;
 
 	nb = 0;
-	i = 0;
-	while (str[i])
+	while (i >= 0)
 	{
 		if (str[i] == c)
 			nb++;
-		i++;
+		i--;
 	}
 	return (nb);
 }
@@ -142,7 +140,6 @@ t_token_list	*ft_append_squoted_str(char *str, int *i, t_token_list **list)
 		return (NULL);
 	token->type = CONTENT;
 	// TODO
-	/*
 	token->content = ft_find_token_content(word);
 	if (token->content)
 	{
@@ -155,7 +152,6 @@ t_token_list	*ft_append_squoted_str(char *str, int *i, t_token_list **list)
 		else if (token->content == DOL)
 			...
 	}
-	*/
 	token->val = ft_extract_squoted_str(str, i);
 	token->next = NULL;
 	if (!(*list))
@@ -245,7 +241,7 @@ char	*ft_extract_dquoted_str(char *line, int *i, char **env)
 	{
 		if (line[len + skip + *i] == '$')
 		{
-			if (ft_var_env_exists(&(line[*i]), env))
+			if (ft_var_env_exists(&(line[*i]), env) || line[*i + 1] == '?' && (line[*i + 2] == ' ' || line[*i + 2] == '\0'))
 				lendoll += ft_strlen_var_env(&(line[*i]), env);
 			skip += ft_strlen_title_var_env(&(line[*i]));
 		}
@@ -264,6 +260,108 @@ char	*ft_extract_dquoted_str(char *line, int *i, char **env)
 	str[j] = '\0';
 	return (str);
 }
+*/
+
+int	ft_is_operand(char *str, int i)
+{
+	if (ft_strncmp(&str[i], ">", 1) == 0)
+		return (1);
+	else if (ft_strncmp(&str[i], "<", 1) == 0)
+		return (1);
+	else if (ft_strncmp(&str[i], "|", 1) == 0)
+		return (1);
+	else
+		return (0);
+}
+
+void	ft_skip_spaces(char *str, int *i)
+{
+	while (ft_isspace(str[*i]) == 1)
+		(*i)++;
+}
+
+t_token_list	*ft_append_operand(char *line, int *i, t_token_list **list)
+{
+	t_token_list	*token;
+
+	token = (t_token_list *)ft_calloc(1, sizeof(t_token_list));
+	if (!token)
+		return (NULL);
+	token->type = ft_find_token_type(&(line[*i]));
+	if (token->type == D_LESS || token->type == D_GREAT)
+		(*i) += 2;
+	else if (token->type == PIPE || token->type == S_LESS || token->type == S_GREAT)
+		(*i) += 1;
+	token->next = NULL;
+	if (!(*list))
+	{
+		*list = token;
+		token->prev = NULL;
+	}
+	else
+	{
+		token->prev = ft_last_token(*list);
+		ft_last_token(*list)->next = token;
+	}
+	return (token);
+}
+
+int	ft_strlen_content(char *str, int i)
+{
+	int	len;
+
+	len = 0;
+	while (str[i] && ft_is_operand(str, i) == 0)
+	{
+		i++;
+		len ++;
+	}
+	return (len);
+}
+
+char	*ft_extract_content(char *line, int *i)
+{
+	int		len;
+	char	*str;
+	int		j;
+
+	len = ft_strlen_content(line, *i);
+	str = (char *)malloc((len + 1) * sizeof(char));
+	j = 0;
+	if (!str)
+		return (NULL);
+	while (line[*i] && ft_is_operand(line, *i) == 0)
+	{
+		str[j] = line[*i];
+		j++;
+		(*i)++;
+	}
+	str[j] = '\0';
+	return (str);
+}
+
+t_token_list	*ft_append_content(char *line, int *i, t_token_list **list)
+{
+	t_token_list	*token;
+
+	token = (t_token_list *)ft_calloc(1, sizeof(t_token_list));
+	if (!token)
+		return (NULL);
+	token->type = CONTENT;
+	token->val = ft_extract_content(line, i);
+	token->next = NULL;
+	if (!(*list))
+	{
+		*list = token;
+		token->prev = NULL;
+	}
+	else
+	{
+		token->prev = ft_last_token(*list);
+		ft_last_token(*list)->next = token;
+	}
+	return (token);
+}
 
 t_token_list	**ft_parse_token_list(char *line, char **env)
 {
@@ -271,31 +369,39 @@ t_token_list	**ft_parse_token_list(char *line, char **env)
 	int				i;
 
 	i = 0;
-	if (ft_unclosed_quotes(line) == 1) //il y a un nombre impair de quotes, ce qui veut dire qu'une n'est pas refermee
+	(void)env;
+	/*if (ft_quote_error(line) == 1)
 			return (-1); //envoyer message d'erreur "open quotes detected"
+	*/
 	list = (t_token_list **)ft_calloc(1, sizeof(t_token_list *));
 	if (!list)
 		return (NULL);
 	*list = NULL;
 	while (line[i])
 	{
-// NB : comment on doit gerer le cas ou on a une simple quote dans une doube quote ou vice versa?		{
-		if (ft_nb_char_lft(line, i, '\'') % 2 == 1) //dans ce cas la on est a l'interieur d'une quote donc tout ce qui suit jusqu'a la prochaine quote doit etre interprete comme une seule chaine de caracteres
+		/*
+		if (ft_nb_char_lft(line, i, '\'') % 2 == 1)//dans ce cas la on est a l'interieur d'une quote donc tout ce qui suit jusqu'a la prochaine quote doit etre interprete comme une seule chaine de caracteres
 			if (!ft_append_squoted_str(line, &i, list))//en donnant l'adresse de i je peux l'incrementer directement dans la fonction
 				return (ft_free_token_list_until(list, i), NULL); 
-		else if (ft_nb_char_lft(line, i, '\"') % 2 == 1) //dans ce cas la on est a l'interieur d'une quote donc tout ce qui suit jusqu'a la prochaine quote doit etre interprete comme une seule chaine de caracteres
+		else if (ft_nb_char_lft(line, i, '\"') % 2 == 1)//dans ce cas la on est a l'interieur d'une quote donc tout ce qui suit jusqu'a la prochaine quote doit etre interprete comme une seule chaine de caracteres
 			if (!ft_append_dquoted_str(line, &i, list))//en donnant l'adresse de i je peux l'incrementer directement dans la fonction
 				return (ft_free_token_list_until(list, i), NULL); 	
 		else
-		{
+		{ */
 			ft_skip_spaces(line, &i);
 			if (ft_is_operand(line, i) == 1)
+			{
 				if (!ft_append_operand(line, &i, list))
-					return (ft_free_token_list_until(list, i), NULL);
+					return (ft_free_list(list), NULL);
+			}
 			else
+			{
 				if (!ft_append_content(line, &i, list))
-					return (ft_free_token_list_until(list, i), NULL);
+					return (ft_free_list(list), NULL);
+			}
+		/*
 		}
+		*/
 	}
 	return (list);
 }

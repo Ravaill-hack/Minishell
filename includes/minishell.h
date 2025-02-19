@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/19 10:19:20 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:31:01 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ typedef struct	s_var
 	char					**split_line;
 	t_token_list			**token_list;
 	char					**env;
-	int						shlvl_0;
 	int						exit_nb;
 }	t_var;
 
@@ -111,7 +110,8 @@ typedef struct	s_var
 /*
 Initialisation
 */
-int			ft_parse_line(t_var *var);
+int				ft_parse_line(t_var *var);
+t_token_list	**ft_parse_token_list(char *line, char **env);
 /*
 Environnement
 */
@@ -119,8 +119,8 @@ char			**ft_modify_shlvl(char **matrix, int ind);
 /*
 Token management
 */
-t_token_list	**ft_build_token_list(char **str);
-t_token_list	*ft_append_token(char *word, t_token_list **list);
+//t_token_list	**ft_build_token_list(char **str);
+//t_token_list	*ft_append_token(char *word, t_token_list **list);
 t_token_list	*ft_last_token(t_token_list *token);
 t_line_token	ft_find_token_type(char *str);
 /*
@@ -143,8 +143,11 @@ void			ft_clear_and_free_all(t_var var);
 /*
 Utils
 */
-char			**ft_chartab_dup(char **matrix);
-int				ft_nb_lines(char **matrix);
-void			ft_free_tab(char **matrix, int ind);
+
+/*
+Debug
+*/
+void			ft_print_info_list(t_token_list **list);
+void			ft_print_token_type(t_token_list *token);
 
 #endif

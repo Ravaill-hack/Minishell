@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:01:37 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/18 13:55:02 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/19 16:03:55 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 int	ft_free_line(t_var var)
 {
-	int	i;
+	/*int	i;
 
-	i = 0;
+	i = 0;*/
 	free(var.line);
-	while (var.split_line[i])
+	/*while (var.split_line[i])
 	{
 		free(var.split_line[i]);
 		i++;
 	}
-	free(var.split_line);
+	free(var.split_line);*/
 	return (0);
 }
 
