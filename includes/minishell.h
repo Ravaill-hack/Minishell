@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/19 14:31:01 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/19 21:19:00 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,5 +149,8 @@ Debug
 */
 void			ft_print_info_list(t_token_list **list);
 void			ft_print_token_type(t_token_list *token);
+
+int				ft_add_env_var(char ***env, char *line);
+int				ft_get_line_env(char **env, char *title);
 
 #endif

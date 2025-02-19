@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/19 16:06:49 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/19 21:50:38 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,18 @@
 
 int	main(int argc, char **argv, char **env)
 {
+	/*
+	char	**varenv;
+	char	*line;
+
+	varenv = ft_strsdup(env);
+	line = ft_strdup("ceci est un test");
+	ft_add_env_var(&varenv, line);
+	ft_print_strs(varenv);
+	(void) argc;
+	(void) argv;
+	*/
+	
 	t_var	var;
 
 	(void) argc;
@@ -29,7 +41,7 @@ int	main(int argc, char **argv, char **env)
 	ft_set_sigint_reception_handler();
 	var.line = readline(PROMPT);
 	ft_parse_line(&var);
-	/*
+	
 	while (var.line)
 	{
 		if (!ft_parse_line(&var))
@@ -39,7 +51,7 @@ int	main(int argc, char **argv, char **env)
 		free(var.line);
 		var.line = readline(PROMPT);
 	}
-	*/
+	
 	ft_print_info_list(var.token_list);
 	ft_clear_and_free_all(var);
 	exit(EXIT_SUCCESS);

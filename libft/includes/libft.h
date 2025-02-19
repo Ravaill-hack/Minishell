@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:21:27 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/18 11:03:08 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/19 21:48:59 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,10 @@ char	**ft_free_strs_until(char **strs, size_t n);
 int		**ft_free_array2D_until(int **array2D, size_t n);
 void	ft_free_array2D(int **array2D);
 int		ft_abs(int nb);
-char	**ft_strsdup(char **strs);
-size_t  ft_strslen(char **strs);
+char	**ft_strsdup(char *const *strs);
+size_t  ft_strslen(char *const *strs);
 void	ft_print_strs(char **strs);
+size_t	ft_strslcpy(char **dst, char *const *src, size_t size);
+char	**ft_strsjoinstr(char **strs, char *str);
 
 #endif

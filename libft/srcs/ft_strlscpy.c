@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strslen.c                                       :+:      :+:    :+:   */
+/*   ft_strlscpy.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 10:47:47 by julien            #+#    #+#             */
-/*   Updated: 2025/02/19 18:16:16 by juduchar         ###   ########.fr       */
+/*   Created: 2025/02/19 21:44:58 by Lmatkows          #+#    #+#             */
+/*   Updated: 2025/02/19 21:46:32 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t  ft_strslen(char *const *strs)
+size_t	ft_strslcpy(char **dst, char *const *src, size_t size)
 {
-	size_t  i;
+	size_t	i;
+	size_t	srcs_len;
 
-	if (!strs)
+	if (!dst || !src)
 		return (0);
+	srcs_len = ft_strslen(src);
+	if (size == 0)
+		return (srcs_len);
 	i = 0;
-	while (strs[i])
+	while (src[i] && i < size - 1)
+	{
+		dst[i] = ft_strdup(src[i]);
 		i++;
-	return (i);
+	}
+	dst[i] = NULL;
+	return (srcs_len);
 }
