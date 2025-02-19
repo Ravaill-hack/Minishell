@@ -24,6 +24,7 @@ SRCS_FILES = \
 	env.c \
 	signal_handling.c \
 	termios_utils.c \
+	ft_cmd.c \
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS_FILES:.c=.o))
 

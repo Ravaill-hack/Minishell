@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/19 08:28:08 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/19 11:21:14 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,4 +145,12 @@ char			**ft_chartab_dup(char **matrix);
 int				ft_nb_lines(char **matrix);
 void			ft_free_tab(char **matrix, int ind);
 
+/*
+Cmds
+*/
+char			*extract_path(char *cmd, char **env);
+int				exec_cmd(char *cmd, char **env);
+int 			ft_cmd_exit(t_var var);
+void 			ft_cmd_env(t_var var);
+int 			ft_cmd_unset(t_var *var);
 #endif

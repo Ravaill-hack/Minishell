@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:55:13 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/18 17:44:23 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/19 09:32:31 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,11 @@ t_token_list	*ft_append_token(char *word, t_token_list **list)
 	if (!token)
 		return (NULL);
 	token->token = ft_find_token_type(word);
+	// TEST
+	token->val = ft_strdup(word);
+	if (!token->val)
+		return (NULL);
+	// END TEST
 	// TODO
 	/*
 	token->content = ft_find_token_content(word);
