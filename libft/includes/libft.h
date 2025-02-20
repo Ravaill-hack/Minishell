@@ -5,10 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 12:21:27 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/19 18:04:12 by juduchar         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/02/20 08:28:16 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
+
 
 #ifndef LIBFT_H
 # define LIBFT_H
@@ -74,8 +77,10 @@ char	**ft_free_strs_until(char **strs, size_t n);
 int		**ft_free_array2D_until(int **array2D, size_t n);
 void	ft_free_array2D(int **array2D);
 int		ft_abs(int nb);
-char	**ft_strsdup(char *const *strs);
-size_t  ft_strslen(char *const *strs);
+char	**ft_strsdup(char *const const *strs);
+size_t  ft_strslen(char *const const *strs);
 void	ft_print_strs(char **strs);
+size_t	ft_strslcpy(char **dst, char *const *src, size_t size);
+char	**ft_strsjoinstr(char **strs, char *str);
 
 #endif

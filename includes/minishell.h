@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/19 17:16:44 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/20 08:26:53 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,16 @@ typedef enum	s_line_token
 	D_LESS,
 	S_GREAT,
 	D_GREAT,
-	O_PAR,
-	C_PAR,
-	AND,
-	OR,
+	//O_PAR, --> pour les bonus
+	//C_PAR, --> pour les bonus
+	//AND, --> pour les bonus
+	//OR, --> pour les bonus
 	PIPE,
+	NL,
 	CONTENT,
 }	t_line_token;
 
+/*
 typedef enum	s_content_token
 {
 	STR,
@@ -84,10 +86,11 @@ typedef enum	s_content_token
 	STAR,
 	SLSH,
 }	t_content_token;
+*/
 
 typedef struct	s_token_list
 {
-	t_line_token			token;
+	t_line_token			type;
 	// t_content_token		content;
 	char					*val;
 	struct	s_token_list	*prev;
@@ -108,7 +111,8 @@ typedef struct	s_var
 /*
 Initialisation
 */
-int				ft_parse_line(t_var *var);
+int					ft_parse_line(t_var *var);
+t_token_list	**ft_parse_token_list(char *line, char **env);
 /*
 Environnement
 */
@@ -117,8 +121,8 @@ char			**ft_modify_shlvl(char **matrix, int ind);
 /*
 Token management
 */
-t_token_list	**ft_build_token_list(char **str);
-t_token_list	*ft_append_token(char *word, t_token_list **list);
+//t_token_list	**ft_build_token_list(char **str);
+//t_token_list	*ft_append_token(char *word, t_token_list **list);
 t_token_list	*ft_last_token(t_token_list *token);
 t_line_token	ft_find_token_type(char *str);
 /*
@@ -141,9 +145,15 @@ void			ft_clear_and_free_all(t_var var);
 /*
 Utils
 */
-char			**ft_chartab_dup(char **matrix);
-int				ft_nb_lines(char **matrix);
-void			ft_free_tab(char **matrix, int ind);
+
+/*
+Debug
+*/
+void			ft_print_info_list(t_token_list **list);
+void			ft_print_token_type(t_token_list *token);
+
+int				ft_add_env_var(char ***env, char *line);
+int				ft_get_line_env(char **env, char *title);
 
 /*
 Cmds

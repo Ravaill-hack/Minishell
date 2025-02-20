@@ -65,6 +65,8 @@ SRCS_FILES = \
 	ft_strsdup.c \
 	ft_strslen.c \
 	ft_print_strs.c \
+	ft_strlscpy.c \
+	ft_strsjoinstr.c \
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS_FILES:.c=.o))
 

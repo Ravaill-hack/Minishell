@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/19 17:59:16 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/20 08:29:58 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,18 @@
 
 int	main(int argc, char **argv, char **env)
 {
+	/*
+	char	**varenv;
+	char	*line;
+
+	varenv = ft_strsdup(env);
+	line = ft_strdup("ceci est un test");
+	ft_add_env_var(&varenv, line);
+	ft_print_strs(varenv);
+	(void) argc;
+	(void) argv;
+	*/
+	
 	t_var	var;
 
 	(void) argc;
@@ -41,6 +53,8 @@ int	main(int argc, char **argv, char **env)
 	ft_set_sigquit_reception_handler();
 	ft_set_sigint_reception_handler();
 	var.line = readline(PROMPT);
+	ft_parse_line(&var);
+	
 	while (var.line)
 	{
 		if (!ft_parse_line(&var))
@@ -150,10 +164,13 @@ int	main(int argc, char **argv, char **env)
 			// . is the current directory
 			// .. is the parent directory
 			add_history(var.line);
+		free(var.line);
 		}
 		ft_free_line(var);
 		var.line = readline(PROMPT);
 	}
+	
+	ft_print_info_list(var.token_list);
 	ft_clear_and_free_all(var);
 	exit(EXIT_SUCCESS);
 }
