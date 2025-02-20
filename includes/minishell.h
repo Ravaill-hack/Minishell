@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/20 17:47:32 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/20 21:49:18 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ int				ft_get_line_env(char **env, char *title);
 Cmds
 */
 char			*ft_strjoin3(char *s1, char *s2, char *s3);
-//char			*extract_env(char **env, char *env_var_key);
+char			*extract_env_value_from_key(char **env, char *key);
 char			*extract_path(char **env, char *cmd);
 char			**ft_set_exec_args(char *path, char **split_cmd);
 int				ft_remove_env_var(char ***env_ptr, int line_index);
@@ -172,4 +172,6 @@ int 			ft_cmd_exit(t_var var, char **env, t_token_list *token_list);
 void 			ft_cmd_env(char **env, t_token_list *token_list);
 int 			ft_cmd_unset(char ***env_ptr, t_token_list *token_list);
 int				ft_cmd_export(char ***env_ptr, t_token_list *token_list);
+int				ft_cmd_pwd(char **env, t_token_list *token_list);
+
 #endif

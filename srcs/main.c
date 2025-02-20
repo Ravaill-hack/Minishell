@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/20 17:47:11 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/20 21:48:26 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@ int	main(int argc, char **argv, char **env)
 			if (ft_strncmp(var.token_list[0]->val, "export", 6) == 0)
 			{
 				if (ft_cmd_export(&var.env, *(var.token_list)) == FAILURE)
+					ft_putstr_fd("Error\n", 2);
+			}
+			if (ft_strncmp(var.token_list[0]->val, "pwd", ft_strlen(var.token_list[0]->val)) == 0)
+			{
+				if (ft_cmd_pwd(var.env, *(var.token_list)) == FAILURE)
 					ft_putstr_fd("Error\n", 2);
 			}
 					// if first token is pwd
