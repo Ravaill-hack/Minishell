@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/20 10:59:52 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/20 11:45:46 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,8 @@ t_token_list	**ft_parse_token_list(char *line, char **env);
 /*
 Environnement
 */
-int				ft_get_line_env(char **env, char *title);
-char			**ft_modify_shlvl(char **matrix, int ind);
+int				ft_get_line_env(char **env, char *env_var_key);
+char			**ft_modify_shlvl(char **env, int lvl);
 char			*ft_extract_key_env(char *env_line);
 char			*ft_extract_value_env(char *env_line);
 /*
@@ -159,10 +159,17 @@ int				ft_get_line_env(char **env, char *title);
 /*
 Cmds
 */
-char			*extract_path(char *cmd, char **env);
-int				exec_cmd(char *cmd, char **env);
+char			*ft_strjoin3(char *s1, char *s2, char *s3);
+//char			*extract_env(char **env, char *env_var_key);
+char			*extract_path(char **env, char *cmd);
+char			**ft_set_exec_args(char *path, char **split_cmd);
+int				ft_remove_env_var(char ***env_ptr, int line_index);
+int				ft_add_env_var(char ***env, char *env_var);
+char			*ft_extract_key_env(char *env_var);
+char			*ft_extract_value_env(char *env_var);
+int				exec_cmd(char **env, char *cmd);
 int 			ft_cmd_exit(char **env, t_token_list *token_list);
 void 			ft_cmd_env(char **env, t_token_list *token_list);
-int 			ft_cmd_unset(t_var *var);
+int 			ft_cmd_unset(char ***env_ptr, t_token_list *token_list);
 int				ft_cmd_export(t_var *var);
 #endif

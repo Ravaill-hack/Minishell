@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/20 11:01:06 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/20 12:01:30 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	main(int argc, char **argv, char **env)
 	if (!var.env)
 		exit(EXIT_FAILURE);
 	var.env = ft_modify_shlvl(var.env, 1);
+	if (!var.env)
+		exit(EXIT_FAILURE);
 	ft_disable_echoctl();
 	ft_set_sigquit_reception_handler();
 	ft_set_sigint_reception_handler();
@@ -52,7 +54,7 @@ int	main(int argc, char **argv, char **env)
 				ft_cmd_env(var.env, var.token_list[0]);
 			if (ft_strncmp(var.token_list[0]->val, "unset", 5) == 0)
 			{
-				if (ft_cmd_unset(&var) == FAILURE)
+				if (ft_cmd_unset(&var.env, var.token_list[0]) == FAILURE)
 					ft_putstr_fd("Error\n", 2);
 			}
 			if (ft_strncmp(var.token_list[0]->val, "export", 6) == 0)
