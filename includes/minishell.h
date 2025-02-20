@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/20 14:31:59 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:47:32 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,8 +168,8 @@ int				ft_add_env_var(char ***env, char *env_var);
 char			*ft_extract_key_env(char *env_var);
 char			*ft_extract_value_env(char *env_var);
 int				exec_cmd(char **env, char *cmd);
-int 			ft_cmd_exit(char **env, t_token_list *token_list);
+int 			ft_cmd_exit(t_var var, char **env, t_token_list *token_list);
 void 			ft_cmd_env(char **env, t_token_list *token_list);
 int 			ft_cmd_unset(char ***env_ptr, t_token_list *token_list);
-int				ft_cmd_export(t_var *var);
+int				ft_cmd_export(char ***env_ptr, t_token_list *token_list);
 #endif

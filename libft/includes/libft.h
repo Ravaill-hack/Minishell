@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/20 08:35:25 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:18:06 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	**ft_strsdup(char *const *strs);
 size_t  ft_strslen(char *const *strs);
 void	ft_print_strs(char **strs);
 size_t  ft_strslen(char *const *strs);
-size_t	ft_strslcpy(char **dst, char *const *src, size_t size);
+size_t	ft_strslcpy(char ***dst, char *const *src, size_t size);
 char	**ft_strsjoinstr(char **strs, char *str);
 
 #endif

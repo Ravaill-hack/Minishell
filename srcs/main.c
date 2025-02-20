@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/20 15:00:42 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:47:11 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int argc, char **argv, char **env)
 		{
 			if (ft_strncmp(var.token_list[0]->val, "exit", ft_strlen(var.token_list[0]->val)) == 0)
 			{
-				if (ft_cmd_exit(var.env, var.token_list[0]) == FAILURE)
+				if (ft_cmd_exit(var, var.env, *(var.token_list)) == FAILURE)
 				{
 					ft_putstr_fd("Error\n", 2);
 					ft_clear_and_free_all(var);
@@ -52,14 +52,17 @@ int	main(int argc, char **argv, char **env)
 				}
 			}
 			if (ft_strncmp(var.token_list[0]->val, "env", ft_strlen(var.token_list[0]->val)) == 0)
-				ft_cmd_env(var.env, var.token_list[0]);
+				ft_cmd_env(var.env, *(var.token_list));
 			if (ft_strncmp(var.token_list[0]->val, "unset", 5) == 0)
 			{
 				if (ft_cmd_unset(&var.env, *(var.token_list)) == FAILURE)
 					ft_putstr_fd("Error\n", 2);
 			}
-			if (ft_strncmp(var.token_list[0]->val, "export", ft_strlen(var.token_list[0]->val)) == 0)
-				ft_cmd_export(&var);
+			if (ft_strncmp(var.token_list[0]->val, "export", 6) == 0)
+			{
+				if (ft_cmd_export(&var.env, *(var.token_list)) == FAILURE)
+					ft_putstr_fd("Error\n", 2);
+			}
 					// if first token is pwd
 					// and only if pwd is alone on the line
 					// print the value of PWD in env
@@ -74,27 +77,10 @@ int	main(int argc, char **argv, char **env)
 					// /!\ if there is a $var
 					// replace $var with the value of var in env
 					// if
-			// and only if exit is alone on the line (?)			
-			// SHLVL--
-			// if SHLVL == getent("SHLVL")
-			// clear and free all
-			// exit
-			// if first token is env
-			// and only if env is alone on the line (?)
-			// print env
-			
-			// if first token is unset
-			// and next token is an env var
-			// that is present in env
-			// remove it from env
 
 			// if first token is export
 			// three cases :
-			// if there is not next token
-			// print env but with "declare -x" before each line
-			// (use the same function as for env, but with a flag ?)
-			// if there is a next token
-			// split with = (key=value)
+			
 			// if the key is an env var
 			// that is not present in env
 			// add this value to env
