@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/20 22:05:27 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/20 22:26:40 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,50 +68,21 @@ int	main(int argc, char **argv, char **env)
 				if (ft_cmd_pwd(var.env, *(var.token_list)) == FAILURE)
 					ft_putstr_fd("Error\n", 2);
 			}
-			/*if (ft_strncmp(var.token_list[0]->val, "cd", 2) == 0)
+			if (ft_strncmp(var.token_list[0]->val, "cd", 2) == 0)
 			{
-				if (ft_cmd_cd(&var.env, *(var.token_list)) == FAILURE)
+				if (ft_cmd_cd(var.env, *(var.token_list)) == FAILURE)
 					ft_putstr_fd("Error\n", 2);
 			}
 			if (ft_strncmp(var.token_list[0]->val, "echo", 4) == 0)
 			{
-				if (ft_cmd_echo(var.env, *(var.token_list)) == FAILURE)
+				if (ft_cmd_echo(*(var.token_list)) == FAILURE)
 					ft_putstr_fd("Error\n", 2);
-			}*/
-
-			// if first token is echo
-			// and if echo is alone on the line
-			// ???
-
-			// check if the next token is the option -n
-			// if echo is followed by a string without quotes			
-			// print this string (without \n if -n)
-			// /!\ if there is a $var
-			// replace $var with the value of var in env
-			// if echo is followed by a string with double quotes
-			// same as above
-			// if echo is followed by a string with single quotes
-			// same as above but without replacing $var
-			// /!\ check if the quotes are closed !
-			// if not, return an error message
-			
-			// if first token is cd
-			// NOTE : don't forget to update PWD in env for each case
-			// and if cd is alone on the line
-			// cd to the home directory
-			// if the second token is ~
-			// and there is no third token
-			// idem
-			// if the second token is /
-			// cd to the root directory
-			// . is the current directory
-			// .. is the parent directory
+			}
 			add_history(var.line);
 		free(var.line);
 		}
 		var.line = readline(PROMPT);
 	}
-	//ft_print_info_list(var.token_list);
 	ft_clear_and_free_all(var);
 	exit(EXIT_SUCCESS);
 }

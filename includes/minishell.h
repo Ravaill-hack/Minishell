@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/20 21:49:18 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/20 22:13:00 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ char			*extract_path(char **env, char *cmd);
 char			**ft_set_exec_args(char *path, char **split_cmd);
 int				ft_remove_env_var(char ***env_ptr, int line_index);
 int				ft_add_env_var(char ***env, char *env_var);
+int				ft_update_env_var_value(char ***env_ptr, int line_index, char *value);
 char			*ft_extract_key_env(char *env_var);
 char			*ft_extract_value_env(char *env_var);
 int				exec_cmd(char **env, char *cmd);
@@ -173,5 +174,7 @@ void 			ft_cmd_env(char **env, t_token_list *token_list);
 int 			ft_cmd_unset(char ***env_ptr, t_token_list *token_list);
 int				ft_cmd_export(char ***env_ptr, t_token_list *token_list);
 int				ft_cmd_pwd(char **env, t_token_list *token_list);
+int				ft_cmd_cd(char **env, t_token_list *token_list);
+int				ft_cmd_echo(t_token_list *token_list);
 
 #endif
