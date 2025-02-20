@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:01:37 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/20 08:22:30 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/20 08:34:44 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,8 @@
 
 void	ft_free_line(t_var var)
 {
-	/*int	i;
-
-	i = 0;*/
 	free(var.line);
-	/*while (var.split_line[i])
-	{
-		free(var.split_line[i]);
-		i++;
-	}
-	free(var.split_line);*/
-	return (0);
+	return ;
 }
 
 void	ft_free_token_list_until(t_token_list **list, int n)

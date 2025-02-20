@@ -6,12 +6,9 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/20 08:28:16 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/20 08:35:25 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
-
 
 #ifndef LIBFT_H
 # define LIBFT_H
@@ -77,9 +74,10 @@ char	**ft_free_strs_until(char **strs, size_t n);
 int		**ft_free_array2D_until(int **array2D, size_t n);
 void	ft_free_array2D(int **array2D);
 int		ft_abs(int nb);
-char	**ft_strsdup(char *const const *strs);
-size_t  ft_strslen(char *const const *strs);
+char	**ft_strsdup(char *const *strs);
+size_t  ft_strslen(char *const *strs);
 void	ft_print_strs(char **strs);
+size_t  ft_strslen(char *const *strs);
 size_t	ft_strslcpy(char **dst, char *const *src, size_t size);
 char	**ft_strsjoinstr(char **strs, char *str);
 

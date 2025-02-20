@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/20 08:26:53 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/20 10:59:52 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ typedef struct	s_var
 	char					**split_line;
 	t_token_list			**token_list;
 	char					**env;
-	//int					shlvl_0;
 	int						exit_nb;
 }	t_var;
 
@@ -111,13 +110,15 @@ typedef struct	s_var
 /*
 Initialisation
 */
-int					ft_parse_line(t_var *var);
+int				ft_parse_line(t_var *var);
 t_token_list	**ft_parse_token_list(char *line, char **env);
 /*
 Environnement
 */
 int				ft_get_line_env(char **env, char *title);
 char			**ft_modify_shlvl(char **matrix, int ind);
+char			*ft_extract_key_env(char *env_line);
+char			*ft_extract_value_env(char *env_line);
 /*
 Token management
 */
@@ -160,8 +161,8 @@ Cmds
 */
 char			*extract_path(char *cmd, char **env);
 int				exec_cmd(char *cmd, char **env);
-int 			ft_cmd_exit(t_var var);
-void 			ft_cmd_env(t_var var);
+int 			ft_cmd_exit(char **env, t_token_list *token_list);
+void 			ft_cmd_env(char **env, t_token_list *token_list);
 int 			ft_cmd_unset(t_var *var);
 int				ft_cmd_export(t_var *var);
 #endif

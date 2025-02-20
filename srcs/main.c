@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/20 08:29:58 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/20 11:01:06 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,47 +14,21 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	/*
-	char	**varenv;
-	char	*line;
-
-	varenv = ft_strsdup(env);
-	line = ft_strdup("ceci est un test");
-	ft_add_env_var(&varenv, line);
-	ft_print_strs(varenv);
-	(void) argc;
-	(void) argv;
-	*/
-	
 	t_var	var;
-
 	(void) argc;
 	(void) argv;
-	// NB : a la fin on pourra rassembler toutes ces lignes dans une fonction ft_init_var, mais pour l'instant c'est plus lisible
-	
-	// var.shlvl_0 = ft_atoi(&env[ft_get_line_env(env, "SHLVL=")][6]); //garde en memoire le niveau de shell au moment du demarrage
-	// ft_putnbr_fd(var.shlvl_0, 1);
-	
-	// ou utiliser getenv plutot que ft_get_line_env pour eviter de parcourir l'env a chaque fois
-	// printf("%s", getenv("SHLVL"));
-
-	// si l'entree standard n'est pas un terminal, on quitte
 	if (!(isatty(STDIN_FILENO)))
 		exit(EXIT_FAILURE);
-	var.exit_nb = 0; // le code d'exit est initialise a 0 (l'ouverture de minishell s'est bien deroulee)
+	var.exit_nb = 0;
 	var.env = ft_strsdup(env);
-	// si l'allocation de memoire a echoue ou que l'env est vide, on quitte
 	if (!var.env)
 		exit(EXIT_FAILURE);
-	//ft_print_strs(var.env);
 	var.env = ft_modify_shlvl(var.env, 1);
-	//ft_print_strs(var.env);
 	ft_disable_echoctl();
 	ft_set_sigquit_reception_handler();
 	ft_set_sigint_reception_handler();
 	var.line = readline(PROMPT);
 	ft_parse_line(&var);
-	
 	while (var.line)
 	{
 		if (!ft_parse_line(&var))
@@ -63,25 +37,25 @@ int	main(int argc, char **argv, char **env)
 			ft_clear_and_free_all(var);
 			exit(EXIT_FAILURE);
 		}
-		if (*(var.line))
+		if (*(var.token_list))
 		{
-			if (ft_strncmp(var.token_list[0][0].val, "exit", ft_strlen(var.token_list[0][0].val)) == 0)
+			if (ft_strncmp(var.token_list[0]->val, "exit", 4) == 0)
 			{
-				if (ft_cmd_exit(var) == FAILURE)
+				if (ft_cmd_exit(var.env, var.token_list[0]) == FAILURE)
 				{
 					ft_putstr_fd("Error\n", 2);
 					ft_clear_and_free_all(var);
 					exit(EXIT_FAILURE);
 				}
 			}
-			if (ft_strncmp(var.token_list[0][0].val, "env", ft_strlen(var.token_list[0][0].val)) == 0)
-				ft_cmd_env(var);
-			if (ft_strncmp(var.token_list[0][0].val, "unset", ft_strlen(var.token_list[0][0].val)) == 0)
+			if (ft_strncmp(var.token_list[0]->val, "env", 3) == 0)
+				ft_cmd_env(var.env, var.token_list[0]);
+			if (ft_strncmp(var.token_list[0]->val, "unset", 5) == 0)
 			{
 				if (ft_cmd_unset(&var) == FAILURE)
 					ft_putstr_fd("Error\n", 2);
 			}
-			if (ft_strncmp(var.token_list[0][0].val, "export", ft_strlen(var.token_list[0][0].val)) == 0)
+			if (ft_strncmp(var.token_list[0]->val, "export", 6) == 0)
 				ft_cmd_export(&var);
 					// if first token is pwd
 					// and only if pwd is alone on the line
@@ -166,10 +140,8 @@ int	main(int argc, char **argv, char **env)
 			add_history(var.line);
 		free(var.line);
 		}
-		ft_free_line(var);
 		var.line = readline(PROMPT);
 	}
-	
 	ft_print_info_list(var.token_list);
 	ft_clear_and_free_all(var);
 	exit(EXIT_SUCCESS);
