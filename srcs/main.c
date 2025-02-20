@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/20 14:44:44 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:00:42 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char **argv, char **env)
 	ft_set_sigint_reception_handler();
 	var.line = readline(PROMPT);
 	ft_parse_line(&var);
-	ft_print_info_list(*(var.token_list));
+	//ft_print_info_list(*(var.token_list));
 	while (var.line)
 	{
 		if (!ft_parse_line(&var))

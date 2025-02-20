@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/02/20 14:57:37 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:31:12 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ int ft_cmd_exit(char **env, t_token_list *token_list)
 {
 	int	shlvl;
 	int	shlvl_current;
-	int	res;
 
 	if (!token_list->next)
 	{
@@ -121,25 +120,17 @@ int ft_cmd_exit(char **env, t_token_list *token_list)
 		if (!shlvl)
 			return (FAILURE);
         shlvl_current = ft_atoi((extract_env(env, "SHLVL")));
-		printf("%d", shlvl_current);
-		if (shlvl_current == shlvl + 1)
+		if (exec_cmd(env, "exit") == SUCCESS)
 		{
 			if (!ft_modify_shlvl(env, -1))
             	return (FAILURE);
-			res = exec_cmd(env, "exit");
-			if (res == SUCCESS)
+			if (shlvl_current == shlvl)
 				exit(EXIT_SUCCESS);
 			else
-				return (FAILURE);
-			return (SUCCESS);
+				return (SUCCESS);
 		}
-		if (!ft_modify_shlvl(env, -1))
-            return (FAILURE);
-		if (exec_cmd(env, "exit") == FAILURE)
-			return (FAILURE);
-		return (SUCCESS);
 	}
-	return (SUCCESS);
+	return (FAILURE);
 }
 
 void	ft_cmd_env(char **env, t_token_list *token_list)
@@ -153,17 +144,18 @@ int	ft_remove_env_var(char ***env_ptr, int line_index)
 	char	**new_env;
 	int		i;
 	int		j;
-
-	new_env = (char **)ft_calloc(sizeof(char *), (ft_strslen(*env_ptr)));
+	
+	new_env = (char **)ft_calloc(ft_strslen(*env_ptr), sizeof(char *));
 	if (!new_env)
 		return (FAILURE);
+	//printf("%s", (*env_ptr)[line_index]);
 	i = 0;
 	j = 0;
-	while (*(env_ptr[i]))
+	while ((*env_ptr)[i])
 	{
 		if (i != line_index)
 		{
-			new_env[j] = ft_strdup(*(env_ptr[i]));
+			new_env[j] = ft_strdup((*env_ptr)[i]);
 			if (!new_env[j])
 				return (ft_free_strs_until(new_env, j), FAILURE);
 			j++;
@@ -178,29 +170,22 @@ int	ft_remove_env_var(char ***env_ptr, int line_index)
 
 int	ft_cmd_unset(char ***env_ptr, t_token_list *token_list)
 {
-	//int		line_index;
-	(void)env_ptr;
+	int		line_index;
 	char	**split_line;
 
 	split_line = ft_split(token_list->val, ' ');
 	if (!split_line[1])
-	{
-		printf("no next");
 		return (FAILURE);
-	}
-	else
-		printf("no next");
-	//env_var_key = ft_strdup((*token_list->next).val);
-	//if (!env_var_key)
-		//return (FAILURE);
-	/*
-	line_index = ft_get_line_env(*env_ptr, env_var_key);
+	line_index = ft_get_line_env(*env_ptr, split_line[1]);
 	if (line_index == -1)
 		return (FAILURE);
-	ft_print_strs(*env_ptr);
-	ft_remove_env_var(env_ptr, line_index);
-	ft_print_strs(*env_ptr);
-	*/
+	else
+	{
+		ft_print_strs(*env_ptr);
+		if (ft_remove_env_var(env_ptr, line_index) == FAILURE)
+			return (FAILURE);
+		ft_print_strs(*env_ptr);
+	}
 	return (SUCCESS);
 }
 
