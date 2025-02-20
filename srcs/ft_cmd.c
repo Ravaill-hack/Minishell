@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/02/20 22:30:10 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/20 22:40:49 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,8 +296,6 @@ int	ft_cmd_export(char ***env_ptr, t_token_list *token_list)
 	{
 		key = ft_strdup(ft_extract_key_env(split_line[1]));
 		value = ft_strdup(ft_extract_value_env(split_line[1]));
-		printf("key = %s\n", key);
-		printf("value = %s\n", value);
 		if (!key || !*key || !value || !*value)
 			return (FAILURE);
 		line_index = ft_get_line_env(*env_ptr, key);
