@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/20 21:48:26 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/20 22:05:27 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,41 +68,16 @@ int	main(int argc, char **argv, char **env)
 				if (ft_cmd_pwd(var.env, *(var.token_list)) == FAILURE)
 					ft_putstr_fd("Error\n", 2);
 			}
-					// if first token is pwd
-					// and only if pwd is alone on the line
-					// print the value of PWD in env
-					
-					// if first token is echo
-					// and if echo is alone on the line
-					// ???
-					
-					// check if the next token is the option -n
-					// if echo is followed by a string without quotes
-					// print this string (without \n if -n)
-					// /!\ if there is a $var
-					// replace $var with the value of var in env
-					// if
-
-			// if first token is export
-			// three cases :
-			
-			// if the key is an env var
-			// that is not present in env
-			// add this value to env
-			// if key is an env var
-			// that is present in env
-			// update this value in env
-			// /!\ with a value of $var
-			// replace $var with the value of var in env
-			// example : export PATH=$PATH:/chemin/test
-			// check if the value after $ in uppercase is an env var
-			// take the value of this env var
-			// concatenate with the string after this env var
-			// and replace the env var with this new string
-
-			// if first token is pwd
-			// and only if pwd is alone on the line (?)
-			// print the value of PWD in env
+			/*if (ft_strncmp(var.token_list[0]->val, "cd", 2) == 0)
+			{
+				if (ft_cmd_cd(&var.env, *(var.token_list)) == FAILURE)
+					ft_putstr_fd("Error\n", 2);
+			}
+			if (ft_strncmp(var.token_list[0]->val, "echo", 4) == 0)
+			{
+				if (ft_cmd_echo(var.env, *(var.token_list)) == FAILURE)
+					ft_putstr_fd("Error\n", 2);
+			}*/
 
 			// if first token is echo
 			// and if echo is alone on the line
