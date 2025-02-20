@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/20 12:01:30 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:44:44 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(int argc, char **argv, char **env)
 	ft_set_sigint_reception_handler();
 	var.line = readline(PROMPT);
 	ft_parse_line(&var);
+	ft_print_info_list(*(var.token_list));
 	while (var.line)
 	{
 		if (!ft_parse_line(&var))
@@ -41,7 +42,7 @@ int	main(int argc, char **argv, char **env)
 		}
 		if (*(var.token_list))
 		{
-			if (ft_strncmp(var.token_list[0]->val, "exit", 4) == 0)
+			if (ft_strncmp(var.token_list[0]->val, "exit", ft_strlen(var.token_list[0]->val)) == 0)
 			{
 				if (ft_cmd_exit(var.env, var.token_list[0]) == FAILURE)
 				{
@@ -50,14 +51,14 @@ int	main(int argc, char **argv, char **env)
 					exit(EXIT_FAILURE);
 				}
 			}
-			if (ft_strncmp(var.token_list[0]->val, "env", 3) == 0)
+			if (ft_strncmp(var.token_list[0]->val, "env", ft_strlen(var.token_list[0]->val)) == 0)
 				ft_cmd_env(var.env, var.token_list[0]);
 			if (ft_strncmp(var.token_list[0]->val, "unset", 5) == 0)
 			{
-				if (ft_cmd_unset(&var.env, var.token_list[0]) == FAILURE)
+				if (ft_cmd_unset(&var.env, *(var.token_list)) == FAILURE)
 					ft_putstr_fd("Error\n", 2);
 			}
-			if (ft_strncmp(var.token_list[0]->val, "export", 6) == 0)
+			if (ft_strncmp(var.token_list[0]->val, "export", ft_strlen(var.token_list[0]->val)) == 0)
 				ft_cmd_export(&var);
 					// if first token is pwd
 					// and only if pwd is alone on the line
@@ -144,7 +145,7 @@ int	main(int argc, char **argv, char **env)
 		}
 		var.line = readline(PROMPT);
 	}
-	ft_print_info_list(var.token_list);
+	//ft_print_info_list(var.token_list);
 	ft_clear_and_free_all(var);
 	exit(EXIT_SUCCESS);
 }

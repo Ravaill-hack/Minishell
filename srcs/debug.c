@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:40:07 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/19 13:56:52 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:31:32 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ void	ft_print_token_type(t_token_list *token)
 		printf("error\n\n");
 }
 
-void	ft_print_info_list(t_token_list **list)
+void	ft_print_info_list(t_token_list *list)
 {
 	t_token_list	*temp;
 
-	temp = *list;
-	printf("add liste : %p\n", list);
+	temp = list;
+	//printf("add liste : %p\n", list);
 	while (temp)
 	{
 		printf("prev : %p\n", temp->prev);

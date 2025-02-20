@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/20 11:45:46 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:31:59 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ Utils
 /*
 Debug
 */
-void			ft_print_info_list(t_token_list **list);
+void			ft_print_info_list(t_token_list *list);
 void			ft_print_token_type(t_token_list *token);
 
 int				ft_add_env_var(char ***env, char *line);
