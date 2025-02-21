@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:40:07 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/21 11:27:05 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:17:26 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_print_token_type(t_token_list *token)
 	else if (token->type == 6)
 		printf("content\n");
 	else if (token->type == 7)
-		printf("content\n");
+		printf("$\n");
 	else
 		printf("error\n\n");
 }
@@ -48,6 +48,8 @@ void	ft_print_info_list(t_token_list *list)
 		printf("next : %p\n", temp->next);
 		ft_print_token_type(temp);
 		if (temp->type == CONTENT)
+			printf("content : %s\n\n", temp->val);
+		else if (temp->type == DOLL)
 			printf("content : %s\n\n", temp->val);
 		temp = temp->next;
 	}

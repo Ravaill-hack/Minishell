@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/21 12:52:49 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:57:51 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,19 @@ typedef struct	s_var
 /*
 Initialisation
 */
+t_token_list	*ft_append_content(char *line, int *i, t_token_list **list);
+t_token_list	*ft_append_squoted(char *line, int *i, t_token_list **list);
+t_token_list	*ft_append_dquoted(char *line, int *i, t_token_list **list);
 int				ft_parse_line(t_var *var);
+t_token_list	**ft_build_token_list(char *line);
 t_token_list	**ft_parse_token_list(char *line, char **env);
+/*
+Checks
+*/
+int				ft_is_in_squotes(char *line, int ind);
+int				ft_is_in_dquotes(char *line, int ind);
+int				ft_is_in_quotes(char *line, int ind);
+int				ft_is_doll(char *str, int i);
 /*
 Environnement
 */

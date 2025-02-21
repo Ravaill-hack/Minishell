@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/20 22:05:27 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/21 14:06:45 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	main(int argc, char **argv, char **env)
 {
+	int	err;
+
 	t_var	var;
 	(void) argc;
 	(void) argv;
@@ -30,8 +32,10 @@ int	main(int argc, char **argv, char **env)
 	ft_set_sigquit_reception_handler();
 	ft_set_sigint_reception_handler();
 	var.line = readline(PROMPT);
-	ft_parse_line(&var);
-	//ft_print_info_list(*(var.token_list));
+	err = ft_parse_line(&var);
+	if (err == 0)
+		return (0);
+	ft_print_info_list(*(var.token_list));
 	while (var.line)
 	{
 		if (!ft_parse_line(&var))

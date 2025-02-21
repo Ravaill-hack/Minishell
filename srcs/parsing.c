@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 20:00:41 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/21 11:01:56 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:50:59 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +122,10 @@ int	ft_develop_strings(t_var var, t_token_list **list)
 int	ft_parse_line(t_var *var)
 {
 	//var->split_line = ft_split(var->line, ' ');
-	var->token_list = ft_build_token_list(var->line, var->env);
-	//if (!var->token_list)
-		//return (ft_free_line(*var), FAILURE);
+	var->token_list = ft_build_token_list(var->line);
+	if (!var->token_list)
+		return (FAILURE);
+	//	return (ft_free_line(*var), FAILURE);
 	//ft_develop_strings(*var, var->token_list);
 	return (SUCCESS);
 }
