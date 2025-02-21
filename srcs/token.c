@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:55:13 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/21 14:51:00 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:12:55 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,10 +142,20 @@ void	ft_skip_spaces(char *str, int *i)
 int	ft_doll_len(char *str, int i)
 {
 	int	len;
+	int	qd;
 
 	len = 0;
-	while (str[i + len] && str[i + len] != ' ')
-		len ++;
+	qd = ft_is_in_dquotes(str, i);
+	if (qd == 1)
+	{
+		while (str[i + len] && str[i + len] != ' ' && str[i + len] != '\"')
+			len ++;
+	}
+	else
+	{
+		while (str[i + len] && str[i + len] != ' ')
+			len ++;
+	}
 	return (len);
 }
 
@@ -153,16 +163,32 @@ char	*ft_extract_title_doll(char *str, int *i)
 {
 	int		j;
 	char	*title;
+	int		dq;
 
 	j = 0;
+	dq = ft_is_in_dquotes(str, *i);
 	title = (char *)malloc((ft_doll_len(str, *i) + 1) * sizeof(char));
 	if (!title)
 		return (NULL);
-	while (str[*i] && str[*i] != ' ')
+	if (dq == 1)
 	{
-		title[j] = str[*i];
-		j++;
-		(*i)++;
+		while (str[*i] && str[*i] != ' ' && str[*i] != '\"')
+		{
+			title[j] = str[*i];
+			j++;
+			(*i)++;
+		}
+		if (str[*i] != '\"')
+			(*i)++;
+	}
+	else
+	{
+		while (str[*i] && str[*i] != ' ')
+		{
+			title[j] = str[*i];
+			j++;
+			(*i)++;
+		}
 	}
 	title[j] = '\0';
 	return (title);
@@ -288,6 +314,8 @@ t_token_list	*ft_append_content(char *line, int *i, t_token_list **list)
 	else
 		token->val = ft_extract_content(line, i);
 	token->next = NULL;
+	if(!(token->val))
+		return (NULL);
 	if (!(*list))
 	{
 		*list = token;
@@ -311,6 +339,8 @@ t_token_list	*ft_append_squoted(char *line, int *i, t_token_list **list)
 	token->type = CONTENT;
 	token->val = ft_extract_sq_content(line, i);
 	token->next = NULL;
+	if (!(token->val))
+		return (NULL);
 	if (!(*list))
 	{
 		*list = token;
@@ -331,9 +361,13 @@ t_token_list	*ft_append_dquoted(char *line, int *i, t_token_list **list)
 	token = (t_token_list *)ft_calloc(1, sizeof(t_token_list));
 	if (!token)
 		return (NULL);
-	token->type = CONTENT;
 	token->val = ft_extract_dq_content(line, i, list);
+	if (line[*i] == '\0')
+		return (token);
+	token->type = CONTENT;
 	token->next = NULL;
+	if (!(token->val))
+		return (NULL);
 	if (!(*list))
 	{
 		*list = token;
