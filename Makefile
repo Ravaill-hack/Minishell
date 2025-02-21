@@ -18,10 +18,13 @@ LIBRARIES = -L$(LIBFT_DIR) -lft
 
 SRCS_FILES = \
 	main.c \
+	init.c \
 	parsing.c \
 	token.c \
 	free.c \
-	signal_handling.c \
+	handle_cmd.c \
+	handle_errors.c \
+	handle_signal.c \
 	termios_utils.c \
 	debug.c \
 	cmd.c \
