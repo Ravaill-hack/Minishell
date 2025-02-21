@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:14:19 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/21 11:14:31 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:47:29 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	exec_cmd(char **env, char *cmd)
 			free(args);
 		ft_free_strs(split_cmd);
 		free(path);
-		return(FAILURE);
+		return (FAILURE);
 	}
 	return (SUCCESS);
 }

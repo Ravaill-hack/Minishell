@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:15:56 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/21 11:19:43 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:50:21 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	ft_cmd_cd(char **env, t_token_list *token_list)
 	char	*path;
 	char	*old_pwd;
 	char	*new_pwd;
+	int		pwd_line_index;
 
 	split_line = ft_split(token_list->val, ' ');
 	if (!split_line[1])
@@ -27,7 +28,8 @@ int	ft_cmd_cd(char **env, t_token_list *token_list)
 			return (FAILURE);
 		exec_cmd(env, ft_strjoin("cd ", path));
 		new_pwd = path;
-		if (ft_update_env_var_value(&env, ft_get_line_env(env, "PWD"), new_pwd) == FAILURE)
+		pwd_line_index = ft_get_line_env(env, "PWD");
+		if (ft_update_env_var_value(&env, pwd_line_index, new_pwd) == FAILURE)
 			return (FAILURE);
 		return (SUCCESS);
 	}
@@ -41,7 +43,8 @@ int	ft_cmd_cd(char **env, t_token_list *token_list)
 		if (exec_cmd(env, ft_strjoin("cd ", path)) == FAILURE)
 			return (FAILURE);
 		new_pwd = path;
-		if (ft_update_env_var_value(&env, ft_get_line_env(env, "PWD"), new_pwd) == FAILURE)
+		pwd_line_index = ft_get_line_env(env, "PWD");
+		if (ft_update_env_var_value(&env, pwd_line_index, new_pwd) == FAILURE)
 			return (FAILURE);
 		return (SUCCESS);
 	}

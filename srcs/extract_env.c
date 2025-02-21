@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:11:49 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/21 11:12:27 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:45:07 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	ft_get_line_env(char **env, char *env_var_key)
 	char	*key;
 
 	i = 0;
-
 	while (env[i])
 	{
 		key = ft_extract_key_env(env[i]);

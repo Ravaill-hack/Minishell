@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handling.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:17:24 by julien            #+#    #+#             */
-/*   Updated: 2025/02/18 10:19:25 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/21 12:01:23 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_set_sigquit_reception_handler(void)
 {
-	struct	sigaction	sa;
+	struct sigaction	sa;
 
 	sa.sa_handler = SIG_IGN;
 	sa.sa_flags = SA_RESTART;
@@ -24,7 +24,7 @@ void	ft_set_sigquit_reception_handler(void)
 
 void	ft_set_sigint_reception_handler(void)
 {
-	struct	sigaction	sa;
+	struct sigaction	sa;
 
 	sa.sa_handler = ft_handle_sigint_reception;
 	sa.sa_flags = SA_RESTART;

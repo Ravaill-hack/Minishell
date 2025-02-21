@@ -6,13 +6,13 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/02/21 11:15:54 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:52:45 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_cmd_exit(t_var var, char **env, t_token_list *token_list)
+int	ft_cmd_exit(t_var var, char **env, t_token_list *token_list)
 {
 	int	shlvl;
 	int	shlvl_current;
@@ -22,18 +22,21 @@ int ft_cmd_exit(t_var var, char **env, t_token_list *token_list)
 		shlvl = ft_atoi(getenv("SHLVL"));
 		if (!shlvl)
 			return (FAILURE);
-        shlvl_current = ft_atoi((extract_env_value_from_key(env, "SHLVL")));
+		shlvl_current = ft_atoi((extract_env_value_from_key(env, "SHLVL")));
 		if (exec_cmd(env, "exit") == SUCCESS)
 		{
-			if (!ft_modify_shlvl(env, -1))
-            	return (FAILURE);
+			if (ft_modify_shlvl(env, -1))
+				return (FAILURE);
 			if (shlvl_current == shlvl)
 			{
 				ft_clear_and_free_all(var);
 				exit(EXIT_SUCCESS);
 			}
 			else
+			{
+				printf("exit\n");
 				return (SUCCESS);
+			}
 		}
 	}
 	return (FAILURE);
@@ -44,7 +47,6 @@ void	ft_cmd_env(char **env, t_token_list *token_list)
 	if (!token_list->next)
 		ft_print_strs(env);
 }
-
 
 int	ft_cmd_unset(char ***env_ptr, t_token_list *token_list)
 {
@@ -64,6 +66,7 @@ int	ft_cmd_unset(char ***env_ptr, t_token_list *token_list)
 	}
 	return (SUCCESS);
 }
+
 int	ft_cmd_export(char ***env_ptr, t_token_list *token_list)
 {
 	char	**split_line;

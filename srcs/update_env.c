@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 10:31:57 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/21 11:17:05 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:46:57 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_update_env_var_value(char ***env_ptr, int line_index, char *value)
 	char	**new_env;
 	int		i;
 	int		j;
-	
+
 	new_env = (char **)ft_calloc(ft_strslen(*env_ptr), sizeof(char *));
 	if (!new_env)
 		return (FAILURE);
@@ -64,7 +64,7 @@ int	ft_remove_env_var(char ***env_ptr, int line_index)
 	char	**new_env;
 	int		i;
 	int		j;
-	
+
 	new_env = (char **)ft_calloc(ft_strslen(*env_ptr), sizeof(char *));
 	if (!new_env)
 		return (FAILURE);
@@ -89,7 +89,7 @@ int	ft_remove_env_var(char ***env_ptr, int line_index)
 
 char	**ft_modify_shlvl(char **env, int lvl)
 {
-	int 	shlvl_0;
+	int		shlvl_0;
 	char	*shlvl;
 	char	*shlvl_str;
 	int		line_env;
@@ -112,4 +112,3 @@ char	**ft_modify_shlvl(char **env, int lvl)
 	env[line_env] = shlvl;
 	return (env);
 }
-

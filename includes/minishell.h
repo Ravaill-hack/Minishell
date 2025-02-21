@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/20 22:39:05 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/21 12:00:32 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 #  define SUCCESS 1
 # endif
 
-// read write access close fork dup dup2 pipe isatty ttyname ttyslot chdir getcwd
+// read write access close fork dup dup2 pipe isatty ttyname
+// ttyslot chdir getcwd
 # include <unistd.h>
 // open
 # include <fcntl.h>
@@ -60,8 +61,7 @@
 # include "libft.h"
 # include "get_next_line.h"
 
-
-typedef enum	s_line_token
+typedef enum s_line_token
 {
 	S_LESS,
 	D_LESS,
@@ -88,16 +88,16 @@ typedef enum	s_content_token
 }	t_content_token;
 */
 
-typedef struct	s_token_list
+typedef struct s_token_list
 {
 	t_line_token			type;
 	// t_content_token		content;
 	char					*val;
-	struct	s_token_list	*prev;
-	struct	s_token_list	*next;
+	struct s_token_list		*prev;
+	struct s_token_list		*next;
 }	t_token_list;
 
-typedef struct	s_var
+typedef struct s_var
 {
 	char					*line;
 	char					**split_line;
@@ -105,7 +105,6 @@ typedef struct	s_var
 	char					**env;
 	int						exit_nb;
 }	t_var;
-
 
 /*
 Initialisation
@@ -165,13 +164,14 @@ char			*extract_path(char **env, char *cmd);
 char			**ft_set_exec_args(char *path, char **split_cmd);
 int				ft_remove_env_var(char ***env_ptr, int line_index);
 int				ft_add_env_var(char ***env, char *env_var);
-int				ft_update_env_var_value(char ***env_ptr, int line_index, char *value);
+int				ft_update_env_var_value(char ***env_ptr, int line_index,
+					char *value);
 char			*ft_extract_key_env(char *env_var);
 char			*ft_extract_value_env(char *env_var);
 int				exec_cmd(char **env, char *cmd);
-int 			ft_cmd_exit(t_var var, char **env, t_token_list *token_list);
-void 			ft_cmd_env(char **env, t_token_list *token_list);
-int 			ft_cmd_unset(char ***env_ptr, t_token_list *token_list);
+int				ft_cmd_exit(t_var var, char **env, t_token_list *token_list);
+void			ft_cmd_env(char **env, t_token_list *token_list);
+int				ft_cmd_unset(char ***env_ptr, t_token_list *token_list);
 int				ft_cmd_export(char ***env_ptr, t_token_list *token_list);
 int				ft_cmd_pwd(char **env, t_token_list *token_list);
 int				ft_cmd_cd(char **env, t_token_list *token_list);
