@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:40:07 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/20 14:31:32 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:27:05 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	ft_print_token_type(t_token_list *token)
 	else if (token->type == 5)
 		printf("new line\n\n");
 	else if (token->type == 6)
+		printf("content\n");
+	else if (token->type == 7)
 		printf("content\n");
 	else
 		printf("error\n\n");

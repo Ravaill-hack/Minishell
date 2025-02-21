@@ -6,11 +6,24 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:55:13 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/21 11:06:13 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:33:56 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_is_doll(char *str, int i)
+{
+	if (ft_is_in_squotes(str, i) == 1)
+		return (0);
+	else if (str[i] == '$')
+	{
+		if (str[i + 1]
+			&& !ft_strchr("~'!@#%^&*+-()[]{}|;:'\,<>/\\", str[i +1]))
+		return (1);
+	}
+	return (0);
+}
 
 int	ft_is_in_squotes(char *line, int ind)
 {
@@ -56,6 +69,13 @@ int	ft_is_in_dquotes(char *line, int ind)
 	return (0);	
 }
 
+int	ft_is_in_quotes(char *line, int ind)
+{
+	if (ft_is_in_dquotes(line, ind) || ft_is_in_squotes(line, ind))
+		return (1);
+	return (0);
+}
+
 t_line_token	ft_find_token_type(char *str)
 {
 	if (ft_strncmp(str, ">", 1) == 0 && *(str + 1) != '>')
@@ -68,6 +88,8 @@ t_line_token	ft_find_token_type(char *str)
 		return (D_LESS);
 	else if (ft_strncmp(str, "|", 1) == 0)
 		return (PIPE);
+	else if (ft_strncmp(str, "$", 1) == 0)
+		return (DOLL);
 	/*else if (ft_strncmp(str, "(", 1) == 0)
 		return (O_PAR);
 	else if (ft_strncmp(str, ")", 1) == 0)
@@ -122,6 +144,35 @@ void	ft_skip_spaces(char *str, int *i)
 		(*i)++;
 }
 
+int	ft_doll_len(char *str, int i)
+{
+	int	len;
+
+	len = 0;
+	while (str[i + len] && str[i + len] != ' ')
+		len ++;
+	return (len);
+}
+
+char	*ft_title_doll(char *str, int i)
+{
+	int		j;
+	char	*title;
+
+	j = 0;
+	title = (char *)malloc((ft_doll_len(str, i) + 1) * sizeof(char));
+	if (!title)
+		return (NULL);
+	while (str[i] && str[i] != ' ')
+	{
+		title[j] = str[i];
+		j++;
+		i++;
+	}
+	title[j] = '\0';
+	return (title);
+}
+
 t_token_list	*ft_append_operand(char *line, int *i, t_token_list **list)
 {
 	t_token_list	*token;
@@ -130,10 +181,14 @@ t_token_list	*ft_append_operand(char *line, int *i, t_token_list **list)
 	if (!token)
 		return (NULL);
 	token->type = ft_find_token_type(&(line[*i]));
+	if (token->type == DOLL)
+		token->val == ft_title_doll(line, *i);
 	if (token->type == D_LESS || token->type == D_GREAT)
 		(*i) += 2;
 	else if (token->type == PIPE || token->type == S_LESS || token->type == S_GREAT)
 		(*i) += 1;
+	else if (ft_is_doll(line, *i) == 1)
+		(*i) += ft_doll_len(line, i);
 	token->next = NULL;
 	if (!(*list))
 	{
@@ -148,11 +203,31 @@ t_token_list	*ft_append_operand(char *line, int *i, t_token_list **list)
 	return (token);
 }
 
-int	ft_strlen_content(char *str, int i)
+int	ft_quoted_len(char *str, int i) //rajouter le cas ou le premier caractere est ' ou "
 {
 	int	len;
 
 	len = 0;
+	if (str[i] == '\'')
+	{
+		while (str[i + len] && str[i + len] != '\'')
+			len ++;
+	}
+	else if (str[i] == '\"')
+	{
+		while (str[i + len] && str[i + len] != '\"')
+			len ++;
+	}
+	return (len);
+}
+
+int	ft_strlen_content(char *str, int i) //rajouter le cas ou le premier caractere est ' ou "
+{
+	int	len;
+
+	len = 0;
+	if (str[i] == '\'' || str[i] == '\"')
+		return (ft_quoted_len(str, i));
 	while (str[i] && ft_is_operand(str, i) == 0)
 	{
 		i++;
@@ -182,7 +257,72 @@ char	*ft_extract_content(char *line, int *i)
 	return (str);
 }
 
+char	*ft_extract_sq_content(char *line, int *i)
+{
+	int		len;
+	char	*str;
+	int		j;
+
+	len = ft_strlen_content(line, *i);
+	str = (char *)malloc((len + 1) * sizeof(char));
+	j = 0;
+	if (!str)
+		return (NULL);
+	*i++;
+	while (line[*i] != '\'')
+	{
+		str[j] = line[*i];
+		j++;
+		(*i)++;
+	}
+	*i++;
+	str[j] = '\0';
+	return (str);
+}
+
 t_token_list	*ft_append_content(char *line, int *i, t_token_list **list)
+{
+	t_token_list	*token;
+
+	token = (t_token_list *)ft_calloc(1, sizeof(t_token_list));
+	if (!token)
+		return (NULL);
+	token->type = ft_find_token_type(&line[*i]);
+	token->val = ft_extract_content(line, i);
+	token->next = NULL;
+	if (!(*list))
+	{
+		*list = token;
+		token->prev = NULL;
+	}
+	else
+	{
+		token->prev = ft_last_token(*list);
+		ft_last_token(*list)->next = token;
+	}
+	return (token);
+}
+
+t_token_list	*ft_deal_content(char *line, int *i, t_token_list **list)
+{
+	t_token_list	*res;
+
+	res = NULL;
+	while (line[*i])
+	{
+		if (line[*i] == '\'')
+			res = ft_append_squoted(line, i, list);
+		else if (line[*i] == '\"')
+			res = ft_append_dquoted(line, i, list);
+		else
+			res = ft_append_content(line, i, list);
+		if (res == NULL)
+			return (NULL);
+	}
+	return (*list);
+}
+
+t_token_list	*ft_append_doll(char *line, int *i, t_token_list **list)
 {
 	t_token_list	*token;
 
@@ -204,6 +344,7 @@ t_token_list	*ft_append_content(char *line, int *i, t_token_list **list)
 	}
 	return (token);
 }
+
 int	ft_quote_error(char *line)
 {
 	int	i;
@@ -242,14 +383,14 @@ t_token_list	**ft_build_token_list(char *line, char **env)
 	while (line[i])
 	{
 		ft_skip_spaces(line, &i);
-		if (ft_is_operand(line, i) == 1)
+		if (ft_is_operand(line, i) == 1 || ft_is_doll(line, i) == 1)
 		{
 			if (!ft_append_operand(line, &i, list))
 				return (ft_free_list(list), NULL);
 		}
 		else
 		{
-			if (!ft_append_content(line, &i, list))
+			if (!ft_deal_content(line, &i, list))
 				return (ft_free_list(list), NULL);
 		}
 	}
