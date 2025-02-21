@@ -21,11 +21,15 @@ SRCS_FILES = \
 	parsing.c \
 	token.c \
 	free.c \
-	env.c \
 	signal_handling.c \
 	termios_utils.c \
 	debug.c \
-	ft_cmd.c \
+	cmd.c \
+	cmd_2.c \
+	exec_cmd.c \
+	extract_env.c \
+	update_env.c \
+	utils.c \
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS_FILES:.c=.o))
 

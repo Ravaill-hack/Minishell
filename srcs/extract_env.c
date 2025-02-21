@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   extract_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/16 10:31:57 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/20 11:56:47 by juduchar         ###   ########.fr       */
+/*   Created: 2025/02/21 11:11:49 by juduchar          #+#    #+#             */
+/*   Updated: 2025/02/21 11:12:27 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,29 +35,48 @@ int	ft_get_line_env(char **env, char *env_var_key)
 	return (i);
 }
 
-char	**ft_modify_shlvl(char **env, int lvl)
+char	*extract_env_value_from_key(char **env, char *env_var_key)
 {
-	int 	shlvl_0;
-	char	*shlvl;
-	char	*shlvl_str;
-	int		line_env;
+	int	i;
+	int	j;
 
-	line_env = ft_get_line_env(env, "SHLVL");
-	if (line_env == -1)
+	i = ft_get_line_env(env, env_var_key);
+	j = 0;
+	if (i == -1 || !env[i])
 		return (NULL);
-	shlvl_0 = ft_atoi(&env[line_env][6]);
-	shlvl_str = ft_itoa(shlvl_0 + lvl);
-	if (!shlvl_str)
-		return (NULL);
-	shlvl = ft_strjoin("SHLVL=", shlvl_str);
-	if (!shlvl)
-	{
-		free(shlvl_str);
-		return (NULL);
-	}
-	free(shlvl_str);
-	free(env[line_env]);
-	env[line_env] = shlvl;
-	return (env);
+	while (env[i][j] && env[i][j] != '=')
+		j++;
+	return (env[i] + j + 1);
 }
 
+char	*ft_extract_key_env(char *env_var)
+{
+	char	*eq_ptr;
+	char	*key;
+
+	if (!env_var)
+		return (NULL);
+	eq_ptr = ft_strchr(env_var, '=');
+	if (!eq_ptr)
+		return (NULL);
+	key = ft_substr(env_var, 0, eq_ptr - env_var);
+	if (!key)
+		return (NULL);
+	return (key);
+}
+
+char	*ft_extract_value_env(char *env_var)
+{
+	char	*eq_ptr;
+	char	*value;
+
+	if (!env_var)
+		return (NULL);
+	eq_ptr = ft_strchr(env_var, '=');
+	if (!eq_ptr)
+		return (NULL);
+	value = ft_substr(eq_ptr + 1, 0, ft_strlen(env_var));
+	if (!value)
+		return (NULL);
+	return (value);
+}
