@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/21 11:06:43 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:52:49 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ Token management
 //t_token_list	**ft_build_token_list(char **str);
 //t_token_list	*ft_append_token(char *word, t_token_list **list);
 t_token_list	*ft_last_token(t_token_list *token);
-t_line_token	ft_find_token_type(char *str);
+t_line_token	ft_find_token_type(char *str, int i);
 /*
 Signal management
 */
