@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:55:13 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/21 14:11:05 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:41:27 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,15 @@ int	ft_is_in_quotes(char *line, int ind)
 
 t_line_token	ft_find_token_type(char *str, int i)
 {
-	if (ft_strncmp(&str[i], ">", 1) == 0 && str[i + 1] != '>')
+	if (str[i] == '>' && str[i + 1] != '>')
 		return (S_GREAT);
-	else if (ft_strncmp(&str[i], "<", 1) == 0 && str[i + 1] != '<')
+	else if (str[i] == '<' && str[i + 1] != '<')
 		return (S_LESS);
-	else if (ft_strncmp(&str[i], ">>", 2) == 0)
+	else if (str[i] == '>' && str[i + 1] == '>')
 		return (D_GREAT);
-	else if (ft_strncmp(&str[i], "<<", 2) == 0)
+	else if (str[i] == '<' && str[i + 1] == '<')
 		return (D_LESS);
-	else if (ft_strncmp(&str[i], "|", 1) == 0)
+	else if (str[i] == '|')
 		return (PIPE);
 	else if (ft_is_doll(str, i))
 		return (DOLL);
@@ -128,14 +128,9 @@ void	ft_free_list(t_token_list **list)
 
 int	ft_is_operand(char *str, int i)
 {
-	if (ft_strncmp(&str[i], ">", 1) == 0)
+	if (str[i] == '>' || str[i] == '<' || str[i] == '|')
 		return (1);
-	else if (ft_strncmp(&str[i], "<", 1) == 0)
-		return (1);
-	else if (ft_strncmp(&str[i], "|", 1) == 0)
-		return (1);
-	else
-		return (0);
+	return (0);
 }
 
 void	ft_skip_spaces(char *str, int *i)
@@ -173,8 +168,6 @@ char	*ft_extract_title_doll(char *str, int *i)
 	return (title);
 }
 
-
-
 int	ft_quoted_len(char *str, int i) //rajouter le cas ou le premier caractere est ' ou "
 {
 	int	len;
@@ -200,7 +193,7 @@ int	ft_strlen_content(char *str, int i) //rajouter le cas ou le premier caracter
 	len = 0;
 	if (str[i] == '\'' || str[i] == '\"')
 		return (ft_quoted_len(str, i));
-	while (str[i] && ft_is_operand(str, i) == 0 && ft_is_doll(str, i) == 0)
+	while (str[i] && ft_is_operand(str, i) == 0 && ft_is_doll(str, i) == 0 && ft_is_in_quotes(str, i) == 0)
 	{
 		i++;
 		len ++;
@@ -414,6 +407,8 @@ t_token_list	*ft_deal_content(char *line, int *i, t_token_list **list)
 			res = ft_append_squoted(line, i, list);
 		else if (line[*i] == '\"')
 			res = ft_append_dquoted(line, i, list);
+		else if (ft_is_operand(line, *i) == 1)
+			return (res);
 		else
 			res = ft_append_content(line, i, list);
 		if (res == NULL)
