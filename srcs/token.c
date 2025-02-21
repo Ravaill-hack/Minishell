@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:55:13 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/21 14:41:27 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:51:00 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,7 +269,7 @@ char	*ft_extract_dq_content(char *line, int *i, t_token_list **list)
 		j++;
 		(*i)++;
 	}
-	if (line[j] == '\"')
+	if (line[*i] == '\"')
 		(*i)++;
 	str[j] = '\0';
 	return (str);
