@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:55:13 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/21 16:12:55 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:54:07 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -362,8 +362,8 @@ t_token_list	*ft_append_dquoted(char *line, int *i, t_token_list **list)
 	if (!token)
 		return (NULL);
 	token->val = ft_extract_dq_content(line, i, list);
-	if (line[*i] == '\0')
-		return (token);
+	//if (line[*i] == '\0')
+	//	return (token);
 	token->type = CONTENT;
 	token->next = NULL;
 	if (!(token->val))
@@ -436,13 +436,16 @@ t_token_list	*ft_deal_content(char *line, int *i, t_token_list **list)
 	res = NULL;
 	while (line[*i])
 	{
-		ft_skip_spaces(line, i);
+		if (ft_is_in_quotes(line, *i) == 0) //ne pas zapper les espaces si on est dans une quote
+			ft_skip_spaces(line, i); 
 		if (line[*i] == '\'')
 			res = ft_append_squoted(line, i, list);
 		else if (line[*i] == '\"')
 			res = ft_append_dquoted(line, i, list);
 		else if (ft_is_operand(line, *i) == 1)
 			return (res);
+		else if (ft_is_in_quotes(line, *i) == 1)
+			res = ft_append_squoted(line, i, list);
 		else
 			res = ft_append_content(line, i, list);
 		if (res == NULL)
