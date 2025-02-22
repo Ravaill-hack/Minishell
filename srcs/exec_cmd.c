@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:14:19 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/21 15:47:29 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/22 16:23:51 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*extract_path(char **env, char *cmd)
+char	*ft_extract_path(char **env, char *cmd)
 {
 	int		i;
 	char	**raw;
@@ -20,7 +20,7 @@ char	*extract_path(char **env, char *cmd)
 	char	*path;
 
 	i = 0;
-	raw = ft_split(extract_env_value_from_key(env, "PATH"), ':');
+	raw = ft_split(ft_extract_env_value_from_key(env, "PATH"), ':');
 	name_cmd = ft_split(cmd, ' ');
 	while (raw[i])
 	{
@@ -60,7 +60,7 @@ char	**ft_set_exec_args(char *path, char **split_cmd)
 	return (args);
 }
 
-int	exec_cmd(char **env, char *cmd)
+int	ft_exec_cmd(char **env, char *cmd)
 {
 	char	**split_cmd;
 	char	*path;
@@ -68,7 +68,7 @@ int	exec_cmd(char **env, char *cmd)
 	int		err;
 
 	split_cmd = ft_split(cmd, ' ');
-	path = extract_path(env, split_cmd[0]);
+	path = ft_extract_path(env, split_cmd[0]);
 	args = ft_set_exec_args(path, split_cmd);
 	if (!args)
 		return (ft_free_strs(split_cmd), free(path), FAILURE);

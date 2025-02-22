@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/21 17:39:45 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/22 16:29:09 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,14 +123,17 @@ void			ft_exit_error(t_var var);
 Extract env
 */
 int				ft_get_line_env(char **env, char *env_var_key);
-char			*extract_env_value_from_key(char **env, char *key);
+char			*ft_extract_env_value_from_key(char **env, char *key);
 char			*ft_extract_key_env(char *env_var);
 char			*ft_extract_value_env(char *env_var);
 /*
 Update env
 */
 int				ft_update_env_var_value(char ***env_ptr, int line_index,
-	char *value);
+					char *value);
+int				ft_copy_env_var(char **new_env, char **env_ptr, int *i, int *j);
+int				ft_update_env_var(char **new_env, char **env_ptr,
+					int *indices, char *value);
 int				ft_add_env_var(char ***env, char *env_var);
 int				ft_remove_env_var(char ***env_ptr, int line_index);
 char			**ft_modify_shlvl(char **env, int lvl);
@@ -174,18 +177,24 @@ int				ft_handle_cmd(t_var *var, char *val);
 /*
 Exec cmd
 */
-char			*extract_path(char **env, char *cmd);
+char			*ft_extract_path(char **env, char *cmd);
 char			**ft_set_exec_args(char *path, char **split_cmd);
-int				exec_cmd(char **env, char *cmd);
+int				ft_exec_cmd(char **env, char *cmd);
 /*
 Cmds
 */
 int				ft_cmd_exit(t_var var, char **env, t_token_list *token_list);
+int				ft_handle_exit_last_shlvl(t_var var, char **env);
+int				ft_handle_exit_not_last_shlvl(char **env);
 void			ft_cmd_env(char **env, t_token_list *token_list);
 int				ft_cmd_unset(char ***env_ptr, t_token_list *token_list);
 int				ft_cmd_export(char ***env_ptr, t_token_list *token_list);
+int				ft_cmd_export_with_no_args(char ***env_ptr);
+int				ft_cmd_export_with_args(char ***env_ptr, char *arg);
 int				ft_cmd_pwd(char **env, t_token_list *token_list);
 int				ft_cmd_cd(char **env, t_token_list *token_list);
+int				ft_cmd_cd_home(char **env);
+int				ft_cmd_cd_path(char **env, char *path);
 int				ft_cmd_echo(t_token_list *token_list);
 
 #endif

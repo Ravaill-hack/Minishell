@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:11:49 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/21 15:45:07 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/22 16:05:10 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_get_line_env(char **env, char *env_var_key)
 	return (i);
 }
 
-char	*extract_env_value_from_key(char **env, char *env_var_key)
+char	*ft_extract_env_value_from_key(char **env, char *env_var_key)
 {
 	int	i;
 	int	j;

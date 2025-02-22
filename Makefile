@@ -29,10 +29,12 @@ SRCS_FILES = \
 	debug.c \
 	cmd.c \
 	cmd_2.c \
+	cmd_3.c \
 	exec_cmd.c \
 	extract_env.c \
 	update_env.c \
 	utils.c \
+	modify_shlvl.c \
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS_FILES:.c=.o))
 

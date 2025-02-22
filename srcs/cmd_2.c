@@ -3,74 +3,78 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:15:56 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/21 15:50:21 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/22 16:15:32 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_cmd_cd(char **env, t_token_list *token_list)
+int	ft_cmd_export(char ***env_ptr, t_token_list *token_list)
 {
 	char	**split_line;
-	char	*path;
-	char	*old_pwd;
-	char	*new_pwd;
-	int		pwd_line_index;
 
 	split_line = ft_split(token_list->val, ' ');
 	if (!split_line[1])
+		return (ft_cmd_export_with_no_args(env_ptr));
+	else
+		return (ft_cmd_export_with_args(env_ptr, split_line[1]));
+}
+
+int	ft_cmd_export_with_no_args(char ***env_ptr)
+{
+	size_t	i;
+	size_t	len;
+
+	i = 0;
+	len = ft_strslen(*env_ptr);
+	while (i < len)
 	{
-		path = extract_env_value_from_key(env, "HOME");
-		if (!path)
-			return (FAILURE);
-		exec_cmd(env, ft_strjoin("cd ", path));
-		new_pwd = path;
-		pwd_line_index = ft_get_line_env(env, "PWD");
-		if (ft_update_env_var_value(&env, pwd_line_index, new_pwd) == FAILURE)
+		printf("declare -x ");
+		printf("%s", (*env_ptr)[i]);
+		printf("\n");
+		i++;
+	}
+	return (SUCCESS);
+}
+
+int	ft_cmd_export_with_args(char ***env_ptr, char *arg)
+{
+	char	*key;
+	char	*value;
+	int		line_index;
+
+	key = ft_strdup(ft_extract_key_env(arg));
+	value = ft_strdup(ft_extract_value_env(arg));
+	if (!key || !*key || !value || !*value)
+		return (FAILURE);
+	line_index = ft_get_line_env(*env_ptr, key);
+	if (line_index == -1)
+	{
+		if (ft_add_env_var(env_ptr, arg) == FAILURE)
 			return (FAILURE);
 		return (SUCCESS);
 	}
 	else
 	{
-		path = split_line[1];
-		old_pwd = extract_env_value_from_key(env, "PWD");
-		if (!old_pwd)
-			return (FAILURE);
-		path = ft_strjoin(old_pwd, path);
-		if (exec_cmd(env, ft_strjoin("cd ", path)) == FAILURE)
-			return (FAILURE);
-		new_pwd = path;
-		pwd_line_index = ft_get_line_env(env, "PWD");
-		if (ft_update_env_var_value(&env, pwd_line_index, new_pwd) == FAILURE)
+		if (ft_update_env_var_value(env_ptr, line_index, value) == FAILURE)
 			return (FAILURE);
 		return (SUCCESS);
 	}
+	return (FAILURE);
 }
 
-int	ft_cmd_echo(t_token_list *token_list)
+int	ft_cmd_pwd(char **env, t_token_list *token_list)
 {
 	char	**split_line;
-	size_t	i;
 
 	split_line = ft_split(token_list->val, ' ');
-	if (split_line[1])
+	if (!split_line[1])
 	{
-		if (ft_strncmp(split_line[1], "-n", 2) == 0)
-			i = 2;
-		else
-			i = 1;
-		while (split_line[i])
-		{
-			printf("%s", split_line[i]);
-			if (split_line[i + 1])
-				printf(" ");
-			i++;
-		}
-		if (ft_strncmp(split_line[1], "-n", 2) != 0)
-			printf("\n");
+		printf("%s\n", ft_extract_env_value_from_key(env, "PWD"));
+		return (SUCCESS);
 	}
-	return (SUCCESS);
+	return (FAILURE);
 }
