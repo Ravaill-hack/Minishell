@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:40:07 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/23 18:34:08 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:09:24 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	ft_print_info_list(t_token_list *list)
 		ft_print_token_type(temp);
 		if (temp->type == CONTENT)
 			printf("content : %s\n\n", temp->val);
+		printf("need for space after : %d\n", temp->print_space_after);
 		temp = temp->next;
 	}
 }

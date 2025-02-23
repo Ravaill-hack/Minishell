@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/23 18:33:15 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:03:55 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,7 @@ typedef struct s_token_list
 {
 	t_line_token			type;
 	char					*val;
-	int						sq_s;
-	int						sq_e;
-	int						dq_s;
-	int						dq_e;
+	int						print_space_after;
 	struct s_token_list		*prev;
 	struct s_token_list		*next;
 }	t_token_list;
@@ -164,7 +161,7 @@ Token - utils
 t_line_token	ft_find_token_type(char *str, int i);
 t_token_list	*ft_last_token(t_token_list *token);
 void			ft_free_list(t_token_list **list);
-void			ft_skip_spaces(char *str, int *i);
+void			ft_skip_spaces(char *str, int *i, t_token_list *list);
 /*
 Handle errors
 */

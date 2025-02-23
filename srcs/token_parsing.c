@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:55:13 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/23 18:14:29 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/23 18:53:35 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_append_tokens(char *line, t_token_list **list)
 	err = *list;
 	while (line[i])
 	{
-		ft_skip_spaces(line, &i);
+		ft_skip_spaces(line, &i, *list);
 		if (ft_is_operand(line, i) == 1)
 			err = ft_append_operand(line, &i, list);
 		else if (ft_is_in_dquotes(line, i))

@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:26:37 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/23 18:10:01 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:05:47 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_token_list	*ft_append_content(char *line, int *i, t_token_list **list)
 		token->val = ft_extract_dq_content(line, i);
 	else
 		token->val = ft_extract_content(line, i);
+	token->print_space_after = 0;
 	token->next = NULL;
 	if (!(token->val))
 		return (NULL);
@@ -49,6 +50,7 @@ t_token_list	*ft_append_squoted(char *line, int *i, t_token_list **list)
 		return (NULL);
 	token->type = CONTENT;
 	token->val = ft_extract_sq_content(line, i);
+	token->print_space_after = 0;
 	token->next = NULL;
 	if (!(token->val))
 		return (NULL);
@@ -73,6 +75,7 @@ t_token_list	*ft_append_dquoted(char *line, int *i, t_token_list **list)
 	if (!token)
 		return (NULL);
 	token->val = ft_extract_dq_content(line, i);
+	token->print_space_after = 0;
 	token->type = CONTENT;
 	token->next = NULL;
 	if (!(token->val))
@@ -98,6 +101,7 @@ t_token_list	*ft_append_doll(char *line, int *i, t_token_list **list)
 	if (!token)
 		return (NULL);
 	token->val = ft_extract_doll(line, i);
+	token->print_space_after = 0;
 	token->type = DOLL;
 	token->next = NULL;
 	if (!(token->val))
@@ -123,6 +127,7 @@ t_token_list	*ft_append_operand(char *line, int *i, t_token_list **list)
 	if (!token)
 		return (NULL);
 	token->type = ft_find_token_type(line, *i);
+	token->print_space_after = 0;
 	if (token->type == D_LESS || token->type == D_GREAT)
 		(*i) += 2;
 	else if (token->type == PIPE || token->type == S_LESS
