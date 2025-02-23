@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/23 19:03:55 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:47:55 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,6 +235,7 @@ int				ft_cmd_pwd(char **env, t_token_list *token_list);
 int				ft_cmd_cd(char **env, t_token_list *token_list);
 int				ft_cmd_cd_home(char **env);
 int				ft_cmd_cd_path(char **env, char *path);
-int				ft_cmd_echo(t_token_list *token_list);
+int				ft_cmd_echo_print_tokens(t_token_list *token, char **env);
+int				ft_cmd_echo(t_token_list *token_list, char **env);
 
 #endif
