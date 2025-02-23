@@ -35,6 +35,7 @@ SRCS_FILES = \
 	cmd.c \
 	cmd_2.c \
 	cmd_3.c \
+	cmd_4.c \
 	exec_cmd.c \
 	extract_env.c \
 	update_env.c \

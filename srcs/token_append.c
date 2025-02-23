@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:26:37 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/23 21:04:21 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:17:15 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@ t_token_list	*ft_append_content(char *line, int *i, t_token_list **list)
 	if (!token)
 		return (NULL);
 	token->type = CONTENT;
-	if (ft_is_in_dquotes(line, *i))
-		token->val = ft_extract_dq_content(line, i);
-	else
-		token->val = ft_extract_content(line, i);
+	token->val = ft_extract_content(line, i);
+	token->dq_end = 0;
+	token->dq_start = 0;
 	token->print_space_after = 0;
 	token->next = NULL;
 	if (!(token->val))
@@ -50,6 +49,8 @@ t_token_list	*ft_append_squoted(char *line, int *i, t_token_list **list)
 		return (NULL);
 	token->type = CONTENT;
 	token->val = ft_extract_sq_content(line, i);
+	token->dq_end = 0;
+	token->dq_start = 0;
 	token->print_space_after = 0;
 	token->next = NULL;
 	if (!(token->val))
@@ -132,10 +133,11 @@ t_token_list	*ft_append_operand(char *line, int *i, t_token_list **list)
 		return (NULL);
 	token->type = ft_find_token_type(line, *i);
 	token->print_space_after = 0;
-	if (token->type == D_LESS || token->type == D_GREAT)
+	token->dq_end = 0;
+	token->dq_start = 0;
+	if (token->type == 1 || token->type == 3)
 		(*i) += 2;
-	else if (token->type == PIPE || token->type == S_LESS
-		|| token->type == S_GREAT)
+	else if (token->type == 4 || token->type == 0 || token->type == 2)
 		(*i) += 1;
 	token->next = NULL;
 	if (!(*list))
