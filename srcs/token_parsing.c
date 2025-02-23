@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:55:13 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/23 18:53:35 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:03:13 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 t_token_list	*ft_deal_dquoted(char *line, int *i, t_token_list **list)
 {
 	t_token_list	*res;
+	int				tour;
 
 	res = NULL;
+	tour = 0;
 	if (line[*i] == '\"')
 		(*i)++;
 	while (line[*i] && line[*i] != '\"')
@@ -25,8 +27,13 @@ t_token_list	*ft_deal_dquoted(char *line, int *i, t_token_list **list)
 			res = ft_append_doll(line, i, list);
 		else
 			res = ft_append_dquoted(line, i, list);
+		if (tour == 0)
+			res->dq_start = 1;
+		if (line[*i] == '\"')
+			res->dq_end = 1;
 		if (!res)
 			return (NULL);
+		tour ++;
 	}
 	if (line[*i] == '\"')
 		(*i)++;
