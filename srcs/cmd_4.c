@@ -6,28 +6,32 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 21:28:54 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/23 21:34:47 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/23 22:02:22 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_cmd_echo_print_doll(t_token_list *token, char **env) // pour l'instant la fonction ne marche pas
+int	ft_cmd_echo_print_doll(t_token_list *token, char **env, int exit_nb)
 {
 	char	*temp;
 
-	// NB : gerer aussi le cas ou on a un "$?"
-	temp = ft_extract_env_value_from_key(env, token->val);
+	if (token->val[1] == '?')
+	{
+		ft_putnbr_fd(exit_nb, 1);
+		return (SUCCESS);
+	}
+	temp = ft_extract_env_value_from_key(env, &(token->val[1]));
 	if (temp)
 	{
 		ft_putstr_fd (temp, 1);
-		free (temp);
+		//free (temp);
 		return (SUCCESS);
 	}
 	return (FAILURE);
 }
 
-int	ft_cmd_echo_print_tokens(t_token_list *token, int i, char **env)
+int	ft_cmd_echo_print_tokens(t_token_list *token, int i, char **env, int ex_nb)
 {
 	if (token->type != CONTENT && token->type != DOLL)
 		return (FAILURE);
@@ -36,7 +40,7 @@ int	ft_cmd_echo_print_tokens(t_token_list *token, int i, char **env)
 	while (token && (token->type == CONTENT || token->type == DOLL))
 	{
 		if (token->type == DOLL)
-			ft_cmd_echo_print_doll(token, env);
+			ft_cmd_echo_print_doll(token, env, ex_nb);
 		else if (token->type == CONTENT && token->dq_end == 0
 			&& token->dq_start == 0)
 			ft_cmd_echo_print_str(token->val, i, 1);
@@ -51,7 +55,7 @@ int	ft_cmd_echo_print_tokens(t_token_list *token, int i, char **env)
 	return (SUCCESS);
 }
 
-int	ft_cmd_echo(t_token_list *token, char **env)
+int	ft_cmd_echo(t_token_list *token, char **env, int ex_nb)
 {
 	size_t	i;
 	int		ind;
@@ -73,7 +77,7 @@ int	ft_cmd_echo(t_token_list *token, char **env)
 		}
 		else
 			i = 1;
-		success = ft_cmd_echo_print_tokens(token, ind, env);
+		success = ft_cmd_echo_print_tokens(token, ind, env, ex_nb);
 		if (i == 1)
 			ft_putchar_fd('\n', 1);
 	}
