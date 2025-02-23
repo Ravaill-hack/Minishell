@@ -19,8 +19,13 @@ LIBRARIES = -L$(LIBFT_DIR) -lft
 SRCS_FILES = \
 	main.c \
 	init.c \
-	parsing.c \
-	token.c \
+	token_append.c \
+	token_check.c \
+	token_error.c \
+	token_extract.c \
+	token_len.c \
+	token_parsing.c \
+	token_utils.c \
 	free.c \
 	handle_cmd.c \
 	handle_errors.c \

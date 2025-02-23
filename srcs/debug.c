@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:40:07 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/20 14:31:32 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/23 18:34:08 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_print_info_list(t_token_list *list)
 	t_token_list	*temp;
 
 	temp = list;
-	//printf("add liste : %p\n", list);
+	printf("add liste : %p\n", list);
 	while (temp)
 	{
 		printf("prev : %p\n", temp->prev);

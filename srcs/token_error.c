@@ -1,21 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   token_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/14 20:00:41 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/20 08:44:48 by juduchar         ###   ########.fr       */
+/*   Created: 2025/02/23 17:30:44 by Lmatkows          #+#    #+#             */
+/*   Updated: 2025/02/23 18:13:51 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_parse_line(t_var *var)
+int	ft_quote_error(char *line)
 {
-	var->token_list = ft_parse_token_list(var->line, var->env);
-	if (!var->token_list)
-		return (ft_free_line(*var), FAILURE);
-	return (SUCCESS);
+	int	i;
+	int	ns;
+	int	nd;
+
+	i = 0;
+	ns = 0;
+	nd = 0;
+	while (line[i])
+	{
+		if (line[i] == '\'' && nd == 0)
+			ns = !ns;
+		else if (line[i] == '\"' && ns == 0)
+			nd = !nd;
+		i++;
+	}
+	if (nd != 0 || ns != 0)
+		return (1);
+	return (0);
 }

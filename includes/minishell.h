@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/22 16:29:09 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:33:15 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,16 @@ typedef enum s_line_token
 	D_LESS,
 	S_GREAT,
 	D_GREAT,
-	//O_PAR, --> pour les bonus
-	//C_PAR, --> pour les bonus
-	//AND, --> pour les bonus
-	//OR, --> pour les bonus
+	/*
+	O_PAR, --> pour les bonus
+	C_PAR, --> pour les bonus
+	AND, --> pour les bonus
+	OR, --> pour les bonus
+	*/
 	PIPE,
 	NL,
 	CONTENT,
+	DOLL,
 }	t_line_token;
 
 /*
@@ -91,8 +94,11 @@ typedef enum	s_content_token
 typedef struct s_token_list
 {
 	t_line_token			type;
-	// t_content_token		content;
 	char					*val;
+	int						sq_s;
+	int						sq_e;
+	int						dq_s;
+	int						dq_e;
 	struct s_token_list		*prev;
 	struct s_token_list		*next;
 }	t_token_list;
@@ -111,10 +117,54 @@ Init
 */
 void			ft_init(t_var *var, char **env);
 /*
-Parse init
+Token - append
 */
+t_token_list	*ft_append_content(char *line, int *i, t_token_list **list);
+t_token_list	*ft_append_squoted(char *line, int *i, t_token_list **list);
+t_token_list	*ft_append_dquoted(char *line, int *i, t_token_list **list);
+t_token_list	*ft_append_doll(char *line, int *i, t_token_list **list);
+t_token_list	*ft_append_operand(char *line, int *i, t_token_list **list);
+/*
+Token - checks
+*/
+int				ft_is_doll(char *str, int i);
+int				ft_is_operand(char *str, int i);
+int				ft_is_in_squotes(char *line, int ind);
+int				ft_is_in_dquotes(char *line, int ind);
+int				ft_is_in_quotes(char *line, int ind);
+/*
+Token - extract
+*/
+char			*ft_extract_content(char *line, int *i);
+char			*ft_extract_sq_content(char *line, int *i);
+char			*ft_extract_dq_content(char *line, int *i);
+char			*ft_extract_doll(char *line, int *i);
+char			*ft_extract_title_doll(char *str, int *i);
+/*
+Token - errors
+*/
+int				ft_quote_error(char *line);
+/*
+Token - len
+*/
+int				ft_doll_len(char *str, int i);
+int				ft_dquoted_len(char *str, int i);
+int				ft_squoted_len(char *str, int i);
+int				ft_strlen_content(char *str, int i);
+/*
+Token - parsing
+*/
+t_token_list	*ft_deal_dquoted(char *line, int *i, t_token_list **list);
+int				ft_append_tokens(char *line, t_token_list **list);
+t_token_list	**ft_build_token_list(char *line);
 int				ft_parse_line(t_var *var);
-t_token_list	**ft_parse_token_list(char *line, char **env);
+/*
+Token - utils
+*/
+t_line_token	ft_find_token_type(char *str, int i);
+t_token_list	*ft_last_token(t_token_list *token);
+void			ft_free_list(t_token_list **list);
+void			ft_skip_spaces(char *str, int *i);
 /*
 Handle errors
 */
@@ -137,13 +187,6 @@ int				ft_update_env_var(char **new_env, char **env_ptr,
 int				ft_add_env_var(char ***env, char *env_var);
 int				ft_remove_env_var(char ***env_ptr, int line_index);
 char			**ft_modify_shlvl(char **env, int lvl);
-/*
-Token
-*/
-//t_token_list	**ft_build_token_list(char **str);
-//t_token_list	*ft_append_token(char *word, t_token_list **list);
-t_token_list	*ft_last_token(t_token_list *token);
-t_line_token	ft_find_token_type(char *str);
 /*
 Handle signal
 */
