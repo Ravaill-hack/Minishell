@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/23 21:57:39 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:04:36 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,12 @@ typedef struct s_var
 	int						exit_nb;
 }	t_var;
 
+typedef	struct s_index
+{
+	int	i;
+	int	j;
+}	t_index;
+
 /*
 Init
 */
@@ -167,7 +173,8 @@ void			ft_skip_spaces(char *str, int *i, t_token_list *list);
 /*
 Handle errors
 */
-void			ft_exit_error(t_var var);
+void	ft_print_error();
+void	ft_print_error_and_exit(t_var var);
 /*
 Extract env
 */
@@ -181,8 +188,7 @@ Update env
 int				ft_update_env_var_value(char ***env_ptr, int line_index,
 					char *value);
 int				ft_copy_env_var(char **new_env, char **env_ptr, int *i, int *j);
-int				ft_update_env_var(char **new_env, char **env_ptr,
-					int *indices, char *value);
+int				ft_update_env_var(char **new_env, char **env, t_index *index, char *value);
 int				ft_add_env_var(char ***env, char *env_var);
 int				ft_remove_env_var(char ***env_ptr, int line_index);
 char			**ft_modify_shlvl(char **env, int lvl);

@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/24 10:52:29 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:04:00 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ int	main(int argc, char **argv, char **env)
 	while (var.line)
 	{
 		if (!ft_parse_line(&var))
-			ft_exit_error(var);
+			ft_print_error_and_exit(var);
 		if (*(var.token_list))
 		{
 			val = var.token_list[0]->val;
 			if (ft_handle_cmd(&var, val) == FAILURE)
-				ft_exit_error(var);
+				ft_print_error();
 			add_history(var.line);
 			free(var.line);
 		}

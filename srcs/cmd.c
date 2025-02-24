@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/02/24 10:51:13 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/24 10:54:41 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ int	ft_cmd_exit(t_var var, char **env, t_token_list *token_list)
 		if (!shlvl)
 			return (FAILURE);
 		shlvl_current = ft_atoi((ft_extract_env_value_from_key(env, "SHLVL")));
-		printf("shlvl : %d\n", shlvl);
-		printf("shlvl current : %d", shlvl_current);
 		if (shlvl_current == shlvl)
 			return (ft_handle_exit_last_shlvl(var, env));
 		else
