@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 10:31:57 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/24 16:49:21 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:19:44 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int	ft_update_env_var_value(char ***env_ptr, int line_index, char *value)
 			ft_update_env_var(new_env, *env_ptr, &index, value);
 		index.i++;
 	}
-	new_env[index.j] = NULL;
 	ft_free_strs(*env_ptr);
 	*env_ptr = new_env;
+	*env_ptr[index.i] = NULL;
 	return (SUCCESS);
 }
 
@@ -47,10 +47,14 @@ int	ft_copy_env_var(char **new_env, char **env, int *i, int *j)
 
 int	ft_update_env_var(char **new_env, char **env, t_index *index, char *value)
 {
+	char	*key;
+	
 	value = ft_strjoin("=", value);
 	if (!value)
 		return (ft_free_strs_until(new_env, index->j), FAILURE);
-	new_env[index->j] = ft_strjoin(ft_extract_key_env(env[index->i]), value);
+	key = ft_extract_key_env(env[index->i]);
+	new_env[index->j] = ft_strjoin(key, value);
+	free(key);
 	if (!new_env[index->j])
 		return (ft_free_strs_until(new_env, index->j), free(value), FAILURE);
 	free(value);
