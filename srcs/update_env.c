@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 10:31:57 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/24 13:58:38 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:49:21 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_update_env_var_value(char ***env_ptr, int line_index, char *value)
 	char	**new_env;
 	t_index	index;
 
-	new_env = (char **)ft_calloc(ft_strslen(*env_ptr), sizeof(char *));
+	new_env = (char **)ft_calloc(ft_strslen(*env_ptr) + 1, sizeof(char *));
 	if (!new_env)
 		return (FAILURE);
 	index.i = 0;
