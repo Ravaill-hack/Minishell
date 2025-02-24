@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/21 17:27:36 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/24 15:31:45 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		if (!ft_parse_line(&var))
 			ft_exit_error(var);
+		ft_print_info_list(*(var.token_list));
 		if (*(var.token_list))
 		{
 			val = var.token_list[0]->val;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:40:07 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/23 19:09:24 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:42:21 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	ft_print_token_type(t_token_list *token)
 		printf("new line\n\n");
 	else if (token->type == 6)
 		printf("content\n");
+	else if (token->type == 7)
+		printf("$\n");
 	else
 		printf("error\n\n");
 }
@@ -38,6 +40,7 @@ void	ft_print_info_list(t_token_list *list)
 	t_token_list	*temp;
 
 	temp = list;
+	printf("nb args : %d\n", ft_nb_str(list));
 	printf("add liste : %p\n", list);
 	while (temp)
 	{
@@ -46,8 +49,10 @@ void	ft_print_info_list(t_token_list *list)
 		printf("next : %p\n", temp->next);
 		ft_print_token_type(temp);
 		if (temp->type == CONTENT)
-			printf("content : %s\n\n", temp->val);
-		printf("need for space after : %d\n", temp->print_space_after);
+			printf("content : %s\n", temp->val);
+		else if (temp->type == DOLL)
+			printf("content : %s\n", temp->val);
+		printf("need for space after : %d\n\n", temp->print_space_after);
 		temp = temp->next;
 	}
 }

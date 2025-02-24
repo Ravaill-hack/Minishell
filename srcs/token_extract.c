@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_extract.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:31:43 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/23 18:11:22 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:44:48 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ char	*ft_extract_content(char *line, int *i)
 	if (!str)
 		return (NULL);
 	while (line[*i] && ft_is_operand(line, *i) == 0
-		&& ft_is_doll(line, *i) == 0 && ft_is_in_quotes(line, *i) == 0)
+		&& ft_is_doll(line, *i) == 0 && ft_is_in_quotes(line, *i) == 0
+		&& ft_isspace(line[*i]) == 0)
 	{
 		str[j] = line[*i];
 		j++;
@@ -90,7 +91,7 @@ char	*ft_extract_doll(char *line, int *i)
 	if (!str)
 		return (NULL);
 	while (line[*i] && line[*i] != '\"' && line[*i] != ' '
-		&& (line[*i] != '$' || j == 0))
+		&& line[*i] != '\'' && (line[*i] != '$' || j == 0))
 	{
 		str[j] = line[*i];
 		j++;

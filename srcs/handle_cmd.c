@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:43 by julien            #+#    #+#             */
-/*   Updated: 2025/02/23 21:58:24 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:27:20 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,3 +30,39 @@ int	ft_handle_cmd(t_var *var, char *val)
 		return (ft_cmd_echo(*(var->token_list), var->env, var->exit_nb));
 	return (FAILURE);
 }
+
+t_token_list *ft_first_operand(t_token_list *list)
+{
+	t_token_list	*temp;
+
+	temp = list;
+	while (temp && (temp->type == CONTENT || temp->type == DOLL || temp->type == PIPE))
+		temp = temp->next;
+	if (temp != list)
+		return (temp);
+	return (NULL);
+}
+
+t_token_list *ft_last_operand(t_token_list *list)
+{
+	t_token_list	*temp;
+
+	temp = ft_last_token(list);
+	while (temp && (temp->type == CONTENT || temp->type == DOLL || temp->type == PIPE))
+		temp = temp->prev;
+	if (temp != ft_last_token(list))
+		return (temp);
+	return (NULL);
+}
+/*
+int	ft_handle_one_cmd(t_var *var, char *val, int opt_in, int opt_out)
+{
+
+}
+
+int	ft_choose_how_to_handle(t_var *var, char *val)
+{
+	
+}
+*/
+

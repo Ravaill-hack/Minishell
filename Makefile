@@ -19,6 +19,7 @@ LIBRARIES = -L$(LIBFT_DIR) -lft
 SRCS_FILES = \
 	main.c \
 	init.c \
+	init_cmd_list.c \
 	token_append.c \
 	token_check.c \
 	token_error.c \

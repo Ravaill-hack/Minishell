@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/23 21:57:39 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:35:21 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,34 @@ typedef enum	s_content_token
 }	t_content_token;
 */
 
+typedef struct s_fd
+{
+	int						fd;
+	int						redir; //if == 0 < or >, else if != 0 << or >>
+}	t_fd;
+
+typedef struct s_arg
+{
+	char					*arg;
+	t_fd					tfd;
+}	t_arg;
+
+typedef union s_node
+{
+	t_arg					*arg;
+	t_fd					fd;
+}	t_node;
+
+typedef struct s_cmd
+{
+	char					*path;
+	char					*name;
+	char					*opt;
+	char					**arg;
+	int						fd_in;
+	int						fd_out;
+}	t_cmd;
+
 typedef struct s_token_list
 {
 	t_line_token			type;
@@ -107,6 +135,7 @@ typedef struct s_var
 	char					*line;
 	char					**split_line;
 	t_token_list			**token_list;
+	t_cmd					*cmd;
 	char					**env;
 	int						exit_nb;
 }	t_var;
@@ -212,6 +241,9 @@ void			ft_print_info_list(t_token_list *list);
 Utils
 */
 char			*ft_strjoin3(char *s1, char *s2, char *s3);
+int				ft_nb_pipes(t_token_list *list);
+int				ft_nb_dolls(t_token_list *list);
+int				ft_nb_str(t_token_list *list);
 /*
 Handle cmd
 */
