@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/02/24 10:37:30 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/24 10:50:49 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_init(t_var *var, char **env)
 	if (!var->env)
 		exit(EXIT_FAILURE);
 	shlvl = ft_atoi(getenv("SHLVL"));
-	if (ft_update_env_var_value(&env, ft_get_line_env(env, "SHLVL"), ft_itoa(shlvl + 1)))
+	if (ft_update_env_var_value(&env, ft_get_line_env(env, "SHLVL"), ft_itoa(shlvl + 1)) == FAILURE)
 		exit(EXIT_FAILURE);
 	if (!var->env)
 		exit(EXIT_FAILURE);
