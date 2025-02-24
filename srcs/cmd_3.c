@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 16:06:24 by julien            #+#    #+#             */
-/*   Updated: 2025/02/24 10:13:32 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:16:16 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,9 @@ int	ft_cmd_skip_name(char *str)
 
 int	ft_cmd_echo_print_str(char *str, int i, int opt)
 {
-	if (opt == 1) // si l'option est a 1 ca veut dire qu'on ne veut pas recopier tous les espaces, sinon on copie tel quel
+	// si l'option est a 1 ca veut dire qu'on ne veut pas recopier
+	// tous les espaces, sinon on copie tel quel
+	if (opt == 1)
 	{
 		while (str[i])
 		{

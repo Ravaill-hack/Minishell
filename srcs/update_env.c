@@ -6,12 +6,11 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 10:31:57 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/24 12:00:02 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:17:56 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	ft_update_env_var_value(char ***env_ptr, int line_index, char *value)
 {

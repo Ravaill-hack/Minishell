@@ -6,13 +6,13 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:27:03 by julien            #+#    #+#             */
-/*   Updated: 2025/02/24 12:07:41 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:17:35 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_print_error()
+void	ft_print_error(void)
 {
 	ft_putstr_fd("Error\n", 2);
 }
