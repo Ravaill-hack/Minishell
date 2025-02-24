@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/24 10:49:43 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/24 10:52:29 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	main(int argc, char **argv, char **env)
 
 	(void) argc;
 	(void) argv;
-	printf("ok");
 	ft_init(&var, env);
 	var.line = readline(PROMPT);
 	while (var.line)
