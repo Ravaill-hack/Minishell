@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd.c                                              :+:      :+:    :+:   */
+/*   cmd_exit_env_unset.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/02/24 13:17:23 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/24 14:12:27 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_cmd_exit(t_var var, char **env, t_token_list *token_list)
 
 	if (!token_list->next)
 	{
-		shlvl = ft_atoi(getenv("SHLVL"));
+		shlvl = ft_atoi(getenv("SHLVL")) + 1;
 		if (!shlvl)
 			return (FAILURE);
 		shlvl_current = ft_atoi((ft_extract_env_value_from_key(env, "SHLVL")));
@@ -36,7 +36,7 @@ int	ft_handle_exit_last_shlvl(t_var var, char **env)
 	int	shlvl;
 
 	shlvl = ft_atoi(getenv("SHLVL"));
-	if (ft_update_env_var_value(&env, ft_get_line_env(env, "SHLVL"),
+	if (ft_update_env_var_value_from_key(&env, "SHLVL",
 			ft_itoa(shlvl - 1)) == FAILURE)
 		return (FAILURE);
 	if (ft_exec_cmd(env, "exit") == FAILURE)
@@ -50,7 +50,7 @@ int	ft_handle_exit_not_last_shlvl(char **env)
 	int	shlvl;
 
 	shlvl = ft_atoi(getenv("SHLVL"));
-	if (ft_update_env_var_value(&env, ft_get_line_env(env, "SHLVL"),
+	if (ft_update_env_var_value_from_key(&env, "SHLVL",
 			ft_itoa(shlvl - 1)) == FAILURE)
 		return (FAILURE);
 	printf("exit\n");

@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/24 13:15:31 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/24 14:14:20 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,9 +190,10 @@ int				ft_update_env_var_value(char ***env_ptr, int line_index,
 int				ft_copy_env_var(char **new_env, char **env_ptr, int *i, int *j);
 int				ft_update_env_var(char **new_env, char **env,
 					t_index *index, char *value);
+int				ft_update_env_var_value_from_key(char ***env,
+					char *key, char *value);
 int				ft_add_env_var(char ***env, char *env_var);
 int				ft_remove_env_var(char ***env_ptr, int line_index);
-char			**ft_modify_shlvl(char **env, int lvl);
 /*
 Handle signal
 */
@@ -242,14 +243,16 @@ int				ft_cmd_export_with_no_args(char ***env_ptr);
 int				ft_cmd_export_with_args(char ***env_ptr, char *arg);
 int				ft_cmd_pwd(char **env, t_token_list *token_list);
 int				ft_cmd_cd(char **env, t_token_list *token_list);
+int				ft_update_old_pwd(char ***env);
+int				ft_update_new_pwd(char ***env, char *new_pwd);
 int				ft_cmd_cd_home(char **env);
 int				ft_cmd_cd_path(char **env, char *path);
-int				ft_cmd_skip_name(char *str);
-int				ft_cmd_echo_print_str(char *str, int i, int opt);
+int				ft_cmd_echo(t_token_list *token_list, char **env, int ex_nb);
 int				ft_cmd_echo_print_doll(t_token_list *token, char **env,
 					int exit_nb);
 int				ft_cmd_echo_print_tokens(t_token_list *token, int i,
 					char **env, int ex_nb);
-int				ft_cmd_echo(t_token_list *token_list, char **env, int ex_nb);
+int				ft_cmd_skip_name(char *str);
+int				ft_cmd_echo_print_str(char *str, int i, int opt);
 
 #endif

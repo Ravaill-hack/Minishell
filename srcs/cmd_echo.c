@@ -1,16 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_4.c                                            :+:      :+:    :+:   */
+/*   cmd_echo.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 21:28:54 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/24 13:16:41 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/24 14:12:07 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_cmd_echo(t_token_list *token, char **env, int ex_nb)
+{
+	size_t	i;
+	int		ind;
+	int		success;
+
+	success = 0;
+	ind = ft_cmd_skip_name(token->val);
+	if (token->val[ind] == '\0')
+		token = token->next;
+	if (token->type == CONTENT || token->type == DOLL)
+	{
+		while (ft_isspace(token->val[ind]))
+			ind++;
+		if ((token->val[ind] == '-' && token->val[ind + 1] == 'n')
+			&& (token->val[ind + 2] == ' ' || token->val[ind + 2] == '\0'))
+		{
+			i = 2;
+			ind += 2;
+		}
+		else
+			i = 1;
+		success = ft_cmd_echo_print_tokens(token, ind, env, ex_nb);
+		if (i == 1)
+			ft_putchar_fd('\n', 1);
+	}
+	return (success);
+}
 
 int	ft_cmd_echo_print_doll(t_token_list *token, char **env, int exit_nb)
 {
@@ -54,31 +83,59 @@ int	ft_cmd_echo_print_tokens(t_token_list *token, int i, char **env, int ex_nb)
 	return (SUCCESS);
 }
 
-int	ft_cmd_echo(t_token_list *token, char **env, int ex_nb)
+int	ft_cmd_skip_name(char *str)
 {
-	size_t	i;
-	int		ind;
-	int		success;
+	int	i;
 
-	success = 0;
-	ind = ft_cmd_skip_name(token->val);
-	if (token->val[ind] == '\0')
-		token = token->next;
-	if (token->type == CONTENT || token->type == DOLL)
+	i = 0;
+	while (ft_isspace(str[i]))
+		i++;
+	if (str[i] && str[i] == '\"')
 	{
-		while (ft_isspace(token->val[ind]))
-			ind++;
-		if ((token->val[ind] == '-' && token->val[ind + 1] == 'n')
-			&& (token->val[ind + 2] == ' ' || token->val[ind + 2] == '\0'))
-		{
-			i = 2;
-			ind += 2;
-		}
-		else
-			i = 1;
-		success = ft_cmd_echo_print_tokens(token, ind, env, ex_nb);
-		if (i == 1)
-			ft_putchar_fd('\n', 1);
+		while (str[i] && str[i] != '\"')
+			i++;
+		i++;
 	}
-	return (success);
+	else if (str[i] && str[i] == '\'')
+	{
+		while (str[i] && str[i] != '\'')
+			i++;
+		i++;
+	}
+	else if (str[i])
+	{
+		while (str[i] && !ft_isspace(str[i]))
+			i++;
+	}
+	return (i);
+}
+
+int	ft_cmd_echo_print_str(char *str, int i, int opt)
+{
+	// si l'option est a 1 ca veut dire qu'on ne veut pas recopier
+	// tous les espaces, sinon on copie tel quel
+	if (opt == 1)
+	{
+		while (str[i])
+		{
+			while (str[i] && ft_isspace(str[i]))
+				i++;
+			while (str[i] && !ft_isspace(str[i]))
+			{
+				ft_putchar_fd(str[i], 1);
+				i++;
+			}
+			if (str[i] != '\0' && ft_isspace(str[i]))
+				ft_putchar_fd(' ', 1);
+		}
+	}
+	else
+	{
+		while (str[i])
+		{
+			ft_putchar_fd(str[i], 1);
+			i++;
+		}
+	}
+	return (SUCCESS);
 }
