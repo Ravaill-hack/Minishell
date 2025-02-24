@@ -40,7 +40,6 @@ SRCS_FILES = \
 	extract_env.c \
 	update_env.c \
 	utils.c \
-	modify_shlvl.c \
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS_FILES:.c=.o))
 

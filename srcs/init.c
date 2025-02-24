@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/02/21 17:41:19 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/24 10:37:30 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,17 @@
 
 void	ft_init(t_var *var, char **env)
 {
+	int	shlvl;
+	
 	if (!(isatty(STDIN_FILENO)))
 		exit(EXIT_FAILURE);
 	var->exit_nb = 0;
 	var->env = ft_strsdup(env);
 	if (!var->env)
 		exit(EXIT_FAILURE);
-	var->env = ft_modify_shlvl(var->env, 1);
+	shlvl = ft_atoi(getenv("SHLVL"));
+	if (ft_update_env_var_value(&env, ft_get_line_env(env, "SHLVL"), ft_itoa(shlvl + 1)))
+		exit(EXIT_FAILURE);
 	if (!var->env)
 		exit(EXIT_FAILURE);
 	ft_disable_echoctl();

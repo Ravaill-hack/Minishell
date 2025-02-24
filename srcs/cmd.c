@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/02/22 16:16:01 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/24 10:38:11 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	ft_cmd_exit(t_var var, char **env, t_token_list *token_list)
 		if (!shlvl)
 			return (FAILURE);
 		shlvl_current = ft_atoi((ft_extract_env_value_from_key(env, "SHLVL")));
+		printf("shlvl : %d\n", shlvl);
+		printf("shlvl current : %d", shlvl_current);
 		if (shlvl_current == shlvl)
 			return (ft_handle_exit_last_shlvl(var, env));
 		else
@@ -46,9 +48,7 @@ int	ft_handle_exit_not_last_shlvl(char **env)
 	if (ft_modify_shlvl(env, -1))
 		return (FAILURE);
 	printf("exit\n");
-	if (ft_exec_cmd(env, "exit") == FAILURE)
-		return (FAILURE);
-	return (SUCCESS);
+	return (ft_exec_cmd(env, "exit"));
 }
 
 void	ft_cmd_env(char **env, t_token_list *token_list)
@@ -69,9 +69,6 @@ int	ft_cmd_unset(char ***env_ptr, t_token_list *token_list)
 	if (line_index == -1)
 		return (FAILURE);
 	else
-	{
-		if (ft_remove_env_var(env_ptr, line_index) == FAILURE)
-			return (FAILURE);
-	}
+		return (ft_remove_env_var(env_ptr, line_index));
 	return (SUCCESS);
 }

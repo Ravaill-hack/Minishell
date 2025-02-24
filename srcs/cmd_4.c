@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_4.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 21:28:54 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/23 22:02:22 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/24 10:14:31 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,9 @@ int	ft_cmd_echo_print_doll(t_token_list *token, char **env, int exit_nb)
 	if (temp)
 	{
 		ft_putstr_fd (temp, 1);
-		//free (temp);
 		return (SUCCESS);
 	}
-	return (FAILURE);
+	return (SUCCESS);
 }
 
 int	ft_cmd_echo_print_tokens(t_token_list *token, int i, char **env, int ex_nb)

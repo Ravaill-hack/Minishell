@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_3.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 16:06:24 by julien            #+#    #+#             */
-/*   Updated: 2025/02/23 21:30:48 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/24 10:13:32 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ int	ft_cmd_cd_home(char **env)
 	ft_exec_cmd(env, ft_strjoin("cd ", home));
 	new_pwd = home;
 	pwd_line_index = ft_get_line_env(env, "PWD");
-	if (ft_update_env_var_value(&env, pwd_line_index, new_pwd) == FAILURE)
-		return (FAILURE);
-	return (SUCCESS);
+	return (ft_update_env_var_value(&env, pwd_line_index, new_pwd));
 }
 
 int	ft_cmd_cd_path(char **env, char *path)
@@ -54,9 +52,7 @@ int	ft_cmd_cd_path(char **env, char *path)
 		return (FAILURE);
 	new_pwd = path;
 	pwd_line_index = ft_get_line_env(env, "PWD");
-	if (ft_update_env_var_value(&env, pwd_line_index, new_pwd) == FAILURE)
-		return (FAILURE);
-	return (SUCCESS);
+	return (ft_update_env_var_value(&env, pwd_line_index, new_pwd));
 }
 
 int	ft_cmd_skip_name(char *str)
