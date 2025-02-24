@@ -6,11 +6,19 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:31:57 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/24 17:56:53 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:09:38 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_token_list	*ft_go_to_next_node(t_token_list *node)
+{
+	while (node && (node->type == CONTENT || node->type == DOLL) 
+		&& node->print_space_after == 0)
+		node = node->next;
+	return (node);
+}
 
 int	ft_doll_val_len(char *doll, char **env)
 {
@@ -118,8 +126,7 @@ char	**ft_token_list_to_char_array(t_token_list *node, char **env)
 		array[j] = ft_fill_arg(node, env);
 		if (!array[j])
 			return (ft_free_arg_array(array, j), NULL); //A FAIRE fonction pour free un tableau de chaines jusqu'a la ieme chaine
-		node = ft_go_to_next_node(node); //A FAIRE fonction pour aller au noeud apres le premier prochain noeud suivi par un espace. renvoie NULL si c'est la fin 
-		//i.e le prochain noeud n'existe pas ou est autre chose qu'un DOLL ou un CONTENT
+		node = ft_go_to_next_node(node);
 		j++;
 	}
 	array[j] = NULL;
@@ -139,9 +146,9 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i)
 	cmd_node->arg = ft_token_list_to_char_array(token_node, var->env);
 	if (!cmd_node->arg)
 		return (NULL);
-	cmd_node->name = ft_extract_cmd_name(cmd_node->arg[0]); //A FAIRE fonction pour isoler le nom de la commande
-	cmd_node->path = ft_extract_cmd_path(cmd_node->arg[0]); //A FAIRE fonction pour isoler le chemin de la commande
-	cmd_node->opt = ft_extract_cmd_opt(cmd_node->arg); //A FAIRE fonction pour isoler les options de la commande
+//	cmd_node->name = ft_extract_cmd_name(cmd_node->arg[0]); //A FAIRE fonction pour isoler le nom de la commande
+//	cmd_node->path = ft_extract_cmd_path(cmd_node->arg[0]); //A FAIRE fonction pour isoler le chemin de la commande
+//	cmd_node->opt = ft_extract_cmd_opt(cmd_node->arg); //A FAIRE fonction pour isoler les options de la commande
 	cmd_node->fd_in = ft_find_fdin(token_node, var->env); //A FAIRE fonction pour renvoyer le fd de lecture : peut etre un
 	// heredoc ou rien ou un fichier ou un canal d'un int[2] qui stockera en ecriture le resultat d'un autre pipe
 	cmd_node->fd_out = ft_find_fdout(token_node, var->env); //A FAIRE fonction pour renvoyer le fd d'ecriture' : peut etre un
