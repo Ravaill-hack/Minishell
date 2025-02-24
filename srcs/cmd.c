@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/02/24 10:38:11 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/24 10:44:37 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ int	ft_cmd_exit(t_var var, char **env, t_token_list *token_list)
 
 int	ft_handle_exit_last_shlvl(t_var var, char **env)
 {
-	if (ft_modify_shlvl(env, -1))
+	int	shlvl;
+	
+	shlvl = ft_atoi(getenv("SHLVL"));
+	if (ft_update_env_var_value(&env, ft_get_line_env(env, "SHLVL"), ft_itoa(shlvl - 1)))
 		return (FAILURE);
 	if (ft_exec_cmd(env, "exit") == FAILURE)
 		return (FAILURE);
@@ -45,7 +48,10 @@ int	ft_handle_exit_last_shlvl(t_var var, char **env)
 
 int	ft_handle_exit_not_last_shlvl(char **env)
 {
-	if (ft_modify_shlvl(env, -1))
+	int	shlvl;
+	
+	shlvl = ft_atoi(getenv("SHLVL"));
+	if (ft_update_env_var_value(&env, ft_get_line_env(env, "SHLVL"), ft_itoa(shlvl - 1)))
 		return (FAILURE);
 	printf("exit\n");
 	return (ft_exec_cmd(env, "exit"));
