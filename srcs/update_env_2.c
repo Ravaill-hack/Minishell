@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_env_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 13:58:43 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/24 13:59:08 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/25 10:51:23 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	ft_update_env_var_value_from_key(char ***env, char *key, char *value)
 {
 	int		index;
 
+	if (!env || !*env || !key || !value)
+		return (FAILURE);
 	index = ft_get_line_env(*env, key);
 	if (index == -1)
 		return (FAILURE);
