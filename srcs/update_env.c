@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 10:31:57 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/25 09:33:16 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/25 10:05:01 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,13 @@ int	ft_update_env_var_value(char ***env_ptr, int line_index, char *value)
 	index.j = 0;
 	while ((*env_ptr)[index.i])
 	{
-		if (index.i != line_index)
-		{
-			if (ft_copy_env_var(new_env, *env_ptr, &index.i, &index.j) == FAILURE)
-				return (ft_free_strs(new_env), FAILURE);
-		}
-		else
-		{
-			if (ft_update_env_var(new_env, *env_ptr, &index, value) == FAILURE)
-				return (ft_free_strs(new_env), FAILURE);
-		}
+		if ((index.i != line_index
+				&& ft_copy_env_var(new_env, *env_ptr,
+					&index.i, &index.j) == FAILURE)
+			|| (index.i == line_index
+				&& ft_update_env_var(new_env, *env_ptr,
+					&index, value) == FAILURE))
+			return (ft_free_strs(new_env), FAILURE);
 		index.i++;
 	}
 	ft_free_strs(*env_ptr);
