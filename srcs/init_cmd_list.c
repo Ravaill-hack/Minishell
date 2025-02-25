@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:31:57 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/25 17:31:35 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:53:18 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,6 @@ char	**ft_token_list_to_char_array(t_token_list *node, char **env)
 	int		j;
 
 	len = ft_nb_str(node);
-	ft_putstr_fd("nbr lines : ", 1);
-	ft_putnbr_fd(len, 1);
-	ft_putchar_fd('\n', 1);
 	j = 0;
 	array = (char **)malloc((len + 1) * sizeof(char *));
 	if (!array)
@@ -163,6 +160,9 @@ t_cmd	**ft_build_cmd_list(t_var *var)
 
 	i = 0;
 	var->nb_cmd = ft_nb_pipes(*(var->token_list)) + 1;
+	ft_putstr_fd("nb_cmd : ", 1);
+	ft_putnbr_fd(var->nb_cmd, 1);
+	ft_putchar_fd('\n', 1);
 	cmd_list = (t_cmd **)malloc((var->nb_cmd + 1) * sizeof(t_cmd *));
 	if(!cmd_list)
 		return (NULL);

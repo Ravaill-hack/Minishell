@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:09:21 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/25 17:38:14 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:51:18 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ int	ft_nb_str(t_token_list *list)
 	res = 0;
 	while (list && (list->type == CONTENT || list->type == DOLL))
 	{
-		if (list->print_space_after == 1 || (list->next->type != CONTENT && list->next->type != DOLL) || !(list->next))
+		if (list->print_space_after == 1
+			|| (list->next && (list->next->type != CONTENT && list->next->type != DOLL))
+			|| !(list->next))
 			res ++;
 		list = list->next;
 	}
