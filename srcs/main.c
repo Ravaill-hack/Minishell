@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/25 13:49:15 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/25 16:28:13 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,12 @@
 int	main(int argc, char **argv, char **env)
 {
 	t_var	var;
-	char	*val;
 	t_shell	*shell;
+	char	*val;
 
-	shell = malloc(sizeof(t_shell));
-	if (!shell)
-		exit(EXIT_FAILURE);
 	(void) argc;
 	(void) argv;
-	ft_init(&var, env);
-	shell->terminal_prompt = "minishell$ ";
+	ft_init(&var, &shell, env);
 	get_prompt(shell, &var);
 	while (shell->prompt)
 	{

@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/02/25 14:33:41 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/25 16:17:41 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,12 @@ int	ft_update_shlvl(char ***env, int level)
 	return (free(new_shlvl), result);
 }
 
-void	ft_init(t_var *var, char **env)
+void	ft_init(t_var *var, t_shell **shell, char **env)
 {
+	*shell = malloc(sizeof(t_shell));
+	if (!*shell)
+		exit(EXIT_FAILURE);
+	(*shell)->terminal_prompt = "minishell$ ";
 	var->exit_nb = 0;
 	var->env = ft_strsdup(env);
 	if (!var->env)

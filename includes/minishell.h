@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/25 13:50:56 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/25 17:07:08 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ typedef struct s_shell
 Init
 */
 void			get_prompt(t_shell *shell, t_var *var);
-void			ft_init(t_var *var, char **env);
+void			ft_init(t_var *var, t_shell **shell, char **env);
 int				ft_update_shlvl(char ***env, int level);
 /*
 Token - append
@@ -234,6 +234,7 @@ Exec cmd
 char			*ft_extract_path(char **env, char *cmd);
 char			**ft_set_exec_args(char *path, char **split_cmd);
 int				ft_exec_cmd(char **env, char *cmd);
+void			ft_handle_pid(pid_t pid, char *path, char **args, char **env);
 /*
 Cmds
 */

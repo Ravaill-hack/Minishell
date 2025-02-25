@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:14:19 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/24 16:43:18 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:03:48 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,26 +60,38 @@ char	**ft_set_exec_args(char *path, char **split_cmd)
 	return (args);
 }
 
+void	ft_handle_pid(pid_t pid, char *path, char **args, char **env)
+{
+	int	status;
+
+	if (pid == 0)
+	{
+		execve(path, args, env);
+		exit(EXIT_FAILURE);
+	}
+	else
+		waitpid(pid, &status, 0);
+}
+
 int	ft_exec_cmd(char **env, char *cmd)
 {
+	pid_t	pid;
 	char	**split_cmd;
 	char	*path;
 	char	**args;
-	int		err;
 
 	split_cmd = ft_split(cmd, ' ');
+	if (!split_cmd || !split_cmd[0])
+		return (ft_free_strs(split_cmd), FAILURE);
 	path = ft_extract_path(env, split_cmd[0]);
+	if (!path)
+		return (ft_free_strs(split_cmd), FAILURE);
 	args = ft_set_exec_args(path, split_cmd);
 	if (!args)
 		return (ft_free_strs(split_cmd), free(path), FAILURE);
-	err = execve(path, args, env);
-	if (err == -1)
-	{
-		if (args != split_cmd)
-			free(args);
-		ft_free_strs(split_cmd);
-		free(path);
-		return (FAILURE);
-	}
+	pid = fork();
+	if (pid == -1)
+		return (ft_free_strs(split_cmd), free(path), FAILURE);
+	ft_handle_pid(pid, path, args, env);
 	return (SUCCESS);
 }
