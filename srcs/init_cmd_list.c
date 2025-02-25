@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:31:57 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/25 10:56:47 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:31:35 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,9 @@ char	**ft_token_list_to_char_array(t_token_list *node, char **env)
 	int		j;
 
 	len = ft_nb_str(node);
+	ft_putstr_fd("nbr lines : ", 1);
+	ft_putnbr_fd(len, 1);
+	ft_putchar_fd('\n', 1);
 	j = 0;
 	array = (char **)malloc((len + 1) * sizeof(char *));
 	if (!array)
