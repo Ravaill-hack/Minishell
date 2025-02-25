@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 16:06:24 by julien            #+#    #+#             */
-/*   Updated: 2025/02/24 16:42:22 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/25 11:20:42 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 int	ft_cmd_cd(char **env, t_token_list *token_list)
 {
 	char	**split_line;
+	int		result;
 
 	split_line = ft_split(token_list->val, ' ');
 	if (!split_line[1])
-		return (ft_cmd_cd_home(env));
+		result = ft_cmd_cd_home(env);
 	else
-		return (ft_cmd_cd_path(env, split_line[1]));
-	return (SUCCESS);
+		result = ft_cmd_cd_path(env, split_line[1]);
+	return (ft_free_strs(split_line), result);
 }
 
 int	ft_cmd_cd_home(char **env)
@@ -39,9 +40,7 @@ int	ft_cmd_cd_home(char **env)
 			perror(NULL);
 		return (FAILURE);
 	}
-	if (ft_update_new_pwd(&env, home) == FAILURE)
-		return (FAILURE);
-	return (SUCCESS);
+	return (ft_update_new_pwd(&env, home));
 }
 
 int	ft_update_old_pwd(char ***env)
@@ -51,16 +50,12 @@ int	ft_update_old_pwd(char ***env)
 	old_pwd = ft_extract_env_value_from_key(*env, "PWD");
 	if (!old_pwd)
 		return (FAILURE);
-	if (ft_update_env_var_value_from_key(env, "OLDPWD", old_pwd) == FAILURE)
-		return (FAILURE);
-	return (SUCCESS);
+	return (ft_update_env_var_value_from_key(env, "OLDPWD", old_pwd));
 }
 
 int	ft_update_new_pwd(char ***env, char *new_pwd)
 {
-	if (ft_update_env_var_value_from_key(env, "PWD", new_pwd) == FAILURE)
-		return (FAILURE);
-	return (SUCCESS);
+	return (ft_update_env_var_value_from_key(env, "PWD", new_pwd));
 }
 
 int	ft_cmd_cd_path(char **env, char *path)
@@ -77,7 +72,5 @@ int	ft_cmd_cd_path(char **env, char *path)
 			perror(NULL);
 		return (FAILURE);
 	}
-	if (ft_update_new_pwd(&env, path) == FAILURE)
-		return (FAILURE);
-	return (SUCCESS);
+	return (ft_update_new_pwd(&env, path));
 }

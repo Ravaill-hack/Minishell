@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 10:31:57 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/25 11:10:39 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/25 11:35:53 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	ft_update_env_var_value(char ***env_ptr, int line_index, char *value)
 		index.i++;
 	}
 	ft_free_strs(*env_ptr);
-	new_env[index.j] = NULL;
 	*env_ptr = new_env;
+	*env_ptr[index.i] = NULL;
 	return (SUCCESS);
 }
 
