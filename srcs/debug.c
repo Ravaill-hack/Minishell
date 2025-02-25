@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:40:07 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/24 15:42:21 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/25 10:51:43 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,19 @@ void	ft_print_info_list(t_token_list *list)
 			printf("content : %s\n", temp->val);
 		printf("need for space after : %d\n\n", temp->print_space_after);
 		temp = temp->next;
+	}
+}
+
+void	ft_print_info_cmd_list(int nb_cmd, t_cmd **list)
+{
+	int	i;
+
+	i = 0;
+	printf("add cmd_list : %p\n", list);
+	while (i < nb_cmd)
+	{
+		ft_print_strs(list[i]->arg);
+		printf("\n\n");
+		i++;
 	}
 }

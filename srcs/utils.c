@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:09:21 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/24 16:13:12 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/25 11:05:17 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	ft_nb_str(t_token_list *list)
 	res = 0;
 	while (list && (list->type == CONTENT || list->type == DOLL))
 	{
-		if (list->print_space_after == 1)
+		if (list->print_space_after == 1 /*|| (list->next->type != CONTENT && list->next->type != DOLL)*/)
 			res ++;
 		list = list->next;
 	}

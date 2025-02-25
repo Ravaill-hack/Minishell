@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmd_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:31:57 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/24 18:09:38 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/25 10:56:47 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,8 @@ char	*ft_dolljoin(char *str, char *doll, char **env)
 
 int	ft_find_special_len(t_token_list *node, char **env)
 {
-	int	i;
 	int	len;
 
-	i = 0;
 	len = 0;
 	while (node && (node->print_space_after == 0 || node->type != CONTENT
 		|| node->type != DOLL))
@@ -124,8 +122,8 @@ char	**ft_token_list_to_char_array(t_token_list *node, char **env)
 	while (j < len)
 	{
 		array[j] = ft_fill_arg(node, env);
-		if (!array[j])
-			return (ft_free_arg_array(array, j), NULL); //A FAIRE fonction pour free un tableau de chaines jusqu'a la ieme chaine
+		//if (!array[j])
+			//return (ft_free_arg_array(array, j), NULL); //A FAIRE fonction pour free un tableau de chaines jusqu'a la ieme chaine
 		node = ft_go_to_next_node(node);
 		j++;
 	}
@@ -137,40 +135,39 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i)
 {
 	t_token_list	*token_node;
 	t_cmd			*cmd_node;
-	char			**tab_args;
 
 	cmd_node = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!cmd_node)
 		return (NULL);
-	token_node = ft_go_to_cmd_node(var->token_list, i);
+	token_node = ft_go_to_cmd_node(*(var->token_list), i);
 	cmd_node->arg = ft_token_list_to_char_array(token_node, var->env);
 	if (!cmd_node->arg)
 		return (NULL);
 //	cmd_node->name = ft_extract_cmd_name(cmd_node->arg[0]); //A FAIRE fonction pour isoler le nom de la commande
 //	cmd_node->path = ft_extract_cmd_path(cmd_node->arg[0]); //A FAIRE fonction pour isoler le chemin de la commande
 //	cmd_node->opt = ft_extract_cmd_opt(cmd_node->arg); //A FAIRE fonction pour isoler les options de la commande
-	cmd_node->fd_in = ft_find_fdin(token_node, var->env); //A FAIRE fonction pour renvoyer le fd de lecture : peut etre un
+	//cmd_node->fd_in = ft_find_fdin(token_node, var->env); //A FAIRE fonction pour renvoyer le fd de lecture : peut etre un
 	// heredoc ou rien ou un fichier ou un canal d'un int[2] qui stockera en ecriture le resultat d'un autre pipe
-	cmd_node->fd_out = ft_find_fdout(token_node, var->env); //A FAIRE fonction pour renvoyer le fd d'ecriture' : peut etre un
+	//cmd_node->fd_out = ft_find_fdout(token_node, var->env); //A FAIRE fonction pour renvoyer le fd d'ecriture' : peut etre un
 	// append ou STDOUT ou un fichier ou un canal d'un int[2] qui utilisera en lecture le resultat d'un autre pipe
+	return (cmd_node);
 }
 
 t_cmd	**ft_build_cmd_list(t_var *var)
 {
 	t_cmd	**cmd_list;
-	int		len;
 	int		i;
 
 	i = 0;
-	len = ft_nb_pipes(var->token_list) + 1;
-	cmd_list = (t_cmd **)malloc((len + 1) * sizeof(t_cmd *));
+	var->nb_cmd = ft_nb_pipes(*(var->token_list)) + 1;
+	cmd_list = (t_cmd **)malloc((var->nb_cmd + 1) * sizeof(t_cmd *));
 	if(!cmd_list)
 		return (NULL);
-	while (i < len)
+	while (i < var->nb_cmd)
 	{
 		cmd_list[i] = ft_create_cmd_node(var, i);
-		if (!cmd_list[i])
-			return (ft_free_cmd_list(cmd_list, i), NULL); //A FAIRE fonction pour free un tableau de structures jusqu'a la ieme structure
+		//if (!cmd_list[i])
+		//	return (ft_free_cmd_list(cmd_list, i), NULL); //A FAIRE fonction pour free un tableau de structures jusqu'a la ieme structure
 		i++;
 	}
 	cmd_list[i] = NULL;

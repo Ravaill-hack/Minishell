@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:55:13 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/24 15:36:16 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/25 10:43:13 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,9 @@ int	ft_parse_line(t_var *var)
 {
 	var->token_list = ft_build_token_list(var->line);
 	if (!var->token_list)
+		return (FAILURE);
+	var->cmd = ft_build_cmd_list(var);
+	if (!var->cmd)
 		return (FAILURE);
 	return (SUCCESS);
 }

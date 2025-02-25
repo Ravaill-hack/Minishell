@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/24 15:35:21 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/25 10:53:24 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,8 @@ typedef struct s_var
 	char					*line;
 	char					**split_line;
 	t_token_list			**token_list;
-	t_cmd					*cmd;
+	t_cmd					**cmd;
+	int						nb_cmd;
 	char					**env;
 	int						exit_nb;
 }	t_var;
@@ -194,6 +195,18 @@ t_token_list	*ft_last_token(t_token_list *token);
 void			ft_free_list(t_token_list **list);
 void			ft_skip_spaces(char *str, int *i, t_token_list *list);
 /*
+Cmd list - init A  TRIER
+*/
+t_cmd			**ft_build_cmd_list(t_var *var);
+t_cmd			*ft_create_cmd_node(t_var *var, int i);
+char			**ft_token_list_to_char_array(t_token_list *node, char **env);
+char			*ft_fill_arg(t_token_list *node, char **env);
+t_token_list	*ft_go_to_cmd_node(t_token_list	*list, int i);
+int				ft_find_special_len(t_token_list *node, char **env);
+char			*ft_dolljoin(char *str, char *doll, char **env);
+int				ft_doll_val_len(char *doll, char **env);
+t_token_list	*ft_go_to_next_node(t_token_list *node);
+/*
 Handle errors
 */
 void			ft_exit_error(t_var var);
@@ -237,6 +250,7 @@ Debug
 */
 void			ft_print_token_type(t_token_list *token);
 void			ft_print_info_list(t_token_list *list);
+void			ft_print_info_cmd_list(int nb_cmd, t_cmd **list);
 /*
 Utils
 */

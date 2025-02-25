@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/24 15:31:45 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/25 10:52:50 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int argc, char **argv, char **env)
 		if (!ft_parse_line(&var))
 			ft_exit_error(var);
 		ft_print_info_list(*(var.token_list));
+		ft_print_info_cmd_list(var.nb_cmd, var.cmd);
 		if (*(var.token_list))
 		{
 			val = var.token_list[0]->val;
