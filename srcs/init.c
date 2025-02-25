@@ -6,11 +6,23 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/02/25 10:42:18 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/25 13:49:56 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	get_prompt(t_shell *shell, t_var *var)
+{
+	if (isatty(fileno(stdin)))
+		shell->prompt = readline(shell->terminal_prompt);
+	else
+	{
+		var->line = get_next_line(fileno(stdin));
+		shell->prompt = ft_strtrim(var->line, "\n");
+		free(var->line);
+	}
+}
 
 int	ft_update_shlvl(char ***env, int level)
 {
@@ -29,8 +41,6 @@ int	ft_update_shlvl(char ***env, int level)
 
 void	ft_init(t_var *var, char **env)
 {
-	if (!(isatty(STDIN_FILENO)))
-		exit(EXIT_FAILURE);
 	var->exit_nb = 0;
 	var->env = ft_strsdup(env);
 	if (!var->env)

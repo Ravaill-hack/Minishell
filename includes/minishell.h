@@ -6,16 +6,12 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/25 09:06:37 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/25 13:50:56 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-# ifndef PROMPT
-#  define PROMPT "minishell$ "
-# endif
 
 # ifndef FAILURE
 #  define FAILURE 0
@@ -117,9 +113,16 @@ typedef struct s_index
 	int	j;
 }	t_index;
 
+typedef struct s_shell
+{
+	char	*terminal_prompt;
+	char	*prompt;
+}	t_shell;
+
 /*
 Init
 */
+void			get_prompt(t_shell *shell, t_var *var);
 void			ft_init(t_var *var, char **env);
 int				ft_update_shlvl(char ***env, int level);
 /*
@@ -163,7 +166,7 @@ Token - parsing
 t_token_list	*ft_deal_dquoted(char *line, int *i, t_token_list **list);
 int				ft_append_tokens(char *line, t_token_list **list);
 t_token_list	**ft_build_token_list(char *line);
-int				ft_parse_line(t_var *var);
+int				ft_parse_line(t_var *var, char *prompt);
 /*
 Token - utils
 */
@@ -243,7 +246,7 @@ int				ft_cmd_export(char ***env_ptr, t_token_list *token_list);
 int				ft_cmd_export_with_no_args(char ***env_ptr);
 int				ft_cmd_export_with_args(char ***env_ptr, char *arg);
 int				ft_cmd_pwd(char **env, t_token_list *token_list);
-int				ft_cmd_cd(char **env, t_token_list *token_list);
+int				ft_cmd_cd(char ***env, t_token_list *token_list);
 int				ft_update_old_pwd(char ***env);
 int				ft_update_new_pwd(char ***env, char *new_pwd);
 int				ft_cmd_cd_home(char **env);

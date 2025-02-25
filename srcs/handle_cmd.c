@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:43 by julien            #+#    #+#             */
-/*   Updated: 2025/02/24 16:04:10 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/25 13:53:46 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ int	ft_handle_cmd(t_var *var, char *val)
 	else if (ft_strncmp(val, "pwd", ft_strlen(val)) == 0)
 		return (ft_cmd_pwd(var->env, *(var->token_list)));
 	else if (ft_strncmp(val, "cd", 2) == 0)
-		return (ft_cmd_cd(var->env, *(var->token_list)));
+		return (ft_cmd_cd(&var->env, *(var->token_list)));
 	else if (ft_strncmp(val, "echo", 4) == 0)
 		return (ft_cmd_echo(*(var->token_list), var->env, var->exit_nb));
+	else
+		return (ft_exec_cmd(var->env, val));
 	return (SUCCESS);
 }

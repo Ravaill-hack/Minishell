@@ -6,22 +6,22 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 16:06:24 by julien            #+#    #+#             */
-/*   Updated: 2025/02/25 11:20:42 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/25 13:13:04 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_cmd_cd(char **env, t_token_list *token_list)
+int	ft_cmd_cd(char ***env, t_token_list *token_list)
 {
 	char	**split_line;
 	int		result;
 
 	split_line = ft_split(token_list->val, ' ');
 	if (!split_line[1])
-		result = ft_cmd_cd_home(env);
+		result = ft_cmd_cd_home(*env);
 	else
-		result = ft_cmd_cd_path(env, split_line[1]);
+		result = ft_cmd_cd_path(*env, split_line[1]);
 	return (ft_free_strs(split_line), result);
 }
 

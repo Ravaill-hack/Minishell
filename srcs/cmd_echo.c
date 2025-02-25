@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_echo.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 21:28:54 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/24 14:12:07 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/25 13:54:33 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ int	ft_cmd_echo(t_token_list *token, char **env, int ex_nb)
 {
 	size_t	i;
 	int		ind;
-	int		success;
+	int		result;
 
-	success = 0;
 	ind = ft_cmd_skip_name(token->val);
 	if (token->val[ind] == '\0')
 		token = token->next;
@@ -34,11 +33,11 @@ int	ft_cmd_echo(t_token_list *token, char **env, int ex_nb)
 		}
 		else
 			i = 1;
-		success = ft_cmd_echo_print_tokens(token, ind, env, ex_nb);
+		result = ft_cmd_echo_print_tokens(token, ind, env, ex_nb);
 		if (i == 1)
 			ft_putchar_fd('\n', 1);
 	}
-	return (success);
+	return (result);
 }
 
 int	ft_cmd_echo_print_doll(t_token_list *token, char **env, int exit_nb)
