@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:15:56 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/25 09:10:24 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/25 09:53:25 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 int	ft_cmd_export(char ***env_ptr, t_token_list *token_list)
 {
 	char	**split_line;
+	int		result;
 
 	split_line = ft_split(token_list->val, ' ');
 	if (!split_line[1])
-		return (ft_free_strs(split_line), ft_cmd_export_with_no_args(env_ptr));
+		result = ft_cmd_export_with_no_args(env_ptr);
 	else
-		return (ft_free_strs(split_line),
-			ft_cmd_export_with_args(env_ptr, split_line[1]));
+		result = ft_cmd_export_with_args(env_ptr, split_line[1]);
+	ft_free_strs(split_line);
+	return (result);
 }
 
 int	ft_cmd_export_with_no_args(char ***env_ptr)
@@ -56,6 +58,7 @@ int	ft_cmd_export_with_args(char ***env_ptr, char *arg)
 		return (ft_add_env_var(env_ptr, arg));
 	else
 		return (ft_update_env_var_value(env_ptr, line_index, value));
+	return (SUCCESS);
 }
 
 int	ft_cmd_pwd(char **env, t_token_list *token_list)

@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/02/25 09:06:41 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/25 09:49:11 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	ft_cmd_unset(char ***env_ptr, t_token_list *token_list)
 {
 	int		line_index;
 	char	**split_line;
+	int		result;
 
 	split_line = ft_split(token_list->val, ' ');
 	if (!split_line[1])
@@ -79,6 +80,8 @@ int	ft_cmd_unset(char ***env_ptr, t_token_list *token_list)
 	if (line_index == -1)
 		return (ft_free_strs(split_line), FAILURE);
 	else
-		return (ft_free_strs(split_line),
-			ft_remove_env_var(env_ptr, line_index));
+	{
+		result = ft_remove_env_var(env_ptr, line_index);
+		return (ft_free_strs(split_line), result);
+	}
 }

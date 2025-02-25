@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 10:31:57 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/25 08:48:25 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/25 09:33:16 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,15 @@ int	ft_update_env_var_value(char ***env_ptr, int line_index, char *value)
 	while ((*env_ptr)[index.i])
 	{
 		if (index.i != line_index)
-			ft_copy_env_var(new_env, *env_ptr, &index.i, &index.j);
+		{
+			if (ft_copy_env_var(new_env, *env_ptr, &index.i, &index.j) == FAILURE)
+				return (ft_free_strs(new_env), FAILURE);
+		}
 		else
-			ft_update_env_var(new_env, *env_ptr, &index, value);
+		{
+			if (ft_update_env_var(new_env, *env_ptr, &index, value) == FAILURE)
+				return (ft_free_strs(new_env), FAILURE);
+		}
 		index.i++;
 	}
 	ft_free_strs(*env_ptr);
@@ -48,7 +54,7 @@ int	ft_copy_env_var(char **new_env, char **env, int *i, int *j)
 int	ft_update_env_var(char **new_env, char **env, t_index *index, char *value)
 {
 	char	*key;
-	
+
 	value = ft_strjoin("=", value);
 	if (!value)
 		return (ft_free_strs_until(new_env, index->j), FAILURE);

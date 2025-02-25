@@ -1,4 +1,7 @@
 cd srcs : seg fault
 cd test (with chmod 000) : No such file or directory
 
+valgrind export with new var
+valgrind export with old var
+
 cd
