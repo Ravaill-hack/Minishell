@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 10:31:57 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/24 17:19:44 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/25 08:48:25 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int	ft_update_env_var_value(char ***env_ptr, int line_index, char *value)
 		index.i++;
 	}
 	ft_free_strs(*env_ptr);
+	new_env[index.j] = NULL;
 	*env_ptr = new_env;
-	*env_ptr[index.i] = NULL;
 	return (SUCCESS);
 }
 

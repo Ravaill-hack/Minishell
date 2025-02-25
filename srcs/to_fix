@@ -1,7 +1,4 @@
 cd srcs : seg fault
 cd test (with chmod 000) : No such file or directory
 
-exit
-export
-pwd
 cd

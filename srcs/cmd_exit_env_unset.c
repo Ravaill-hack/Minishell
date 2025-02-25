@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exit_env_unset.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/02/24 17:23:00 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/25 09:06:41 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,7 @@ int	ft_cmd_exit(t_var var, char **env, t_token_list *token_list)
 
 int	ft_handle_exit_last_shlvl(t_var var, char **env)
 {
-	int	shlvl;
-
-	shlvl = ft_atoi(getenv("SHLVL"));
-	if (ft_update_env_var_value_from_key(&env, "SHLVL",
-			ft_itoa(shlvl - 1)) == FAILURE)
+	if (!ft_update_shlvl(&env, -1))
 		return (FAILURE);
 	if (ft_exec_cmd(env, "exit") == FAILURE)
 		return (FAILURE);
@@ -49,12 +45,18 @@ int	ft_handle_exit_last_shlvl(t_var var, char **env)
 
 int	ft_handle_exit_not_last_shlvl(char **env)
 {
-	int	shlvl;
+	int		shlvl;
+	char	*new_shlvl;
 
 	shlvl = ft_atoi(getenv("SHLVL"));
-	if (ft_update_env_var_value_from_key(&env, "SHLVL",
-			ft_itoa(shlvl - 1)) == FAILURE)
+	if (!shlvl)
 		return (FAILURE);
+	new_shlvl = ft_itoa(shlvl - 1);
+	if (ft_update_env_var_value_from_key(&env, "SHLVL", new_shlvl) == FAILURE)
+	{
+		free(new_shlvl);
+		return (FAILURE);
+	}
 	printf("exit\n");
 	return (ft_exec_cmd(env, "exit"));
 }
@@ -77,5 +79,6 @@ int	ft_cmd_unset(char ***env_ptr, t_token_list *token_list)
 	if (line_index == -1)
 		return (ft_free_strs(split_line), FAILURE);
 	else
-		return (ft_free_strs(split_line), ft_remove_env_var(env_ptr, line_index));
+		return (ft_free_strs(split_line),
+			ft_remove_env_var(env_ptr, line_index));
 }
