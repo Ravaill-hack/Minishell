@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/25 10:53:24 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/25 22:45:26 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,7 +257,8 @@ Utils
 char			*ft_strjoin3(char *s1, char *s2, char *s3);
 int				ft_nb_pipes(t_token_list *list);
 int				ft_nb_dolls(t_token_list *list);
-int				ft_nb_str(t_token_list *list);
+int				ft_nb_str(t_token_list *list, char **env);
+int				ft_doll_var_exists(char *str, char **env);
 /*
 Handle cmd
 */

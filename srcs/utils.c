@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:09:21 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/25 19:51:18 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/25 22:07:27 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	ft_nb_dolls(t_token_list *list)
 	return (res);
 }
 
-int	ft_nb_str(t_token_list *list)
+int	ft_nb_str(t_token_list *list, char **env)
 {
 	int	res;
 
@@ -61,7 +61,11 @@ int	ft_nb_str(t_token_list *list)
 		if (list->print_space_after == 1
 			|| (list->next && (list->next->type != CONTENT && list->next->type != DOLL))
 			|| !(list->next))
+		{
 			res ++;
+			if (list->type == DOLL && !ft_doll_val_len(list->val, env))
+				res --;
+		}
 		list = list->next;
 	}
 	return (res);

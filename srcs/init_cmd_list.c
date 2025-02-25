@@ -6,17 +6,37 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:31:57 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/25 19:53:18 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/25 22:53:47 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	ft_doll_var_exists(char *str, char **env)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strncmp(str, env[i], ft_strlen(str)) == 0
+			&& env[i][ft_strlen(str)] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 t_token_list	*ft_go_to_next_node(t_token_list *node)
 {
-	while (node && (node->type == CONTENT || node->type == DOLL) 
-		&& node->print_space_after == 0)
+	node = node->next;
+	while (node)
+	{
+		if (node->prev->print_space_after == 1 
+			&& (node->type == CONTENT || node->type == DOLL))
+			break;
 		node = node->next;
+	}
 	return (node);
 }
 
@@ -27,7 +47,7 @@ int	ft_doll_val_len(char *doll, char **env)
 
 	len = 0;
 	ptr = ft_extract_env_value_from_key(env, &(doll[1]));
-	while (ptr[len])
+	while (ptr && ptr[len])
 		len ++;
 	return (len);
 }
@@ -41,25 +61,39 @@ char	*ft_dolljoin(char *str, char *doll, char **env)
 
 	src_len = ft_strlen(str);
 	size = ft_strlen(str) + (size_t)ft_doll_val_len(doll, env);
+	if (size == 0)
+		return (NULL);
 	joined_str = (char *)ft_calloc((size + 1), sizeof(char));
 	if (!joined_str)
 		return (NULL);
 	val_doll = ft_extract_env_value_from_key(env, &(doll[1]));
-	ft_strlcpy(joined_str, str, src_len + 1);
-	ft_strlcat(joined_str, val_doll, size + 1);
+	if (str)
+		ft_strlcpy(joined_str, str, src_len + 1);
+	if (val_doll)
+		ft_strlcat(joined_str, val_doll, size + 1);
+	if (!str && !val_doll)
+		return (NULL);
 	return (joined_str);
 }
 
 int	ft_find_special_len(t_token_list *node, char **env)
 {
 	int	len;
+	int	len_doll;
 
 	len = 0;
-	while (node && (node->print_space_after == 0 || node->type != CONTENT
-		|| node->type != DOLL))
+	len_doll = 0;
+	while (node && (node->print_space_after == 0 || (node->type != CONTENT
+		|| node->type != DOLL)))
 	{
 		if (node->type == DOLL)
-			len += ft_doll_val_len(node->val, env);
+		{
+			len_doll = ft_doll_val_len(node->val, env);
+			if (len_doll == 0)
+				node = node->next;
+			else
+				len += len_doll;
+		}
 		else if (node->type == CONTENT)
 			len += ft_strlen((const char *)node->val);
 		node = node->next;
@@ -84,27 +118,27 @@ t_token_list	*ft_go_to_cmd_node(t_token_list	*list, int i)
 char	*ft_fill_arg(t_token_list *node, char **env)
 {
 	char	*str;
-	char	*tmp;
-	int		len;
+	//char	*tmp;
+	//int		len;
 
-	len = ft_find_special_len(node, env);
+	//len = ft_find_special_len(node, env);
 	str = NULL;
-	tmp = NULL;
+	//tmp = NULL;
 	while (node && (node->type == CONTENT || node->type == DOLL))
 	{
-		tmp = str;
+		//tmp = str;	
 		if (node->type == CONTENT)
 			str = ft_strjoin(str, node->val);
-		else if (node->type == DOLL)
+		else if (node->type == DOLL && ft_doll_var_exists(&(node->val[1]), env))
 			str = ft_dolljoin(str, node->val, env);
-		free (tmp);
+		//free (tmp);
 		if (!str)
 			return (NULL);
 		if (node->print_space_after != 0)
 			break;
 		node = node->next;
 	}
-	str[len] = '\0';
+	//str[len] = '\0';
 	return (str);
 }
 
@@ -114,7 +148,7 @@ char	**ft_token_list_to_char_array(t_token_list *node, char **env)
 	int		len;
 	int		j;
 
-	len = ft_nb_str(node);
+	len = ft_nb_str(node, env);
 	j = 0;
 	array = (char **)malloc((len + 1) * sizeof(char *));
 	if (!array)
@@ -125,7 +159,8 @@ char	**ft_token_list_to_char_array(t_token_list *node, char **env)
 		//if (!array[j])
 			//return (ft_free_arg_array(array, j), NULL); //A FAIRE fonction pour free un tableau de chaines jusqu'a la ieme chaine
 		node = ft_go_to_next_node(node);
-		j++;
+		if (array[j])
+			j++;
 	}
 	array[j] = NULL;
 	return (array);
@@ -160,9 +195,8 @@ t_cmd	**ft_build_cmd_list(t_var *var)
 
 	i = 0;
 	var->nb_cmd = ft_nb_pipes(*(var->token_list)) + 1;
-	ft_putstr_fd("nb_cmd : ", 1);
+	ft_putstr_fd("\nnb_cmd : ", 1);
 	ft_putnbr_fd(var->nb_cmd, 1);
-	ft_putchar_fd('\n', 1);
 	cmd_list = (t_cmd **)malloc((var->nb_cmd + 1) * sizeof(t_cmd *));
 	if(!cmd_list)
 		return (NULL);
