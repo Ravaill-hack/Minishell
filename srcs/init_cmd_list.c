@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:31:57 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/26 10:57:25 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:12:53 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,12 @@ char	*ft_extract_cmd_from_array(t_cmd *node)
 	int		i;
 
 	i = 0;
-	if (!ft_is_path(node->arg[0]))
-		return (ft_strdup(node->arg[0]));
-	while (node->arg[0][i] != '/')
+	if (!ft_is_path(node->raw[0]))
+		return (ft_strdup(node->raw[0]));
+	while (node->raw[0][i] != '/')
 		i++;
 	i++;
-	return (ft_strdup(&(node->arg[0][i])));
+	return (ft_strdup(&(node->raw[0][i])));
 }
 
 int	ft_check_for_in_redir(t_token_list *node)
@@ -327,10 +327,10 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i)
 	if (!cmd_node)
 		return (NULL);
 	token_node = ft_go_to_cmd_node(*(var->token_list), i);
-	cmd_node->arg = ft_token_list_to_char_array(token_node, var);
-	if (!cmd_node->arg)
+	cmd_node->raw = ft_token_list_to_char_array(token_node, var);
+	if (!cmd_node->raw)
 		return (NULL);
-	cmd_node->opt = ft_extract_opt_from_array(cmd_node->arg);
+	cmd_node->opt = ft_extract_opt_from_array(cmd_node->raw);
 	//cmd_node->fd_in = ft_find_fdin(token_node, var->env); //A FAIRE fonction pour renvoyer le fd de lecture : peut etre un
 	// heredoc ou rien ou un fichier ou un canal d'un int[2] qui stockera en ecriture le resultat d'un autre pipe
 	//cmd_node->fd_out = ft_find_fdout(token_node, var->env); //A FAIRE fonction pour renvoyer le fd d'ecriture' : peut etre un

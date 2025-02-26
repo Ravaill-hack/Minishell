@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/26 10:50:02 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:10:18 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,10 @@ typedef struct s_cmd
 {
 //	char					*path;
 //	char					*name;
-	char					**opt;
+	char					**raw;
 	char					**arg;
+	char					**opt;
+	char					*cmd;
 	int						*fd_in;
 	int						*fd_out;
 }	t_cmd;
