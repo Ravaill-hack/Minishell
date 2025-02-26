@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/26 11:02:43 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:03:22 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,8 +250,8 @@ int				ft_cmd_pwd(char **env, t_token_list *token_list);
 int				ft_cmd_cd(char ***env, t_token_list *token_list);
 int				ft_update_old_pwd(char ***env);
 int				ft_update_new_pwd(char ***env, char *new_pwd);
-int				ft_cmd_cd_home(char **env);
-int				ft_cmd_cd_path(char **env, char *path);
+int				ft_cmd_cd_home(char ***env);
+int				ft_cmd_cd_path(char ***env, char *path);
 int				ft_cmd_echo(t_token_list *token_list, char **env, int ex_nb);
 int				ft_cmd_echo_print_doll(t_token_list *token, char **env,
 					int exit_nb);
