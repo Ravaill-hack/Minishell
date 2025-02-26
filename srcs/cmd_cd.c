@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 16:06:24 by julien            #+#    #+#             */
-/*   Updated: 2025/02/26 13:44:48 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:27:16 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,20 @@ int	ft_update_new_pwd(char ***env, char *new_pwd)
 int	ft_cmd_cd_path(char ***env, char *path)
 {
 	char	*old_pwd;
+	int		status;
 
 	if (ft_update_old_pwd(env) == FAILURE)
 		return (FAILURE);
 	old_pwd = ft_extract_env_value_from_key(*env, "PWD");
-	path = ft_strjoin(old_pwd, path);
+	path = ft_strjoin3(old_pwd, "/", path);
 	if (chdir(path) == -1)
 	{
 		if (errno == EACCES || errno == ENOENT || errno == ENOTDIR)
 			perror(NULL);
+		free(path);
 		return (FAILURE);
 	}
-	return (ft_update_new_pwd(env, path));
+	status = ft_update_new_pwd(env, path);
+	free(path);
+	return (status);
 }
