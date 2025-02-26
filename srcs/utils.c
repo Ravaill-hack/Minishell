@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:09:21 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/26 09:35:10 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/26 09:51:27 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,14 @@ int	ft_nb_str(t_token_list *list, char **env)
 	while (list && (list->type == CONTENT || list->type == DOLL))
 	{
 		if (list->print_space_after == 1
-			|| (list->next && (list->next->type != CONTENT && list->next->type != DOLL))
-			|| !(list->next) || (list->next && list->next->type == DOLL))
+			|| (list->next && (list->next->type != 6 && list->next->type != 7))
+			|| !(list->next) /*|| (list->next && list->next->type == DOLL)*/)
 		{
 			res ++;
-			if (list->type == DOLL && (!ft_doll_val_len(list->val, env) && !ft_is_nb_exit(list->val + 1)))
+			if (list->type == DOLL 
+				&& !ft_doll_var_exists(list->val, env)
+				&& !ft_is_nb_exit(list->val + 1)
+				&& (list->prev && list->prev->print_space_after == 1))
 				res --;
 		}
 		list = list->next;
