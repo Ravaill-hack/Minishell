@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 16:06:24 by julien            #+#    #+#             */
-/*   Updated: 2025/02/26 13:03:51 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:44:48 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 int	ft_cmd_cd(char ***env, t_token_list *token_list)
 {
 	char	**split_line;
-	int		result;
+	int		status;
 
 	split_line = ft_split(token_list->val, ' ');
 	if (!split_line[1])
-		result = ft_cmd_cd_home(env);
+		status = ft_cmd_cd_home(env);
 	else
-		result = ft_cmd_cd_path(env, split_line[1]);
-	return (ft_free_strs(split_line), result);
+		status = ft_cmd_cd_path(env, split_line[1]);
+	return (ft_free_strs(split_line), status);
 }
 
 int	ft_cmd_cd_home(char ***env)

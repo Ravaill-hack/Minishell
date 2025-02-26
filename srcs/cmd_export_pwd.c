@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export_pwd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:15:56 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/25 10:21:22 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/26 13:45:24 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 int	ft_cmd_export(char ***env_ptr, t_token_list *token_list)
 {
 	char	**split_line;
-	int		result;
+	int		status;
 
 	split_line = ft_split(token_list->val, ' ');
 	if (!split_line[1])
-		result = ft_cmd_export_with_no_args(env_ptr);
+		status = ft_cmd_export_with_no_args(env_ptr);
 	else
-		result = ft_cmd_export_with_args(env_ptr, split_line[1]);
+		status = ft_cmd_export_with_args(env_ptr, split_line[1]);
 	ft_free_strs(split_line);
-	return (result);
+	return (status);
 }
 
 int	ft_cmd_export_with_no_args(char ***env_ptr)
@@ -48,7 +48,7 @@ int	ft_cmd_export_with_args(char ***env_ptr, char *arg)
 	char	*key;
 	char	*value;
 	int		line_index;
-	int		result;
+	int		status;
 
 	key = ft_extract_key_env(arg);
 	value = ft_extract_value_env(arg);
@@ -57,11 +57,11 @@ int	ft_cmd_export_with_args(char ***env_ptr, char *arg)
 	line_index = ft_get_line_env(*env_ptr, key);
 	free(key);
 	if (line_index == -1)
-		result = ft_add_env_var(env_ptr, arg);
+		status = ft_add_env_var(env_ptr, arg);
 	else
-		result = ft_update_env_var_value(env_ptr, line_index, value);
+		status = ft_update_env_var_value(env_ptr, line_index, value);
 	free(value);
-	return (result);
+	return (status);
 }
 
 int	ft_cmd_pwd(char **env, t_token_list *token_list)

@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/02/26 11:45:26 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:45:34 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ int	ft_update_shlvl(char ***env, int level)
 {
 	int		shlvl;
 	char	*new_shlvl;
-	int		result;
+	int		status;
 
 	shlvl = ft_atoi(getenv("SHLVL"));
 	if (!shlvl)
 		return (FAILURE);
 	new_shlvl = ft_itoa(shlvl + level);
-	result = ft_update_env_var_value_from_key(env, "SHLVL",
+	status = ft_update_env_var_value_from_key(env, "SHLVL",
 			new_shlvl);
-	return (free(new_shlvl), result);
+	return (free(new_shlvl), status);
 }
 
 void	ft_init(t_var *var, t_shell **shell, char **env)
