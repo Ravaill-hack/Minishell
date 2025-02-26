@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/26 11:10:18 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/26 12:49:22 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,18 +97,6 @@ typedef struct s_fd
 	int						redir; //if == 0 < or >, else if != 0 << or >>
 }	t_fd;
 
-typedef struct s_arg
-{
-	char					*arg;
-	t_fd					tfd;
-}	t_arg;
-
-typedef union s_node
-{
-	t_arg					*arg;
-	t_fd					fd;
-}	t_node;
-
 typedef struct s_cmd
 {
 //	char					*path;
@@ -117,8 +105,7 @@ typedef struct s_cmd
 	char					**arg;
 	char					**opt;
 	char					*cmd;
-	int						*fd_in;
-	int						*fd_out;
+	t_fd					*fd;
 }	t_cmd;
 
 typedef struct s_token_list
