@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:14:19 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/26 10:55:31 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:34:06 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ void	ft_handle_pid(pid_t pid, char *path, char **args, char **env)
 	}
 	else
 		waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-		printf("OK");
 }
 
 int	ft_exec_cmd(char **env, char *cmd)
@@ -96,9 +94,9 @@ int	ft_exec_cmd(char **env, char *cmd)
 		return (ft_free_strs(args),
 			ft_free_strs(split_cmd), free(path), FAILURE);
 	ft_handle_pid(pid, path, args, env);
-	if (args != split_cmd)
-		ft_free_strs(args);
-	ft_free_strs(split_cmd);
-	free(path);
+	//if (args != split_cmd)
+		//ft_free_strs(args);
+	//ft_free_strs(split_cmd);
+	//free(path);
 	return (SUCCESS);
 }
