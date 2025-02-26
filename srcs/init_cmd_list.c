@@ -6,19 +6,42 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:31:57 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/26 08:53:41 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/26 09:31:49 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+size_t	ft_strlen_nb(int n)
+{
+	size_t	len;
+
+	if (n == 0)
+		return (1);
+	len = 0;
+	if (n < 0)
+		len++;
+	while (n != 0)
+	{
+		n = n / 10;
+		len++;
+	}
+	return (len);
+}
+
+int	ft_is_nb_exit(char *str)
+{
+	if (str[0] == '?')
+		return (1);
+	return (0);
+}
 
 int	ft_doll_var_exists(char *str, char **env)
 {
 	int	i;
 
 	i = 0;
-	//if (str[0] == '?')
-	//	return (1);
+	
 	while (env[i])
 	{
 		if (ft_strncmp(str, env[i], ft_strlen(str)) == 0
@@ -75,6 +98,26 @@ char	*ft_dolljoin(char *str, char *doll, char **env)
 		ft_strlcat(joined_str, val_doll, size + 1);
 	if (!str && !val_doll)
 		return (NULL);
+	return (joined_str);
+}
+
+char	*ft_nb_ex_join(char *str, char *doll, int nb_ex)
+{
+	size_t	size_tot;
+	char	*val_doll;
+	char	*joined_str;
+
+	size_tot = ft_strlen(str) + ft_strlen_nb(nb_ex);
+	if (doll[2] != '\0')
+		size_tot += ft_strlen(&doll[2]);
+	joined_str = (char *)ft_calloc((size_tot + 1), sizeof(char));
+	if (!joined_str)
+		return (NULL);
+	val_doll = ft_itoa(nb_ex);
+	ft_strlcpy(joined_str, str, ft_strlen(str) + 1);
+	ft_strlcat(joined_str, val_doll, ft_strlen(str) + ft_strlen_nb(nb_ex) + 1);
+	if (doll[2] != '\0')
+		ft_strlcat(joined_str, &(doll[2]), size_tot + 1);
 	return (joined_str);
 }
 
@@ -160,6 +203,8 @@ char	*ft_fill_arg(t_token_list *node, t_var *var)
 		//tmp = str;	
 		if (node->type == CONTENT)
 			str = ft_strjoin(str, node->val);
+		else if (node->type == DOLL && ft_is_nb_exit(&(node->val[1])))
+			str = ft_nb_ex_join(str, node->val, var->exit_nb);
 		else if (node->type == DOLL && ft_doll_var_exists(&(node->val[1]), var->env))
 			str = ft_dolljoin(str, node->val, var->env);
 		//free (tmp);
@@ -180,6 +225,8 @@ char	**ft_token_list_to_char_array(t_token_list *node, t_var *var)
 	int		j;
 
 	len = ft_nb_str(node, var->env);
+	ft_putnbr_fd(len, 1);
+	ft_putchar_fd('\n', 1);
 	j = 0;
 	array = (char **)malloc((len + 1) * sizeof(char *));
 	if (!array)

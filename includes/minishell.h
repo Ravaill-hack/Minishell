@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/26 08:49:12 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/26 09:00:25 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ int				ft_is_operand(char *str, int i);
 int				ft_is_in_squotes(char *line, int ind);
 int				ft_is_in_dquotes(char *line, int ind);
 int				ft_is_in_quotes(char *line, int ind);
+int				ft_is_nb_exit(char *str);
 /*
 Token - extract
 */
