@@ -6,11 +6,118 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:31:57 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/26 09:31:49 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/26 10:57:25 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		ft_is_opt(char	*str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '-')
+			return (1);
+	}
+	return (0);
+}
+
+int		ft_is_path(char	*str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '/')
+			return (1);
+	}
+	return (0);
+}
+
+int	ft_nb_opt(char **str)
+{
+	int	i;
+	int	res;
+
+	i = 0;
+	res = 0;
+	while (str[i])
+	{
+		if (str[i][0] == '-')
+			res++;
+		i++;
+	}
+	return (res);
+}
+
+char	**ft_extract_opt_from_array(char **str)
+{
+	char	**opt_tab;
+	int		len;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	len = ft_nb_opt(str);
+	opt_tab = (char **)malloc((len + 1) * sizeof(char *));
+	if (!opt_tab)
+		return (NULL);
+	while (j < len)
+	{
+		if (str[i][0] == '-')
+		{
+			opt_tab[j] = ft_strdup(str[i]);
+			if (!opt_tab[j])
+				return (ft_free_char_array(opt_tab, j), NULL);
+			j++;
+		}
+		i++;
+	}
+	opt_tab[j] = NULL;
+	return (opt_tab);
+}
+
+char	*ft_extract_cmd_from_array(t_cmd *node)
+{
+	int		i;
+
+	i = 0;
+	if (!ft_is_path(node->arg[0]))
+		return (ft_strdup(node->arg[0]));
+	while (node->arg[0][i] != '/')
+		i++;
+	i++;
+	return (ft_strdup(&(node->arg[0][i])));
+}
+
+int	ft_check_for_in_redir(t_token_list *node)
+{
+	while (node && node->type != PIPE)
+	{
+		if (node->type == S_LESS)
+			return (1);
+		if (node->type == D_LESS)
+			return (2);
+	}
+	return (0);
+}
+
+int	ft_check_for_out_redir(t_token_list *node)
+{
+	while (node && node->type != PIPE)
+	{
+		if (node->type == S_GREAT)
+			return (1);
+		if (node->type == D_GREAT)
+			return (2);
+	}
+	return (0);
+}
 
 size_t	ft_strlen_nb(int n)
 {
@@ -160,42 +267,11 @@ t_token_list	*ft_go_to_cmd_node(t_token_list	*list, int i)
 	return (list);
 }
 
-/*
-char	*ft_create_first_line(t_token_list *node, char **env)
-{
-	char	*str;
-	//char	*tmp;
-	//int		len;
-
-	//len = ft_find_special_len(node, env);
-	str = NULL;
-	//tmp = NULL;
-	while (node && (node->type == CONTENT || node->type == DOLL))
-	{
-		//tmp = str;	
-		if (node->type == CONTENT)
-			str = ft_strjoin(str, node->val);
-		else if (node->type == DOLL && ft_doll_var_exists(&(node->val[1]), env))
-			str = ft_dolljoin(str, node->val, env);
-		//free (tmp);
-		if (!str)
-			return (NULL);
-		if (node->print_space_after != 0)
-			break;
-		node = node->next;
-	}
-	//str[len] = '\0';
-	return (str);
-}
-*/
-
 char	*ft_fill_arg(t_token_list *node, t_var *var)
 {
 	char	*str;
 	//char	*tmp;
-	//int		len;
 
-	//len = ft_find_special_len(node, env);
 	str = NULL;
 	//tmp = NULL;
 	while (node && (node->type == CONTENT || node->type == DOLL))
@@ -225,15 +301,10 @@ char	**ft_token_list_to_char_array(t_token_list *node, t_var *var)
 	int		j;
 
 	len = ft_nb_str(node, var->env);
-	ft_putnbr_fd(len, 1);
-	ft_putchar_fd('\n', 1);
 	j = 0;
 	array = (char **)malloc((len + 1) * sizeof(char *));
 	if (!array)
 		return (NULL);
-	/*array[0] = ft_create_first_line(node, env);
-	if (!array[0])
-		return (NULL);*/
 	while (j < len)
 	{
 		array[j] = ft_fill_arg(node, var);
@@ -259,9 +330,7 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i)
 	cmd_node->arg = ft_token_list_to_char_array(token_node, var);
 	if (!cmd_node->arg)
 		return (NULL);
-//	cmd_node->name = ft_extract_cmd_name(cmd_node->arg[0]); //A FAIRE fonction pour isoler le nom de la commande
-//	cmd_node->path = ft_extract_cmd_path(cmd_node->arg[0]); //A FAIRE fonction pour isoler le chemin de la commande
-//	cmd_node->opt = ft_extract_cmd_opt(cmd_node->arg); //A FAIRE fonction pour isoler les options de la commande
+	cmd_node->opt = ft_extract_opt_from_array(cmd_node->arg);
 	//cmd_node->fd_in = ft_find_fdin(token_node, var->env); //A FAIRE fonction pour renvoyer le fd de lecture : peut etre un
 	// heredoc ou rien ou un fichier ou un canal d'un int[2] qui stockera en ecriture le resultat d'un autre pipe
 	//cmd_node->fd_out = ft_find_fdout(token_node, var->env); //A FAIRE fonction pour renvoyer le fd d'ecriture' : peut etre un

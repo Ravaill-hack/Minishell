@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:40:07 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/26 08:42:46 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:05:37 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,38 @@ void	ft_print_info_list(t_token_list *list, char **env)
 	}
 }
 
-void	ft_print_info_cmd_list(int nb_cmd, t_cmd **list)
+void	ft_print_opt(char **opt)
 {
 	int	i;
 
 	i = 0;
+	while (opt[i])
+	{
+		printf("opt %d : %s\n", i, opt[i]);
+		i++;
+	}
+}
+
+void	ft_print_info_cmd_list(int nb_cmd, t_cmd **list)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
 	printf("add cmd_list : %p\n", list);
+	printf("nb cmd : %d\n\n", nb_cmd);
 	while (i < nb_cmd)
 	{
-		ft_print_strs((list[i])->arg);
+		j = 0;
+		printf("cmd %d\n", i);
+		while (((list[i])->arg[j]))
+		{
+			printf("arg %d = %s\n", j, (list[i])->arg[j]);
+			j++;
+		}
+		printf("\n");
+		ft_print_opt(list[i]->opt);
 		printf("\n\n");
 		i++;
 	}
