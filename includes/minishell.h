@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/25 17:07:08 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/26 11:02:43 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ void			ft_skip_spaces(char *str, int *i, t_token_list *list);
 Handle errors
 */
 void			ft_print_error(void);
-void			ft_print_error_and_exit(t_var var);
+void			ft_print_error_and_exit(t_var var, t_shell shell);
 /*
 Extract env
 */
@@ -214,7 +214,7 @@ Free
 */
 void			ft_free_line(t_var var);
 void			ft_free_token_list_until(t_token_list **list, int n);
-void			ft_clear_and_free_all(t_var var);
+void			ft_clear_and_free_all(t_var var, t_shell shell);
 /*
 Debug
 */
@@ -227,7 +227,7 @@ char			*ft_strjoin3(char *s1, char *s2, char *s3);
 /*
 Handle cmd
 */
-int				ft_handle_cmd(t_var *var, char *val);
+int				ft_handle_cmd(t_var *var, t_shell shell, char *val);
 /*
 Exec cmd
 */
@@ -238,8 +238,8 @@ void			ft_handle_pid(pid_t pid, char *path, char **args, char **env);
 /*
 Cmds
 */
-int				ft_cmd_exit(t_var var, char **env, t_token_list *token_list);
-int				ft_handle_exit_last_shlvl(t_var var, char **env);
+int				ft_cmd_exit(t_var var, t_shell shell, char **env, t_token_list *token_list);
+int				ft_handle_exit_last_shlvl(t_var var, t_shell shell, char **env);
 int				ft_handle_exit_not_last_shlvl(char **env);
 void			ft_cmd_env(char **env, t_token_list *token_list);
 int				ft_cmd_unset(char ***env_ptr, t_token_list *token_list);

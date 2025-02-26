@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exit_env_unset.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/02/25 09:49:11 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/26 11:01:05 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_cmd_exit(t_var var, char **env, t_token_list *token_list)
+int	ft_cmd_exit(t_var var, t_shell shell, char **env, t_token_list *token_list)
 {
 	int	shlvl;
 	int	shlvl_current;
@@ -26,20 +26,21 @@ int	ft_cmd_exit(t_var var, char **env, t_token_list *token_list)
 		if (!shlvl_current)
 			return (FAILURE);
 		if (shlvl_current == shlvl)
-			return (ft_handle_exit_last_shlvl(var, env));
+			return (ft_handle_exit_last_shlvl(var, shell, env));
 		else
 			return (ft_handle_exit_not_last_shlvl(env));
 	}
 	return (FAILURE);
 }
 
-int	ft_handle_exit_last_shlvl(t_var var, char **env)
+int	ft_handle_exit_last_shlvl(t_var var, t_shell shell, char **env)
 {
 	if (!ft_update_shlvl(&env, -1))
 		return (FAILURE);
 	if (ft_exec_cmd(env, "exit") == FAILURE)
 		return (FAILURE);
-	ft_clear_and_free_all(var);
+	(void)var;
+	ft_clear_and_free_all(var, shell);
 	exit(EXIT_SUCCESS);
 }
 

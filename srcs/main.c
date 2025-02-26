@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/25 16:28:13 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/26 11:03:03 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@ int	main(int argc, char **argv, char **env)
 	while (shell->prompt)
 	{
 		if (!ft_parse_line(&var, shell->prompt))
-			ft_print_error_and_exit(var);
+			ft_print_error_and_exit(var, *shell);
 		if (*(var.token_list))
 		{
 			val = var.token_list[0]->val;
-			if (ft_handle_cmd(&var, val) == FAILURE)
+			if (ft_handle_cmd(&var, *shell, val) == FAILURE)
 				ft_print_error();
 			add_history(shell->prompt);
 			free(shell->prompt);
 		}
 		get_prompt(shell, &var);
 	}
-	ft_clear_and_free_all(var);
+	ft_clear_and_free_all(var, *shell);
 	exit(EXIT_SUCCESS);
 }

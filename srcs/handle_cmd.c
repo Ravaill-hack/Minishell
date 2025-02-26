@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   handle_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:43 by julien            #+#    #+#             */
-/*   Updated: 2025/02/25 13:53:46 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/26 11:01:26 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_handle_cmd(t_var *var, char *val)
+int	ft_handle_cmd(t_var *var, t_shell shell, char *val)
 {
 	if (ft_strncmp(val, "exit", ft_strlen(val)) == 0)
-		return (ft_cmd_exit(*var, var->env, *(var->token_list)));
+		return (ft_cmd_exit(*var, shell, var->env, *(var->token_list)));
 	else if (ft_strncmp(val, "env", ft_strlen(val)) == 0)
 		ft_cmd_env(var->env, *(var->token_list));
 	else if (ft_strncmp(val, "unset", 5) == 0)
