@@ -6,23 +6,57 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:31:57 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/26 11:12:53 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:43:31 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_is_opt(char	*str)
+
+int	ft_len_new_array(char **old_array)
 {
+	int	len;
 	int	i;
 
-	i = 0;
-	while (str[i])
+	len = 0;
+	i = 1;
+	while (old_array[i])
 	{
-		if (str[i] == '-')
-			return (1);
+		if (old_array[i][0] != '-')
+			len ++;
+		i++;
 	}
-	return (0);
+	return (len);
+}
+
+char	**ft_epure_args_array(char **old_array)
+{
+	int		len;
+	char	**new_array;
+	int		i;
+	int		j;
+
+	i = 1;
+	j = 0;
+	
+	len = ft_len_new_array(old_array);
+	ft_putnbr_fd(len, 1);
+	new_array = (char **)malloc((len + 1) * sizeof(char *));
+	if (!new_array)
+		return (NULL);
+	while (old_array[i])
+	{
+		if (old_array[i][0] != '-')
+		{
+			new_array[j] = ft_strdup(old_array[i]);
+			if (!new_array[j])
+				return (ft_free_char_array(new_array, j), NULL);
+			j++;
+		}
+		i++;
+	}
+	new_array[j] = NULL;
+	return (new_array);
 }
 
 int		ft_is_path(char	*str)
@@ -331,6 +365,9 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i)
 	if (!cmd_node->raw)
 		return (NULL);
 	cmd_node->opt = ft_extract_opt_from_array(cmd_node->raw);
+	cmd_node->arg = ft_epure_args_array(cmd_node->raw);
+	cmd_node->cmd = ft_strdup((cmd_node->raw)[0]);
+	ft_free_char_array(cmd_node->raw, -1);
 	//cmd_node->fd_in = ft_find_fdin(token_node, var->env); //A FAIRE fonction pour renvoyer le fd de lecture : peut etre un
 	// heredoc ou rien ou un fichier ou un canal d'un int[2] qui stockera en ecriture le resultat d'un autre pipe
 	//cmd_node->fd_out = ft_find_fdout(token_node, var->env); //A FAIRE fonction pour renvoyer le fd d'ecriture' : peut etre un
