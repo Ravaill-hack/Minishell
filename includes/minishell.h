@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/26 12:49:22 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:56:10 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,17 @@ typedef enum	s_content_token
 }	t_content_token;
 */
 
+typedef enum s_type_fd
+{
+	SIMPLE,
+	DOUBLE,
+}	t_type_fd;
+
 typedef struct s_fd
 {
 	int						fd;
-	int						redir; //if == 0 < or >, else if != 0 << or >>
+	t_type_fd				type;
+	struct s_fd				*next;
 }	t_fd;
 
 typedef struct s_cmd
@@ -103,9 +110,11 @@ typedef struct s_cmd
 //	char					*name;
 	char					**raw;
 	char					**arg;
-	char					**opt;
+	char					**chev;
 	char					*cmd;
-	t_fd					*fd;
+	t_fd					fd_in;
+	t_fd					fd_out;
+	char 					*heredoc;
 }	t_cmd;
 
 typedef struct s_token_list

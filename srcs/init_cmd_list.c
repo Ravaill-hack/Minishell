@@ -6,12 +6,94 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:31:57 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/26 11:43:31 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:40:16 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+t_type_fd	ft_find_fd_type(t_token_list *node)
+{
+	if (node->type == S_LESS || node->type == S_GREAT)
+		return (SIMPLE);
+	else
+		return (DOUBLE);
+}
+
+int	ft_choose_fd_in(t_token_list *node, t_type_fd type, t_var *var, t_cmd *cmd)
+{
+	if (type == SIMPLE)
+		return (ft_special_open(node, var));
+	else if (type == DOUBLE)
+	{
+		cmd->heredoc = ft_strdup(str);
+		return (0);
+	}
+}
+
+t_fd	*ft_fd_list_new_node(t_token_list *node, t_var *var)
+{
+	t_fd	*new;
+
+	new = (t_fd *)malloc(sizeof(t_fd));
+	if (!new)
+		return (NULL);
+	new->next = NULL;
+	new->type = ft_find_fd_type(node);
+	new->fd = ft_choose_fd(node, new->type, var);
+	return (new);
+}
+
+t_fd	*ft_fd_list_last(t_fd *list)
+{
+	while (list)
+		list = list->next;
+	return (list);
+}
+
+void	ft_fd_add_back(t_fd *new_fd, t_fd **fd_list)
+{
+	t_fd	*last;
+
+	last = ft_fd_list_last(*fd_list);
+	if (*fd_list == NULL)
+		*fd_list = new_fd;
+	else
+		last->next = new_fd;
+}
+
+t_token_list *ft_go_to_next_chevron(t_token_list *node)
+{
+	node = node->next;
+	while (node && node->type != PIPE)
+	{
+		node = node->next;
+		if (node->type == 0 || node->type == 1
+		|| node->type == 2 || node->type == 3)
+			return (node);
+	}
+	return (NULL);
+}
+
+t_fd	**ft_build_fd(t_token_list	*node, t_var *var)
+{
+	t_fd	**fd_list;
+
+	fd_list = (t_fd **)malloc(sizeof(t_fd *));
+	if (!fd_list)
+		return (NULL);
+	*fd_list = NULL;
+	while (node)
+	{
+		node = ft_go_to_next_chevron(node); // en realite il faut aller jusqu'a la prochaine valeur et pas le prochain chevron
+		if (!node)
+			break;
+		ft_fd_add_back(ft_fd_new(node, var), fd_list);
+	}
+	return (fd_list);
+}
+*/
 
 int	ft_len_new_array(char **old_array)
 {
@@ -198,8 +280,8 @@ t_token_list	*ft_go_to_next_node(t_token_list *node)
 	node = node->next;
 	while (node)
 	{
-		if (node->prev->print_space_after == 1 
-			&& (node->type == CONTENT || node->type == DOLL))
+		if (node->prev && node->prev->print_space_after == 1 
+			&& (node->type != PIPE))
 			break;
 		node = node->next;
 	}
@@ -262,6 +344,19 @@ char	*ft_nb_ex_join(char *str, char *doll, int nb_ex)
 	return (joined_str);
 }
 
+char	*ft_dup_operand(t_line_token type)
+{
+	if (type == S_LESS)
+		return (ft_strdup ("<"));
+	else if (type == D_LESS)
+		return (ft_strdup ("<<"));
+	else if (type == S_GREAT)
+		return (ft_strdup (">"));
+	else if (type == D_GREAT)
+		return (ft_strdup (">>"));
+	return (NULL);
+}
+
 int	ft_find_special_len(t_token_list *node, char **env)
 {
 	int	len;
@@ -308,7 +403,7 @@ char	*ft_fill_arg(t_token_list *node, t_var *var)
 
 	str = NULL;
 	//tmp = NULL;
-	while (node && (node->type == CONTENT || node->type == DOLL))
+	while (node && (node->type != PIPE))
 	{
 		//tmp = str;	
 		if (node->type == CONTENT)
@@ -317,6 +412,8 @@ char	*ft_fill_arg(t_token_list *node, t_var *var)
 			str = ft_nb_ex_join(str, node->val, var->exit_nb);
 		else if (node->type == DOLL && ft_doll_var_exists(&(node->val[1]), var->env))
 			str = ft_dolljoin(str, node->val, var->env);
+		else if (node->type == 0 || node->type == 1 || node->type == 2 || node->type == 3)
+			str = ft_dup_operand(node->type);
 		//free (tmp);
 		if (!str)
 			return (NULL);
@@ -335,6 +432,8 @@ char	**ft_token_list_to_char_array(t_token_list *node, t_var *var)
 	int		j;
 
 	len = ft_nb_str(node, var->env);
+	ft_putnbr_fd(len, 1);
+	ft_putchar_fd('\n', 1);
 	j = 0;
 	array = (char **)malloc((len + 1) * sizeof(char *));
 	if (!array)
@@ -364,14 +463,11 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i)
 	cmd_node->raw = ft_token_list_to_char_array(token_node, var);
 	if (!cmd_node->raw)
 		return (NULL);
-	cmd_node->opt = ft_extract_opt_from_array(cmd_node->raw);
-	cmd_node->arg = ft_epure_args_array(cmd_node->raw);
-	cmd_node->cmd = ft_strdup((cmd_node->raw)[0]);
-	ft_free_char_array(cmd_node->raw, -1);
-	//cmd_node->fd_in = ft_find_fdin(token_node, var->env); //A FAIRE fonction pour renvoyer le fd de lecture : peut etre un
-	// heredoc ou rien ou un fichier ou un canal d'un int[2] qui stockera en ecriture le resultat d'un autre pipe
-	//cmd_node->fd_out = ft_find_fdout(token_node, var->env); //A FAIRE fonction pour renvoyer le fd d'ecriture' : peut etre un
-	// append ou STDOUT ou un fichier ou un canal d'un int[2] qui utilisera en lecture le resultat d'un autre pipe
+	//cmd_node->chev = ft_extract_chev_from_array(cmd_node->raw);
+	//cmd_node->arg = ft_epure_args_array(cmd_node->raw);
+	//cmd_node->cmd = ft_strdup((cmd_node->raw)[0]);
+	//cmd_node->fd = ft_build_fd(token_node, var); // A REFAIRE
+	//ft_free_char_array(cmd_node->raw, -1);
 	return (cmd_node);
 }
 
