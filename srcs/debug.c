@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:40:07 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/25 10:51:43 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/26 08:42:46 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ void	ft_print_token_type(t_token_list *token)
 		printf("error\n\n");
 }
 
-void	ft_print_info_list(t_token_list *list)
+void	ft_print_info_list(t_token_list *list, char **env)
 {
 	t_token_list	*temp;
 
 	temp = list;
-	printf("nb args : %d\n", ft_nb_str(list));
+	printf("nb args : %d\n", ft_nb_str(list, env));
 	printf("add liste : %p\n", list);
 	while (temp)
 	{
@@ -65,7 +65,7 @@ void	ft_print_info_cmd_list(int nb_cmd, t_cmd **list)
 	printf("add cmd_list : %p\n", list);
 	while (i < nb_cmd)
 	{
-		ft_print_strs(list[i]->arg);
+		ft_print_strs((list[i])->arg);
 		printf("\n\n");
 		i++;
 	}

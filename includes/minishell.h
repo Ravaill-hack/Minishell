@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/25 22:45:26 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/26 08:49:12 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,9 @@ typedef union s_node
 
 typedef struct s_cmd
 {
-	char					*path;
-	char					*name;
-	char					*opt;
+//	char					*path;
+//	char					*name;
+//	char					*opt;
 	char					**arg;
 	int						fd_in;
 	int						fd_out;
@@ -199,8 +199,8 @@ Cmd list - init A  TRIER
 */
 t_cmd			**ft_build_cmd_list(t_var *var);
 t_cmd			*ft_create_cmd_node(t_var *var, int i);
-char			**ft_token_list_to_char_array(t_token_list *node, char **env);
-char			*ft_fill_arg(t_token_list *node, char **env);
+char			**ft_token_list_to_char_array(t_token_list *node, t_var *var);
+char			*ft_fill_arg(t_token_list *node, t_var *var);
 t_token_list	*ft_go_to_cmd_node(t_token_list	*list, int i);
 int				ft_find_special_len(t_token_list *node, char **env);
 char			*ft_dolljoin(char *str, char *doll, char **env);
@@ -245,11 +245,14 @@ Free
 void			ft_free_line(t_var var);
 void			ft_free_token_list_until(t_token_list **list, int n);
 void			ft_clear_and_free_all(t_var var);
+void			ft_free_char_array(char **chartab, int imax);
+void			ft_free_cmd_node(t_cmd *node);
+void			ft_free_cmd_list(t_var *var, t_cmd **list, int imax);
 /*
 Debug
 */
 void			ft_print_token_type(t_token_list *token);
-void			ft_print_info_list(t_token_list *list);
+void			ft_print_info_list(t_token_list *list, char **env);
 void			ft_print_info_cmd_list(int nb_cmd, t_cmd **list);
 /*
 Utils

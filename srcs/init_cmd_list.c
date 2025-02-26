@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmd_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:31:57 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/25 22:53:47 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/26 08:53:41 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_doll_var_exists(char *str, char **env)
 	int	i;
 
 	i = 0;
+	//if (str[0] == '?')
+	//	return (1);
 	while (env[i])
 	{
 		if (ft_strncmp(str, env[i], ft_strlen(str)) == 0
@@ -115,7 +117,8 @@ t_token_list	*ft_go_to_cmd_node(t_token_list	*list, int i)
 	return (list);
 }
 
-char	*ft_fill_arg(t_token_list *node, char **env)
+/*
+char	*ft_create_first_line(t_token_list *node, char **env)
 {
 	char	*str;
 	//char	*tmp;
@@ -141,23 +144,54 @@ char	*ft_fill_arg(t_token_list *node, char **env)
 	//str[len] = '\0';
 	return (str);
 }
+*/
 
-char	**ft_token_list_to_char_array(t_token_list *node, char **env)
+char	*ft_fill_arg(t_token_list *node, t_var *var)
+{
+	char	*str;
+	//char	*tmp;
+	//int		len;
+
+	//len = ft_find_special_len(node, env);
+	str = NULL;
+	//tmp = NULL;
+	while (node && (node->type == CONTENT || node->type == DOLL))
+	{
+		//tmp = str;	
+		if (node->type == CONTENT)
+			str = ft_strjoin(str, node->val);
+		else if (node->type == DOLL && ft_doll_var_exists(&(node->val[1]), var->env))
+			str = ft_dolljoin(str, node->val, var->env);
+		//free (tmp);
+		if (!str)
+			return (NULL);
+		if (node->print_space_after != 0)
+			break;
+		node = node->next;
+	}
+	//str[len] = '\0';
+	return (str);
+}
+
+char	**ft_token_list_to_char_array(t_token_list *node, t_var *var)
 {
 	char	**array;
 	int		len;
 	int		j;
 
-	len = ft_nb_str(node, env);
+	len = ft_nb_str(node, var->env);
 	j = 0;
 	array = (char **)malloc((len + 1) * sizeof(char *));
 	if (!array)
 		return (NULL);
+	/*array[0] = ft_create_first_line(node, env);
+	if (!array[0])
+		return (NULL);*/
 	while (j < len)
 	{
-		array[j] = ft_fill_arg(node, env);
+		array[j] = ft_fill_arg(node, var);
 		//if (!array[j])
-			//return (ft_free_arg_array(array, j), NULL); //A FAIRE fonction pour free un tableau de chaines jusqu'a la ieme chaine
+		//	return (ft_free_char_array(array, j), NULL);
 		node = ft_go_to_next_node(node);
 		if (array[j])
 			j++;
@@ -175,7 +209,7 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i)
 	if (!cmd_node)
 		return (NULL);
 	token_node = ft_go_to_cmd_node(*(var->token_list), i);
-	cmd_node->arg = ft_token_list_to_char_array(token_node, var->env);
+	cmd_node->arg = ft_token_list_to_char_array(token_node, var);
 	if (!cmd_node->arg)
 		return (NULL);
 //	cmd_node->name = ft_extract_cmd_name(cmd_node->arg[0]); //A FAIRE fonction pour isoler le nom de la commande
@@ -195,16 +229,14 @@ t_cmd	**ft_build_cmd_list(t_var *var)
 
 	i = 0;
 	var->nb_cmd = ft_nb_pipes(*(var->token_list)) + 1;
-	ft_putstr_fd("\nnb_cmd : ", 1);
-	ft_putnbr_fd(var->nb_cmd, 1);
 	cmd_list = (t_cmd **)malloc((var->nb_cmd + 1) * sizeof(t_cmd *));
 	if(!cmd_list)
 		return (NULL);
 	while (i < var->nb_cmd)
 	{
 		cmd_list[i] = ft_create_cmd_node(var, i);
-		//if (!cmd_list[i])
-		//	return (ft_free_cmd_list(cmd_list, i), NULL); //A FAIRE fonction pour free un tableau de structures jusqu'a la ieme structure
+		if (!cmd_list[i])
+			return (ft_free_cmd_list(var, cmd_list, i), NULL);
 		i++;
 	}
 	cmd_list[i] = NULL;
