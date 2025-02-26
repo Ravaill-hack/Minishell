@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_exit_env_unset.c                               :+:      :+:    :+:   */
+/*   cmd_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/02/26 13:46:35 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:45:30 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_cmd_exit(t_var var, t_shell shell, char ***env, t_token_list *token_list)
 {
-	int	shlvl;
-	int	shlvl_current;
+	int		shlvl;
+	int		shlvl_current;
 	char	**split_cmd;
 	int		status;
 
@@ -55,7 +55,8 @@ int	ft_exec_exit_cmd(char **env, char **split_cmd)
 	return (SUCCESS);
 }
 
-int	ft_handle_exit_last_shlvl(t_var var, t_shell shell, char ***env, char **split_cmd)
+int	ft_handle_exit_last_shlvl(t_var var, t_shell shell,
+	char ***env, char **split_cmd)
 {
 	if (!ft_update_shlvl(env, -1))
 		return (FAILURE);
@@ -83,29 +84,4 @@ int	ft_handle_exit_not_last_shlvl(char ***env, char **split_cmd)
 	if (ft_exec_exit_cmd(*env, split_cmd) == FAILURE)
 		return (FAILURE);
 	_exit(0);
-}
-
-void	ft_cmd_env(char **env, t_token_list *token_list)
-{
-	if (!token_list->next)
-		ft_print_strs(env);
-}
-
-int	ft_cmd_unset(char ***env_ptr, t_token_list *token_list)
-{
-	int		line_index;
-	char	**split_line;
-	int		status;
-
-	split_line = ft_split(token_list->val, ' ');
-	if (!split_line[1])
-		return (ft_free_strs(split_line), FAILURE);
-	line_index = ft_get_line_env(*env_ptr, split_line[1]);
-	if (line_index == -1)
-		return (ft_free_strs(split_line), FAILURE);
-	else
-	{
-		status = ft_remove_env_var(env_ptr, line_index);
-		return (ft_free_strs(split_line), status);
-	}
 }

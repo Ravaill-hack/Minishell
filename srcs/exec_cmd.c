@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:14:19 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/26 14:49:32 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:42:29 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,5 @@ int	ft_exec_cmd(char **env, char *cmd)
 		return (ft_free_strs(args),
 			ft_free_strs(split_cmd), free(path), FAILURE);
 	ft_handle_pid(pid, path, args, env);
-	//if (args != split_cmd)
-		//ft_free_strs(args);
-	//ft_free_strs(split_cmd);
-	//free(path);
 	return (SUCCESS);
 }

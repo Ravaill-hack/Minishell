@@ -32,7 +32,8 @@ SRCS_FILES = \
 	handle_signal.c \
 	termios_utils.c \
 	debug.c \
-	cmd_exit_env_unset.c \
+	cmd_exit.c \
+	cmd_env_unset.c \
 	cmd_export_pwd.c \
 	cmd_cd.c \
 	cmd_echo.c \
