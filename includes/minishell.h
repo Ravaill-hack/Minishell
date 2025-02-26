@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/26 13:42:01 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:48:54 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,10 +220,6 @@ Debug
 */
 void			ft_print_token_type(t_token_list *token);
 void			ft_print_info_list(t_token_list *list);
-/*
-Utils
-*/
-char			*ft_strjoin3(char *s1, char *s2, char *s3);
 /*
 Handle cmd
 */
