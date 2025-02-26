@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_extract.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:31:43 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/24 15:44:48 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:44:15 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,10 @@ char	*ft_extract_sq_content(char *line, int *i)
 	if (!str)
 		return (NULL);
 	(*i)++;
-	while (line[*i] != '\'')
+	while (line[*i] != '\'' || (line[*i] == '\'' && line[*i + 1] == '\''))
 	{
+		if (line[*i] == '\'')
+			(*i) += 2;
 		str[j] = line[*i];
 		j++;
 		(*i)++;
@@ -69,12 +71,16 @@ char	*ft_extract_dq_content(char *line, int *i)
 	j = 0;
 	if (!str)
 		return (NULL);
-	while (line[*i] && line[*i] != '\"' && !ft_is_doll(line, *i))
+	(*i)++;
+	while (line[*i] != '\"' || (line[*i] == '\"' && line[*i + 1] == '\"'))
 	{
+		if (line[*i] == '\"')
+			(*i) += 2;
 		str[j] = line[*i];
 		j++;
 		(*i)++;
 	}
+	(*i)++;
 	str[j] = '\0';
 	return (str);
 }

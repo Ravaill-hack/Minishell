@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_len.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:37:31 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/24 15:45:27 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:53:45 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,15 @@ int	ft_dquoted_len(char *str, int i)
 	int	len;
 
 	len = 0;
-	while (str[i + len] && str[i + len] != '\"' && !ft_is_doll(str, i))
-		len ++;
+	if (str[i] == '\"')
+		i++;
+	while (str[i + len] != '\"' || (str[i + len] == '\"' && str[i + len + 1] == '\"'))
+	{
+		if (str[i + len] == '\"')
+			i += 2;
+		else
+			len++;
+	}
 	return (len);
 }
 
@@ -39,8 +46,15 @@ int	ft_squoted_len(char *str, int i)
 	int	len;
 
 	len = 0;
-	while (str[i + len] && str[i + len] != '\'')
-		len ++;
+	if (str[i] == '\'')
+		i++;
+	while (str[i + len] != '\'' || (str[i + len] == '\'' && str[i + len + 1] == '\''))
+	{
+		if (str[i + len] == '\'')
+			i += 2;
+		else
+			len++;
+	}
 	return (len);
 }
 
@@ -49,12 +63,33 @@ int	ft_strlen_content(char *str, int i)
 	int	len;
 
 	len = 0;
-	while (str[i] && ft_is_operand(str, i) == 0
-		&& ft_is_doll(str, i) == 0 && ft_is_in_quotes(str, i) == 0
-		&& ft_isspace(str[i]) == 0)
+	while (str[i] && ft_is_operand(str, i) == 0 && ft_isspace(str[i]) == 0)
 	{
-		i++;
-		len ++;
+		if (str[i] == '\"')
+		{
+			i++;
+			while (str[i] != '\"')
+			{
+				len++;
+				i++;
+			}
+			i++;
+		}
+		else if (str[i] == '\'')
+		{
+			i++;
+			while (str[i] != '\'')
+			{
+				len++;
+				i++;
+			}
+			i++;			
+		}
+		else
+		{
+			i++;
+			len ++;		
+		}
 	}
 	return (len);
 }

@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:36:11 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/23 19:07:23 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:13:00 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@ t_line_token	ft_find_token_type(char *str, int i)
 		return (D_LESS);
 	else if (str[i] == '|')
 		return (PIPE);
-	else if (ft_is_doll(str, i))
-		return (DOLL);
 	else
-		return (CONTENT);
+		return (STR);
 }
 
 t_token_list	*ft_last_token(t_token_list *token)

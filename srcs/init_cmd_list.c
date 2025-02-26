@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmd_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:31:57 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/26 16:40:16 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:57:46 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_fd	**ft_build_fd(t_token_list	*node, t_var *var)
 	return (fd_list);
 }
 */
-
+/*
 int	ft_len_new_array(char **old_array)
 {
 	int	len;
@@ -491,3 +491,4 @@ t_cmd	**ft_build_cmd_list(t_var *var)
 	cmd_list[i] = NULL;
 	return (cmd_list);
 }
+*/

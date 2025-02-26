@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/26 16:49:06 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:28:46 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	main(int argc, char **argv, char **env)
 {
 	t_var	var;
-	char	*val;
+	//char	*val;
 
 	(void) argc;
 	(void) argv;
@@ -23,10 +23,13 @@ int	main(int argc, char **argv, char **env)
 	var.line = readline(PROMPT);
 	while (var.line)
 	{
+		ft_putnbr_fd(ft_strlen_content(var.line, 0), 1);
+		ft_putchar_fd('\n', 1);
 		if (!ft_parse_line(&var))
 			ft_exit_error(var);
-		//ft_print_info_list(*(var.token_list), var.env);
-		ft_print_info_cmd_list(var.nb_cmd, var.cmd);
+		ft_print_info_list(*(var.token_list), var.env);
+		//ft_print_info_cmd_list(var.nb_cmd, var.cmd);
+		/*
 		if (*(var.token_list))
 		{
 			val = var.token_list[0]->val;
@@ -34,7 +37,7 @@ int	main(int argc, char **argv, char **env)
 				ft_exit_error(var);
 			add_history(var.line);
 			free(var.line);
-		}
+		}*/
 		var.line = readline(PROMPT);
 	}
 	ft_clear_and_free_all(var);

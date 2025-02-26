@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/26 14:56:10 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:36:04 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,7 @@ typedef enum s_line_token
 	OR, --> pour les bonus
 	*/
 	PIPE,
-	NL,
-	CONTENT,
-	DOLL,
+	STR,
 }	t_line_token;
 
 /*
@@ -149,7 +147,6 @@ Token - append
 t_token_list	*ft_append_content(char *line, int *i, t_token_list **list);
 t_token_list	*ft_append_squoted(char *line, int *i, t_token_list **list);
 t_token_list	*ft_append_dquoted(char *line, int *i, t_token_list **list);
-t_token_list	*ft_append_doll(char *line, int *i, t_token_list **list);
 t_token_list	*ft_append_operand(char *line, int *i, t_token_list **list);
 /*
 Token - checks
@@ -159,7 +156,7 @@ int				ft_is_operand(char *str, int i);
 int				ft_is_in_squotes(char *line, int ind);
 int				ft_is_in_dquotes(char *line, int ind);
 int				ft_is_in_quotes(char *line, int ind);
-int				ft_is_nb_exit(char *str);
+//int				ft_is_nb_exit(char *str);
 /*
 Token - extract
 */
@@ -182,7 +179,6 @@ int				ft_strlen_content(char *str, int i);
 /*
 Token - parsing
 */
-t_token_list	*ft_deal_dquoted(char *line, int *i, t_token_list **list);
 int				ft_append_tokens(char *line, t_token_list **list);
 t_token_list	**ft_build_token_list(char *line);
 int				ft_parse_line(t_var *var);
@@ -195,7 +191,7 @@ void			ft_free_list(t_token_list **list);
 void			ft_skip_spaces(char *str, int *i, t_token_list *list);
 /*
 Cmd list - init A  TRIER
-*/
+
 t_cmd			**ft_build_cmd_list(t_var *var);
 t_cmd			*ft_create_cmd_node(t_var *var, int i);
 char			**ft_token_list_to_char_array(t_token_list *node, t_var *var);
@@ -205,7 +201,7 @@ int				ft_find_special_len(t_token_list *node, char **env);
 char			*ft_dolljoin(char *str, char *doll, char **env);
 int				ft_doll_val_len(char *doll, char **env);
 t_token_list	*ft_go_to_next_node(t_token_list *node);
-/*
+
 Handle errors
 */
 void			ft_exit_error(t_var var);

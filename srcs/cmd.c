@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/02/22 16:16:01 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/26 19:17:28 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,21 +57,3 @@ void	ft_cmd_env(char **env, t_token_list *token_list)
 		ft_print_strs(env);
 }
 
-int	ft_cmd_unset(char ***env_ptr, t_token_list *token_list)
-{
-	int		line_index;
-	char	**split_line;
-
-	split_line = ft_split(token_list->val, ' ');
-	if (!split_line[1])
-		return (FAILURE);
-	line_index = ft_get_line_env(*env_ptr, split_line[1]);
-	if (line_index == -1)
-		return (FAILURE);
-	else
-	{
-		if (ft_remove_env_var(env_ptr, line_index) == FAILURE)
-			return (FAILURE);
-	}
-	return (SUCCESS);
-}
