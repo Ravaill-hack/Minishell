@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 17:53:15 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:00:06 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		if (!ft_parse_line(&var, shell->prompt))
 			ft_print_error_and_exit(var, *shell);
+		ft_print_info_cmd_list(var.nb_cmd, var.cmd);
 		if (*(var.token_list))
 		{
 			val = var.token_list[0]->val;

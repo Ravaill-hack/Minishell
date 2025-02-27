@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:36:11 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 17:33:34 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:04:48 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_skip_spaces(char *str, int *i, t_token_list *list)
 
 	last = ft_last_token(list);
 	if (ft_isspace(str[*i]) == 1
-		&& !(last->type <= 0 && last->type <= 3))
+		&& !(last->type >= 0 && last->type <= 3))
 		last->print_space_after = 1;
 	while (ft_isspace(str[*i]) == 1)
 		(*i)++;

@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 17:44:44 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:58:31 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,7 +286,6 @@ void			ft_enable_echoctl(void);
 /*
 Free
 */
-void			ft_free_line(t_var var);
 void			ft_free_token_list(t_token_list **token_list);
 void			ft_free_token_list_until(t_token_list **list, int n);
 void			ft_clear_and_free_all(t_var var, t_shell shell);
@@ -312,7 +311,6 @@ char			*ft_extract_path(char **env, char *cmd);
 char			**ft_set_exec_args(char *path, char **split_cmd);
 int				ft_exec_cmd(char **env, char *cmd);
 int				ft_exec_cmd_in_child(char *path, char **split_cmd, char **env);
-void			ft_handle_pid(pid_t pid, char *path, char **args, char **env);
 /*
 Cmds
 */
