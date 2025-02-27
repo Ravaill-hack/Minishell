@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:31:57 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/26 16:40:16 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 09:26:30 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,22 +259,6 @@ int	ft_is_nb_exit(char *str)
 	return (0);
 }
 
-int	ft_doll_var_exists(char *str, char **env)
-{
-	int	i;
-
-	i = 0;
-	
-	while (env[i])
-	{
-		if (ft_strncmp(str, env[i], ft_strlen(str)) == 0
-			&& env[i][ft_strlen(str)] == '=')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 t_token_list	*ft_go_to_next_node(t_token_list *node)
 {
 	node = node->next;
@@ -288,17 +272,7 @@ t_token_list	*ft_go_to_next_node(t_token_list *node)
 	return (node);
 }
 
-int	ft_doll_val_len(char *doll, char **env)
-{
-	int		len;
-	char	*ptr;
 
-	len = 0;
-	ptr = ft_extract_env_value_from_key(env, &(doll[1]));
-	while (ptr && ptr[len])
-		len ++;
-	return (len);
-}
 
 char	*ft_dolljoin(char *str, char *doll, char **env)
 {
