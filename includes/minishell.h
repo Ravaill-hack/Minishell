@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 10:22:58 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:30:53 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ typedef struct s_fd
 {
 	int						fd;
 	t_type_fd				type;
-	struct s_fd				*next;
+	int						is_def;
 }	t_fd;
 
 typedef struct s_cmd
@@ -112,8 +112,8 @@ typedef struct s_cmd
 	char					**arg;
 	char					**chev;
 	char					*cmd;
-	t_fd					fd_in;
-	t_fd					fd_out;
+	t_fd					fd_in[500];
+	t_fd					fd_out[500];
 	char 					*heredoc;
 }	t_cmd;
 

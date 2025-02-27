@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:31:57 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 11:22:39 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:39:13 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,8 @@ int	ft_len_new_array(char **old)
 	i = 0;
 	while (old[i])
 	{
-		len ++;
-		if (old[i][0] == '<' || old[i][0] == '>')
-		{
-			len --;
-			i ++;
-		}
+		if (old[i][0] != '<' && old[i][0] != '>')
+			len ++;
 		i++;
 	}
 	return (len);
@@ -431,6 +427,16 @@ char	**ft_token_list_to_char_array(t_token_list *node)
 	return (array);
 }
 
+void	ft_init_fd(t_cmd *node)
+{
+	node->fd_in[0].is_def = 1;
+	node->fd_in[0].fd = 0;
+	node->fd_in[0].type = SIMPLE;
+	node->fd_out[0].fd = 1;
+	node->fd_out[0].is_def = 1;
+	node->fd_out[0].type = SIMPLE;
+}
+
 t_cmd	*ft_create_cmd_node(t_var *var, int i)
 {
 	t_token_list	*token_node;
@@ -446,6 +452,7 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i)
 		return (NULL);
 	//cmd_node->chev = ft_extract_chev_from_array(cmd_node->raw);
 	cmd_node->arg = ft_epure_args_array(cmd_node->raw);
+	ft_init_fd(cmd_node);
 	//cmd_node->cmd = ft_strdup((cmd_node->raw)[0]);
 	//cmd_node->fd = ft_build_fd(token_node, var); // A REFAIRE
 	//ft_free_char_array(cmd_node->raw, -1);
