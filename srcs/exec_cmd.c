@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:14:19 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/27 12:46:14 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:01:07 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,30 @@ char	**ft_set_exec_args(char *path, char **split_cmd)
 		args[2] = split_cmd[0];
 		args[3] = NULL;
 	}
-	else
-		args = split_cmd;
 	return (args);
+}
+
+int	ft_exec_cmd_in_child(char *path, char **split_cmd, char **env)
+{
+	char	**args;
+
+	if (ft_strncmp(path, "/bin/bash", 9) == 0)
+	{
+		args = ft_set_exec_args(path, split_cmd);
+		execve(path, args, env);
+		ft_free_strs(split_cmd);
+		ft_free_strs(args);
+		free(path);
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		execve(path, split_cmd, env);
+		ft_free_strs(split_cmd);
+		free(path);
+		exit(EXIT_FAILURE);
+	}
+	return (FAILURE);
 }
 
 int	ft_exec_cmd(char **env, char *cmd)
@@ -65,7 +86,6 @@ int	ft_exec_cmd(char **env, char *cmd)
 	pid_t	pid;
 	char	**split_cmd;
 	char	*path;
-	char	**args;
 
 	split_cmd = ft_split(cmd, ' ');
 	if (!split_cmd || !split_cmd[0])
@@ -77,33 +97,11 @@ int	ft_exec_cmd(char **env, char *cmd)
 	if (pid == -1)
 		return (ft_free_strs(split_cmd), free(path), FAILURE);
 	if (pid == 0)
-	{
-		if (ft_strncmp(path, "/bin/bash", 9) == 0)
-		{
-			args = (char **)ft_calloc(4, sizeof(char *));
-			if (!args)
-				return (ft_free_strs(split_cmd), free(path), FAILURE);
-			args[0] = path;
-			args[1] = "-c";
-			args[2] = split_cmd[0];
-			args[3] = NULL;
-			execve(path, args, env);
-			ft_free_strs(split_cmd);
-			ft_free_strs(args);
-			free(path);
-			exit(EXIT_FAILURE);
-		}
-		else
-		{
-			execve(path, split_cmd, env);
-			free(path);
-			ft_free_strs(split_cmd);
-			exit(EXIT_FAILURE);
-		}
-	}
+		return (ft_exec_cmd_in_child(path, split_cmd, env));
 	else
 	{
 		waitpid(pid, NULL, 0);
+		free(path);
 		ft_free_strs(split_cmd);
 	}
 	return (SUCCESS);
