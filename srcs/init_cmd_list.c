@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:31:57 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 11:39:13 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:39:16 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +122,6 @@ char	**ft_epure_args_array(char **old)
 	j = 0;
 	
 	len = ft_len_new_array(old);
-	ft_putstr_fd("new nb_lines : ", 1);
-	ft_putnbr_fd(len, 1);
-	ft_putchar_fd('\n', 1);
 	new_array = (char **)malloc((len + 1) * sizeof(char *));
 	if (!new_array)
 		return (NULL);
@@ -408,8 +405,6 @@ char	**ft_token_list_to_char_array(t_token_list *node)
 	int		j;
 
 	len = ft_nb_str(node);
-	ft_putnbr_fd(len, 1);
-	ft_putchar_fd('\n', 1);
 	j = 0;
 	array = (char **)malloc((len + 1) * sizeof(char *));
 	if (!array)
@@ -429,12 +424,131 @@ char	**ft_token_list_to_char_array(t_token_list *node)
 
 void	ft_init_fd(t_cmd *node)
 {
-	node->fd_in[0].is_def = 1;
-	node->fd_in[0].fd = 0;
-	node->fd_in[0].type = SIMPLE;
-	node->fd_out[0].fd = 1;
-	node->fd_out[0].is_def = 1;
-	node->fd_out[0].type = SIMPLE;
+	node->fd_in.is_def = 0;
+	node->fd_in.fd = 0;
+	node->fd_in.type = SIMPLE;
+	node->fd_out.fd = 1;
+	node->fd_out.is_def = 0;
+	node->fd_out.type = SIMPLE;
+}
+
+int	ft_set_infile(char *str, t_cmd *node)
+{
+	if (node->fd_in.is_def)
+	{
+		if (node->fd_in.fd != 0 && node->fd_in.fd != -1)
+			close(node->fd_in.fd);
+		if (node->heredoc)
+			free(node->heredoc);
+	}
+	node->heredoc = NULL;
+	node->fd_in.fd = open(str + 1, O_RDONLY);
+	if (node->fd_in.fd == -1)
+		return (FAILURE);
+	node->fd_in.type = SIMPLE;
+	return (SUCCESS);
+}
+
+int	ft_set_outfile_append(char *str, t_cmd *node)
+{
+	if (node->fd_out.is_def)
+	{
+		if (node->fd_out.fd != 1 && node->fd_out.fd != -1)
+			close(node->fd_out.fd);
+	}
+	node->fd_out.fd = open(str + 2, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (node->fd_out.fd == -1)
+		return (FAILURE);
+	node->fd_out.type = DOUBLE;
+	return (SUCCESS);
+}
+
+int	ft_set_outfile_trunc(char *str, t_cmd *node)
+{
+	if (node->fd_out.is_def)
+	{
+		if (node->fd_out.fd != 1 && node->fd_out.fd != -1)
+			close(node->fd_out.fd);
+	}
+	node->fd_out.fd = open(str + 1, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (node->fd_out.fd == -1)
+		return (FAILURE);
+	node->fd_out.type = SIMPLE;
+	return (SUCCESS);
+}
+
+int	ft_set_heredoc(char *str, t_cmd *node)
+{
+	int		fd_pipe[2];
+	char	*line;
+
+	if (pipe(fd_pipe) == -1)
+		return (FAILURE);
+	line = NULL;
+	if (node->fd_in.is_def)
+	{
+		if (node->fd_in.fd != 0 && node->fd_in.fd != -1)
+			close(node->fd_in.fd);
+		if (node->heredoc)
+			free(node->heredoc);
+	}
+	node->heredoc = ft_strdup(str + 2);
+	if (!(node->heredoc))
+		return (FAILURE);
+	while (1)
+	{
+		line = readline("heredoc> ");
+		if (!line)
+			break;
+		if (ft_strncmp(line, node->heredoc, ft_strlen(line)) == 0)
+		{
+			free (line);
+			break;
+		}
+		write(fd_pipe[1], line, strlen(line));
+		write(fd_pipe[1], "\n", 1);
+		free(line);
+	}
+	close(fd_pipe[1]);
+	node->fd_in.fd = fd_pipe[0];
+	node->fd_in.is_def = 1;
+	node->fd_in.type = DOUBLE;
+	return (SUCCESS);
+}
+
+int	ft_close_fds(t_cmd *node)
+{
+	close(node->fd_in.fd);
+	close(node->fd_out.fd);
+	if (node->heredoc)
+		free(node->heredoc);
+	return (SUCCESS);
+}
+
+int	ft_fill_fd(t_cmd *node)
+{
+	int	i;
+	int	res;
+
+	i = 0;
+	res = SUCCESS;
+	while (node->raw[i])
+	{
+		if ((node->raw[i][0] == '<' || node->raw[i][0] == '>') && !(node->raw[i][1]))
+			return (FAILURE);
+		if (node->raw[i][0] == '<' && node->raw[i][1] == '<')
+			res = ft_set_heredoc(node->raw[i], node);
+		else if (node->raw[i][0] == '<' && node->raw[i][1] != '<')
+			res = ft_set_infile(node->raw[i], node);
+		else if (node->raw[i][0] == '>' && node->raw[i][1] == '>')
+			res = ft_set_outfile_append(node->raw[i], node);
+		else if (node->raw[i][0] == '>' && node->raw[i][1] != '>')
+			res = ft_set_outfile_trunc(node->raw[i], node);
+		if (res == FAILURE)
+			return (ft_close_fds(node), FAILURE);
+		i++;
+	}
+	return (SUCCESS);
 }
 
 t_cmd	*ft_create_cmd_node(t_var *var, int i)
@@ -450,12 +564,10 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i)
 	cmd_node->raw = ft_token_list_to_char_array(token_node);
 	if (!cmd_node->raw)
 		return (NULL);
-	//cmd_node->chev = ft_extract_chev_from_array(cmd_node->raw);
 	cmd_node->arg = ft_epure_args_array(cmd_node->raw);
 	ft_init_fd(cmd_node);
-	//cmd_node->cmd = ft_strdup((cmd_node->raw)[0]);
-	//cmd_node->fd = ft_build_fd(token_node, var); // A REFAIRE
-	//ft_free_char_array(cmd_node->raw, -1);
+	ft_fill_fd(cmd_node);
+	ft_free_char_array(cmd_node->raw, -1);
 	return (cmd_node);
 }
 

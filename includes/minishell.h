@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 11:30:53 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:04:13 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,8 @@ typedef struct s_cmd
 	char					**arg;
 	char					**chev;
 	char					*cmd;
-	t_fd					fd_in[500];
-	t_fd					fd_out[500];
+	t_fd					fd_in;
+	t_fd					fd_out;
 	char 					*heredoc;
 }	t_cmd;
 

@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:55:13 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 10:09:01 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:24:10 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,8 +167,5 @@ int	ft_parse_line(t_var *var)
 	var->cmd = ft_build_cmd_list(var);
 	if (!var->cmd)
 		return (FAILURE);
-	/*var->cmd = ft_build_cmd_list(var);
-	if (!var->cmd)
-		return (FAILURE);*/
 	return (SUCCESS);
 }
