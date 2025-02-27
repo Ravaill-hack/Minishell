@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 09:14:08 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 10:22:58 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,8 +198,8 @@ Cmd list - init A  TRIER
 */
 t_cmd			**ft_build_cmd_list(t_var *var);
 t_cmd			*ft_create_cmd_node(t_var *var, int i);
-char			**ft_token_list_to_char_array(t_token_list *node, t_var *var);
-char			*ft_fill_arg(t_token_list *node, t_var *var);
+char			**ft_token_list_to_char_array(t_token_list *node);
+char			*ft_fill_arg(t_token_list *node);
 t_token_list	*ft_go_to_cmd_node(t_token_list	*list, int i);
 int				ft_find_special_len(t_token_list *node, char **env);
 char			*ft_dolljoin(char *str, char *doll, char **env);
@@ -259,7 +259,7 @@ Utils
 char			*ft_strjoin3(char *s1, char *s2, char *s3);
 int				ft_nb_pipes(t_token_list *list);
 int				ft_nb_dolls(t_token_list *list);
-int				ft_nb_str(t_token_list *list, char **env);
+int				ft_nb_str(t_token_list *list);
 int				ft_doll_var_exists(char *str, char **env);
 /*
 Handle cmd

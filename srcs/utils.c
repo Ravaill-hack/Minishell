@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:09:21 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/26 17:07:05 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 10:21:49 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,24 +51,19 @@ int	ft_nb_dolls(t_token_list *list)
 	return (res);
 }
 
-int	ft_nb_str(t_token_list *list, char **env)
+int	ft_nb_str(t_token_list *list)
 {
 	int	res;
 
 	res = 0;
-	(void) env;
 	while (list && (list->type != PIPE))
 	{
 		if (list->print_space_after == 1
 			|| (list->next && list->next->type == PIPE)
 			|| !(list->next) || (list->next->type == 0 || list->next->type == 1 || list->next->type == 2 || list->next->type == 3))
-		{
 			res ++;
-			if (list->type == DOLL && !ft_doll_var_exists(list->val, env))
-/*(list->type == DOLL && !ft_doll_var_exists(list->val, env) && !ft_is_nb_exit(list->val + 1) && (list->prev && list->prev->print_space_after == 1))
-				|| (list->type == 0 || list->type == 1 || list->type == 2 || list->type == 3))*/
-				res --;
-		}
+		if (list->type == DOLL && list->val[0] == '\0')
+			res --;
 		list = list->next;
 	}
 	return (res);

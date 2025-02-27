@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:31:57 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 09:26:30 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 10:32:36 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -370,7 +370,7 @@ t_token_list	*ft_go_to_cmd_node(t_token_list	*list, int i)
 	return (list);
 }
 
-char	*ft_fill_arg(t_token_list *node, t_var *var)
+char	*ft_fill_arg(t_token_list *node)
 {
 	char	*str;
 	//char	*tmp;
@@ -380,12 +380,12 @@ char	*ft_fill_arg(t_token_list *node, t_var *var)
 	while (node && (node->type != PIPE))
 	{
 		//tmp = str;	
-		if (node->type == CONTENT)
+		if (node->type == CONTENT || node->type == DOLL)
+		{
+			if (node->type == DOLL && node->val[0] == '\0')
+				return (NULL);
 			str = ft_strjoin(str, node->val);
-		else if (node->type == DOLL && ft_is_nb_exit(&(node->val[1])))
-			str = ft_nb_ex_join(str, node->val, var->exit_nb);
-		else if (node->type == DOLL && ft_doll_var_exists(&(node->val[1]), var->env))
-			str = ft_dolljoin(str, node->val, var->env);
+		}
 		else if (node->type == 0 || node->type == 1 || node->type == 2 || node->type == 3)
 			str = ft_dup_operand(node->type);
 		//free (tmp);
@@ -399,13 +399,13 @@ char	*ft_fill_arg(t_token_list *node, t_var *var)
 	return (str);
 }
 
-char	**ft_token_list_to_char_array(t_token_list *node, t_var *var)
+char	**ft_token_list_to_char_array(t_token_list *node)
 {
 	char	**array;
 	int		len;
 	int		j;
 
-	len = ft_nb_str(node, var->env);
+	len = ft_nb_str(node);
 	ft_putnbr_fd(len, 1);
 	ft_putchar_fd('\n', 1);
 	j = 0;
@@ -414,7 +414,7 @@ char	**ft_token_list_to_char_array(t_token_list *node, t_var *var)
 		return (NULL);
 	while (j < len)
 	{
-		array[j] = ft_fill_arg(node, var);
+		array[j] = ft_fill_arg(node);
 		//if (!array[j])
 		//	return (ft_free_char_array(array, j), NULL);
 		node = ft_go_to_next_node(node);
@@ -430,11 +430,12 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i)
 	t_token_list	*token_node;
 	t_cmd			*cmd_node;
 
+	(void) var;
 	cmd_node = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!cmd_node)
 		return (NULL);
 	token_node = ft_go_to_cmd_node(*(var->token_list), i);
-	cmd_node->raw = ft_token_list_to_char_array(token_node, var);
+	cmd_node->raw = ft_token_list_to_char_array(token_node);
 	if (!cmd_node->raw)
 		return (NULL);
 	//cmd_node->chev = ft_extract_chev_from_array(cmd_node->raw);

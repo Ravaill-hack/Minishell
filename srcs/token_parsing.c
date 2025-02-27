@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:55:13 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 09:48:42 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 10:09:01 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,9 @@ int	ft_parse_line(t_var *var)
 	if (!var->token_list)
 		return (FAILURE);
 	ft_expand_dolls(*(var->token_list), var);
+	var->cmd = ft_build_cmd_list(var);
+	if (!var->cmd)
+		return (FAILURE);
 	/*var->cmd = ft_build_cmd_list(var);
 	if (!var->cmd)
 		return (FAILURE);*/
