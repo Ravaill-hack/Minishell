@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:12:19 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 18:13:11 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 19:02:48 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	ft_free_cmd_list(t_var *var, t_cmd **list, int imax)
 	{
 		while (i < (var->nb_cmd))
 		{
-			ft_free_cmd_node(list[i]);
+			if (list[i])
+				ft_free_cmd_node(list[i]);
 			i++;
 		}
 	}
@@ -29,9 +30,10 @@ void	ft_free_cmd_list(t_var *var, t_cmd **list, int imax)
 	{
 		while (i < imax)
 		{
-			ft_free_cmd_node(list[i]);
+			if (list[i])
+				ft_free_cmd_node(list[i]);
 			i++;
 		}
 	}
-	free(list);
+	//free(list);
 }

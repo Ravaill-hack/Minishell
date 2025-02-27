@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/26 14:45:13 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:09:32 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*ft_strndup(const char *src, size_t size);
 char	*ft_strnjoin(char *dst, const char *src,
 			size_t dst_len, size_t src_len);
 void	ft_free_strs(char **strs);
-char	**ft_free_strs_until(char **strs, size_t n);
+char	**ft_free_strs_until(char **strs, int n);
 int		**ft_free_array2D_until(int **array2D, size_t n);
 void	ft_free_array2D(int **array2D);
 int		ft_abs(int nb);

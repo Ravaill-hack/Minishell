@@ -28,6 +28,7 @@ SRCS_FILES = \
 	token_parsing_2.c \
 	token_utils.c \
 	free.c \
+	free_2.c \
 	handle_cmd.c \
 	handle_errors.c \
 	handle_signal.c \

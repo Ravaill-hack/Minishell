@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 17:58:31 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:24:56 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,9 +288,8 @@ Free
 */
 void			ft_free_token_list(t_token_list **token_list);
 void			ft_free_token_list_until(t_token_list **list, int n);
-void			ft_clear_and_free_all(t_var var, t_shell shell);
-void			ft_clear_and_free_while(t_shell shell);
-void			ft_free_char_array(char **chartab, int imax);
+void			ft_clear_and_free_all(t_var *var, t_shell *shell);
+void			ft_clear_and_free_while(t_shell shell, t_var *var);
 void			ft_free_cmd_node(t_cmd *node);
 void			ft_free_cmd_list(t_var *var, t_cmd **list, int imax);
 /*

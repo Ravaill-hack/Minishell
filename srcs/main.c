@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 18:00:06 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:51:01 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,11 @@ int	main(int argc, char **argv, char **env)
 			if (ft_handle_cmd(&var, *shell, val) == FAILURE)
 				ft_print_error();
 			add_history(shell->prompt);
-			ft_clear_and_free_while(*shell);
-			ft_free_token_list(var.token_list);
+			ft_clear_and_free_while(*shell, &var);
 		}
 		get_prompt(shell, &var);
 	}
-	ft_clear_and_free_all(var, *shell);
+	ft_clear_and_free_all(&var, shell);
 	exit(EXIT_SUCCESS);
 }
 
