@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:40:07 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 10:30:00 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:19:35 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ void	ft_print_info_cmd_list(int nb_cmd, t_cmd **list)
 	while (i < nb_cmd)
 	{
 		j = 0;
-		while (((list[i])->raw[j]))
+		while (((list[i])->arg[j]))
 		{
-			printf("arg %d = %s\n", j, (list[i])->raw[j]);
+			printf("arg %d = %s\n", j, (list[i])->arg[j]);
 			j++;
 		}
 		printf("nb_args : %d\n", j);

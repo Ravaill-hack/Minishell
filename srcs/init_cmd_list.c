@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:31:57 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 10:32:36 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:22:39 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,42 +95,48 @@ t_fd	**ft_build_fd(t_token_list	*node, t_var *var)
 }
 */
 
-int	ft_len_new_array(char **old_array)
+int	ft_len_new_array(char **old)
 {
 	int	len;
 	int	i;
 
 	len = 0;
-	i = 1;
-	while (old_array[i])
+	i = 0;
+	while (old[i])
 	{
-		if (old_array[i][0] != '-')
-			len ++;
+		len ++;
+		if (old[i][0] == '<' || old[i][0] == '>')
+		{
+			len --;
+			i ++;
+		}
 		i++;
 	}
 	return (len);
 }
 
-char	**ft_epure_args_array(char **old_array)
+char	**ft_epure_args_array(char **old)
 {
 	int		len;
 	char	**new_array;
 	int		i;
 	int		j;
 
-	i = 1;
+	i = 0;
 	j = 0;
 	
-	len = ft_len_new_array(old_array);
+	len = ft_len_new_array(old);
+	ft_putstr_fd("new nb_lines : ", 1);
 	ft_putnbr_fd(len, 1);
+	ft_putchar_fd('\n', 1);
 	new_array = (char **)malloc((len + 1) * sizeof(char *));
 	if (!new_array)
 		return (NULL);
-	while (old_array[i])
+	while (old[i])
 	{
-		if (old_array[i][0] != '-')
+		if (old[i][0] != '<' && old[i][0] != '>')
 		{
-			new_array[j] = ft_strdup(old_array[i]);
+			new_array[j] = ft_strdup(old[i]);
 			if (!new_array[j])
 				return (ft_free_char_array(new_array, j), NULL);
 			j++;
@@ -373,13 +379,13 @@ t_token_list	*ft_go_to_cmd_node(t_token_list	*list, int i)
 char	*ft_fill_arg(t_token_list *node)
 {
 	char	*str;
-	//char	*tmp;
+	char	*tmp;
 
 	str = NULL;
-	//tmp = NULL;
+	tmp = NULL;
 	while (node && (node->type != PIPE))
 	{
-		//tmp = str;	
+		tmp = str;	
 		if (node->type == CONTENT || node->type == DOLL)
 		{
 			if (node->type == DOLL && node->val[0] == '\0')
@@ -388,14 +394,14 @@ char	*ft_fill_arg(t_token_list *node)
 		}
 		else if (node->type == 0 || node->type == 1 || node->type == 2 || node->type == 3)
 			str = ft_dup_operand(node->type);
-		//free (tmp);
+		if (tmp != str)
+			free (tmp);
 		if (!str)
 			return (NULL);
 		if (node->print_space_after != 0)
 			break;
 		node = node->next;
 	}
-	//str[len] = '\0';
 	return (str);
 }
 
@@ -439,7 +445,7 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i)
 	if (!cmd_node->raw)
 		return (NULL);
 	//cmd_node->chev = ft_extract_chev_from_array(cmd_node->raw);
-	//cmd_node->arg = ft_epure_args_array(cmd_node->raw);
+	cmd_node->arg = ft_epure_args_array(cmd_node->raw);
 	//cmd_node->cmd = ft_strdup((cmd_node->raw)[0]);
 	//cmd_node->fd = ft_build_fd(token_node, var); // A REFAIRE
 	//ft_free_char_array(cmd_node->raw, -1);
