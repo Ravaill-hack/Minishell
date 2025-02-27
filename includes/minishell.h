@@ -6,16 +6,12 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 17:35:56 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:43:53 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-# ifndef PROMPT
-#  define PROMPT "minishell$ "
-# endif
 
 # ifndef FAILURE
 #  define FAILURE 0
@@ -138,10 +134,24 @@ typedef struct s_var
 	int						exit_nb;
 }	t_var;
 
+typedef struct s_index
+{
+	int	i;
+	int	j;
+}	t_index;
+
+typedef struct s_shell
+{
+	char	*terminal_prompt;
+	char	*prompt;
+}	t_shell;
+
 /*
 Init
 */
-void			ft_init(t_var *var, char **env);
+void			get_prompt(t_shell *shell, t_var *var);
+void			ft_init(t_var *var, t_shell **shell, char **env);
+int				ft_update_shlvl(char ***env, int level);
 /*
 Token - append
 */
@@ -184,7 +194,7 @@ Token - parsing
 t_token_list	*ft_deal_dquoted(char *line, int *i, t_token_list **list);
 int				ft_append_tokens(char *line, t_token_list **list);
 t_token_list	**ft_build_token_list(char *line);
-int				ft_parse_line(t_var *var);
+int				ft_parse_line(t_var *var, char *prompt);
 /*
 Token - utils
 */
@@ -237,7 +247,8 @@ int				ft_set_heredoc(char *str, t_cmd *node);
 /*
 Handle errors
 */
-void			ft_exit_error(t_var var);
+void			ft_print_error(void);
+void			ft_print_error_and_exit(t_var var, t_shell shell);
 /*
 Extract env
 */
@@ -251,11 +262,12 @@ Update env
 int				ft_update_env_var_value(char ***env_ptr, int line_index,
 					char *value);
 int				ft_copy_env_var(char **new_env, char **env_ptr, int *i, int *j);
-int				ft_update_env_var(char **new_env, char **env_ptr,
-					int *indices, char *value);
+int				ft_update_env_var(char **new_env, char **env,
+					t_index *index, char *value);
+int				ft_update_env_var_value_from_key(char ***env,
+					char *key, char *value);
 int				ft_add_env_var(char ***env, char *env_var);
 int				ft_remove_env_var(char ***env_ptr, int line_index);
-char			**ft_modify_shlvl(char **env, int lvl);
 /*
 Handle signal
 */
@@ -271,8 +283,10 @@ void			ft_enable_echoctl(void);
 Free
 */
 void			ft_free_line(t_var var);
+void			ft_free_token_list(t_token_list **token_list);
 void			ft_free_token_list_until(t_token_list **list, int n);
-void			ft_clear_and_free_all(t_var var);
+void			ft_clear_and_free_all(t_var var, t_shell shell);
+void			ft_clear_and_free_while(t_shell shell);
 void			ft_free_char_array(char **chartab, int imax);
 void			ft_free_cmd_node(t_cmd *node);
 void			ft_free_cmd_list(t_var *var, t_cmd **list, int imax);
@@ -282,10 +296,6 @@ Debug
 void			ft_print_token_type(t_token_list *token);
 void			ft_print_info_list(t_token_list *list, char **env);
 void			ft_print_info_cmd_list(int nb_cmd, t_cmd **list);
-/*
-Utils
-*/
-char			*ft_strjoin3(char *s1, char *s2, char *s3);
 int				ft_nb_pipes(t_token_list *list);
 int				ft_nb_dolls(t_token_list *list);
 int				ft_nb_str(t_token_list *list);
@@ -293,34 +303,41 @@ int				ft_doll_var_exists(char *str, char **env);
 /*
 Handle cmd
 */
-int				ft_handle_cmd(t_var *var, char *val);
+int				ft_handle_cmd(t_var *var, t_shell shell, char *val);
 /*
 Exec cmd
 */
 char			*ft_extract_path(char **env, char *cmd);
 char			**ft_set_exec_args(char *path, char **split_cmd);
 int				ft_exec_cmd(char **env, char *cmd);
+int				ft_exec_cmd_in_child(char *path, char **split_cmd, char **env);
+void			ft_handle_pid(pid_t pid, char *path, char **args, char **env);
 /*
 Cmds
 */
-int				ft_cmd_exit(t_var var, char **env, t_token_list *token_list);
-int				ft_handle_exit_last_shlvl(t_var var, char **env);
-int				ft_handle_exit_not_last_shlvl(char **env);
+int				ft_cmd_exit(t_var var, t_shell shell, char ***env,
+					t_token_list *token_list);
+int				ft_exec_exit_cmd(char **env, char **split_cmd);
+int				ft_handle_exit_last_shlvl(t_var var, t_shell shell,
+					char ***env, char **split_cmd);
+int				ft_handle_exit_not_last_shlvl(char ***env, char **split_cmd);
 void			ft_cmd_env(char **env, t_token_list *token_list);
 int				ft_cmd_unset(char ***env_ptr, t_token_list *token_list);
 int				ft_cmd_export(char ***env_ptr, t_token_list *token_list);
 int				ft_cmd_export_with_no_args(char ***env_ptr);
 int				ft_cmd_export_with_args(char ***env_ptr, char *arg);
 int				ft_cmd_pwd(char **env, t_token_list *token_list);
-int				ft_cmd_cd(char **env, t_token_list *token_list);
-int				ft_cmd_cd_home(char **env);
-int				ft_cmd_cd_path(char **env, char *path);
-int				ft_cmd_skip_name(char *str);
-int				ft_cmd_echo_print_str(char *str, int i, int opt);
+int				ft_cmd_cd(char ***env, t_token_list *token_list);
+int				ft_update_old_pwd(char ***env);
+int				ft_update_new_pwd(char ***env, char *new_pwd);
+int				ft_cmd_cd_home(char ***env);
+int				ft_cmd_cd_path(char ***env, char *path);
+int				ft_cmd_echo(t_token_list *token_list, char **env, int ex_nb);
 int				ft_cmd_echo_print_doll(t_token_list *token, char **env,
 					int exit_nb);
 int				ft_cmd_echo_print_tokens(t_token_list *token, int i,
 					char **env, int ex_nb);
-int				ft_cmd_echo(t_token_list *token_list, char **env, int ex_nb);
+int				ft_cmd_skip_name(char *str);
+int				ft_cmd_echo_print_str(char *str, int i, int opt);
 
 #endif

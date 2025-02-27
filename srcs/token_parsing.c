@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/14 17:55:13 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 17:31:01 by lmatkows         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/02/27 17:53:37 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -86,9 +87,9 @@ t_token_list	**ft_build_token_list(char *line)
 	return (list);
 }
 
-int	ft_parse_line(t_var *var)
+int	ft_parse_line(t_var *var, char *prompt)
 {
-	var->token_list = ft_build_token_list(var->line);
+	var->token_list = ft_build_token_list(prompt);
 	if (!var->token_list)
 		return (FAILURE);
 	ft_expand_dolls(*(var->token_list), var);

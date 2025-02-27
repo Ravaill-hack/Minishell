@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:14:19 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/22 16:23:51 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/27 16:04:14 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,11 @@ char	*ft_extract_path(char **env, char *cmd)
 	name_cmd = ft_split(cmd, ' ');
 	while (raw[i])
 	{
-		path = ft_strjoin3(raw[i], "/", name_cmd[0]);
+		path = ft_strjoin_n(3, raw[i], "/", name_cmd[0]);
+		if (!path)
+			return (NULL);
 		if (access(path, F_OK | X_OK) == 0)
-		{
-			ft_free_strs(raw);
-			ft_free_strs(name_cmd);
-			return (path);
-		}
+			return (ft_free_strs(raw), ft_free_strs(name_cmd), path);
 		if (path)
 			free(path);
 		i++;
@@ -38,7 +36,8 @@ char	*ft_extract_path(char **env, char *cmd)
 	if (raw)
 		ft_free_strs(raw);
 	ft_free_strs(name_cmd);
-	return ("/bin/bash");
+	path = ft_strdup("/bin/bash");
+	return (path);
 }
 
 char	**ft_set_exec_args(char *path, char **split_cmd)
@@ -55,31 +54,50 @@ char	**ft_set_exec_args(char *path, char **split_cmd)
 		args[2] = split_cmd[0];
 		args[3] = NULL;
 	}
-	else
-		args = split_cmd;
 	return (args);
+}
+
+int	ft_exec_cmd_in_child(char *path, char **split_cmd, char **env)
+{
+	char	**args;
+
+	if (ft_strncmp(path, "/bin/bash", 9) == 0)
+	{
+		args = ft_set_exec_args(path, split_cmd);
+		execve(path, args, env);
+		ft_free_strs(args);
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		execve(path, split_cmd, env);
+		exit(EXIT_FAILURE);
+	}
+	return (FAILURE);
 }
 
 int	ft_exec_cmd(char **env, char *cmd)
 {
+	pid_t	pid;
 	char	**split_cmd;
 	char	*path;
-	char	**args;
-	int		err;
 
 	split_cmd = ft_split(cmd, ' ');
+	if (!split_cmd || !split_cmd[0])
+		return (ft_free_strs(split_cmd), FAILURE);
 	path = ft_extract_path(env, split_cmd[0]);
-	args = ft_set_exec_args(path, split_cmd);
-	if (!args)
+	if (!path)
+		return (ft_free_strs(split_cmd), FAILURE);
+	pid = fork();
+	if (pid == -1)
 		return (ft_free_strs(split_cmd), free(path), FAILURE);
-	err = execve(path, args, env);
-	if (err == -1)
+	if (pid == 0)
+		return (ft_exec_cmd_in_child(path, split_cmd, env));
+	else
 	{
-		if (args != split_cmd)
-			free(args);
-		ft_free_strs(split_cmd);
+		waitpid(pid, NULL, 0);
 		free(path);
-		return (FAILURE);
+		ft_free_strs(split_cmd);
 	}
 	return (SUCCESS);
 }

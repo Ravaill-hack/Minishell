@@ -33,15 +33,15 @@ SRCS_FILES = \
 	handle_signal.c \
 	termios_utils.c \
 	debug.c \
-	cmd.c \
-	cmd_2.c \
-	cmd_3.c \
-	cmd_4.c \
+	cmd_exit.c \
+	cmd_env_unset.c \
+	cmd_export_pwd.c \
+	cmd_cd.c \
+	cmd_echo.c \
 	exec_cmd.c \
 	extract_env.c \
 	update_env.c \
-	utils.c \
-	modify_shlvl.c \
+	update_env_2.c \
 	redirection_build.c \
 	redirection_handle.c \
 	cmd_list_init.c \
