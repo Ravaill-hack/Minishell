@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:14:19 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/26 16:42:29 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/27 10:51:30 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,6 @@ char	**ft_set_exec_args(char *path, char **split_cmd)
 	return (args);
 }
 
-void	ft_handle_pid(pid_t pid, char *path, char **args, char **env)
-{
-	int	status;
-
-	if (pid == 0)
-	{
-		execve(path, args, env);
-		exit(127);
-	}
-	else
-		waitpid(pid, &status, 0);
-}
-
 int	ft_exec_cmd(char **env, char *cmd)
 {
 	pid_t	pid;
@@ -86,13 +73,34 @@ int	ft_exec_cmd(char **env, char *cmd)
 	path = ft_extract_path(env, split_cmd[0]);
 	if (!path)
 		return (ft_free_strs(split_cmd), FAILURE);
-	args = ft_set_exec_args(path, split_cmd);
-	if (!args)
-		return (ft_free_strs(split_cmd), free(path), FAILURE);
 	pid = fork();
 	if (pid == -1)
-		return (ft_free_strs(args),
-			ft_free_strs(split_cmd), free(path), FAILURE);
-	ft_handle_pid(pid, path, args, env);
+		return (ft_free_strs(split_cmd), free(path), FAILURE);
+	if (pid == 0)
+	{
+		if (ft_strncmp(path, "/bin/bash", 9) == 0)
+		{
+			args = (char **)ft_calloc(4, sizeof(char *));
+			if (!args)
+				return (ft_free_strs(split_cmd), free(path), FAILURE);
+			args[0] = path;
+			args[1] = "-c";
+			args[2] = split_cmd[0];
+			args[3] = NULL;
+			execve(path, args, env);
+			ft_free_strs(args);
+			exit(EXIT_FAILURE);
+		}
+		else
+		{
+			execve(path, split_cmd, env);
+			exit(EXIT_FAILURE);
+		}
+	}
+	else
+	{
+		waitpid(pid, NULL, 0);
+		ft_free_strs(split_cmd);
+	}
 	return (SUCCESS);
 }
