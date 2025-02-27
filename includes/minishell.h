@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 17:43:53 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:44:44 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,10 @@ char			*ft_dup_operand(t_line_token type);
 char			*ft_nb_ex_join(char *str, char *doll, int nb_ex);
 int				ft_is_nb_exit(char *str);
 char			*ft_dolljoin(char *str, char *doll, char **env);
+int				ft_nb_pipes(t_token_list *list);
+int				ft_nb_dolls(t_token_list *list);
+int				ft_nb_str(t_token_list *list);
+int				ft_doll_var_exists(char *str, char **env);
 /*
 Cmd list - build
 */
@@ -296,10 +300,7 @@ Debug
 void			ft_print_token_type(t_token_list *token);
 void			ft_print_info_list(t_token_list *list, char **env);
 void			ft_print_info_cmd_list(int nb_cmd, t_cmd **list);
-int				ft_nb_pipes(t_token_list *list);
-int				ft_nb_dolls(t_token_list *list);
-int				ft_nb_str(t_token_list *list);
-int				ft_doll_var_exists(char *str, char **env);
+
 /*
 Handle cmd
 */

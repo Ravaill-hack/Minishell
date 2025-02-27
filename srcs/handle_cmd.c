@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/27 17:52:44 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:52:51 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	ft_handle_cmd(t_var *var, t_shell shell, char *val)
 		return (ft_exec_cmd(var->env, val));
 	return (SUCCESS);
 }
-
 
 t_token_list *ft_first_operand(t_token_list *list)
 {
