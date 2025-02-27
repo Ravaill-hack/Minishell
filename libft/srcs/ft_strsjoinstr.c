@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 21:47:22 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/20 17:37:44 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/27 12:55:53 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ char	**ft_strsjoinstr(char **strs, char *str)
 	if (!new_strs[strs_len])
 		return (ft_free_strs(new_strs), NULL);
 	new_strs[strs_len + 1] = NULL;
-	free(strs);
+	ft_free_strs(strs);
 	return (new_strs);
 }

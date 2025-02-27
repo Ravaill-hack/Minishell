@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:14:19 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/27 10:51:30 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/27 12:46:14 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,16 @@ int	ft_exec_cmd(char **env, char *cmd)
 			args[2] = split_cmd[0];
 			args[3] = NULL;
 			execve(path, args, env);
+			ft_free_strs(split_cmd);
 			ft_free_strs(args);
+			free(path);
 			exit(EXIT_FAILURE);
 		}
 		else
 		{
 			execve(path, split_cmd, env);
+			free(path);
+			ft_free_strs(split_cmd);
 			exit(EXIT_FAILURE);
 		}
 	}
