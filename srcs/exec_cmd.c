@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:14:19 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/27 15:01:07 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:36:36 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ char	*ft_extract_path(char **env, char *cmd)
 	if (raw)
 		ft_free_strs(raw);
 	ft_free_strs(name_cmd);
-	return ("/bin/bash");
+	path = ft_strdup("/bin/bash");
+	return (path);
 }
 
 char	**ft_set_exec_args(char *path, char **split_cmd)
@@ -66,16 +67,12 @@ int	ft_exec_cmd_in_child(char *path, char **split_cmd, char **env)
 	{
 		args = ft_set_exec_args(path, split_cmd);
 		execve(path, args, env);
-		ft_free_strs(split_cmd);
 		ft_free_strs(args);
-		free(path);
 		exit(EXIT_FAILURE);
 	}
 	else
 	{
 		execve(path, split_cmd, env);
-		ft_free_strs(split_cmd);
-		free(path);
 		exit(EXIT_FAILURE);
 	}
 	return (FAILURE);
