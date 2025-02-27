@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 16:04:13 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:10:26 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ typedef struct s_cmd
 	char					**raw;
 	char					**arg;
 	char					**chev;
-	char					*cmd;
 	t_fd					fd_in;
 	t_fd					fd_out;
 	char 					*heredoc;
@@ -194,17 +193,45 @@ t_token_list	*ft_last_token(t_token_list *token);
 void			ft_free_list(t_token_list **list);
 void			ft_skip_spaces(char *str, int *i, t_token_list *list);
 /*
-Cmd list - init A  TRIER
+Cmd list - init
 */
-t_cmd			**ft_build_cmd_list(t_var *var);
-t_cmd			*ft_create_cmd_node(t_var *var, int i);
-char			**ft_token_list_to_char_array(t_token_list *node);
-char			*ft_fill_arg(t_token_list *node);
-t_token_list	*ft_go_to_cmd_node(t_token_list	*list, int i);
-int				ft_find_special_len(t_token_list *node, char **env);
-char			*ft_dolljoin(char *str, char *doll, char **env);
-int				ft_doll_val_len(char *doll, char **env);
+char			**ft_epure_args_array(char **old);
 t_token_list	*ft_go_to_next_node(t_token_list *node);
+/*
+Cmd list - len
+*/
+size_t			ft_strlen_nb(int n);
+int				ft_len_new_array(char **old);
+int				ft_find_special_len(t_token_list *node, char **env);
+int				ft_doll_val_len(char *doll, char **env);
+/*
+Cmd list - utils
+*/
+t_token_list	*ft_go_to_cmd_node(t_token_list	*list, int i);
+char			*ft_dup_operand(t_line_token type);
+char			*ft_nb_ex_join(char *str, char *doll, int nb_ex);
+int				ft_is_nb_exit(char *str);
+char			*ft_dolljoin(char *str, char *doll, char **env);
+/*
+Cmd list - build
+*/
+char			*ft_fill_arg(t_token_list *node);
+char			**ft_token_list_to_char_array(t_token_list *node);
+t_cmd			*ft_create_cmd_node(t_var *var, int i);
+t_cmd			**ft_build_cmd_list(t_var *var);
+/*
+Redirection - build
+*/
+void			ft_init_fd(t_cmd *node);
+int				ft_close_fds(t_cmd *node);
+int				ft_fill_fd(t_cmd *node);
+/*
+Redirection - bhandle
+*/
+int				ft_set_infile(char *str, t_cmd *node);
+int				ft_set_outfile_append(char *str, t_cmd *node);
+int				ft_set_outfile_trunc(char *str, t_cmd *node);
+int				ft_set_heredoc(char *str, t_cmd *node);
 /*
 Handle errors
 */

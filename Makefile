@@ -19,7 +19,6 @@ LIBRARIES = -L$(LIBFT_DIR) -lft
 SRCS_FILES = \
 	main.c \
 	init.c \
-	init_cmd_list.c \
 	token_append.c \
 	token_check.c \
 	token_error.c \
@@ -42,6 +41,12 @@ SRCS_FILES = \
 	update_env.c \
 	utils.c \
 	modify_shlvl.c \
+	redirection_build.c \
+	redirection_handle.c \
+	cmd_list_init.c \
+	cmd_list_build.c \
+	cmd_list_utils.c \
+	cmd_list_len.c \
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS_FILES:.c=.o))
 
