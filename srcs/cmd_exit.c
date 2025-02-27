@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/02/26 16:45:30 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:07:32 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	ft_handle_exit_not_last_shlvl(char ***env, char **split_cmd)
 		free(new_shlvl);
 		return (FAILURE);
 	}
-	printf("exit\n");
+	//printf("exit\n");
 	if (ft_exec_exit_cmd(*env, split_cmd) == FAILURE)
 		return (FAILURE);
 	_exit(0);
