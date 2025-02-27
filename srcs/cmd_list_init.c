@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:31:57 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 17:14:44 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:10:17 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	**ft_epure_args_array(char **old)
 		{
 			new_array[j] = ft_strdup(old[i]);
 			if (!new_array[j])
-				return (ft_free_char_array(new_array, j), NULL);
+				return (ft_free_strs_until(new_array, j), NULL);
 			j++;
 		}
 		i++;

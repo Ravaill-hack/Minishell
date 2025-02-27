@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:54:47 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 17:13:40 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:15:03 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i)
 	cmd_node->arg = ft_epure_args_array(cmd_node->raw);
 	ft_init_fd(cmd_node);
 	ft_fill_fd(cmd_node);
-	ft_free_char_array(cmd_node->raw, -1);
+	ft_free_strs_until(cmd_node->raw, -1);
 	return (cmd_node);
 }
 

@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/27 17:53:37 by lmatkows         ###   ########.fr       */
+/*   Created: 2025/02/27 18:16:10 by lmatkows          #+#    #+#             */
+/*   Updated: 2025/02/27 18:16:13 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 

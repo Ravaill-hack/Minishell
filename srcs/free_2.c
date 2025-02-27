@@ -1,25 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_errors.c                                    :+:      :+:    :+:   */
+/*   free_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 17:27:03 by julien            #+#    #+#             */
-/*   Updated: 2025/02/27 18:06:16 by lmatkows         ###   ########.fr       */
+/*   Created: 2025/02/27 18:12:19 by lmatkows          #+#    #+#             */
+/*   Updated: 2025/02/27 18:13:11 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_print_error(void)
+void	ft_free_cmd_list(t_var *var, t_cmd **list, int imax)
 {
-	ft_putstr_fd("Error\n", 2);
-}
+	int	i;
 
-void	ft_print_error_and_exit(t_var var, t_shell shell)
-{
-	ft_print_error();
-	ft_clear_and_free_all(var, shell);
-	exit(EXIT_FAILURE);
+	i = 0;
+	if (imax == -1)
+	{
+		while (i < (var->nb_cmd))
+		{
+			ft_free_cmd_node(list[i]);
+			i++;
+		}
+	}
+	else
+	{
+		while (i < imax)
+		{
+			ft_free_cmd_node(list[i]);
+			i++;
+		}
+	}
+	free(list);
 }

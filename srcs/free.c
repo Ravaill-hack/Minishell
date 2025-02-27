@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:01:37 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 17:50:40 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:13:06 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,56 +60,7 @@ void	ft_clear_and_free_while(t_shell shell)
 	ft_enable_echoctl();
 }
 
-void	ft_free_char_array(char **chartab, int imax)
-{
-	int	i;
-
-	i = 0;
-	if (imax == -1)
-	{
-		while (chartab[i])
-		{
-			free(chartab[i]);
-			i++;
-		}
-	}
-	else
-	{
-		while (i < imax)
-		{
-			free(chartab[i]);
-			i++;
-		}
-	}
-	free(chartab);
-}
-
 void	ft_free_cmd_node(t_cmd *node)
 {
-	ft_free_char_array(node->arg, -1);
-	// A completer en fonction de comment evolue la structure
-}
-
-void	ft_free_cmd_list(t_var *var, t_cmd **list, int imax)
-{
-	int	i;
-
-	i = 0;
-	if (imax == -1)
-	{
-		while (i < (var->nb_cmd))
-		{
-			ft_free_cmd_node(list[i]);
-			i++;
-		}
-	}
-	else
-	{
-		while (i < imax)
-		{
-			ft_free_cmd_node(list[i]);
-			i++;
-		}
-	}
-	free(list);
+	ft_free_strs_until(node->arg, -1);
 }

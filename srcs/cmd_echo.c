@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_echo.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 21:28:54 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/26 13:44:55 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:07:08 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,6 @@ int	ft_cmd_skip_name(char *str)
 
 int	ft_cmd_echo_print_str(char *str, int i, int opt)
 {
-	// si l'option est a 1 ca veut dire qu'on ne veut pas recopier
-	// tous les espaces, sinon on copie tel quel
 	if (opt == 1)
 	{
 		while (str[i])

@@ -5,12 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/27 17:52:51 by lmatkows         ###   ########.fr       */
+/*   Created: 2025/02/27 18:13:42 by lmatkows          #+#    #+#             */
+/*   Updated: 2025/02/27 18:16:04 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "minishell.h"
 
@@ -33,28 +31,4 @@ int	ft_handle_cmd(t_var *var, t_shell shell, char *val)
 	else
 		return (ft_exec_cmd(var->env, val));
 	return (SUCCESS);
-}
-
-t_token_list *ft_first_operand(t_token_list *list)
-{
-	t_token_list	*temp;
-
-	temp = list;
-	while (temp && (temp->type == CONTENT || temp->type == DOLL || temp->type == PIPE))
-		temp = temp->next;
-	if (temp != list)
-		return (temp);
-	return (NULL);
-}
-
-t_token_list *ft_last_operand(t_token_list *list)
-{
-	t_token_list	*temp;
-
-	temp = ft_last_token(list);
-	while (temp && (temp->type == CONTENT || temp->type == DOLL || temp->type == PIPE))
-		temp = temp->prev;
-	if (temp != ft_last_token(list))
-		return (temp);
-	return (NULL);
 }
