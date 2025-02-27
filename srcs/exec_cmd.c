@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:14:19 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/27 15:36:36 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:04:14 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,10 @@ char	*ft_extract_path(char **env, char *cmd)
 	while (raw[i])
 	{
 		path = ft_strjoin_n(3, raw[i], "/", name_cmd[0]);
+		if (!path)
+			return (NULL);
 		if (access(path, F_OK | X_OK) == 0)
-		{
-			ft_free_strs(raw);
-			ft_free_strs(name_cmd);
-			return (path);
-		}
+			return (ft_free_strs(raw), ft_free_strs(name_cmd), path);
 		if (path)
 			free(path);
 		i++;
