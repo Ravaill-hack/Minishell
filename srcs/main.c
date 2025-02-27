@@ -6,28 +6,11 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 11:15:38 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:50:24 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void ft_free_token_list(t_token_list *head)
-{
-    t_token_list *current;
-    t_token_list *next;
-
-	current = head;
-    while (current != NULL)
-    {
-        next = current->next;
-        if (current->val)
-            free(current->val);
-        free(current);
-        current = next;
-    }
-}
-
 
 int	main(int argc, char **argv, char **env)
 {
@@ -50,11 +33,10 @@ int	main(int argc, char **argv, char **env)
 				ft_print_error();
 			add_history(shell->prompt);
 			ft_clear_and_free_while(*shell);
-			ft_free_token_list(*(var.token_list));
-			free(var.token_list);
+			ft_free_token_list(var.token_list);
 		}
 		get_prompt(shell, &var);
 	}
-	//ft_clear_and_free_all(var, *shell);
+	ft_clear_and_free_all(var, *shell);
 	exit(EXIT_SUCCESS);
 }
