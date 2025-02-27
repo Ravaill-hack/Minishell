@@ -25,6 +25,7 @@ SRCS_FILES = \
 	token_extract.c \
 	token_len.c \
 	token_parsing.c \
+	token_parsing_2.c \
 	token_utils.c \
 	free.c \
 	handle_cmd.c \

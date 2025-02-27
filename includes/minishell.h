@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 17:10:26 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:35:56 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,7 @@ t_line_token	ft_find_token_type(char *str, int i);
 t_token_list	*ft_last_token(t_token_list *token);
 void			ft_free_list(t_token_list **list);
 void			ft_skip_spaces(char *str, int *i, t_token_list *list);
+int				ft_expand_dolls(t_token_list *list, t_var *var);
 /*
 Cmd list - init
 */
@@ -231,6 +232,7 @@ Redirection - bhandle
 int				ft_set_infile(char *str, t_cmd *node);
 int				ft_set_outfile_append(char *str, t_cmd *node);
 int				ft_set_outfile_trunc(char *str, t_cmd *node);
+int				ft_while_heredoc(char *line, char *heredoc);
 int				ft_set_heredoc(char *str, t_cmd *node);
 /*
 Handle errors

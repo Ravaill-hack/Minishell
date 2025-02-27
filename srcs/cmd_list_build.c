@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:54:47 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 17:02:05 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:13:40 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,21 @@ char	*ft_fill_arg(t_token_list *node)
 	tmp = NULL;
 	while (node && (node->type != PIPE))
 	{
-		tmp = str;	
+		tmp = str;
 		if (node->type == CONTENT || node->type == DOLL)
 		{
 			if (node->type == DOLL && node->val[0] == '\0')
 				return (NULL);
 			str = ft_strjoin(str, node->val);
 		}
-		else if (node->type == 0 || node->type == 1 || node->type == 2 || node->type == 3)
+		else if (node->type >= 0 && node->type <= 3)
 			str = ft_dup_operand(node->type);
 		if (tmp != str)
 			free (tmp);
 		if (!str)
 			return (NULL);
 		if (node->print_space_after != 0)
-			break;
+			break ;
 		node = node->next;
 	}
 	return (str);
@@ -91,7 +91,7 @@ t_cmd	**ft_build_cmd_list(t_var *var)
 	i = 0;
 	var->nb_cmd = ft_nb_pipes(*(var->token_list)) + 1;
 	cmd_list = (t_cmd **)malloc((var->nb_cmd + 1) * sizeof(t_cmd *));
-	if(!cmd_list)
+	if (!cmd_list)
 		return (NULL);
 	while (i < var->nb_cmd)
 	{

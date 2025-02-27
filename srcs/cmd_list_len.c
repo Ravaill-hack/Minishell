@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:57:12 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 17:10:16 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:17:10 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,10 @@ int	ft_find_special_len(t_token_list *node, char **env)
 
 	len = 0;
 	len_doll = 0;
-	while (node && (node->print_space_after == 0 || (node->type != CONTENT
-		|| node->type != DOLL)))
+	while (node
+		&& (node->print_space_after == 0
+			|| node->type != CONTENT
+			|| node->type != DOLL))
 	{
 		if (node->type == DOLL)
 		{
@@ -81,4 +83,3 @@ int	ft_doll_val_len(char *doll, char **env)
 		len ++;
 	return (len);
 }
-

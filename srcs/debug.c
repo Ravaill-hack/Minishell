@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:40:07 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 11:19:35 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:33:48 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ void	ft_print_info_cmd_list(int nb_cmd, t_cmd **list)
 			j++;
 		}
 		printf("nb_args : %d\n", j);
-		//ft_print_chev(list[i]->chev);
 		printf("\n\n");
 		i++;
 	}

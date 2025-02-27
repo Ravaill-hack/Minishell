@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:31:57 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 16:59:50 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:14:44 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ char	**ft_epure_args_array(char **old)
 
 	i = 0;
 	j = 0;
-	
 	len = ft_len_new_array(old);
 	new_array = (char **)malloc((len + 1) * sizeof(char *));
 	if (!new_array)
@@ -46,22 +45,10 @@ t_token_list	*ft_go_to_next_node(t_token_list *node)
 	node = node->next;
 	while (node)
 	{
-		if (node->prev && node->prev->print_space_after == 1 
+		if (node->prev && node->prev->print_space_after == 1
 			&& (node->type != PIPE))
-			break;
+			break ;
 		node = node->next;
 	}
 	return (node);
 }
-
-
-
-
-
-
-
-
-
-
-
-
