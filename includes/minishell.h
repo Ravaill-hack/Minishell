@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/28 10:41:37 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:09:23 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,13 +302,14 @@ void			ft_print_info_cmd_list(int nb_cmd, t_cmd **list);
 /*
 Handle cmd
 */
-int				ft_handle_cmd(t_var *var, t_shell shell, char *val);
+int				ft_handle_pipes(t_var *var, t_shell shell);
+int				ft_handle_cmd(t_var *var, t_shell shell, t_cmd *cmd_node);
 /*
 Exec cmd
 */
 char			*ft_extract_path(char **env, char *cmd);
 char			**ft_set_exec_args(char *path, char **split_cmd);
-int				ft_exec_cmd(char **env, char *cmd);
+int				ft_exec_cmd(char **env, char **split_cmd);
 int				ft_exec_cmd_in_child(char *path, char **split_cmd, char **env);
 /*
 Cmds

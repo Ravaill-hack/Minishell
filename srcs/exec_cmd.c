@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:14:19 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/27 16:04:14 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:06:04 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,21 +76,19 @@ int	ft_exec_cmd_in_child(char *path, char **split_cmd, char **env)
 	return (FAILURE);
 }
 
-int	ft_exec_cmd(char **env, char *cmd)
+int	ft_exec_cmd(char **env, char **split_cmd)
 {
 	pid_t	pid;
-	char	**split_cmd;
 	char	*path;
 
-	split_cmd = ft_split(cmd, ' ');
-	if (!split_cmd || !split_cmd[0])
-		return (ft_free_strs(split_cmd), FAILURE);
+	// if (!ft_cmd_is_valid(split_cmd[0], env))
+	// 	return (FAILURE);
 	path = ft_extract_path(env, split_cmd[0]);
 	if (!path)
-		return (ft_free_strs(split_cmd), FAILURE);
+		return (FAILURE);
 	pid = fork();
 	if (pid == -1)
-		return (ft_free_strs(split_cmd), free(path), FAILURE);
+		return (free(path), FAILURE);
 	if (pid == 0)
 		return (ft_exec_cmd_in_child(path, split_cmd, env));
 	else

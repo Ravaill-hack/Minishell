@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:30:22 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 17:35:04 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:13:44 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*ft_replace_doll(char *str, t_var *var)
 	if (str[1] == '?' && str[2])
 		return (ft_exit_nb_join(&str[2], var));
 	if (ft_doll_var_exists(str + 1, var->env))
-		return (ft_extract_env_value_from_key(var->env, str + 1));
+		return (ft_strdup(ft_extract_env_value_from_key(var->env, str + 1)));
 	else
 		return (ft_strdup(""));
 }
