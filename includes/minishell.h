@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/28 11:09:23 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:02:20 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,7 +303,7 @@ void			ft_print_info_cmd_list(int nb_cmd, t_cmd **list);
 Handle cmd
 */
 int				ft_handle_pipes(t_var *var, t_shell shell);
-int				ft_handle_cmd(t_var *var, t_shell shell, t_cmd *cmd_node);
+int				ft_handle_cmd(t_var *var, t_shell shell, t_cmd *node);
 /*
 Exec cmd
 */
@@ -320,17 +320,23 @@ int				ft_exec_exit_cmd(char **env, char **split_cmd);
 int				ft_handle_exit_last_shlvl(t_var var, t_shell shell,
 					char ***env, char **split_cmd);
 int				ft_handle_exit_not_last_shlvl(char ***env, char **split_cmd);
-void			ft_cmd_env(char **env, t_token_list *token_list);
 int				ft_cmd_unset(char ***env_ptr, t_token_list *token_list);
-int				ft_cmd_export(char ***env_ptr, t_token_list *token_list);
-int				ft_cmd_export_with_no_args(char ***env_ptr);
-int				ft_cmd_export_with_args(char ***env_ptr, char *arg);
 int				ft_cmd_pwd(char **env, t_token_list *token_list);
 int				ft_cmd_cd(char ***env, t_token_list *token_list);
 int				ft_update_old_pwd(char ***env);
 int				ft_update_new_pwd(char ***env, char *new_pwd);
 int				ft_cmd_cd_home(char ***env);
 int				ft_cmd_cd_path(char ***env, char *path);
+/*
+CMD - export
+*/
+int				ft_cmd_export(char ***env_ptr, char **split_line);
+int				ft_cmd_export_with_no_args(char ***env_ptr);
+int				ft_cmd_export_with_args(char ***env_ptr, char *arg);
+/*
+CMD - env
+*/
+int				ft_cmd_env(char **env, t_cmd *cmd_node);
 /*
 CMD - echo
 */
