@@ -1,1 +1,1 @@
-export test="test" : error
+export test=bonjour : ne set plus la variable d'environnement
