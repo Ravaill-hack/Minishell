@@ -50,6 +50,7 @@ SRCS_FILES = \
 	cmd_list_utils.c \
 	cmd_list_len.c \
 	utils.c \
+	handle_pipes.c \
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS_FILES:.c=.o))
 

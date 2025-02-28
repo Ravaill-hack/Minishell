@@ -6,133 +6,91 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 21:28:54 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 18:07:08 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/28 10:42:10 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_cmd_echo(t_token_list *token, char **env, int ex_nb)
+int	ft_line_is_str(char *line)
 {
-	size_t	i;
-	int		ind;
-	int		status;
-
-	ind = ft_cmd_skip_name(token->val);
-	if (token->val[ind] == '\0')
-		token = token->next;
-	if (token->type == CONTENT || token->type == DOLL)
-	{
-		while (ft_isspace(token->val[ind]))
-			ind++;
-		if ((token->val[ind] == '-' && token->val[ind + 1] == 'n')
-			&& (token->val[ind + 2] == ' ' || token->val[ind + 2] == '\0'))
-		{
-			i = 2;
-			ind += 2;
-		}
-		else
-			i = 1;
-		status = ft_cmd_echo_print_tokens(token, ind, env, ex_nb);
-		if (i == 1)
-			ft_putchar_fd('\n', 1);
-	}
-	return (status);
+	if (line && line[0] && line[0] != '-')
+		return (1);
+	return (0);
 }
 
-int	ft_cmd_echo_print_doll(t_token_list *token, char **env, int exit_nb)
+int	ft_is_valid_n(char *line)
 {
-	char	*temp;
+	int	i;
 
-	if (token->val[1] == '?')
-	{
-		ft_putnbr_fd(exit_nb, 1);
-		return (SUCCESS);
-	}
-	temp = ft_extract_env_value_from_key(env, &(token->val[1]));
-	if (temp)
-	{
-		ft_putstr_fd (temp, 1);
-		return (SUCCESS);
-	}
-	return (SUCCESS);
-}
-
-int	ft_cmd_echo_print_tokens(t_token_list *token, int i, char **env, int ex_nb)
-{
-	if (token->type != CONTENT && token->type != DOLL)
-		return (FAILURE);
-	while (ft_isspace(token->val[i]))
+	i = 2;
+	if (line[0] != '-' || line[1] != 'n')
+		return (0);
+	if (line[2] == '\0')
+		return (1);
+	while (line[i] == 'n')
 		i++;
-	while (token && (token->type == CONTENT || token->type == DOLL))
-	{
-		if (token->type == DOLL)
-			ft_cmd_echo_print_doll(token, env, ex_nb);
-		else if (token->type == CONTENT && token->dq_end == 0
-			&& token->dq_start == 0)
-			ft_cmd_echo_print_str(token->val, i, 1);
-		else if (token->type == CONTENT && (token->dq_end != 0
-				|| token->dq_start != 0))
-			ft_cmd_echo_print_str(token->val, i, 0);
-		if (token->print_space_after == 1)
-			ft_putchar_fd(' ', 1);
-		i = 0;
-		token = token->next;
-	}
-	return (SUCCESS);
+	if (line[i] == '\0')
+		return (1);
+	return (0);
 }
 
-int	ft_cmd_skip_name(char *str)
+int	ft_line_is_opt_n(char **chartab, int imax)
+{
+	int	i;
+	int	n_saw;
+	int	opt;
+
+	i = 0;
+	n_saw = 0;
+	opt = 0;
+	while (i <= imax)
+	{
+		if (ft_line_is_str(chartab[i]) == 1 && n_saw == 1)
+			return (0);
+		if (ft_is_valid_n(chartab[i]) == 1)
+		{
+			n_saw = 1;
+			opt = 1;
+		}
+		i++;
+	}
+	return (opt);
+}
+
+int	ft_opt_n_enabled(char **chartab)
 {
 	int	i;
 
 	i = 0;
-	while (ft_isspace(str[i]))
-		i++;
-	if (str[i] && str[i] == '\"')
+	while (chartab[i])
 	{
-		while (str[i] && str[i] != '\"')
-			i++;
+		if (ft_line_is_opt_n(chartab, i) == 1)
+			return (1);
 		i++;
 	}
-	else if (str[i] && str[i] == '\'')
-	{
-		while (str[i] && str[i] != '\'')
-			i++;
-		i++;
-	}
-	else if (str[i])
-	{
-		while (str[i] && !ft_isspace(str[i]))
-			i++;
-	}
-	return (i);
+	return (0);
 }
 
-int	ft_cmd_echo_print_str(char *str, int i, int opt)
+int	ft_cmd_echo(t_cmd *cmd, t_var *var)
 {
-	if (opt == 1)
+	int		i;
+	int		opt;
+
+	(void) var;
+	i = 0;
+	if (!cmd || !(cmd->arg) || !(cmd->arg[0]))
+		return (FAILURE);
+	opt = ft_opt_n_enabled(cmd->arg);
+	while (cmd->arg[i])
 	{
-		while (str[i])
-		{
-			while (str[i] && ft_isspace(str[i]))
-				i++;
-			while (str[i] && !ft_isspace(str[i]))
-			{
-				ft_putchar_fd(str[i], 1);
-				i++;
-			}
-			if (str[i] != '\0' && ft_isspace(str[i]))
-				ft_putchar_fd(' ', 1);
-		}
+		if (ft_line_is_opt_n(cmd->arg, i) == 0)
+			ft_putstr_fd(cmd->arg[i], 1);
+		if (cmd->arg[i + 1])
+			ft_putchar_fd(' ', 1);
+		i++;
 	}
-	else
-	{
-		while (str[i])
-		{
-			ft_putchar_fd(str[i], 1);
-			i++;
-		}
-	}
+	if (opt == 0)
+		ft_putchar_fd('\n', 1);
 	return (SUCCESS);
 }

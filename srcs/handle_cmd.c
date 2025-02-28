@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:13:42 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 18:16:04 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/28 10:34:39 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_handle_cmd(t_var *var, t_shell shell, char *val)
 	else if (ft_strncmp(val, "cd", 2) == 0)
 		return (ft_cmd_cd(&var->env, *(var->token_list)));
 	else if (ft_strncmp(val, "echo", 4) == 0)
-		return (ft_cmd_echo(*(var->token_list), var->env, var->exit_nb));
+		return (ft_cmd_echo(*(var->cmd), var));
 	else
 		return (ft_exec_cmd(var->env, val));
 	return (SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 18:24:56 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/28 10:41:37 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,10 +288,10 @@ Free
 */
 void			ft_free_token_list(t_token_list **token_list);
 void			ft_free_token_list_until(t_token_list **list, int n);
-void			ft_clear_and_free_all(t_var *var, t_shell *shell);
+void			ft_clear_and_free_all(t_var var, t_shell shell);
 void			ft_clear_and_free_while(t_shell shell, t_var *var);
 void			ft_free_cmd_node(t_cmd *node);
-void			ft_free_cmd_list(t_var *var, t_cmd **list, int imax);
+void			ft_free_cmd_list(t_var var, t_cmd **list, int imax);
 /*
 Debug
 */
@@ -330,12 +330,13 @@ int				ft_update_old_pwd(char ***env);
 int				ft_update_new_pwd(char ***env, char *new_pwd);
 int				ft_cmd_cd_home(char ***env);
 int				ft_cmd_cd_path(char ***env, char *path);
-int				ft_cmd_echo(t_token_list *token_list, char **env, int ex_nb);
-int				ft_cmd_echo_print_doll(t_token_list *token, char **env,
-					int exit_nb);
-int				ft_cmd_echo_print_tokens(t_token_list *token, int i,
-					char **env, int ex_nb);
-int				ft_cmd_skip_name(char *str);
-int				ft_cmd_echo_print_str(char *str, int i, int opt);
+/*
+CMD - echo
+*/
+int				ft_line_is_str(char *line);
+int				ft_is_valid_n(char *line);
+int				ft_line_is_opt_n(char **chartab, int imax);
+int				ft_opt_n_enabled(char **chartab);
+int				ft_cmd_echo(t_cmd *cmd, t_var *var);
 
 #endif
