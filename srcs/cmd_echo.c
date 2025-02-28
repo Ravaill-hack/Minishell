@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 21:28:54 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/28 10:42:10 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/28 10:56:00 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,17 +78,20 @@ int	ft_cmd_echo(t_cmd *cmd, t_var *var)
 	int		opt;
 
 	(void) var;
-	i = 0;
+	i = 1;
 	if (!cmd || !(cmd->arg) || !(cmd->arg[0]))
 		return (FAILURE);
 	opt = ft_opt_n_enabled(cmd->arg);
-	while (cmd->arg[i])
+	if (cmd->arg[i])
 	{
-		if (ft_line_is_opt_n(cmd->arg, i) == 0)
-			ft_putstr_fd(cmd->arg[i], 1);
-		if (cmd->arg[i + 1])
-			ft_putchar_fd(' ', 1);
-		i++;
+		while (cmd->arg[i])
+		{
+			if (ft_line_is_opt_n(cmd->arg, i) == 0)
+				ft_putstr_fd(cmd->arg[i], 1);
+			if (cmd->arg[i + 1])
+				ft_putchar_fd(' ', 1);
+			i++;
+		}
 	}
 	if (opt == 0)
 		ft_putchar_fd('\n', 1);

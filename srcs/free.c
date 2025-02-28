@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:01:37 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/28 10:38:20 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/28 10:49:36 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	ft_clear_and_free_all(t_var var, t_shell shell)
 
 void	ft_clear_and_free_while(t_shell shell, t_var *var)
 {
-	ft_putstr_fd("0\n", 1);
 	if (shell.prompt)
 		free(shell.prompt);
 	rl_clear_history();
