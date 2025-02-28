@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:13:42 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/28 12:01:25 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/28 13:02:56 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ int	ft_handle_cmd(t_var *var, t_shell shell, t_cmd *node)
 	 	return (ft_cmd_env(var->env, node));
 	else if (ft_strncmp(node->arg[0], "export", ft_strlen(node->arg[0])) == 0)
 		return (ft_cmd_export(&var->env, node->arg));
-	// else if (ft_strncmp(val, "exit", ft_strlen(val)) == 0)
-	// 	return (ft_cmd_exit(*var, shell, &var->env, *(var->token_list)));
+	else if (ft_strncmp(node->arg[0], "exit", ft_strlen(node->arg[0])) == 0)
+	 	return (ft_cmd_exit(*var, shell, &var->env, node));
 	// else if (ft_strncmp(val, "unset", 5) == 0)
 	// 	return (ft_cmd_unset(&var->env, *(var->token_list)));
 	// else if (ft_strncmp(val, "pwd", ft_strlen(val)) == 0)

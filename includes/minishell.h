@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/28 12:02:20 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/28 13:41:09 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,7 +291,7 @@ void			ft_free_token_list_until(t_token_list **list, int n);
 void			ft_clear_and_free_all(t_var var, t_shell shell);
 void			ft_clear_and_free_while(t_shell shell, t_var *var);
 void			ft_free_cmd_node(t_cmd *node);
-void			ft_free_cmd_list(t_var var, t_cmd **list, int imax);
+void			ft_free_cmd_list(int nb_cmd, t_cmd **list, int imax);
 /*
 Debug
 */
@@ -314,12 +314,6 @@ int				ft_exec_cmd_in_child(char *path, char **split_cmd, char **env);
 /*
 Cmds
 */
-int				ft_cmd_exit(t_var var, t_shell shell, char ***env,
-					t_token_list *token_list);
-int				ft_exec_exit_cmd(char **env, char **split_cmd);
-int				ft_handle_exit_last_shlvl(t_var var, t_shell shell,
-					char ***env, char **split_cmd);
-int				ft_handle_exit_not_last_shlvl(char ***env, char **split_cmd);
 int				ft_cmd_unset(char ***env_ptr, t_token_list *token_list);
 int				ft_cmd_pwd(char **env, t_token_list *token_list);
 int				ft_cmd_cd(char ***env, t_token_list *token_list);
@@ -327,6 +321,13 @@ int				ft_update_old_pwd(char ***env);
 int				ft_update_new_pwd(char ***env, char *new_pwd);
 int				ft_cmd_cd_home(char ***env);
 int				ft_cmd_cd_path(char ***env, char *path);
+/*
+CMD - exit
+*/
+int				ft_cmd_exit(t_var var, t_shell shell, char ***env, t_cmd *node);
+int				ft_exec_exit_cmd(char **env);
+int				ft_handle_exit_last_shlvl(t_var var, t_shell shell, char ***env);
+int				ft_handle_exit_not_last_shlvl(char ***env);
 /*
 CMD - export
 */

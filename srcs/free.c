@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:01:37 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/28 10:49:36 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:10:54 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,28 +66,31 @@ void	ft_clear_and_free_all(t_var var, t_shell shell)
 	//	ft_putstr_fd("token_list\n", 1);
 	//	ft_free_token_list(var->token_list);
 	//}
-	if (var.cmd)
-	{
-		ft_putstr_fd("cmd_list\n", 1);
-		ft_free_cmd_list(var, var.cmd, -1);
-	}
+	// if (var.cmd)
+	// {
+	// 	ft_putstr_fd("cmd_list\n", 1);
+	// 	ft_free_cmd_list(var.nb_cmd, var.cmd, -1);
+	// }
 	rl_clear_history();
 	ft_enable_echoctl();
 }
 
 void	ft_clear_and_free_while(t_shell shell, t_var *var)
 {
+	//int	nb_cmd;
+
+	ft_putstr_fd("aaa\n", 1);
+	//nb_cmd = var->nb_cmd;
 	if (shell.prompt)
 		free(shell.prompt);
-	rl_clear_history();
-	ft_enable_echoctl();
 	if (var->token_list)
 		ft_free_token_list(var->token_list);
 	if (var->cmd)
-		ft_free_cmd_list(*var, var->cmd, -1);
+	 	ft_free_cmd_list(nb_cmd, var->cmd, -1);
 }
 
 void	ft_free_cmd_node(t_cmd *node)
 {
+	
 	ft_free_strs_until(node->arg, -1);
 }
