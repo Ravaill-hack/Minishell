@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_strs_until.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 09:56:16 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/28 14:06:45 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/02 12:38:16 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ char	**ft_free_strs_until(char **strs, int n)
 		}
 	}
 	if (strs)
-	 	free(strs);
+		free(strs);
 	return (NULL);
 }

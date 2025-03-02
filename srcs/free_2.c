@@ -3,40 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   free_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:12:19 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/02 10:04:51 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/02 12:34:35 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_free_cmd_list(int nb_cmd, t_cmd **list, int imax)
+void	ft_free_cmd_list(t_cmd **cmd)
 {
-	(void)list;
-	(void)nb_cmd;
-	(void)imax;
-	/*
+	int	i;
+
+	if (!cmd)
+		return ;
 	i = 0;
-	if (imax == -1)
+	while (cmd[i])
 	{
-		while (i < (nb_cmd))
-		{
-			if (list[i])
-				ft_free_strs_until(list[i], -1);
-			i++;
-		}
+		free(cmd[i]);
+		i++;
 	}
-	else
-	{
-		while (i < imax)
-		{
-			if (list[i])
-				ft_free_strs_until(list[i], -1);
-			i++;
-		}
-	}
-	//free(list);
-	*/
+	free(cmd);
 }

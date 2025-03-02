@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/03/02 21:46:56 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/02 21:56:43 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,18 @@
 
 void	get_prompt(t_var *var, t_shell *shell)
 {
-	if (isatty(STDIN_FILENO))
+	if (isatty(STDIN_FILENO) && VALGRIND_DEBUG == 0)
 		shell->prompt = readline(shell->terminal_prompt);
 	else
 	{
 		var->line = get_next_line(fileno(stdin));
-		shell->prompt = ft_strtrim(var->line, "\n");
-		free(var->line);
+		if (var->line)
+		{
+			shell->prompt = ft_strtrim(var->line, "\n");
+			free(var->line);
+		}
+		else
+			shell->prompt = NULL;
 	}
 }
 

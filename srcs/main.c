@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/02 10:33:44 by juduchar         ###   ########.fr       */
+/*   Created: 2025/03/02 12:35:39 by julien            #+#    #+#             */
+/*   Updated: 2025/03/02 12:59:57 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int argc, char **argv, char **env)
 	(void) argc;
 	(void) argv;
 	shell = ft_init_shell();
-	ft_init(&var, env);	
+	ft_init(&var, env);
 	get_prompt(&var, shell);
 	while (shell->prompt)
 	{
@@ -30,7 +30,8 @@ int	main(int argc, char **argv, char **env)
 		{
 			if (ft_handle_pipes(&var, *shell) == FAILURE)
 				ft_print_error();
-			add_history(shell->prompt);
+			if (VALGRIND_DEBUG == 0)
+				add_history(shell->prompt);
 			ft_clear_and_free_while(&var, shell);
 		}
 		get_prompt(&var, shell);
