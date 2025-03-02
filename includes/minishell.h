@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/02 10:33:26 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/02 19:39:34 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef enum s_type_fd
 {
 	SIMPLE,
 	DOUBLE,
+	NONE,
 }	t_type_fd;
 
 typedef struct s_fd
@@ -109,6 +110,8 @@ typedef struct s_cmd
 	char					**chev;
 	t_fd					fd_in;
 	t_fd					fd_out;
+	int						need_pipe_in;
+	int						need_pipe_out;
 	char 					*heredoc;
 }	t_cmd;
 
@@ -128,6 +131,7 @@ typedef struct s_var
 	char					*line;
 	char					**split_line;
 	t_token_list			**token_list;
+	int						**fd_pipe;
 	t_cmd					**cmd;
 	int						nb_cmd;
 	char					**env;
@@ -136,14 +140,14 @@ typedef struct s_var
 
 typedef struct s_index
 {
-	int	i;
-	int	j;
+	int						i;
+	int						j;
 }	t_index;
 
 typedef struct s_shell
 {
-	char	*terminal_prompt;
-	char	*prompt;
+	char					*terminal_prompt;
+	char					*prompt;
 }	t_shell;
 
 /*
@@ -241,8 +245,10 @@ Redirection - build
 void			ft_init_fd(t_cmd *node);
 int				ft_close_fds(t_cmd *node);
 int				ft_fill_fd(t_cmd *node);
+int				*ft_init_pipes(int	nb_pipes);
+int				ft_set_pipes(t_cmd **cmd, int n_cmd, int **pipes);
 /*
-Redirection - bhandle
+Redirection - handle
 */
 int				ft_set_infile(char *str, t_cmd *node);
 int				ft_set_outfile_append(char *str, t_cmd *node);
@@ -298,11 +304,15 @@ Debug
 void			ft_print_token_type(t_token_list *token);
 void			ft_print_info_list(t_token_list *list, char **env);
 void			ft_print_info_cmd_list(int nb_cmd, t_cmd **list);
-
+/*
+Handle pipes
+*/
+int				ft_handle_pipes(t_var *var, t_shell shell);
+int				ft_need_to_send_in_pipe(t_cmd **cmd_tab, int i_cmd, int nb_cmd);
+int				ft_need_to_grep_from_pipe(t_cmd **cmd_tab, int i_cmd, int nb_cmd);
 /*
 Handle cmd
 */
-int				ft_handle_pipes(t_var *var, t_shell shell);
 int				ft_handle_cmd(t_var *var, t_shell shell, t_cmd *node);
 /*
 Exec cmd
