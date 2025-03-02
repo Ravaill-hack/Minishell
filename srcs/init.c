@@ -6,22 +6,22 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/02/27 16:35:05 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/02 10:37:24 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	get_prompt(t_shell *shell, t_var *var)
+void	get_prompt(t_var *var, t_shell *shell)
 {
-	if (isatty(STDIN_FILENO))
-		shell->prompt = readline(shell->terminal_prompt);
-	else
-	{
+	//if (isatty(STDIN_FILENO))
+		//shell->prompt = readline(shell->terminal_prompt);
+	//else
+	//{
 		var->line = get_next_line(fileno(stdin));
 		shell->prompt = ft_strtrim(var->line, "\n");
 		free(var->line);
-	}
+	//}
 }
 
 int	ft_update_shlvl(char ***env, int level)
@@ -39,12 +39,19 @@ int	ft_update_shlvl(char ***env, int level)
 	return (free(new_shlvl), status);
 }
 
-void	ft_init(t_var *var, t_shell **shell, char **env)
+t_shell	*ft_init_shell(void)
 {
-	*shell = malloc(sizeof(t_shell));
-	if (!*shell)
+	t_shell	*shell;
+
+	shell = malloc(sizeof(t_shell));
+	if (!shell)
 		exit(EXIT_FAILURE);
-	(*shell)->terminal_prompt = "minishell$ ";
+	shell->terminal_prompt = "minishell$ ";
+	return (shell);
+}
+
+void	ft_init(t_var *var, char **env)
+{
 	var->exit_nb = 0;
 	var->env = ft_strsdup(env);
 	if (!var->env)

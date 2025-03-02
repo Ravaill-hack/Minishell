@@ -3,26 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export_pwd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:15:56 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/26 13:45:24 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:06:37 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_cmd_export(char ***env_ptr, t_token_list *token_list)
+int	ft_cmd_export(char ***env_ptr, char **split_line)
 {
-	char	**split_line;
 	int		status;
 
-	split_line = ft_split(token_list->val, ' ');
 	if (!split_line[1])
 		status = ft_cmd_export_with_no_args(env_ptr);
 	else
 		status = ft_cmd_export_with_args(env_ptr, split_line[1]);
-	ft_free_strs(split_line);
 	return (status);
 }
 

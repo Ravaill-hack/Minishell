@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/28 10:41:37 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/02 10:33:26 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,8 +149,9 @@ typedef struct s_shell
 /*
 Init
 */
-void			get_prompt(t_shell *shell, t_var *var);
-void			ft_init(t_var *var, t_shell **shell, char **env);
+void			get_prompt(t_var *var, t_shell *shell);
+t_shell			*ft_init_shell(void);
+void			ft_init(t_var *var, char **env);
 int				ft_update_shlvl(char ***env, int level);
 /*
 Token - append
@@ -288,10 +289,9 @@ Free
 */
 void			ft_free_token_list(t_token_list **token_list);
 void			ft_free_token_list_until(t_token_list **list, int n);
-void			ft_clear_and_free_all(t_var var, t_shell shell);
-void			ft_clear_and_free_while(t_shell shell, t_var *var);
-void			ft_free_cmd_node(t_cmd *node);
-void			ft_free_cmd_list(t_var var, t_cmd **list, int imax);
+void			ft_clear_and_free_all(t_var *var, t_shell *shell);
+void			ft_clear_and_free_while(t_var *var, t_shell *shell);
+void			ft_free_cmd_list(int nb_cmd, t_cmd **list, int imax);
 /*
 Debug
 */
@@ -302,34 +302,42 @@ void			ft_print_info_cmd_list(int nb_cmd, t_cmd **list);
 /*
 Handle cmd
 */
-int				ft_handle_cmd(t_var *var, t_shell shell, char *val);
+int				ft_handle_pipes(t_var *var, t_shell shell);
+int				ft_handle_cmd(t_var *var, t_shell shell, t_cmd *node);
 /*
 Exec cmd
 */
 char			*ft_extract_path(char **env, char *cmd);
 char			**ft_set_exec_args(char *path, char **split_cmd);
-int				ft_exec_cmd(char **env, char *cmd);
+int				ft_exec_cmd(char **env, char **split_cmd);
 int				ft_exec_cmd_in_child(char *path, char **split_cmd, char **env);
 /*
 Cmds
 */
-int				ft_cmd_exit(t_var var, t_shell shell, char ***env,
-					t_token_list *token_list);
-int				ft_exec_exit_cmd(char **env, char **split_cmd);
-int				ft_handle_exit_last_shlvl(t_var var, t_shell shell,
-					char ***env, char **split_cmd);
-int				ft_handle_exit_not_last_shlvl(char ***env, char **split_cmd);
-void			ft_cmd_env(char **env, t_token_list *token_list);
 int				ft_cmd_unset(char ***env_ptr, t_token_list *token_list);
-int				ft_cmd_export(char ***env_ptr, t_token_list *token_list);
-int				ft_cmd_export_with_no_args(char ***env_ptr);
-int				ft_cmd_export_with_args(char ***env_ptr, char *arg);
 int				ft_cmd_pwd(char **env, t_token_list *token_list);
 int				ft_cmd_cd(char ***env, t_token_list *token_list);
 int				ft_update_old_pwd(char ***env);
 int				ft_update_new_pwd(char ***env, char *new_pwd);
 int				ft_cmd_cd_home(char ***env);
 int				ft_cmd_cd_path(char ***env, char *path);
+/*
+CMD - exit
+*/
+int				ft_cmd_exit(t_var var, t_shell shell, char ***env, t_cmd *node);
+int				ft_exec_exit_cmd(char **env);
+int				ft_handle_exit_last_shlvl(t_var var, t_shell shell, char ***env);
+int				ft_handle_exit_not_last_shlvl(char ***env);
+/*
+CMD - export
+*/
+int				ft_cmd_export(char ***env_ptr, char **split_line);
+int				ft_cmd_export_with_no_args(char ***env_ptr);
+int				ft_cmd_export_with_args(char ***env_ptr, char *arg);
+/*
+CMD - env
+*/
+int				ft_cmd_env(char **env, t_cmd *cmd_node);
 /*
 CMD - echo
 */

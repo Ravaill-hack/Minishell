@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 09:56:16 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/27 18:09:18 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:06:45 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,15 @@ char	**ft_free_strs_until(char **strs, int n)
 			i++;
 		}
 	}
-	while (i < n)
+	else
 	{
-		free(strs[i]);
-		i++;
+		while (i < n)
+		{
+			free(strs[i]);
+			i++;
+		}
 	}
-	
-	free(strs);
+	if (strs)
+	 	free(strs);
 	return (NULL);
 }

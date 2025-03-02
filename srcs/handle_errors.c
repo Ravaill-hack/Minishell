@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:27:03 by julien            #+#    #+#             */
-/*   Updated: 2025/02/27 18:06:16 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/02 10:35:37 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ void	ft_print_error(void)
 void	ft_print_error_and_exit(t_var var, t_shell shell)
 {
 	ft_print_error();
-	ft_clear_and_free_all(var, shell);
+	ft_clear_and_free_all(&var, &shell);
 	exit(EXIT_FAILURE);
 }

@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 10:26:14 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/28 10:49:26 by juduchar         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/03/02 10:40:14 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -16,28 +17,26 @@ int	main(int argc, char **argv, char **env)
 {
 	t_var	var;
 	t_shell	*shell;
-	char	*val;
 
 	(void) argc;
 	(void) argv;
-	ft_init(&var, &shell, env);
-	get_prompt(shell, &var);
+	shell = ft_init_shell();
+	ft_init(&var, env);	
+	get_prompt(&var, shell);
 	while (shell->prompt)
 	{
 		if (!ft_parse_line(&var, shell->prompt))
 			ft_print_error_and_exit(var, *shell);
-		ft_print_info_cmd_list(var.nb_cmd, var.cmd);
 		if (*(var.token_list))
 		{
-			val = var.token_list[0]->val;
-			if (ft_handle_cmd(&var, *shell, val) == FAILURE)
+			if (ft_handle_pipes(&var, *shell) == FAILURE)
 				ft_print_error();
 			add_history(shell->prompt);
-			ft_clear_and_free_while(*shell, &var);
+			ft_clear_and_free_while(&var, shell);
 		}
-		get_prompt(shell, &var);
+		get_prompt(&var, shell);
 	}
-	//ft_clear_and_free_all(var, *shell);
+	ft_clear_and_free_all(&var, shell);
 	exit(EXIT_SUCCESS);
 }
 

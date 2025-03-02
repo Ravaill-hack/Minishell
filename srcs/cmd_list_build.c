@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:54:47 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/28 10:42:42 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:01:33 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ t_cmd	**ft_build_cmd_list(t_var *var)
 	{
 		cmd_list[i] = ft_create_cmd_node(var, i);
 		if (!cmd_list[i])
-			return (ft_free_cmd_list(*var, cmd_list, i), NULL);
+			return (ft_free_cmd_list(var->nb_cmd, cmd_list, i), NULL);
 		i++;
 	}
 	cmd_list[i] = NULL;
