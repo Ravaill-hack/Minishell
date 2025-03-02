@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:01:37 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/02 13:36:13 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/02 13:41:48 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_clear_and_free_while(t_var *var, t_shell *shell)
 		ft_free_token_list(var->token_list);
 	// /!\ This line is commented out because it causes a double free error in certain cases
 	// to do with env, export, echo, (and unset, pwd and cd ???)
-	// but not with buitins, exit, or unknow command
+	// but not with buitins (ls, ...), exit, or unknow command
 	// if (var->cmd[0]->arg)
 		// ft_free_strs(var->cmd[0]->arg);
 	if (var->cmd)
