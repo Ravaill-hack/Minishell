@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:35:39 by julien            #+#    #+#             */
-/*   Updated: 2025/03/02 12:37:11 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/02 12:59:57 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int argc, char **argv, char **env)
 		{
 			if (ft_handle_pipes(&var, *shell) == FAILURE)
 				ft_print_error();
-			if (VALGRIND_DEBUG == 1)
+			if (VALGRIND_DEBUG == 0)
 				add_history(shell->prompt);
 			ft_clear_and_free_while(&var, shell);
 		}

@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/02 12:32:09 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/02 12:59:23 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # endif
 
 # ifndef VALGRIND_DEBUG
-#  define VALGRIND_DEBUG 0
+#  define VALGRIND_DEBUG 1
 # endif
 
 // read write access close fork dup dup2 pipe isatty ttyname

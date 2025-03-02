@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:01:37 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/02 12:50:31 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/02 13:29:59 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_clear_and_free_all(t_var *var, t_shell *shell)
 		ft_free_strs(var->env);
 	if (shell)
 		free(shell);
-	if (VALGRIND_DEBUG == 1)
+	if (VALGRIND_DEBUG == 0)
 		rl_clear_history();
 	ft_enable_echoctl();
 }
@@ -61,6 +61,9 @@ void	ft_clear_and_free_while(t_var *var, t_shell *shell)
 		free(shell->prompt);
 	if (var->token_list)
 		ft_free_token_list(var->token_list);
+	// /!\ This line is commented out because it causes a double free error in certain cases
+	// if (var->cmd[0]->arg)
+		// ft_free_strs(var->cmd[0]->arg);
 	if (var->cmd)
 		ft_free_cmd_list(var->cmd);
 }

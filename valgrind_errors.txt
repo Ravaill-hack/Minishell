@@ -1,0 +1,17 @@
+==11136== 91 bytes in 13 blocks are indirectly lost in loss record 20 of 75
+==11136==    at 0x484680F: malloc (vg_replace_malloc.c:446)
+==11136==    by 0x10EA37: ft_calloc (in /home/julien/minishell/minishell)
+==11136==    by 0x10EAAD: ft_strdup (in /home/julien/minishell/minishell)
+==11136==    by 0x10D9CD: ft_epure_args_array (cmd_list_init.c:32)
+==11136==    by 0x10DCFA: ft_create_cmd_node (cmd_list_build.c:79)
+==11136==    by 0x10DE64: ft_build_cmd_list (cmd_list_build.c:124)
+==11136==    by 0x10ABA8: ft_parse_line (token_parsing.c:95)
+==11136==    by 0x1095DA: main (main.c:27)
+
+==11136== 267 (176 direct, 91 indirect) bytes in 9 blocks are definitely lost in loss record 27 of 75
+==11136==    at 0x484680F: malloc (vg_replace_malloc.c:446)
+==11136==    by 0x10D93F: ft_epure_args_array (cmd_list_init.c:25)
+==11136==    by 0x10DCFA: ft_create_cmd_node (cmd_list_build.c:79)
+==11136==    by 0x10DE64: ft_build_cmd_list (cmd_list_build.c:124)
+==11136==    by 0x10ABA8: ft_parse_line (token_parsing.c:95)
+==11136==    by 0x1095DA: main (main.c:27)
