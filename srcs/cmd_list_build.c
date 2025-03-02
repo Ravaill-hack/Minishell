@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/02 21:54:05 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/02 22:22:23 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ char	*ft_fill_arg(t_token_list *node)
 {
 	char	*str;
 	char	*tmp;
+	//int		i;
 
 	str = NULL;
 	tmp = NULL;
+	//i = 0;
 	while (node && (node->type != PIPE))
 	{
 		tmp = str;
@@ -39,6 +41,11 @@ char	*ft_fill_arg(t_token_list *node)
 			break ;
 		node = node->next;
 	}
+	//while (str[i])
+	//{
+	//	ft_putchar_fd(str[i], 1);
+	//	i++;
+	//}
 	return (str);
 }
 
@@ -49,6 +56,8 @@ char	**ft_token_list_to_char_array(t_token_list *node)
 	int		j;
 
 	len = ft_nb_str(node);
+	//ft_putnbr_fd(len, 1);
+	//ft_putchar_fd('\n', 1);
 	j = 0;
 	array = (char **)malloc((len + 1) * sizeof(char *));
 	if (!array)
@@ -56,6 +65,7 @@ char	**ft_token_list_to_char_array(t_token_list *node)
 	while (j < len)
 	{
 		array[j] = ft_fill_arg(node);
+		//ft_putchar_fd(' ', 1);
 		node = ft_go_to_next_node(node);
 		if (array[j])
 			j++;
@@ -75,6 +85,7 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i)
 		return (NULL);
 	token_node = ft_go_to_cmd_node(*(var->token_list), i);
 	cmd_node->raw = ft_token_list_to_char_array(token_node);
+	//ft_putchar_fd('\n', 1);
 	if (!cmd_node->raw)
 		return (NULL);
 	cmd_node->arg = ft_epure_args_array(cmd_node->raw);
