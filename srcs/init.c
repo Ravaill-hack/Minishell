@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/03/02 10:37:24 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/02 21:46:56 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	get_prompt(t_var *var, t_shell *shell)
 {
-	//if (isatty(STDIN_FILENO))
-		//shell->prompt = readline(shell->terminal_prompt);
-	//else
-	//{
+	if (isatty(STDIN_FILENO))
+		shell->prompt = readline(shell->terminal_prompt);
+	else
+	{
 		var->line = get_next_line(fileno(stdin));
 		shell->prompt = ft_strtrim(var->line, "\n");
 		free(var->line);
-	//}
+	}
 }
 
 int	ft_update_shlvl(char ***env, int level)

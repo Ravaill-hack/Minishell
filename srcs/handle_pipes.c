@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:07:11 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/02 21:32:33 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/02 21:42:09 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	ft_handle_pipes(t_var *var, t_shell shell)
 	i = 0;
 	res = 0;
 	if (var->cmd[0]->fd_in.fd != 0)
-		if (dup2(var->cmd[0]->fd_in.fd, 0))
+		if (dup2(var->cmd[0]->fd_in.fd, 0) == -1)
 			return (FAILURE);
 	if (var->nb_cmd == 1)
 		return (ft_handle_last_cmd(var, shell, 0));
