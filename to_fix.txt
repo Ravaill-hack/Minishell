@@ -1,1 +1,0 @@
-export test=bonjour : ne set plus la variable d'environnement

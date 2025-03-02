@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:14:19 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/28 11:06:04 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/02 12:33:24 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	ft_exec_cmd(char **env, char **split_cmd)
 	char	*path;
 
 	// if (!ft_cmd_is_valid(split_cmd[0], env))
-	// 	return (FAILURE);
+		// return (FAILURE);
 	path = ft_extract_path(env, split_cmd[0]);
 	if (!path)
 		return (FAILURE);

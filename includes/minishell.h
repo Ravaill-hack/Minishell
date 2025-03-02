@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/02 10:33:26 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/02 12:32:09 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 
 # ifndef SUCCESS
 #  define SUCCESS 1
+# endif
+
+# ifndef VALGRIND_DEBUG
+#  define VALGRIND_DEBUG 0
 # endif
 
 // read write access close fork dup dup2 pipe isatty ttyname
@@ -109,7 +113,7 @@ typedef struct s_cmd
 	char					**chev;
 	t_fd					fd_in;
 	t_fd					fd_out;
-	char 					*heredoc;
+	char					*heredoc;
 }	t_cmd;
 
 typedef struct s_token_list
@@ -235,6 +239,7 @@ char			*ft_fill_arg(t_token_list *node);
 char			**ft_token_list_to_char_array(t_token_list *node);
 t_cmd			*ft_create_cmd_node(t_var *var, int i);
 t_cmd			**ft_build_cmd_list(t_var *var);
+t_cmd			**ft_free_cmd_list_until(t_cmd **cmd_list, int n);
 /*
 Redirection - build
 */
@@ -291,7 +296,7 @@ void			ft_free_token_list(t_token_list **token_list);
 void			ft_free_token_list_until(t_token_list **list, int n);
 void			ft_clear_and_free_all(t_var *var, t_shell *shell);
 void			ft_clear_and_free_while(t_var *var, t_shell *shell);
-void			ft_free_cmd_list(int nb_cmd, t_cmd **list, int imax);
+void			ft_free_cmd_list(t_cmd **cmd);
 /*
 Debug
 */
@@ -326,7 +331,8 @@ CMD - exit
 */
 int				ft_cmd_exit(t_var var, t_shell shell, char ***env, t_cmd *node);
 int				ft_exec_exit_cmd(char **env);
-int				ft_handle_exit_last_shlvl(t_var var, t_shell shell, char ***env);
+int				ft_handle_exit_last_shlvl(t_var var, t_shell shell,
+					char ***env);
 int				ft_handle_exit_not_last_shlvl(char ***env);
 /*
 CMD - export

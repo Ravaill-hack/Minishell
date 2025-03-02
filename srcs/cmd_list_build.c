@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list_build.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:54:47 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/28 14:01:33 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/02 12:33:54 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,32 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i)
 	return (cmd_node);
 }
 
+t_cmd	**ft_free_cmd_list_until(t_cmd **cmd_list, int n)
+{
+	int	i;
+
+	i = 0;
+	if (n == -1)
+	{
+		while (cmd_list[i])
+		{
+			free(cmd_list[i]);
+			i++;
+		}
+	}
+	else
+	{
+		while (i < n)
+		{
+			free(cmd_list[i]);
+			i++;
+		}
+	}
+	if (cmd_list)
+		free(cmd_list);
+	return (NULL);
+}
+
 t_cmd	**ft_build_cmd_list(t_var *var)
 {
 	t_cmd	**cmd_list;
@@ -97,7 +123,7 @@ t_cmd	**ft_build_cmd_list(t_var *var)
 	{
 		cmd_list[i] = ft_create_cmd_node(var, i);
 		if (!cmd_list[i])
-			return (ft_free_cmd_list(var->nb_cmd, cmd_list, i), NULL);
+			return (ft_free_cmd_list_until(cmd_list, i));
 		i++;
 	}
 	cmd_list[i] = NULL;
