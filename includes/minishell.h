@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/02 19:39:34 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/02 21:32:23 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,7 @@ Redirection - build
 void			ft_init_fd(t_cmd *node);
 int				ft_close_fds(t_cmd *node);
 int				ft_fill_fd(t_cmd *node);
-int				*ft_init_pipes(int	nb_pipes);
+int				**ft_init_pipes(int	nb_pipes);
 int				ft_set_pipes(t_cmd **cmd, int n_cmd, int **pipes);
 /*
 Redirection - handle
@@ -307,9 +307,11 @@ void			ft_print_info_cmd_list(int nb_cmd, t_cmd **list);
 /*
 Handle pipes
 */
+int				ft_handle_last_cmd(t_var *var, t_shell shell, int i);
+int				ft_handle_regular_cmd(t_var *var, t_shell shell, int i);
 int				ft_handle_pipes(t_var *var, t_shell shell);
 int				ft_need_to_send_in_pipe(t_cmd **cmd_tab, int i_cmd, int nb_cmd);
-int				ft_need_to_grep_from_pipe(t_cmd **cmd_tab, int i_cmd, int nb_cmd);
+int				ft_need_to_grep_from_pipe(t_cmd **cmd_tab, int i_cmd);
 /*
 Handle cmd
 */
