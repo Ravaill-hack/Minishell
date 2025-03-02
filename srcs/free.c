@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:01:37 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/28 14:10:54 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/02 10:34:15 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,24 +43,14 @@ void	ft_free_token_list_until(t_token_list **list, int n)
 	free(list);
 }
 
-void	ft_clear_and_free_all(t_var var, t_shell shell)
+void	ft_clear_and_free_all(t_var *var, t_shell *shell)
 {
-	ft_putstr_fd("1\n", 1);
-	if (var.env)
-	{
-		ft_putstr_fd("env\n", 1);
-		ft_free_strs(var.env);
-	}
-	if (shell.prompt)
-	{
-		ft_putstr_fd("prompt\n", 1);
-		free(shell.prompt);
-	}
-	//if (shell)
-	//{
-	//	ft_putstr_fd("shell\n", 1);
-	//	free(shell);
-	//}
+	if (var->env)
+		ft_free_strs(var->env);
+	if (shell->prompt)
+		free(shell->prompt);
+	if (shell)
+		free(shell);
 	//if (var->token_list)
 	//{
 	//	ft_putstr_fd("token_list\n", 1);
@@ -75,22 +65,15 @@ void	ft_clear_and_free_all(t_var var, t_shell shell)
 	ft_enable_echoctl();
 }
 
-void	ft_clear_and_free_while(t_shell shell, t_var *var)
+void	ft_clear_and_free_while(t_var *var, t_shell *shell)
 {
-	//int	nb_cmd;
+	int	nb_cmd;
 
-	ft_putstr_fd("aaa\n", 1);
-	//nb_cmd = var->nb_cmd;
-	if (shell.prompt)
-		free(shell.prompt);
+	nb_cmd = var->nb_cmd;
+	if (shell->prompt)
+		free(shell->prompt);
 	if (var->token_list)
 		ft_free_token_list(var->token_list);
 	if (var->cmd)
 	 	ft_free_cmd_list(nb_cmd, var->cmd, -1);
-}
-
-void	ft_free_cmd_node(t_cmd *node)
-{
-	
-	ft_free_strs_until(node->arg, -1);
 }

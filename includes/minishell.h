@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/28 13:41:09 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/02 10:33:26 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,8 +149,9 @@ typedef struct s_shell
 /*
 Init
 */
-void			get_prompt(t_shell *shell, t_var *var);
-void			ft_init(t_var *var, t_shell **shell, char **env);
+void			get_prompt(t_var *var, t_shell *shell);
+t_shell			*ft_init_shell(void);
+void			ft_init(t_var *var, char **env);
 int				ft_update_shlvl(char ***env, int level);
 /*
 Token - append
@@ -288,9 +289,8 @@ Free
 */
 void			ft_free_token_list(t_token_list **token_list);
 void			ft_free_token_list_until(t_token_list **list, int n);
-void			ft_clear_and_free_all(t_var var, t_shell shell);
-void			ft_clear_and_free_while(t_shell shell, t_var *var);
-void			ft_free_cmd_node(t_cmd *node);
+void			ft_clear_and_free_all(t_var *var, t_shell *shell);
+void			ft_clear_and_free_while(t_var *var, t_shell *shell);
 void			ft_free_cmd_list(int nb_cmd, t_cmd **list, int imax);
 /*
 Debug

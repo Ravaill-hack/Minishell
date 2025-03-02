@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/02/28 13:30:24 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/02 10:36:16 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	ft_handle_exit_last_shlvl(t_var var, t_shell shell, char ***env)
 		return (FAILURE);
 	if (ft_exec_exit_cmd(*env) == FAILURE)
 		return (FAILURE);
-	ft_clear_and_free_all(var, shell);
+	ft_clear_and_free_all(&var, &shell);
 	exit(EXIT_SUCCESS);
 }
 
