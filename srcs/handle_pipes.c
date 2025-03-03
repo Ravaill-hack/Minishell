@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:07:11 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/03 16:30:12 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:01:38 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ int	ft_handle_last_cmd(t_var *var, t_shell shell, int i, int frk)
 				if (dup2(var->cmd[i]->fd_out.fd, 1) == -1)
 					return (FAILURE);
 			}
+			if (var->cmd[i]->fd_in.fd != 0)
+			{
+				if (dup2(var->cmd[i]->fd_in.fd, 0) == -1)
+					return (FAILURE);
+			}
 			ft_handle_cmd(var, shell, var->cmd[i]);
 			exit(0);
 		}
@@ -62,7 +67,7 @@ int	ft_handle_last_cmd(t_var *var, t_shell shell, int i, int frk)
 		}
 		return (SUCCESS);
 	}
-	else
+	else if (frk == 0)
 	{
 		if (var->cmd[i]->fd_out.fd != 1)
 		{
@@ -73,6 +78,26 @@ int	ft_handle_last_cmd(t_var *var, t_shell shell, int i, int frk)
 		if (var->cmd[i]->fd_out.fd != 1)
 			close(var->cmd[i]->fd_out.fd);
 		return (res);
+	}
+	else
+	{
+		pid = fork();
+		if (pid == -1)
+			return (FAILURE);
+		if (pid == 0)
+		{
+			ft_handle_cmd(var, shell, var->cmd[i]);
+			exit(0);
+		}
+		else
+		{
+			//ft_putstr_fd("je suis le parent\n", 1);
+			if (!waitpid(pid, &var->exit_nb, 0) && var->cmd[i]->fd_out.fd != 1)
+				return (close(var->cmd[i]->fd_out.fd), FAILURE);
+			if (var->cmd[i]->fd_out.fd != 1)
+				close(var->cmd[i]->fd_out.fd);
+		}
+		return (SUCCESS);
 	}
 }
 
@@ -153,7 +178,7 @@ int	ft_handle_pipes(t_var *var, t_shell shell)
 				ft_handle_regular_cmd(var, shell, i);
 				i++;
 			}
-			ft_handle_last_cmd(var, shell, i, 1);
+			ft_handle_last_cmd(var, shell, i, 2);
 			exit(0);
 		}
 		else
