@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/03/03 16:08:29 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:41:45 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	ft_exec_exit_cmd(char **env)
 	args[0] = ft_strdup("exit");
 	args[1] = NULL;
 	path = ft_extract_path(env, "exit");
+	ft_putstr_fd(path, 1);
 	if (!path)
 		return (FAILURE);
 	status = execve(path, args, env);
@@ -61,9 +62,7 @@ int	ft_handle_exit_last_shlvl(t_var var, t_shell shell, char ***env)
 	(void)var;
 	if (ft_update_shlvl(env, -1) == FAILURE)
 		return (FAILURE);
-	if (ft_exec_exit_cmd(*env) == FAILURE)
-		return (FAILURE);
-	ft_clear_and_free_all(&var, &shell);
+	//ft_clear_and_free_all(&var, &shell);
 	exit(EXIT_SUCCESS);
 }
 
