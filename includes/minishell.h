@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/03 10:53:33 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/03 14:10:26 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,6 +321,7 @@ int				ft_need_to_grep_from_pipe(t_cmd **cmd_tab, int i_cmd);
 /*
 Handle cmd
 */
+int				ft_is_builtin_cmd(t_cmd *node);
 int				ft_handle_cmd(t_var *var, t_shell shell, t_cmd *node);
 /*
 Exec cmd

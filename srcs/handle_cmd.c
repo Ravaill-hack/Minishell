@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/02 21:55:26 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/03 14:10:06 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,23 @@ int	ft_handle_cmd(t_var *var, t_shell shell, t_cmd *node)
 	else
 		return (ft_exec_cmd(var->env, node->arg));
 	return (SUCCESS);
+}
+
+int	ft_is_builtin_cmd(t_cmd *node)
+{
+	if (ft_strncmp(node->arg[0], "echo", ft_strlen(node->arg[0])) == 0)
+		return (1);
+	else if (ft_strncmp(node->arg[0], "env", ft_strlen(node->arg[0])) == 0)
+		return (1);
+	else if (ft_strncmp(node->arg[0], "export", ft_strlen(node->arg[0])) == 0)
+		return (1);
+	else if (ft_strncmp(node->arg[0], "exit", ft_strlen(node->arg[0])) == 0)
+		return (1);
+	else if (ft_strncmp(node->arg[0], "unset", ft_strlen(node->arg[0])) == 0)
+		return (1);
+	else if (ft_strncmp(node->arg[0], "pwd", ft_strlen(node->arg[0])) == 0)
+		return (1);
+	else if (ft_strncmp(node->arg[0], "cd", ft_strlen(node->arg[0])) == 0)
+		return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:07:11 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/03 11:47:00 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/03 14:21:57 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_handle_last_cmd(t_var *var, t_shell shell, int i, int frk)
 		else
 		{
 			//ft_putstr_fd("je suis le parent\n", 1);
-			if (!waitpid(pid, &var->exit_nb, 0))
+			if (!waitpid(pid, &var->exit_nb, 0) && var->cmd[i]->fd_out.fd != 1)
 				return (close(var->cmd[i]->fd_out.fd), FAILURE);
 			if (var->cmd[i]->fd_out.fd != 1)
 				close(var->cmd[i]->fd_out.fd);
@@ -79,25 +79,24 @@ int	ft_handle_regular_cmd(t_var *var, t_shell shell, int i)
 {
 	pid_t	pid;
 
+	(void)shell;
 	pid = fork();
 	if (pid == -1)
 		return (FAILURE);
 	if (pid == 0)
 	{
-		close(var->cmd[i + 1]->fd_in.fd);
+		if (var->cmd[i + 1]->fd_in.fd != 0)
+			close(var->cmd[i + 1]->fd_in.fd);
 		if (var->cmd[i]->fd_out.fd != 1)
 		{
 			if (dup2(var->cmd[i]->fd_out.fd, 1) == -1)
 				return (FAILURE);
 		}
-		ft_handle_cmd(var, shell, var->cmd[i]);
+		//ft_handle_cmd(var, shell, var->cmd[i]);
 		exit(0);
 	}
 	else
 	{
-		// ft_putstr_fd("je suis le parent ", 1);
-		// ft_putnbr_fd(pid, 1);
-		// ft_putchar_fd('\n', 1);
 		if (!waitpid(pid, &(var->exit_nb), 0))
 			return(close(var->cmd[i]->fd_out.fd), FAILURE);
 		if (var->cmd[i]->fd_out.fd != 1)
@@ -114,20 +113,24 @@ int	ft_handle_regular_cmd(t_var *var, t_shell shell, int i)
 int	ft_handle_pipes(t_var *var, t_shell shell)
 {
 	int	i;
-	int	res;
+	int	saved_fd_in;
 
 	i = 0;
-	res = 0;
+	saved_fd_in = dup(STDIN_FILENO);
 	if (var->cmd[0]->fd_in.fd != 0)
 		if (dup2(var->cmd[0]->fd_in.fd, 0) == -1)
 			return (FAILURE);
-	if (var->nb_cmd == 1)
-		return (ft_handle_last_cmd(var, shell, 0, 0));
+	if (var->nb_cmd == 1 && ft_is_builtin_cmd(var->cmd[0]) == 1)
+		return (dup2(saved_fd_in, STDIN_FILENO), close(saved_fd_in), ft_handle_last_cmd(var, shell, 0, 0));
+	else if (var->nb_cmd == 1 && ft_is_builtin_cmd(var->cmd[0]) == 0)
+		return (dup2(saved_fd_in, STDIN_FILENO), close(saved_fd_in), ft_handle_last_cmd(var, shell, 0, 1));
 	while (i < var->nb_cmd - 1)
 	{
-		res = ft_handle_regular_cmd(var, shell, i);
+		ft_handle_regular_cmd(var, shell, i);
 		i++;
 	}
-	res = ft_handle_last_cmd(var, shell, i, 1);
-	return (res);
+	ft_handle_last_cmd(var, shell, i, 1);
+	dup2(saved_fd_in, STDIN_FILENO);
+	close(saved_fd_in);
+	return (SUCCESS);
 }
