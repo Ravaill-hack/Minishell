@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list_build.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/02 22:22:23 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/03 11:46:27 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,14 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i)
 	cmd_node->arg = ft_epure_args_array(cmd_node->raw);
 	ft_init_fd(cmd_node);
 	ft_fill_fd(cmd_node);
+	// ft_putstr_fd("fd_in : ", 1);
+	// ft_putnbr_fd(cmd_node->fd_in.fd, 1);
+	// ft_putchar_fd('\n', 1);
+	// ft_putstr_fd("fd_out : ", 1);
+	// ft_putnbr_fd(cmd_node->fd_out.fd, 1);
+	// ft_putchar_fd('\n', 1);
 	var->fd_pipe = ft_init_pipes(ft_nb_pipes(*(var->token_list)));
+	
 	ft_free_strs_until(cmd_node->raw, -1);
 	return (cmd_node);
 }

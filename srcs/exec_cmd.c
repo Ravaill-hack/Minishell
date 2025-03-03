@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:14:19 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/03 10:52:57 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/03 11:39:24 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ int	ft_exec_cmd(char **env, char **split_cmd)
 
 	status = 0;
 	path = ft_extract_path(env, split_cmd[0]);
-	ft_putstr_fd(path, 1);
-	ft_putchar_fd('\n', 1);
 	if (!path)
 		return (FAILURE);
 	status = execve(path, split_cmd, env);
