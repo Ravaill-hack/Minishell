@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list_build.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/03 11:46:27 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/03 18:39:31 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i)
 	// ft_putnbr_fd(cmd_node->fd_out.fd, 1);
 	// ft_putchar_fd('\n', 1);
 	var->fd_pipe = ft_init_pipes(ft_nb_pipes(*(var->token_list)));
-	
+
 	ft_free_strs_until(cmd_node->raw, -1);
 	return (cmd_node);
 }

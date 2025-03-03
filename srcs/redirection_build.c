@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_build.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:48:38 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/03 11:47:16 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/03 18:54:28 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ int	ft_fill_fd(t_cmd *node)
 	return (SUCCESS);
 }
 
-int	**ft_init_pipes(int	nb_pipes)
+int	**ft_init_pipes(int nb_pipes)
 {
 	int	i;
 	int	**pipes;
 
 	i = 0;
-	pipes = (int **)malloc(nb_pipes * sizeof(int *));
+	pipes = (int **)malloc((nb_pipes + 1) * sizeof(int *));
 	if (!pipes)
 		return (NULL);
 	while (i < nb_pipes)
@@ -74,6 +74,7 @@ int	**ft_init_pipes(int	nb_pipes)
 			return (/*ft_close_and_free_pipes(pipes, i), */NULL);
 		i++;
 	}
+	pipes[i] = NULL;
 	return (pipes);
 }
 

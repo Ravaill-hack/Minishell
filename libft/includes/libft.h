@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:41:05 by julien            #+#    #+#             */
-/*   Updated: 2025/03/02 12:41:06 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/03 18:42:09 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ char	*ft_strnjoin(char *dst, const char *src,
 			size_t dst_len, size_t src_len);
 void	ft_free_strs(char **strs);
 char	**ft_free_strs_until(char **strs, int n);
-int		**ft_free_array2D_until(int **array2D, size_t n);
-void	ft_free_array2D(int **array2D);
+int		**ft_free_array2d_until(int **array2D, size_t n);
+void	ft_free_array2d(int **array2D);
 int		ft_abs(int nb);
 char	**ft_strsdup(char *const *strs);
 size_t	ft_strslen(char *const *strs);

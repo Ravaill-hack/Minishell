@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/03 16:04:09 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/03 18:32:23 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # endif
 
 # ifndef VALGRIND_DEBUG
-#  define VALGRIND_DEBUG 0
+#  define VALGRIND_DEBUG 1
 # endif
 
 // read write access close fork dup dup2 pipe isatty ttyname
@@ -251,7 +251,7 @@ Redirection - build
 void			ft_init_fd(t_cmd *node);
 int				ft_close_fds(t_cmd *node);
 int				ft_fill_fd(t_cmd *node);
-int				**ft_init_pipes(int	nb_pipes);
+int				**ft_init_pipes(int nb_pipes);
 int				ft_set_pipes(t_cmd **cmd, int n_cmd, int **pipes);
 /*
 Redirection - handle
