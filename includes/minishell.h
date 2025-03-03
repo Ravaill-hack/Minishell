@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/02 21:53:39 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/03 10:34:18 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # endif
 
 # ifndef VALGRIND_DEBUG
-#  define VALGRIND_DEBUG 1
+#  define VALGRIND_DEBUG 0
 # endif
 
 // read write access close fork dup dup2 pipe isatty ttyname
@@ -60,6 +60,7 @@
 # include <curses.h>
 # include "libft.h"
 # include "get_next_line.h"
+# include <errno.h>
 
 typedef enum s_line_token
 {
@@ -312,7 +313,7 @@ void			ft_print_info_cmd_list(int nb_cmd, t_cmd **list);
 /*
 Handle pipes
 */
-int				ft_handle_last_cmd(t_var *var, t_shell shell, int i);
+int				ft_handle_last_cmd(t_var *var, t_shell shell, int i, int frk);
 int				ft_handle_regular_cmd(t_var *var, t_shell shell, int i);
 int				ft_handle_pipes(t_var *var, t_shell shell);
 int				ft_need_to_send_in_pipe(t_cmd **cmd_tab, int i_cmd, int nb_cmd);
