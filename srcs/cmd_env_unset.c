@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:44:08 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/28 11:56:24 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:13:47 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,21 @@ int	ft_cmd_env(char **env, t_cmd *cmd_node)
 		return (FAILURE);
 }
 
-int	ft_cmd_unset(char ***env_ptr, t_token_list *token_list)
+int	ft_cmd_unset(char ***env_ptr, t_cmd *node)
 {
 	int		line_index;
-	char	**split_line;
-	int		status;
 
-	split_line = ft_split(token_list->val, ' ');
-	if (!split_line[1])
-		return (ft_free_strs(split_line), FAILURE);
-	line_index = ft_get_line_env(*env_ptr, split_line[1]);
+	if (!node->arg[1])
+		return (FAILURE);
+	line_index = ft_get_line_env(*env_ptr, node->arg[1]);
 	if (line_index == -1)
-		return (ft_free_strs(split_line), FAILURE);
+	{
+		ft_putstr_fd("on est ici\n", 1);
+		return (FAILURE);
+	}
 	else
 	{
-		status = ft_remove_env_var(env_ptr, line_index);
-		return (ft_free_strs(split_line), status);
+		ft_putstr_fd("on est la\n", 1);
+		return(ft_remove_env_var(env_ptr, line_index));
 	}
 }

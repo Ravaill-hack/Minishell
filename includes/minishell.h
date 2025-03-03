@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/03 14:10:26 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:04:09 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define MINISHELL_H
 
 # ifndef FAILURE
-#  define FAILURE 0
+#  define FAILURE 1
 # endif
 
 # ifndef SUCCESS
-#  define SUCCESS 1
+#  define SUCCESS 0
 # endif
 
 # ifndef VALGRIND_DEBUG
@@ -331,9 +331,9 @@ int				ft_exec_cmd(char **env, char **split_cmd);
 /*
 Cmds
 */
-int				ft_cmd_unset(char ***env_ptr, t_token_list *token_list);
-int				ft_cmd_pwd(char **env, t_token_list *token_list);
-int				ft_cmd_cd(char ***env, t_token_list *token_list);
+int				ft_cmd_unset(char ***env_ptr, t_cmd *node);
+int				ft_cmd_pwd(char **env, t_cmd *node);
+int				ft_cmd_cd(char ***env, t_cmd *node);
 int				ft_update_old_pwd(char ***env);
 int				ft_update_new_pwd(char ***env, char *new_pwd);
 int				ft_cmd_cd_home(char ***env);

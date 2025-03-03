@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:15:56 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/28 12:06:37 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:30:41 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,12 @@ int	ft_cmd_export_with_args(char ***env_ptr, char *arg)
 	return (status);
 }
 
-int	ft_cmd_pwd(char **env, t_token_list *token_list)
+int	ft_cmd_pwd(char **env, t_cmd *node)
 {
-	char	**split_line;
-
-	split_line = ft_split(token_list->val, ' ');
-	if (!split_line[1])
+	if (!node->arg[1])
 	{
 		printf("%s\n", ft_extract_env_value_from_key(env, "PWD"));
-		return (ft_free_strs(split_line), SUCCESS);
+		return (SUCCESS);
 	}
-	return (ft_free_strs(split_line), FAILURE);
+	return (FAILURE);
 }

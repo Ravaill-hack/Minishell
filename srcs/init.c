@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/03/03 13:37:36 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:07:33 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	ft_init(t_var *var, char **env)
 	var->env = ft_strsdup(env);
 	if (!var->env)
 		exit(EXIT_FAILURE);
-	if (!ft_update_shlvl(&var->env, 1))
+	if (ft_update_shlvl(&var->env, 1) == FAILURE)
 		exit(EXIT_FAILURE);
 	ft_disable_echoctl();
 	ft_set_sigquit_reception_handler();

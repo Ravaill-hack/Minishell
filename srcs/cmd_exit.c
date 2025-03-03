@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/03/03 10:54:38 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:08:29 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_handle_exit_last_shlvl(t_var var, t_shell shell, char ***env)
 {
 	(void)shell;
 	(void)var;
-	if (!ft_update_shlvl(env, -1))
+	if (ft_update_shlvl(env, -1) == FAILURE)
 		return (FAILURE);
 	if (ft_exec_exit_cmd(*env) == FAILURE)
 		return (FAILURE);

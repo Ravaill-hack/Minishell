@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:35:39 by julien            #+#    #+#             */
-/*   Updated: 2025/03/03 13:58:08 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:08:50 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **env)
 	get_prompt(&var, shell);
 	while (shell->prompt)
 	{
-		if (!ft_parse_line(&var, shell->prompt))
+		if (ft_parse_line(&var, shell->prompt) == FAILURE)
 			ft_print_error_and_exit(var, *shell);
 		//ft_print_info_list(*(var.token_list), var.env);
 		if (*(var.token_list))

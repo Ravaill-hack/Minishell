@@ -3,26 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 16:06:24 by julien            #+#    #+#             */
-/*   Updated: 2025/02/26 16:43:22 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:29:31 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_cmd_cd(char ***env, t_token_list *token_list)
+int	ft_cmd_cd(char ***env, t_cmd *node)
 {
-	char	**split_line;
 	int		status;
 
-	split_line = ft_split(token_list->val, ' ');
-	if (!split_line[1])
+	if (!node->arg[1])
 		status = ft_cmd_cd_home(env);
 	else
-		status = ft_cmd_cd_path(env, split_line[1]);
-	return (ft_free_strs(split_line), status);
+		status = ft_cmd_cd_path(env, node->arg[1]);
+	return (status);
 }
 
 int	ft_cmd_cd_home(char ***env)
