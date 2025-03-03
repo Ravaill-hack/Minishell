@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/03 10:34:18 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/03 10:53:33 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,9 +326,7 @@ int				ft_handle_cmd(t_var *var, t_shell shell, t_cmd *node);
 Exec cmd
 */
 char			*ft_extract_path(char **env, char *cmd);
-char			**ft_set_exec_args(char *path, char **split_cmd);
 int				ft_exec_cmd(char **env, char **split_cmd);
-int				ft_exec_cmd_in_child(char *path, char **split_cmd, char **env);
 /*
 Cmds
 */

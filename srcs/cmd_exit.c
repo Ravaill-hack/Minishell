@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/03/02 10:36:16 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/03 10:54:38 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,6 @@ int	ft_exec_exit_cmd(char **env)
 	path = ft_extract_path(env, "exit");
 	if (!path)
 		return (FAILURE);
-	args = ft_set_exec_args(path, args);
-	if (!args)
-		return (ft_free_strs(args), free(path), FAILURE);
 	status = execve(path, args, env);
 	ft_free_strs(args);
 	free(path);
