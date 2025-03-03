@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:07:11 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/03 14:21:57 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:16:02 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	ft_handle_regular_cmd(t_var *var, t_shell shell, int i)
 			if (dup2(var->cmd[i]->fd_out.fd, 1) == -1)
 				return (FAILURE);
 		}
-		//ft_handle_cmd(var, shell, var->cmd[i]);
+		ft_handle_cmd(var, shell, var->cmd[i]);
 		exit(0);
 	}
 	else
@@ -112,25 +112,34 @@ int	ft_handle_regular_cmd(t_var *var, t_shell shell, int i)
 
 int	ft_handle_pipes(t_var *var, t_shell shell)
 {
-	int	i;
-	int	saved_fd_in;
+	int		i;
+	pid_t pid;
 
 	i = 0;
-	saved_fd_in = dup(STDIN_FILENO);
-	if (var->cmd[0]->fd_in.fd != 0)
-		if (dup2(var->cmd[0]->fd_in.fd, 0) == -1)
-			return (FAILURE);
-	if (var->nb_cmd == 1 && ft_is_builtin_cmd(var->cmd[0]) == 1)
-		return (dup2(saved_fd_in, STDIN_FILENO), close(saved_fd_in), ft_handle_last_cmd(var, shell, 0, 0));
-	else if (var->nb_cmd == 1 && ft_is_builtin_cmd(var->cmd[0]) == 0)
-		return (dup2(saved_fd_in, STDIN_FILENO), close(saved_fd_in), ft_handle_last_cmd(var, shell, 0, 1));
-	while (i < var->nb_cmd - 1)
+	pid = fork();
+	if (pid == -1)
+		return (FAILURE);
+	if (pid == 0)
 	{
-		ft_handle_regular_cmd(var, shell, i);
-		i++;
+		if (var->cmd[0]->fd_in.fd != 0)
+			if (dup2(var->cmd[0]->fd_in.fd, 0) == -1)
+				return (FAILURE);
+		if (var->nb_cmd == 1 && ft_is_builtin_cmd(var->cmd[0]) == 1)
+		return (ft_handle_last_cmd(var, shell, 0, 0));
+		else if (var->nb_cmd == 1 && ft_is_builtin_cmd(var->cmd[0]) == 0)
+			return (ft_handle_last_cmd(var, shell, 0, 1));
+		while (i < var->nb_cmd - 1)
+		{
+			ft_handle_regular_cmd(var, shell, i);
+			i++;
+		}
+		ft_handle_last_cmd(var, shell, i, 1);
+		exit(0);
 	}
-	ft_handle_last_cmd(var, shell, i, 1);
-	dup2(saved_fd_in, STDIN_FILENO);
-	close(saved_fd_in);
+	else
+	{
+		waitpid(pid, NULL, 0);
+		close(var->cmd[i]->fd_out.fd);
+	}
 	return (SUCCESS);
 }
