@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:14:19 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/03 16:37:26 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:53:48 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ int	ft_exec_cmd(char **env, char **split_cmd)
 	path = ft_extract_path(env, split_cmd[0]);
 	if (!path)
 		return (FAILURE);
+	ft_putstr_fd("jarrive jusque ici\n", 1);
 	status = execve(path, split_cmd, env);
+	ft_putstr_fd("mais pas jusque la\n", 1);
 	if (status == -1)
 		ft_putstr_fd("echec\n", 1);
 	printf("%s\n", strerror(errno));
