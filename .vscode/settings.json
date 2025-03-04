@@ -4,6 +4,7 @@
 		"libft.h": "c",
 		"type_traits": "c",
 		"cstdlib": "c",
-		"format": "c"
+		"format": "c",
+		"sstream": "c"
 	}
 }

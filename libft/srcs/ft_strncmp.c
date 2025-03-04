@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 09:11:29 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/04 11:31:04 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:00:23 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,6 @@
 // respectively, to be less than, to match, or be greater than s2
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	// if (s1)
-	// 	ft_putstr_fd((char *)s1, 1);
-	// ft_putchar_fd('\n', 1);
-	// if (s2)
-	// 	ft_putstr_fd((char *)s2, 1);
-	// ft_putchar_fd('\n', 1);
 	while (((unsigned char) *s1 || (unsigned char) *s2) && n--)
 	{
 		if ((unsigned char) *s1 != (unsigned char) *s2)
