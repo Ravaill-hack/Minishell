@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:01:37 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/04 10:14:43 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:56:57 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_free_token_list(t_token_list **token_list)
 	t_token_list	*current;
 	t_token_list	*next;
 
-	if (!token_list || !(*token_list))
+	if (!token_list)
 		return ;
 	current = *token_list;
 	while (current)
@@ -28,7 +28,6 @@ void	ft_free_token_list(t_token_list **token_list)
 		free(current);
 		current = next;
 	}
-	free(token_list);
 }
 
 void	ft_free_token_list_until(t_token_list **list, int n)
@@ -54,6 +53,7 @@ void	ft_clear_and_free_all(t_var *var, t_shell *shell)
 			free(shell->terminal_prompt);
 		if (shell->prompt)
 			free(shell->prompt);
+		free(shell);
 	}
 	if (VALGRIND_DEBUG == 0)
 		rl_clear_history();
@@ -66,7 +66,10 @@ void	ft_clear_and_free_while(t_var *var, t_shell *shell)
 	if (shell->prompt)
 		free(shell->prompt);
 	if (var->token_list)
+	{
 		ft_free_token_list(var->token_list);
+		free(var->token_list);
+	}
 	if (var->cmd[0])
 		ft_free_strs(var->cmd[0]->arg);
 	if (var->cmd)
