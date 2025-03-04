@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:48:38 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/04 17:07:39 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/04 20:10:45 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	ft_set_pipes(t_cmd **cmd, int nb_cmd, int **pipes)
 				return (FAILURE);
 			cmd[i]->fd_out.fd = pipes[i][1];
 			if (cmd[i + 1]->need_pipe_in == 1)
-				cmd[i + 1]->fd_in.fd = pipes[i][0];
+			 	cmd[i + 1]->fd_in.fd = pipes[i][0];
 			else
 				close(pipes[i][0]);
 		}
