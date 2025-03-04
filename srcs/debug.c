@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:40:07 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 17:33:48 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/04 13:09:22 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ void	ft_print_info_cmd_list(int nb_cmd, t_cmd **list)
 			j++;
 		}
 		printf("nb_args : %d\n", j);
+		printf("fd in : %d\n", list[i]->fd_in.fd);
+		printf("fd out : %d\n", list[i]->fd_out.fd);
 		printf("\n\n");
 		i++;
 	}

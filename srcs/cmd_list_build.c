@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list_build.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/03 18:39:31 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/04 13:18:56 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,23 @@ char	*ft_fill_arg(t_token_list *node)
 		}
 		else if (node->type >= 0 && node->type <= 3)
 			str = ft_dup_operand(node->type);
+		// if (str && node->next && (node->next->type >= 0 && node->next->type <= 3))
+		// 	return (str);
 		if (tmp != str)
 			free (tmp);
 		if (!str)
 			return (NULL);
-		if (node->print_space_after != 0)
+		if (node->print_space_after != 0 || (node->next && (node->next->type >= 0 && node->next->type <= 3)))
 			break ;
 		node = node->next;
 	}
-	//while (str[i])
-	//{
-	//	ft_putchar_fd(str[i], 1);
-	//	i++;
-	//}
+	
+	// while (str[i])
+	// {
+	// 	ft_putchar_fd(str[i], 1);
+	// 	i++;
+	// }
+	// ft_putchar_fd('\n', 1);
 	return (str);
 }
 
@@ -56,8 +60,6 @@ char	**ft_token_list_to_char_array(t_token_list *node)
 	int		j;
 
 	len = ft_nb_str(node);
-	//ft_putnbr_fd(len, 1);
-	//ft_putchar_fd('\n', 1);
 	j = 0;
 	array = (char **)malloc((len + 1) * sizeof(char *));
 	if (!array)
@@ -65,12 +67,13 @@ char	**ft_token_list_to_char_array(t_token_list *node)
 	while (j < len)
 	{
 		array[j] = ft_fill_arg(node);
-		//ft_putchar_fd(' ', 1);
 		node = ft_go_to_next_node(node);
+		if (!node)
+			break;
 		if (array[j])
 			j++;
 	}
-	array[j] = NULL;
+	array[len] = NULL;
 	return (array);
 }
 
@@ -90,7 +93,8 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i)
 		return (NULL);
 	cmd_node->arg = ft_epure_args_array(cmd_node->raw);
 	ft_init_fd(cmd_node);
-	ft_fill_fd(cmd_node);
+	if (ft_fill_fd(cmd_node) == FAILURE)
+		return (NULL);
 	// ft_putstr_fd("fd_in : ", 1);
 	// ft_putnbr_fd(cmd_node->fd_in.fd, 1);
 	// ft_putchar_fd('\n', 1);
@@ -98,7 +102,6 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i)
 	// ft_putnbr_fd(cmd_node->fd_out.fd, 1);
 	// ft_putchar_fd('\n', 1);
 	var->fd_pipe = ft_init_pipes(ft_nb_pipes(*(var->token_list)));
-
 	ft_free_strs_until(cmd_node->raw, -1);
 	return (cmd_node);
 }
@@ -136,14 +139,21 @@ t_cmd	**ft_build_cmd_list(t_var *var)
 
 	i = 0;
 	var->nb_cmd = ft_nb_pipes(*(var->token_list)) + 1;
+	// ft_putstr_fd("nb cmd : ", 1);
+	// ft_putnbr_fd(var->nb_cmd, 1);
+	// ft_putchar_fd('\n', 1);
 	cmd_list = (t_cmd **)malloc((var->nb_cmd + 1) * sizeof(t_cmd *));
 	if (!cmd_list)
 		return (NULL);
 	while (i < var->nb_cmd)
 	{
 		cmd_list[i] = ft_create_cmd_node(var, i);
-		if (!cmd_list[i])
+		if (!cmd_list[i] && i == 0)
+			return (NULL);
+		if (!cmd_list[i] && i != 0)
 			return (ft_free_cmd_list_until(cmd_list, i));
+		else if (!cmd_list[i] && i == 0)
+			return (NULL);
 		i++;
 	}
 	cmd_list[i] = NULL;

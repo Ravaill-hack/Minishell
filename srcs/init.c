@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/03/03 16:07:33 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/04 10:03:48 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_shell	*ft_init_shell(void)
 	shell = malloc(sizeof(t_shell));
 	if (!shell)
 		exit(EXIT_FAILURE);
-	shell->terminal_prompt = "minishell$ ";
+	shell->terminal_prompt = ft_strdup("minishell$ ");
 	return (shell);
 }
 

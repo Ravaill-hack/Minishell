@@ -1,0 +1,19 @@
+total 196
+-rwxr-xr-x 1 lmatkows 2024_perpignan  16040 Mar  4 10:12 a.out
+-rw-r--r-- 1 lmatkows 2024_perpignan  30731 Feb 21 09:26 doc.txt
+-rw-r--r-- 1 lmatkows 2024_perpignan      0 Mar  4 09:25 ejfiejif
+-rw-r--r-- 1 lmatkows 2024_perpignan      0 Mar  4 09:28 ererere
+-rw-r--r-- 1 lmatkows 2024_perpignan      0 Mar  4 09:26 fegeg
+-rw-r--r-- 1 lmatkows 2024_perpignan      0 Mar  4 09:28 gfgergfg
+-rw-r--r-- 1 lmatkows 2024_perpignan      0 Mar  4 13:20 here
+drwxr-xr-x 2 lmatkows 2024_perpignan     25 Mar  4 09:03 includes
+drwxr-xr-x 5 lmatkows 2024_perpignan     77 Mar  4 11:31 libft
+-rw-r--r-- 1 lmatkows 2024_perpignan   1377 Feb 28 09:39 Makefile
+-rwxr-xr-x 1 lmatkows 2024_perpignan 117800 Mar  4 13:22 minishell
+drwxr-xr-x 2 lmatkows 2024_perpignan   4096 Mar  4 13:22 objs
+-rw-r--r-- 1 lmatkows 2024_perpignan    445 Feb 27 17:39 readme_test_3.txt
+-rw-r--r-- 1 lmatkows 2024_perpignan    220 Feb 27 17:39 readme_tester_2.txt
+-rw-r--r-- 1 lmatkows 2024_perpignan    389 Feb 27 17:39 readme_tester.txt
+-rw-r--r-- 1 lmatkows 2024_perpignan   5215 Feb 21 09:26 recap.txt
+drwxr-xr-x 2 lmatkows 2024_perpignan   4096 Mar  4 09:03 srcs
+-rw-r--r-- 1 lmatkows 2024_perpignan      0 Mar  4 13:23 test2

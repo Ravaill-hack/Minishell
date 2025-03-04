@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:01:37 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/03 19:14:25 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/04 10:14:43 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,12 @@ void	ft_clear_and_free_all(t_var *var, t_shell *shell)
 	if (var->env)
 		ft_free_strs(var->env);
 	if (shell)
-		free(shell);
+	{
+		if (shell->terminal_prompt)
+			free(shell->terminal_prompt);
+		if (shell->prompt)
+			free(shell->prompt);
+	}
 	if (VALGRIND_DEBUG == 0)
 		rl_clear_history();
 	ft_enable_echoctl();

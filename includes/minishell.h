@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/03 21:46:23 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/04 10:14:57 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -323,6 +323,7 @@ Handle cmd
 */
 int				ft_is_builtin_cmd(t_cmd *node);
 int				ft_handle_cmd(t_var *var, t_shell shell, t_cmd *node);
+int				ft_is_cmd(t_cmd *cmd, char **env);
 /*
 Exec cmd
 */

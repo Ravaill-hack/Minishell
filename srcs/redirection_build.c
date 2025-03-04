@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_build.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:48:38 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/03 18:54:28 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/04 09:54:26 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@ void	ft_init_fd(t_cmd *node)
 
 int	ft_close_fds(t_cmd *node)
 {
-	close(node->fd_in.fd);
-	close(node->fd_out.fd);
+	if (node->fd_in.fd != -1 && node->fd_in.fd != 0)
+		close(node->fd_in.fd);
+	if (node->fd_out.fd != -1 && node->fd_out.fd != 1)
+		close(node->fd_out.fd);
 	if (node->heredoc)
 		free(node->heredoc);
-	return (SUCCESS);
+	return (FAILURE);
 }
 
 int	ft_fill_fd(t_cmd *node)
@@ -52,7 +54,7 @@ int	ft_fill_fd(t_cmd *node)
 		else if (node->raw[i][0] == '>' && node->raw[i][1] != '>')
 			res = ft_set_outfile_trunc(node->raw[i], node);
 		if (res == FAILURE)
-			return (ft_close_fds(node), FAILURE);
+			return (ft_close_fds(node));
 		i++;
 	}
 	return (SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:35:39 by julien            #+#    #+#             */
-/*   Updated: 2025/03/03 16:08:50 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/04 13:22:43 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int	main(int argc, char **argv, char **env)
 	get_prompt(&var, shell);
 	while (shell->prompt)
 	{
-		if (ft_parse_line(&var, shell->prompt) == FAILURE)
-			ft_print_error_and_exit(var, *shell);
-		//ft_print_info_list(*(var.token_list), var.env);
-		if (*(var.token_list))
+			//ft_print_error_and_exit(var, *shell);
+		if (ft_parse_line(&var, shell->prompt) != FAILURE)
 		{
+			//ft_print_info_list(*(var.token_list), var.env);
+			//ft_print_info_cmd_list(var.nb_cmd, var.cmd)
 			if (ft_handle_pipes(&var, *shell) == FAILURE)
 				ft_print_error();
 			if (VALGRIND_DEBUG == 0)
