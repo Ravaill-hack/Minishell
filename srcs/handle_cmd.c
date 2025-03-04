@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/03 15:25:59 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:14:43 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	ft_handle_cmd(t_var *var, t_shell shell, t_cmd *node)
 
 int	ft_is_builtin_cmd(t_cmd *node)
 {
+	if (!node->arg[0])
+		return (0);
 	if (ft_strncmp(node->arg[0], "echo", ft_strlen(node->arg[0])) == 0)
 		return (1);
 	else if (ft_strncmp(node->arg[0], "env", ft_strlen(node->arg[0])) == 0)
