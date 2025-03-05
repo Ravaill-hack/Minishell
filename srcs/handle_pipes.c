@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:07:11 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/05 17:35:37 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/05 22:37:48 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_need_to_grep_from_pipe(t_cmd **cmd_tab, int i_cmd)
 	return (1);
 }
 
-int	ft_interpret_status(int	status)
+int	ft_interpret_status(int status)
 {
 	int	exit_nb;
 
@@ -60,7 +60,7 @@ int	ft_is_cmd(t_cmd *cmd, char **env)
 
 	path = NULL;
 	if (!cmd->arg[0])
-	 	return (0);
+		return (0);
 	if (ft_is_builtin_cmd(cmd))
 		return (1);
 	path = ft_extract_path(env, cmd->arg[0]);
@@ -69,12 +69,26 @@ int	ft_is_cmd(t_cmd *cmd, char **env)
 	return (1);
 }
 
-int	ft_exec_one(t_var *var, t_shell *shell, int i)
+void	ft_close_pipes(t_var *var, int i)
 {
-	int	status;
 	int	j;
 
 	j = 0;
+	while (j < var->nb_cmd)
+	{
+		if (j != i && var->cmd[j]->need_pipe_in == 1
+			&& (j - 1) >= 0 && var->cmd[j - 1]->need_pipe_out == 1)
+			close(var->cmd[j]->fd_in.fd);
+		if (j != i && var->cmd[j]->need_pipe_out == 1)
+			close(var->cmd[j]->fd_out.fd);
+		j++;
+	}
+}
+
+int	ft_exec_one(t_var *var, t_shell *shell, int i)
+{
+	int	status;
+
 	status = SUCCESS;
 	if (i > 0 && var->cmd[i]->need_pipe_in == 1)
 		close (var->cmd[i - 1]->fd_out.fd);
@@ -85,21 +99,14 @@ int	ft_exec_one(t_var *var, t_shell *shell, int i)
 		if (dup2(var->cmd[i]->fd_in.fd, 0) == -1)
 			return (FAILURE);
 		close(var->cmd[i]->fd_in.fd);
-	}	
+	}
 	if (var->cmd[i]->fd_out.fd != 1)
 	{
 		if (dup2(var->cmd[i]->fd_out.fd, 1) == -1)
 			return (FAILURE);
-		close(var->cmd[i]->fd_out.fd);	
+		close(var->cmd[i]->fd_out.fd);
 	}
-	while (j < var->nb_cmd)
-	{
-		if (j != i && var->cmd[j]->need_pipe_in == 1 && (j - 1) >= 0 && var->cmd[j - 1]->need_pipe_out == 1)
-			close(var->cmd[j]->fd_in.fd);
-		if (j != i && var->cmd[j]->need_pipe_out == 1)
-			close(var->cmd[j]->fd_out.fd);
-		j++;
-	}
+	ft_close_pipes(var, i);
 	status = ft_handle_cmd(var, shell, var->cmd[i]);
 	return (status);
 }
@@ -134,38 +141,38 @@ int	ft_single_cmd(t_var *var, t_shell *shell)
 		return (FAILURE);
 	else if (ft_is_builtin_cmd(var->cmd[0]) == 1)
 	{
-		ft_handle_signal_children();
+		ft_set_sigint_sigquit_children();
 		res = ft_exec_one(var, shell, 0);
 	}
 	else
 	{
-		ft_handle_signal_children();
+		ft_set_sigint_sigquit_children();
 		res = ft_handle_regular_cmd(var, shell, 0, &pid[0]);
 		waitpid(pid[0], &res, 0);
 	}
 	return (ft_interpret_status(res));
 }
 
-int	ft_handle_pipes(t_var *var, t_shell *shell)
+int	ft_handle_all_regular_cmds(t_var *var, t_shell *shell, pid_t *pids)
 {
-	int		i;
-	int		status;
-	pid_t	pids[var->nb_cmd];
+	int	i;
+	int	status;
 
 	i = 0;
-	if (var->nb_cmd == 1)
-	{
-		status = ft_single_cmd(var, shell);
-		ft_handle_signal_parent();
-		return (ft_interpret_status(status));
-	}
 	while (i < var->nb_cmd)
 	{
 		status = ft_handle_regular_cmd(var, shell, i, &pids[i]);
 		i++;
 	}
+	return (status);
+}
+
+void	ft_close_all_pipes(t_var *var)
+{
+	int	i;
+
 	i = 0;
-	while(i < var->nb_cmd - 1)
+	while (i < var->nb_cmd - 1)
 	{
 		if (var->cmd[i]->fd_out.fd != 1)
 			close(var->cmd[i]->fd_out.fd);
@@ -173,17 +180,42 @@ int	ft_handle_pipes(t_var *var, t_shell *shell)
 			close(var->cmd[i + 1]->fd_in.fd);
 		i++;
 	}
+}
+
+int	ft_wait_all_childrens(t_var *var, pid_t *pids)
+{
+	int	i;
+	int	status;
+
 	i = 0;
 	while (i < var->nb_cmd)
 	{
 		waitpid(pids[i], &status, 0);
 		if (ft_interpret_status(status) == FAILURE)
 		{
-			ft_handle_signal_parent();
+			ft_set_sigint_sigquit_parent();
 			return (FAILURE);
 		}
 		i++;
 	}
-	ft_handle_signal_parent();
-	return(SUCCESS);
+	return (SUCCESS);
+}
+
+int	ft_handle_pipes(t_var *var, t_shell *shell)
+{
+	int		status;
+	pid_t	*pids;
+
+	pids = (pid_t *)ft_calloc(var->nb_cmd, sizeof(pid_t));
+	if (var->nb_cmd == 1)
+	{
+		status = ft_single_cmd(var, shell);
+		ft_set_sigint_sigquit_parent();
+		return (ft_interpret_status(status));
+	}
+	status = ft_handle_all_regular_cmds(var, shell, pids);
+	ft_close_all_pipes(var);
+	ft_wait_all_childrens(var, pids);
+	ft_set_sigint_sigquit_parent();
+	return (SUCCESS);
 }

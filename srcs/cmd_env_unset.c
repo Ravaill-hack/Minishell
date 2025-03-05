@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_env_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:44:08 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/03 16:13:47 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/05 22:40:59 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ int	ft_cmd_unset(char ***env_ptr, t_cmd *node)
 	else
 	{
 		ft_putstr_fd("on est la\n", 1);
-		return(ft_remove_env_var(env_ptr, line_index));
+		return (ft_remove_env_var(env_ptr, line_index));
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list_init.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:31:57 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/04 13:06:01 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/05 22:12:02 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ t_token_list	*ft_go_to_next_node(t_token_list *node)
 		return (NULL);
 	while (node)
 	{
-		if (node->prev 
+		if (node->prev
 			&& ((node->prev->print_space_after == 1 && node->type != PIPE)
-			|| (node->prev->print_space_after == 0
-			&& (node->type >= 0 && node->type <= 3))))
+				|| (node->prev->print_space_after == 0
+					&& (node->type >= 0 && node->type <= 3))))
 			break ;
 		node = node->next;
 	}

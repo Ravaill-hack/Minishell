@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/05 17:25:51 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/05 22:24:18 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,6 +242,7 @@ int				ft_doll_var_exists(char *str, char **env);
 Cmd list - build
 */
 char			*ft_fill_arg(t_token_list *node);
+char			*ft_handle_node_type(t_token_list *node, char *str);
 char			**ft_token_list_to_char_array(t_token_list *node);
 t_cmd			*ft_create_cmd_node(t_var *var, int i, t_shell *shell);
 t_cmd			**ft_build_cmd_list(t_var *var, t_shell *shell);
@@ -289,12 +290,11 @@ int				ft_remove_env_var(char ***env_ptr, int line_index);
 /*
 Handle signal
 */
-void			ft_set_sigquit_reception_handler(void);
-void			ft_set_sigint_reception_handler(void);
-void			ft_handle_sigint_reception(int signum);
-void			ft_handle_signal_children(void);
-void			ft_handle_signal_parent(void);
-void			ft_handle_special_children(void);
+void	ft_set_sigquit_parent(void);
+void	ft_set_sigint_parent(void);
+void	ft_handle_sigint_parent(int signum);
+void	ft_set_sigint_sigquit_children(void);
+void	ft_set_sigint_sigquit_parent(void);
 /*
 Termios
 */
@@ -317,8 +317,10 @@ void			ft_print_info_cmd_list(int nb_cmd, t_cmd **list);
 /*
 Handle pipes
 */
-int				ft_handle_regular_cmd(t_var *var, t_shell *shell, int i, pid_t *pid);
+int				ft_handle_regular_cmd(t_var *var, t_shell *shell,
+					int i, pid_t *pid);
 int				ft_handle_pipes(t_var *var, t_shell *shell);
+void			ft_close_pipes(t_var *var, int i);
 int				ft_need_to_send_in_pipe(t_cmd **cmd_tab, int i_cmd, int nb_cmd);
 int				ft_need_to_grep_from_pipe(t_cmd **cmd_tab, int i_cmd);
 /*

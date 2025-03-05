@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/03/05 14:00:34 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/05 22:08:16 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ int	ft_exec_exit_cmd(char **env)
 
 int	ft_handle_exit_last_shlvl(t_var var, t_shell shell, char ***env)
 {
-	(void)shell;
 	(void)var;
+	(void)shell;
 	if (ft_update_shlvl(env, -1) == FAILURE)
 		return (FAILURE);
 	//ft_clear_and_free_all(&var, &shell);

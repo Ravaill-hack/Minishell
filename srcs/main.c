@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:35:39 by julien            #+#    #+#             */
-/*   Updated: 2025/03/05 16:17:22 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/05 22:39:23 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	main(int argc, char **argv, char **env)
 	get_prompt(&var, shell);
 	while (shell->prompt)
 	{
-		
 		//ft_print_error_and_exit(var, *shell);
 		if (shell->while_hdc == 0)
 		{
@@ -42,7 +41,7 @@ int	main(int argc, char **argv, char **env)
 			get_prompt(&var, shell);
 		}
 		else
-		 	shell->while_hdc = 0;
+			shell->while_hdc = 0;
 	}
 	ft_clear_and_free_all(&var, shell);
 	exit(EXIT_SUCCESS);

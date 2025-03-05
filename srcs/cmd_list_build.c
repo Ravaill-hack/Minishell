@@ -3,53 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list_build.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/05 13:27:01 by lmatkows         ###   ########.fr       */
+/*   Created: 2025/03/05 21:35:42 by julien            #+#    #+#             */
+/*   Updated: 2025/03/05 21:51:08 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
+
+char	*ft_handle_node_type(t_token_list *node, char *str)
+{
+	if (node->type == CONTENT || node->type == DOLL)
+	{
+		if (node->type == DOLL && node->val[0] == '\0')
+			return (NULL);
+		str = ft_strjoin(str, node->val);
+	}
+	else if (node->type >= 0 && node->type <= 3)
+		str = ft_dup_operand(node->type);
+	return (str);
+}
 
 char	*ft_fill_arg(t_token_list *node)
 {
 	char	*str;
 	char	*tmp;
-	//int		i;
 
 	str = NULL;
 	tmp = NULL;
-	//i = 0;
 	while (node && (node->type != PIPE))
 	{
 		tmp = str;
-		if (node->type == CONTENT || node->type == DOLL)
-		{
-			if (node->type == DOLL && node->val[0] == '\0')
-				return (NULL);
-			str = ft_strjoin(str, node->val);
-		}
-		else if (node->type >= 0 && node->type <= 3)
-			str = ft_dup_operand(node->type);
-		// if (str && node->next && (node->next->type >= 0 && node->next->type <= 3))
-		// 	return (str);
+		str = ft_handle_node_type(node, str);
+		//if (str && node->next
+		//	&& (node->next->type >= 0
+		//		&& node->next->type <= 3))
+		//	return (str);
 		if (tmp != str)
-			free (tmp);
+			free(tmp);
 		if (!str)
 			return (NULL);
-		if (node->print_space_after != 0 || (node->next && (node->next->type >= 0 && node->next->type <= 3)))
+		if (node->print_space_after != 0
+			|| (node->next
+				&& (node->next->type >= 0
+					&& node->next->type <= 3)))
 			break ;
 		node = node->next;
 	}
-	
-	// while (str[i])
-	// {
-	// 	ft_putchar_fd(str[i], 1);
-	// 	i++;
-	// }
-	// ft_putchar_fd('\n', 1);
 	return (str);
 }
 
@@ -69,7 +70,7 @@ char	**ft_token_list_to_char_array(t_token_list *node)
 		array[j] = ft_fill_arg(node);
 		node = ft_go_to_next_node(node);
 		if (!node)
-			break;
+			break ;
 		if (array[j])
 			j++;
 	}
@@ -130,33 +131,4 @@ t_cmd	**ft_free_cmd_list_until(t_cmd **cmd_list, int n)
 	if (cmd_list)
 		free(cmd_list);
 	return (NULL);
-}
-
-t_cmd	**ft_build_cmd_list(t_var *var, t_shell *shell)
-{
-	t_cmd	**cmd_list;
-	int		i;
-
-	i = 0;
-	var->nb_cmd = ft_nb_pipes(*(var->token_list)) + 1;
-	// ft_putstr_fd("nb cmd : ", 1);
-	// ft_putnbr_fd(var->nb_cmd, 1);
-	// ft_putchar_fd('\n', 1);
-	cmd_list = (t_cmd **)malloc((var->nb_cmd + 1) * sizeof(t_cmd *));
-	if (!cmd_list)
-		return (NULL);
-	while (i < var->nb_cmd)
-	{
-		cmd_list[i] = ft_create_cmd_node(var, i, shell);
-		if (!cmd_list[i] && i == 0)
-			return (NULL);
-		if (!cmd_list[i] && i != 0)
-			return (ft_free_cmd_list_until(cmd_list, i));
-		else if (!cmd_list[i] && i == 0)
-			return (NULL);
-		i++;
-	}
-	cmd_list[i] = NULL;
-	ft_set_pipes(cmd_list, var->nb_cmd, var->fd_pipe);
-	return (cmd_list);
 }

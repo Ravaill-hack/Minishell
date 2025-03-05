@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_build.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:48:38 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/05 13:24:20 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/05 22:13:41 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ int	**ft_init_pipes(int nb_pipes)
 	{
 		pipes[i] = (int *)malloc(2 * sizeof(int));
 		if (!pipes[i])
-			return (/*ft_close_and_free_pipes(pipes, i), */NULL);
+		{
+			//ft_close_and_free_pipes(pipes, i);
+			return (NULL);
+		}
 		i++;
 	}
 	pipes[i] = NULL;
@@ -100,7 +103,7 @@ int	ft_set_pipes(t_cmd **cmd, int nb_cmd, int **pipes)
 				return (FAILURE);
 			cmd[i]->fd_out.fd = pipes[i][1];
 			if (cmd[i + 1]->need_pipe_in == 1)
-			 	cmd[i + 1]->fd_in.fd = pipes[i][0];
+				cmd[i + 1]->fd_in.fd = pipes[i][0];
 			else
 				close(pipes[i][0]);
 		}

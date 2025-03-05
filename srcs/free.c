@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/14 21:01:37 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/04 16:56:57 by lmatkows         ###   ########.fr       */
+/*   Created: 2025/03/05 22:38:47 by julien            #+#    #+#             */
+/*   Updated: 2025/03/05 22:38:52 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	ft_clear_and_free_all(t_var *var, t_shell *shell)
 	ft_enable_echoctl();
 }
 
-#include <stdio.h>
 void	ft_clear_and_free_while(t_var *var, t_shell *shell)
 {
 	if (shell->prompt)

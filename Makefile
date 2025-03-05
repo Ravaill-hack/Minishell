@@ -47,6 +47,7 @@ SRCS_FILES = \
 	redirection_handle.c \
 	cmd_list_init.c \
 	cmd_list_build.c \
+	cmd_list_build_2.c \
 	cmd_list_utils.c \
 	cmd_list_len.c \
 	utils.c \

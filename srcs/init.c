@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/03/05 16:59:30 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/05 22:02:14 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	get_prompt(t_var *var, t_shell *shell)
 {
-
 	if (isatty(STDIN_FILENO) && VALGRIND_DEBUG == 0)
 		shell->prompt = readline(shell->terminal_prompt);
 	else
@@ -66,6 +65,5 @@ void	ft_init(t_var *var, char **env)
 	if (ft_update_shlvl(&var->env, 1) == FAILURE)
 		exit(EXIT_FAILURE);
 	ft_disable_echoctl();
-	ft_set_sigquit_reception_handler();
-	ft_set_sigint_reception_handler();
+	ft_set_sigint_sigquit_parent();
 }
