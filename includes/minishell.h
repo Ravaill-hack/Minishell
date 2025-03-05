@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/04 19:15:39 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/05 10:12:42 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -314,7 +314,7 @@ void			ft_print_info_cmd_list(int nb_cmd, t_cmd **list);
 Handle pipes
 */
 int				ft_handle_last_cmd(t_var *var, t_shell shell, int i, int frk);
-int				ft_handle_regular_cmd(t_var *var, t_shell shell, int i);
+int				ft_handle_regular_cmd(t_var *var, t_shell shell, int i, pid_t *pid);
 int				ft_handle_pipes(t_var *var, t_shell shell);
 int				ft_need_to_send_in_pipe(t_cmd **cmd_tab, int i_cmd, int nb_cmd);
 int				ft_need_to_grep_from_pipe(t_cmd **cmd_tab, int i_cmd);

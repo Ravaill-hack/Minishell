@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:40:07 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/04 13:57:06 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/05 09:58:09 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void	ft_print_info_cmd_list(int nb_cmd, t_cmd **list)
 		printf("fd out is def : %d\n", list[i]->fd_out.is_def);
 		printf("fd in : %d\n", list[i]->fd_in.fd);
 		printf("fd out : %d\n", list[i]->fd_out.fd);
+		printf("fneed pipe in : %d\n", list[i]->need_pipe_in);
+		printf("fneed pipe out : %d\n", list[i]->need_pipe_out);
 		printf("\n\n");
 		i++;
 	}
