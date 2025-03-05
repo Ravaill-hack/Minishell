@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:50:06 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/04 13:57:24 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:35:48 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,6 @@ int	ft_set_heredoc(char *str, t_cmd *node)
 		return (FAILURE);
 	node->fd_in.is_def = 1;
 	node->fd_in.type = DOUBLE;
+	node->need_pipe_in = 1;
 	return (SUCCESS);
 }
