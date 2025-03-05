@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:07:11 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/05 16:02:01 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/05 16:21:12 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,9 @@ int	ft_is_cmd(t_cmd *cmd, char **env)
 int	ft_exec_one(t_var *var, t_shell *shell, int i)
 {
 	int	status;
-	//
-	// int	j; A DECOMMENTER POUR CAT CAT LS
-	//
-	
-	//
-	// j = 0; A DECOMMENTER POUR CAT CAT LS
-	//
+	int	j;
+
+	j = 0;
 	status = SUCCESS;
 	if (i > 0 && var->cmd[i]->need_pipe_in == 1)
 		close (var->cmd[i - 1]->fd_out.fd);
@@ -96,16 +92,14 @@ int	ft_exec_one(t_var *var, t_shell *shell, int i)
 			return (FAILURE);
 		close(var->cmd[i]->fd_out.fd);	
 	}
-	// A DECOMMENTER POUR CAT CAT LS MAIS EMPECHE LE TRAITEMENT DES REDIRECTIONS
-	// while (j < var->nb_cmd)
-	// {
-	// 	if (j != i && var->cmd[j]->need_pipe_in == 1)
-	// 		close(var->cmd[j]->fd_in.fd);
-	// 	if (j != i && var->cmd[j]->need_pipe_out == 1)
-	// 		close(var->cmd[j]->fd_out.fd);
-	// 	j++;
-	// }
-	//
+	while (j < var->nb_cmd)
+	{
+		if (j != i && var->cmd[j]->need_pipe_in == 1 && (j - 1) >= 0 && var->cmd[j - 1]->need_pipe_out == 1)
+			close(var->cmd[j]->fd_in.fd);
+		if (j != i && var->cmd[j]->need_pipe_out == 1)
+			close(var->cmd[j]->fd_out.fd);
+		j++;
+	}
 	status = ft_handle_cmd(var, shell, var->cmd[i]);
 	return (status);
 }
@@ -128,10 +122,6 @@ int	ft_handle_regular_cmd(t_var *var, t_shell *shell, int i, pid_t *pid)
 	{
 		if (i > 0 && var->cmd[i]->need_pipe_in == 1)
 			close(var->cmd[i - 1]->fd_out.fd);
-	// A DECOMMENTER POUR CAT CAT LS MAIS PROVOQUE L'EXIT DU PROGRAMME
-	// if (i < var->nb_cmd - 1 && var->cmd[i]->need_pipe_out == 1)
-	// 		close(var->cmd[i]->fd_in.fd);
-	//
 	}
 	return (ft_interpret_status(status));
 }
@@ -170,7 +160,6 @@ int	ft_handle_pipes(t_var *var, t_shell *shell)
 		status = ft_handle_regular_cmd(var, shell, i, &pids[i]);
 		i++;
 	}
-	// A DECOMMENTER POUR CAT CAT LS ET A L'AIR DE NE PAS INDUIRE D'ERREURS SUPPLEMENTAIRES
 	i = 0;
 	while(i < var->nb_cmd - 1)
 	{
