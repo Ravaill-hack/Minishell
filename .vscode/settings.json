@@ -5,6 +5,8 @@
 		"type_traits": "c",
 		"cstdlib": "c",
 		"format": "c",
-		"sstream": "c"
+		"sstream": "c",
+		"chrono": "c",
+		"variant": "c"
 	}
 }
