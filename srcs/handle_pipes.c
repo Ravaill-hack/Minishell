@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:07:11 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/05 16:21:12 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:14:23 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ int	ft_handle_regular_cmd(t_var *var, t_shell *shell, int i, pid_t *pid)
 		return (FAILURE);
 	if (*pid == 0)
 	{
-		ft_handle_signal_children();
 		status = ft_exec_one(var, shell, i);
 		exit(status);
 	}
@@ -150,9 +149,12 @@ int	ft_handle_pipes(t_var *var, t_shell *shell)
 	pid_t	pids[var->nb_cmd];
 
 	i = 0;
+	ft_handle_signal_children();
 	if (var->nb_cmd == 1)
 	{
 		status = ft_single_cmd(var, shell);
+		ft_set_sigquit_reception_handler();
+		ft_set_sigint_reception_handler();
 		return (ft_interpret_status(status));
 	}
 	while (i < var->nb_cmd)
@@ -169,14 +171,19 @@ int	ft_handle_pipes(t_var *var, t_shell *shell)
 			close(var->cmd[i + 1]->fd_in.fd);
 		i++;
 	}
-	//
 	i = 0;
 	while (i < var->nb_cmd)
 	{
 		waitpid(pids[i], &status, 0);
 		if (ft_interpret_status(status) == FAILURE)
+		{
+			ft_set_sigquit_reception_handler();
+			ft_set_sigint_reception_handler();
 			return (FAILURE);
+		}
 		i++;
 	}
+	ft_set_sigquit_reception_handler();
+	ft_set_sigint_reception_handler();
 	return(SUCCESS);
 }
