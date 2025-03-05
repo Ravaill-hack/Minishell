@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:35:39 by julien            #+#    #+#             */
-/*   Updated: 2025/03/05 11:52:35 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:56:22 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,24 @@ int	main(int argc, char **argv, char **env)
 	get_prompt(&var, shell);
 	while (shell->prompt)
 	{
-			//ft_print_error_and_exit(var, *shell);
-		if (ft_parse_line(&var, shell->prompt) != FAILURE)
+		
+		//ft_print_error_and_exit(var, *shell);
+		if (shell->while_hdc == 0)
 		{
+			if (ft_parse_line(&var, shell->prompt, shell) != FAILURE)
+			{
 			//ft_print_info_list(*(var.token_list), var.env);
-			//ft_print_info_cmd_list(var.nb_cmd, var.cmd);
-			if (ft_handle_pipes(&var, *shell) == FAILURE)
-				ft_print_error();
-			if (VALGRIND_DEBUG == 0)
-				add_history(shell->prompt);
-			ft_clear_and_free_while(&var, shell);
+				//ft_print_info_cmd_list(var.nb_cmd, var.cmd);
+				if (ft_handle_pipes(&var, shell) == FAILURE)
+					ft_print_error();
+				if (VALGRIND_DEBUG == 0)
+					add_history(shell->prompt);
+				ft_clear_and_free_while(&var, shell);
+			}
+			get_prompt(&var, shell);
 		}
-		get_prompt(&var, shell);
+		else
+		 	shell->while_hdc = 0;
 	}
 	ft_clear_and_free_all(&var, shell);
 	exit(EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/04 13:18:56 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:27:01 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	**ft_token_list_to_char_array(t_token_list *node)
 	return (array);
 }
 
-t_cmd	*ft_create_cmd_node(t_var *var, int i)
+t_cmd	*ft_create_cmd_node(t_var *var, int i, t_shell *shell)
 {
 	t_token_list	*token_node;
 	t_cmd			*cmd_node;
@@ -93,7 +93,7 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i)
 		return (NULL);
 	cmd_node->arg = ft_epure_args_array(cmd_node->raw);
 	ft_init_fd(cmd_node);
-	if (ft_fill_fd(cmd_node) == FAILURE)
+	if (ft_fill_fd(cmd_node, shell) == FAILURE)
 		return (NULL);
 	// ft_putstr_fd("fd_in : ", 1);
 	// ft_putnbr_fd(cmd_node->fd_in.fd, 1);
@@ -132,7 +132,7 @@ t_cmd	**ft_free_cmd_list_until(t_cmd **cmd_list, int n)
 	return (NULL);
 }
 
-t_cmd	**ft_build_cmd_list(t_var *var)
+t_cmd	**ft_build_cmd_list(t_var *var, t_shell *shell)
 {
 	t_cmd	**cmd_list;
 	int		i;
@@ -147,7 +147,7 @@ t_cmd	**ft_build_cmd_list(t_var *var)
 		return (NULL);
 	while (i < var->nb_cmd)
 	{
-		cmd_list[i] = ft_create_cmd_node(var, i);
+		cmd_list[i] = ft_create_cmd_node(var, i, shell);
 		if (!cmd_list[i] && i == 0)
 			return (NULL);
 		if (!cmd_list[i] && i != 0)

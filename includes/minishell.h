@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/05 10:57:51 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:39:06 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ typedef struct s_shell
 {
 	char					*terminal_prompt;
 	char					*prompt;
+	int						while_hdc;
 }	t_shell;
 
 /*
@@ -204,7 +205,7 @@ Token - parsing
 t_token_list	*ft_deal_dquoted(char *line, int *i, t_token_list **list);
 int				ft_append_tokens(char *line, t_token_list **list);
 t_token_list	**ft_build_token_list(char *line);
-int				ft_parse_line(t_var *var, char *prompt);
+int				ft_parse_line(t_var *var, char *prompt, t_shell *shell);
 /*
 Token - utils
 */
@@ -242,15 +243,15 @@ Cmd list - build
 */
 char			*ft_fill_arg(t_token_list *node);
 char			**ft_token_list_to_char_array(t_token_list *node);
-t_cmd			*ft_create_cmd_node(t_var *var, int i);
-t_cmd			**ft_build_cmd_list(t_var *var);
+t_cmd			*ft_create_cmd_node(t_var *var, int i, t_shell *shell);
+t_cmd			**ft_build_cmd_list(t_var *var, t_shell *shell);
 t_cmd			**ft_free_cmd_list_until(t_cmd **cmd_list, int n);
 /*
 Redirection - build
 */
 void			ft_init_fd(t_cmd *node);
 int				ft_close_fds(t_cmd *node);
-int				ft_fill_fd(t_cmd *node);
+int				ft_fill_fd(t_cmd *node, t_shell *shell);
 int				**ft_init_pipes(int nb_pipes);
 int				ft_set_pipes(t_cmd **cmd, int n_cmd, int **pipes);
 /*
@@ -259,8 +260,8 @@ Redirection - handle
 int				ft_set_infile(char *str, t_cmd *node);
 int				ft_set_outfile_append(char *str, t_cmd *node);
 int				ft_set_outfile_trunc(char *str, t_cmd *node);
-int				ft_while_heredoc(char *line, char *heredoc);
-int				ft_set_heredoc(char *str, t_cmd *node);
+int				ft_while_heredoc(char *line, char *heredoc, t_shell *shell);
+int				ft_set_heredoc(char *str, t_cmd *node, t_shell *shell);
 /*
 Handle errors
 */
@@ -314,16 +315,15 @@ void			ft_print_info_cmd_list(int nb_cmd, t_cmd **list);
 /*
 Handle pipes
 */
-int				ft_handle_last_cmd(t_var *var, t_shell shell, int i, int frk);
-int				ft_handle_regular_cmd(t_var *var, t_shell shell, int i, pid_t *pid);
-int				ft_handle_pipes(t_var *var, t_shell shell);
+int				ft_handle_regular_cmd(t_var *var, t_shell *shell, int i, pid_t *pid);
+int				ft_handle_pipes(t_var *var, t_shell *shell);
 int				ft_need_to_send_in_pipe(t_cmd **cmd_tab, int i_cmd, int nb_cmd);
 int				ft_need_to_grep_from_pipe(t_cmd **cmd_tab, int i_cmd);
 /*
 Handle cmd
 */
 int				ft_is_builtin_cmd(t_cmd *node);
-int				ft_handle_cmd(t_var *var, t_shell shell, t_cmd *node);
+int				ft_handle_cmd(t_var *var, t_shell *shell, t_cmd *node);
 int				ft_is_cmd(t_cmd *cmd, char **env);
 /*
 Exec cmd

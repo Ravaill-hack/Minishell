@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:07:11 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/05 11:52:06 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:55:53 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,27 @@ int	ft_interpret_status(int	status)
 {
 	int	exit_nb;
 
-	(void)status;
+	if (status == 0) //succes
+		return (SUCCESS);
+	else if (status == 1) //erreur generale
+		return (FAILURE);
+	else if (status == 2) //mauvaise utilisation de la commande ex cd sans argument valide
+		return (FAILURE);
+	else if (status == 126) //commande trouvee mais non executable (droits)
+		return (FAILURE);
+	else if (status == 127) //commande n'a pas ete trouvee
+		return (FAILURE);
+	else if (status == 128) //commande interrompue avec CTRL D dans un eof
+		return (FAILURE);
+	else if (status == 130) //commande interrompue avec CTRL C dans un eof
+		return (FAILURE);
+	else if (status == 131) //commande interrompue avec CTRL \ dans un eof -->tue le processus salement
+		return (FAILURE);
 	exit_nb = SUCCESS;
 	return (exit_nb);
 }
 
-int	ft_exec_one(t_var *var, t_shell shell, int i)
+int	ft_exec_one(t_var *var, t_shell *shell, int i)
 {
 	int	status;
 
@@ -64,7 +79,7 @@ int	ft_exec_one(t_var *var, t_shell shell, int i)
 	return (status);
 }
 
-int	ft_handle_regular_cmd(t_var *var, t_shell shell, int i, pid_t *pid)
+int	ft_handle_regular_cmd(t_var *var, t_shell *shell, int i, pid_t *pid)
 {
 	int		status;
 
@@ -103,19 +118,24 @@ int	ft_is_cmd(t_cmd *cmd, char **env)
 	return (1);
 }
 
-int	ft_single_cmd(t_var *var, t_shell shell)
+int	ft_single_cmd(t_var *var, t_shell *shell)
 {
 	int		res;
 	pid_t	pid[1];
 
 	if (ft_is_cmd(var->cmd[0], var->env) == 0)
 		return (FAILURE);
-	res = ft_handle_regular_cmd(var, shell, 0, &pid[0]);
-	waitpid(pid[0], &res, 0);
+	else if (ft_is_builtin_cmd(var->cmd[0]) == 1)
+		res = ft_exec_one(var, shell, 0);
+	else
+	{
+		res = ft_handle_regular_cmd(var, shell, 0, &pid[0]);
+		waitpid(pid[0], &res, 0);
+	}
 	return (ft_interpret_status(res));
 }
 
-int	ft_handle_pipes(t_var *var, t_shell shell)
+int	ft_handle_pipes(t_var *var, t_shell *shell)
 {
 	int		i;
 	int		status;

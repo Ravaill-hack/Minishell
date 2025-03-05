@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:48:38 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/05 11:31:30 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:24:20 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_close_fds(t_cmd *node)
 	return (FAILURE);
 }
 
-int	ft_fill_fd(t_cmd *node)
+int	ft_fill_fd(t_cmd *node, t_shell *shell)
 {
 	int	i;
 	int	res;
@@ -46,7 +46,7 @@ int	ft_fill_fd(t_cmd *node)
 			&& !(node->raw[i][1]))
 			return (FAILURE);
 		if (node->raw[i][0] == '<' && node->raw[i][1] == '<')
-			res = ft_set_heredoc(node->raw[i], node);
+			res = ft_set_heredoc(node->raw[i], node, shell);
 		else if (node->raw[i][0] == '<' && node->raw[i][1] != '<')
 			res = ft_set_infile(node->raw[i], node);
 		else if (node->raw[i][0] == '>' && node->raw[i][1] == '>')
