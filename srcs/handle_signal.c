@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:17:24 by julien            #+#    #+#             */
-/*   Updated: 2025/03/05 17:19:52 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:40:20 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,6 @@ void	ft_handle_sigint_reception(int signum)
 	}
 }
 
-void	ft_test(int signum)
-{
-	if (signum == SIGINT)
-		ft_putstr_fd("ceci est un SIGINT\n", 1);
-	if (signum == SIGQUIT)
-		ft_putstr_fd("ceci est un SIGQUIT\n", 1);
-	//if (signum == SIGTSTP)
-		//ft_putstr_fd("ceci est un SIGTSTP\n", 1);
-}
-
 void	ft_handle_signal_children(void)
 {
 	struct sigaction	sa;
@@ -67,8 +57,38 @@ void	ft_handle_signal_children(void)
 	sigemptyset(&sa.sa_mask);
 	sigaddset(&sa.sa_mask, SIGINT);
 	sigaddset(&sa.sa_mask, SIGQUIT);
-	sigaddset(&sa.sa_mask, SIGTSTP);
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
 	//sigaction(SIGTSTP, &sa, NULL);
 }
+
+void	ft_handle_signal_parent(void)
+{
+	ft_set_sigquit_reception_handler();
+	ft_set_sigint_reception_handler();
+}
+
+void	ft_special_signal(int signum)
+{
+	(void) signum;
+	ft_putstr_fd("siginfiinfi\n", 1);
+	return;
+}
+
+void	ft_handle_special_children(void)
+{
+	struct sigaction	sa;
+	struct sigaction	sa_special;
+	//sa.sa_handler = ft_test;
+	sa.sa_handler = SIG_DFL;
+	sa.sa_flags = 0;
+	sa_special.sa_handler = ft_special_signal;
+	sa_special.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+	sigemptyset(&sa_special.sa_mask);
+	//sigaddset(&sa.sa_mask, SIGINT);
+	//sigaddset(&sa.sa_mask, SIGQUIT);
+	sigaction(SIGINT, &sa_special, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
+}
+

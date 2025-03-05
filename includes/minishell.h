@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/05 13:39:06 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:25:51 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,6 +293,8 @@ void			ft_set_sigquit_reception_handler(void);
 void			ft_set_sigint_reception_handler(void);
 void			ft_handle_sigint_reception(int signum);
 void			ft_handle_signal_children(void);
+void			ft_handle_signal_parent(void);
+void			ft_handle_special_children(void);
 /*
 Termios
 */
