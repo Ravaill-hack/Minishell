@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:07:11 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/06 09:47:06 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/06 13:16:29 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,9 @@ int	ft_is_cmd(t_cmd *cmd, char **env)
 		return (0);
 	if (ft_is_builtin_cmd(cmd))
 		return (1);
-	path = ft_extract_path(env, cmd->arg[0]);
+	path = ft_sub_path(cmd->arg[0]);
+	if (!path)
+		path = ft_extract_path(env, cmd->arg[0]);
 	if (!path)
 		return (0);
 	free(path);
@@ -139,7 +141,10 @@ int	ft_single_cmd(t_var *var, t_shell *shell)
 	pid_t	pid[1];
 
 	if (ft_is_cmd(var->cmd[0], var->env) == 0)
+	{
+		ft_putstr_fd("test\n", 1);
 		return (FAILURE);
+	}
 	else if (ft_is_builtin_cmd(var->cmd[0]) == 1)
 	{
 		ft_set_sigint_sigquit_children();

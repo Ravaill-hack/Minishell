@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/06 09:48:50 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/06 13:05:48 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,8 +266,10 @@ int				ft_set_heredoc(char *str, t_cmd *node, t_shell *shell);
 /*
 Handle errors
 */
+void			ft_print_msg_error(char *error_msg);
 void			ft_print_error(void);
 void			ft_print_error_and_exit(t_var var, t_shell shell);
+void			ft_error_cmd_not_found(char *cmd);
 /*
 Extract env
 */
@@ -335,6 +337,7 @@ Exec cmd
 */
 char			*ft_extract_path(char **env, char *cmd);
 int				ft_exec_cmd(char **env, char **split_cmd);
+char 			*ft_sub_path(char *str);
 /*
 Cmds
 */

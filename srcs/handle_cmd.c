@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 22:41:23 by julien            #+#    #+#             */
-/*   Updated: 2025/03/05 22:41:24 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/06 13:14:03 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ int	ft_handle_cmd(t_var *var, t_shell *shell, t_cmd *node)
 	// if (!node->arg[0] && shell->while_hdc == 1)
 	// 	return (SUCCESS);
 	if (!node->arg[0])
+	{
+		ft_putstr_fd("Command '' not found.\n", 2);
 		return (FAILURE);
+	}
 	if (ft_strncmp(node->arg[0], "echo", ft_strlen(node->arg[0])) == 0)
 		return (ft_cmd_echo(node, var));
 	else if (ft_strncmp(node->arg[0], "env", ft_strlen(node->arg[0])) == 0)

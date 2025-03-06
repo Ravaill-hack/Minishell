@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:16:10 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/05 13:27:18 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/06 13:38:49 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,20 @@ t_token_list	**ft_build_token_list(char *line)
 
 int	ft_parse_line(t_var *var, char *prompt, t_shell *shell)
 {
+	if (((prompt[0] == 34 && prompt[1] == 34)
+		|| (prompt[0] == '\'' && prompt[1] == '\'')) && !prompt[2])
+	{
+		ft_putstr_fd("Command \'\' not found.\n", 2);
+		return (FAILURE);	
+	}
 	var->token_list = ft_build_token_list(prompt);
 	if (!var->token_list)
 		return (FAILURE);
 	ft_expand_dolls(*(var->token_list), var);
 	var->cmd = ft_build_cmd_list(var, shell);
+	//ft_putchar_fd(prompt[0], 1);
+	//ft_putchar_fd(prompt[1], 1);
+	//ft_putchar_fd('\n', 1);
 	if (!var->cmd)
 		return (FAILURE);
 	return (SUCCESS);
