@@ -1,0 +1,735 @@
+mstest m pa
+TOTAL TEST COUNT: 213  TESTS PASSED: 96  LEAKING: 0 
+                     STD_OUT: 63  STD_ERR: 42  EXIT_CODE: 53  
+                         TOTAL FAILED AND PASSED CASES:
+                                     ❌ 158   
+                                     ✅ 481
+
+COMPARE PARSING
+2	mand/0_compare_parsing.sh:8
+/bin/echo $?"42"
+minishell :
+42
+bash :
+042
+
+17	mand/0_compare_parsing.sh:38
+/bin/echo hi >./outfiles/outfile01 | /bin/echo bye
+minishell :
+
+bash :
+bash: ./outfiles/outfile01: No such file or directory
+bye
+
+18	mand/0_compare_parsing.sh:40
+/bin/echo <123 <456 hi | /bin/echo 42
+minishell :
+
+bash : 
+bash: 123: No such file or directory
+42
+
+24	mand/0_compare_parsing.sh:52
+/bin/echo \$USER
+minishell :
+\julien
+bash : 
+$USER
+
+25	mand/0_compare_parsing.sh:54
+/bin/echo \\$USER
+minishell :
+\\julien
+bash :
+\julien
+
+26	mand/0_compare_parsing.sh:56
+/bin/echo \\\$USER
+minishell :
+\\\julien
+bash : 
+\$USER
+
+27	mand/0_compare_parsing.sh:58
+/bin/echo \\\\$USER
+minishell :
+\\\\julien
+bash : 
+\\julien
+
+28	mand/0_compare_parsing.sh:60
+/bin/echo \\\\\$USER
+minishell :
+\\\\\julien
+bash : 
+\\$USER
+
+29	mand/0_compare_parsing.sh:62
+/bin/echo \\\\\\\\\$USER
+minishell :
+\\\\\\\\\julien
+bash : 
+\\\\$USER
+
+30	mand/0_compare_parsing.sh:64
+/bin/echo \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\$USER \$PATH \\$PWD
+minishell :
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\julien \/home/julien/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/julien/.local/bin:/home/julien/.local/bin \\/home/julien/minishell
+bash :
+\\\\\\\\\\\\\\\\$USER $PATH \/home/julien/minishell
+
+47	mand/0_compare_parsing.sh:98
+/bin/echo """""""'"$USER"'"""""""
+minishell :
+''
+bash :
+""
+'julien'
+
+66	mand/0_compare_parsing.sh:136
+/bin/echo $USER$TESTNOTFOUND$HOME$
+minishell :
+
+bash : 
+julien/home/julien$
+
+67	mand/0_compare_parsing.sh:138
+/bin/echo $USER$TESTNOTFOUND$HOME$WTF$PWD
+minishell :
+Error
+bash : 
+julien/home/julien/home/julien/minishell
+
+
+PARSING HELL
+1	/mand/10_parsing_hell.sh:5
+">>" asd
+minishell :
+
+bash : 
+>>: command not found
+
+2	/mand/10_parsing_hell.sh:7
+>">" asd
+/bin/rm -f ">"
+minishell :
+
+
+bash :
+ls => '>asd'
+
+4	/mand/10_parsing_hell.sh:14
+>> '$USER'
+cat '$USER'
+/bin/rm -f '$USER'
+minishell :
+Error
+
+
+bash : 
+ls => '$USER'
+
+ls =>
+
+5	/mand/10_parsing_hell.sh:18
+"echo "
+minishell :
+
+bash : 
+
+
+6	/mand/10_parsing_hell.sh:20
+"echo -nnnnn"
+minishell :
+
+bash : 
+echo -nnnnn: command not found
+
+7	/mand/10_parsing_hell.sh:22
+"ECho" -n -nnn"" "-"nnnnn
+minishell :
+Error
+bash :
+ECho: command not found
+
+8	/mand/10_parsing_hell.sh:24
+"ECHO" "-n"
+minishell :
+Error
+bash : 
+ECHO: command not found
+
+9	/mand/10_parsing_hell.sh:26
+ECHO '''''-''n'
+minishell :
+Error
+bash : 
+ECHO: command not found
+
+10	/mand/10_parsing_hell.sh:28
+echo '' -n
+minishell :
+ minishell$
+bash :
+ -n
+
+11	/mand/10_parsing_hell.sh:30
+echo "" "" "" -n -n -n -n
+minishell :
+
+bash : 
+   -n -n -n -n
+
+12	/mand/10_parsing_hell.sh:32
+cat << $USER
+why
+not
+$USER
+minishell :
+> why
+> not
+> $USER
+> 
+
+bash : 
+> why
+> not
+> $USER
+why
+not
+
+13	/mand/10_parsing_hell.sh:37
+export T=">>"
+$T lol
+minishell :
+Error
+bash : 
+>>: command not found
+
+14	/mand/10_parsing_hell.sh:40
+cat << "$USER"
+why
+not
+$USER
+
+minishell :
+> why
+> not
+> $USER
+> 
+bash : 
+> why
+> not
+> $USER
+why
+not
+
+15	/mand/10_parsing_hell.sh:45
+cat << "$US"E"R"
+because
+we
+love
+bash
+$USER
+
+minishell :
+because
+because
+we
+we
+love
+love
+bash
+bash
+$USER
+$USER
+
+bash : 
+> because
+> we
+> love
+> bash
+> $USER
+because
+we
+love
+bash
+
+16	/mand/10_parsing_hell.sh:52
+>> $HOME
+minishell :
+
+bash :
+bash: /home/julien: Is a directory
+
+17	/mand/10_parsing_hell.sh:54
+>> "$H"OM"E"
+cat OME
+/bin/rm -f OME
+minishell :
+Error
+cat: OME: No such file or directory
+
+bash : 
+ls >= OME
+ls >=
+
+18	/mand/10_parsing_hell.sh:58
+>> "$USER'$USER'"
+cat "$USER'$USER'"
+/bin/rm -f "$USER'$USER'"
+minishell :
+
+bash : 
+
+19	/mand/10_parsing_hell.sh:62
+>> "$USER"
+cat $USER
+/bin/rm -f $USER
+minishell :
+
+bash : 
+
+20	/mand/10_parsing_hell.sh:66
+cd $HOME/Desktop/
+pwd
+minishell :
+
+bash : 
+
+21	/mand/10_parsing_hell.sh:69
+cd "$HOME"/Desktop/
+pwd
+minishell :
+
+bash : 
+
+22	/mand/10_parsing_hell.sh:72
+cd "$H"O"ME"/Desktop/
+echo $?
+minishell :
+
+bash : 
+
+23	/mand/10_parsing_hell.sh:75
+export T=n
+echo "-"$T$T
+minishell :
+
+bash : 
+
+25	/mand/10_parsing_hell.sh:81
+export T=ech
+echo $T"o"
+minishell :
+
+bash : 
+
+26	/mand/10_parsing_hell.sh:84
+export T=ech
+echo $T"o "
+minishell :
+
+bash : 
+
+27	/mand/10_parsing_hell.sh:87
+export T=ech
+echo $T"o -n"
+minishell :
+
+bash : 
+
+28	/mand/10_parsing_hell.sh:90
+export T=ech
+echo $T"o -n"
+minishell :
+
+bash : 
+
+29	/mand/10_parsing_hell.sh:93
+minishell :
+
+bash : 
+
+30	/mand/10_parsing_hell.sh:96
+minishell :
+
+bash : 
+
+31	/mand/10_parsing_hell.sh:99
+minishell :
+
+bash : 
+
+32
+minishell :
+
+bash : 
+
+33
+minishell :
+
+bash : 
+
+34
+minishell :
+
+bash : 
+
+35
+minishell :
+
+bash : 
+
+37
+minishell :
+
+bash : 
+
+38
+minishell :
+
+bash : 
+
+39
+minishell :
+
+bash : 
+
+40
+minishell :
+
+bash : 
+
+41
+minishell :
+
+bash : 
+
+42
+minishell :
+
+bash : 
+
+43
+minishell :
+
+bash : 
+
+44
+minishell :
+
+bash : 
+
+45
+minishell :
+
+bash : 
+
+46
+minishell :
+
+bash : 
+
+47
+minishell :
+
+bash : 
+
+48
+minishell :
+
+bash : 
+
+49
+minishell :
+
+bash : 
+
+50
+minishell :
+
+bash : 
+
+51
+minishell :
+
+bash : 
+
+52
+minishell :
+
+bash : 
+
+53
+minishell :
+
+bash : 
+
+54
+minishell :
+
+bash : 
+
+55
+minishell :
+
+bash : 
+
+56
+minishell :
+
+bash : 
+
+57
+minishell :
+
+bash : 
+
+58
+minishell :
+
+bash : 
+
+59
+minishell :
+
+bash : 
+
+60
+minishell :
+
+bash : 
+
+61
+minishell :
+
+bash : 
+
+62
+minishell :
+
+bash : 
+
+63
+minishell :
+
+bash : 
+
+64
+minishell :
+
+bash : 
+
+65
+minishell :
+
+bash : 
+
+66
+minishell :
+
+bash : 
+
+67
+minishell :
+
+bash : 
+
+68
+minishell :
+
+bash : 
+
+69
+minishell :
+
+bash : 
+
+70
+minishell :
+
+bash : 
+
+71
+minishell :
+
+bash : 
+
+72
+minishell :
+
+bash : 
+
+73
+minishell :
+
+bash : 
+
+74
+minishell :
+
+bash : 
+
+75
+minishell :
+
+bash : 
+
+76
+minishell :
+
+bash : 
+
+77
+minishell :
+
+bash : 
+
+78
+minishell :
+
+bash : 
+
+79
+minishell :
+
+bash : 
+
+80
+minishell :
+
+bash : 
+
+81
+minishell :
+
+bash : 
+
+82
+minishell :
+
+bash : 
+
+83
+minishell :
+
+bash : 
+
+84
+minishell :
+
+bash : 
+
+85
+minishell :
+
+bash : 
+
+86
+minishell :
+
+bash : 
+
+87
+minishell :
+
+bash : 
+
+88
+minishell :
+
+bash : 
+
+89
+minishell :
+
+bash : 
+
+90
+minishell :
+
+bash : 
+
+91
+minishell :
+
+bash : 
+
+92
+minishell :
+
+bash : 
+
+93
+minishell
+39
+40
+41
+42
+43
+44
+45
+46
+48
+49
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+63
+64
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+101
+103
+104
+105
+110
+111
+112
+113
+114
+115
+116
+120
+121
+122
+123
+124
+

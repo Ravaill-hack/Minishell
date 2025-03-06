@@ -1,3 +1,0 @@
-free all exit
-CTRL + C in cat must quit cat, not minishell
-interpret status (exit code)
