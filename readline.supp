@@ -1,0 +1,6 @@
+{
+   readline-leak
+   Memcheck:Leak
+   fun:readline
+   fun:*malloc*
+}

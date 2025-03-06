@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:07:11 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/05 22:37:48 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/06 09:47:06 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	ft_is_cmd(t_cmd *cmd, char **env)
 	path = ft_extract_path(env, cmd->arg[0]);
 	if (!path)
 		return (0);
+	free(path);
 	return (1);
 }
 
@@ -206,16 +207,17 @@ int	ft_handle_pipes(t_var *var, t_shell *shell)
 	int		status;
 	pid_t	*pids;
 
-	pids = (pid_t *)ft_calloc(var->nb_cmd, sizeof(pid_t));
 	if (var->nb_cmd == 1)
 	{
 		status = ft_single_cmd(var, shell);
 		ft_set_sigint_sigquit_parent();
 		return (ft_interpret_status(status));
 	}
+	pids = (pid_t *)ft_calloc(var->nb_cmd, sizeof(pid_t));
 	status = ft_handle_all_regular_cmds(var, shell, pids);
 	ft_close_all_pipes(var);
 	ft_wait_all_childrens(var, pids);
+	free(pids);
 	ft_set_sigint_sigquit_parent();
 	return (SUCCESS);
 }

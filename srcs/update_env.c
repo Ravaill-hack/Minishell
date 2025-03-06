@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 10:31:57 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/28 11:46:25 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/06 10:18:22 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_update_env_var_value(char ***env_ptr, int line_index, char *value)
 			|| (index.i == line_index
 				&& ft_update_env_var(new_env, *env_ptr,
 					&index, value) == FAILURE))
-			return (ft_free_strs(new_env), FAILURE);
+			return (ft_free_strs(*env_ptr), ft_free_strs(new_env), FAILURE);
 		index.i++;
 	}
 	ft_free_strs(*env_ptr);
