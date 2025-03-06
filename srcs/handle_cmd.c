@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 22:41:23 by julien            #+#    #+#             */
-/*   Updated: 2025/03/05 22:41:24 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/06 11:34:15 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_handle_cmd(t_var *var, t_shell *shell, t_cmd *node)
 	else if (ft_strncmp(node->arg[0], "export", ft_strlen(node->arg[0])) == 0)
 		return (ft_cmd_export(&var->env, node->arg));
 	else if (ft_strncmp(node->arg[0], "exit", ft_strlen(node->arg[0])) == 0)
-		return (ft_cmd_exit(*var, *shell, &var->env, node));
+		return (ft_cmd_exit(var, shell, &var->env, node));
 	else if (ft_strncmp(node->arg[0], "unset", ft_strlen(node->arg[0])) == 0)
 		return (ft_cmd_unset(&var->env, node));
 	else if (ft_strncmp(node->arg[0], "pwd", ft_strlen(node->arg[0])) == 0)

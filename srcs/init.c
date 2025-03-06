@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/03/05 22:02:14 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/06 11:28:09 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_shell	*ft_init_shell(void)
 {
 	t_shell	*shell;
 
-	shell = malloc(sizeof(t_shell));
+	shell = ft_calloc(1, sizeof(t_shell));
 	if (!shell)
 		exit(EXIT_FAILURE);
 	shell->terminal_prompt = ft_strdup("minishell$ ");

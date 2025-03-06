@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/06 09:48:50 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/06 11:36:01 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -348,9 +348,9 @@ int				ft_cmd_cd_path(char ***env, char *path);
 /*
 CMD - exit
 */
-int				ft_cmd_exit(t_var var, t_shell shell, char ***env, t_cmd *node);
+int				ft_cmd_exit(t_var *var, t_shell *shell, char ***env, t_cmd *node);
 int				ft_exec_exit_cmd(char **env);
-int				ft_handle_exit_last_shlvl(t_var var, t_shell shell,
+int				ft_handle_exit_last_shlvl(t_var *var, t_shell *shell,
 					char ***env);
 int				ft_handle_exit_not_last_shlvl(char ***env);
 /*

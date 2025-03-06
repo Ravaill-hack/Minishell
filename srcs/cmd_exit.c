@@ -6,13 +6,13 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/03/06 09:53:52 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/06 11:34:53 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_cmd_exit(t_var var, t_shell shell, char ***env, t_cmd *node)
+int	ft_cmd_exit(t_var *var, t_shell *shell, char ***env, t_cmd *node)
 {
 	int		shlvl;
 	int		shlvl_current;
@@ -56,12 +56,12 @@ int	ft_exec_exit_cmd(char **env)
 	return (status);
 }
 
-int	ft_handle_exit_last_shlvl(t_var var, t_shell shell, char ***env)
+int	ft_handle_exit_last_shlvl(t_var *var, t_shell *shell, char ***env)
 {
 	if (ft_update_shlvl(env, -1) == FAILURE)
 		return (FAILURE);
-	ft_clear_and_free_while(&var, &shell);
-	ft_clear_and_free_all_exit(&var, &shell);
+	ft_clear_and_free_while(var, shell);
+	ft_clear_and_free_all_exit(var, shell);
 	exit(EXIT_SUCCESS);
 }
 
