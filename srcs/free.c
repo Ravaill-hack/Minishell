@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 22:38:47 by julien            #+#    #+#             */
-/*   Updated: 2025/03/06 10:15:49 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/06 11:37:07 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,14 @@ void	ft_free_token_list_until(t_token_list **list, int n)
 
 void	ft_clear_and_free_all_exit(t_var *var, t_shell *shell)
 {
-	//if (var->env)
-		//ft_free_strs(var->env);
-	(void)var;
+	if (var->env)
+		ft_free_strs(var->env);
 	if (shell)
 	{
 		if (shell->terminal_prompt)
 			free(shell->terminal_prompt);
-		//free(shell);
+		free(shell);
 	}
-	//if (var)
-	//{
-		//if (var->env)
-			//ft_free_strs(var->env);
-	//}	
 	if (VALGRIND_DEBUG == 0)
 		rl_clear_history();
 	ft_enable_echoctl();
