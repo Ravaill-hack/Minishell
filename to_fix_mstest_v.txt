@@ -4,39 +4,141 @@ TOTAL TEST COUNT: 59  TESTS PASSED: 23  LEAKING: 0
                                      ❌ 40   
                                      ✅ 137
 
-4
-7
-8
-9
-10
-11
-12
-13
-14
-18
-20
-24
-28
-33
-34
-35
-36
-38
-39
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
+4   mand/1_variables.sh:12
+/bin/echo $HOME$NOTHING$USER$
+
+7   mand/1_variables.sh:18
+export miert ne lehetne ezt is
+
+8   mand/1_variables.sh:20
+export a="asd"
+unset a
+
+9   mand/1_variables.sh:23
+export a="asd" b="de" o= c="hellomi" X
+unset o
+
+10   mand/1_variables.sh:26
+export a="asd" b="de" o= c="hellomi" X
+unset X
+
+11   mand/1_variables.sh:29
+export a="asd" b="de" o= c="hellomi" X
+unset o a X b c
+
+12   mand/1_variables.sh:32
+export a="asd" b="de" o= c="hellomi" X
+unset o asd B x X wqd c
+
+13   mand/1_variables.sh:35
+export T=a T=b T=c
+echo $T
+
+14   mand/1_variables.sh:38
+export miert ne lehetne ezt is
+
+18   mand/1_variables.sh:46
+/bin/echo $'HOM'E$USER
+
+
+20   mand/1_variables.sh:50
+/bin/echo $'HOME'
+
+24   mand/1_variables.sh:58
+/bin/echo "$""$"
+
+28   mand/1_variables.sh:66
+/bin/echo $'$'
+
+33   mand/1_variables.sh:76
+/bin/echo $HOME$TESTNOTFOUND
+
+34   mand/1_variables.sh:78
+/bin/echo $TESTNOTFOUND$HOME
+
+35   mand/1_variables.sh:80
+/bin/echo $TESTNOTFOUND$HOME$
+
+36   mand/1_variables.sh:82
+cd ..$PWD
+
+38   mand/1_variables.sh:89
+/bin/echo $PWD/random_folder
+
+39   mand/1_variables.sh:91
+/bin/echo ""$?""
+/bin/echo " "$?" "
+/bin/echo $?"42"
+/bin/echo ''$?''"42"
+/bin/echo 'HELLO'$?:''"42"
+
+43   mand/1_variables.sh:120
+export tmp_test="/bin/echo 42"
+$tmp_test
+$tmp_test 42
+export tmp_test="/bin/echo"
+$tmp_test 42 42
+
+44   mand/1_variables.sh:126
+export tmp_test="/bin/echo 42"
+"tmp_test"
+
+45   mand/1_variables.sh:130
+export X="  A  B  "
+/bin/echo "1"$X'2'
+
+46   mand/1_variables.sh:133
+export X=" A  B  "
+/bin/echo "1"$X'2'
+
+47   mand/1_variables.sh:136
+export X="A  B  "
+/bin/echo "1"$X'2'
+
+48   mand/1_variables.sh:139
+export X="  A  B "
+/bin/echo "1"$X'2'
+
+49   mand/1_variables.sh:142
+export X="  A  B"
+/bin/echo "1"$X'2'
+
+50   mand/1_variables.sh:145
+export X="  A B  "
+/bin/echo "1"$X'2'
+
+51   mand/1_variables.sh:148
+export X="  AB  "
+/bin/echo "1"$X'2'
+
+52   mand/1_variables.sh:151
+export X="  A  B  "
+/bin/echo $X'2'
+
+53   mand/1_variables.sh:154
+export X="  A  B  "
+/bin/echo $X"1"
+
+54   mand/1_variables.sh:157
+export X=""
+/bin/echo "1"$X'2'
+
+55   mand/1_variables.sh:160
+export X=" "
+/bin/echo "1"$X'2'
+
+56   mand/1_variables.sh:163
+export X="   "
+/bin/echo "1"$X'2'
+
+57   mand/1_variables.sh:166
+export X="  A  B  "
+/bin/echo ?$X'2'
+
+58   mand/1_variables.sh:169
+export X="  A  B  "
+/bin/echo "1"$X?
+
+59   mand/1_variables.sh:172
+export X="  A  B  "
+/bin/echo "1"$X2?
