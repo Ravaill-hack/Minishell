@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:26:37 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/04 13:14:55 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:03:56 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,14 @@ t_token_list	*ft_append_dquoted(char *line, int *i, t_token_list **list)
 	return (token);
 }
 
-t_token_list	*ft_append_doll(char *line, int *i, t_token_list **list)
+t_token_list	*ft_append_doll(char *line, int *i, t_token_list **list, int x)
 {
 	t_token_list	*token;
 
 	token = (t_token_list *)ft_calloc(1, sizeof(t_token_list));
 	if (!token)
 		return (NULL);
-	token->val = ft_extract_doll(line, i);
+	token->val = ft_extract_doll(line, i, x);
 	token->print_space_after = 0;
 	token->dq_start = 0;
 	token->dq_end = 0;

@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/06 13:42:27 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:07:37 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ Token - append
 t_token_list	*ft_append_content(char *line, int *i, t_token_list **list);
 t_token_list	*ft_append_squoted(char *line, int *i, t_token_list **list);
 t_token_list	*ft_append_dquoted(char *line, int *i, t_token_list **list);
-t_token_list	*ft_append_doll(char *line, int *i, t_token_list **list);
+t_token_list	*ft_append_doll(char *line, int *i, t_token_list **list, int x);
 t_token_list	*ft_append_operand(char *line, int *i, t_token_list **list);
 /*
 Token - checks
@@ -186,7 +186,7 @@ Token - extract
 char			*ft_extract_content(char *line, int *i);
 char			*ft_extract_sq_content(char *line, int *i);
 char			*ft_extract_dq_content(char *line, int *i);
-char			*ft_extract_doll(char *line, int *i);
+char			*ft_extract_doll(char *line, int *i, int nb_x);
 char			*ft_extract_title_doll(char *str, int *i);
 /*
 Token - errors
@@ -195,16 +195,17 @@ int				ft_quote_error(char *line);
 /*
 Token - len
 */
-int				ft_doll_len(char *str, int i);
+int				ft_doll_len(char *str, int i, int nb_ex);
 int				ft_dquoted_len(char *str, int i);
 int				ft_squoted_len(char *str, int i);
 int				ft_strlen_content(char *str, int i);
+int				ft_exit_nb_len(int	nb_exit);
 /*
 Token - parsing
 */
-t_token_list	*ft_deal_dquoted(char *line, int *i, t_token_list **list);
-int				ft_append_tokens(char *line, t_token_list **list);
-t_token_list	**ft_build_token_list(char *line);
+t_token_list	*ft_deal_dquoted(char *line, int *i, t_token_list **list, int x);
+int				ft_append_tokens(char *line, t_token_list **list, int nb_x);
+t_token_list	**ft_build_token_list(char *line, int nb_x);
 int				ft_parse_line(t_var *var, char *prompt, t_shell *shell);
 /*
 Token - utils

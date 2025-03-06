@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:07:11 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/06 13:16:29 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:36:33 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,10 +141,7 @@ int	ft_single_cmd(t_var *var, t_shell *shell)
 	pid_t	pid[1];
 
 	if (ft_is_cmd(var->cmd[0], var->env) == 0)
-	{
-		ft_putstr_fd("test\n", 1);
 		return (FAILURE);
-	}
 	else if (ft_is_builtin_cmd(var->cmd[0]) == 1)
 	{
 		ft_set_sigint_sigquit_children();

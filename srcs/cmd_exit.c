@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/03/06 11:34:53 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:36:27 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int	ft_handle_exit_not_last_shlvl(char ***env)
 	char	*new_shlvl;
 	int		status;
 
-	ft_putstr_fd("test\n", 1);
 	shlvl = ft_atoi(getenv("SHLVL"));
 	if (!shlvl)
 		return (FAILURE);

@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:31:43 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/24 15:44:48 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:29:49 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,37 @@ char	*ft_extract_dq_content(char *line, int *i)
 	return (str);
 }
 
-char	*ft_extract_doll(char *line, int *i)
+char	*ft_extract_doll(char *line, int *i, int nb_x)
 {
 	int		len;
 	char	*str;
 	int		j;
+	int		nb_dq;
 
-	len = ft_doll_len(line, *i);
+	nb_dq = 0;
+	len = ft_doll_len(line, *i, nb_x);
 	str = (char *)malloc((len + 1) * sizeof(char));
 	j = 0;
 	if (!str)
 		return (NULL);
+	if (line[*i + 1] == '?' && line[*i + 2] == '\"')
+	{
+		while (line[*i] && line[*i] != ' '
+			&& (line[*i] != '\"' && nb_dq == 0)
+			&& line[*i] != '\'' && (line[*i] != '$' || j == 0))
+		{
+			if (line[*i] == '\"')
+			{
+				nb_dq = 1;
+				(*i)++;
+			}
+			str[j] = line[*i];
+			(*i)++;
+			j++;
+		}
+		str[j] = '\0';
+		return (str);
+	}
 	while (line[*i] && line[*i] != '\"' && line[*i] != ' '
 		&& line[*i] != '\'' && (line[*i] != '$' || j == 0))
 	{
@@ -107,7 +127,7 @@ char	*ft_extract_title_doll(char *str, int *i)
 	char	*title;
 
 	j = 0;
-	title = (char *)malloc((ft_doll_len(str, *i) + 1) * sizeof(char));
+	title = (char *)malloc((ft_doll_len(str, *i, 0) + 1) * sizeof(char));
 	if (!title)
 		return (NULL);
 	while (str[*i] && str[*i] != ' ' && str[*i] != '\"'

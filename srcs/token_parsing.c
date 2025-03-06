@@ -6,13 +6,13 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:16:10 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/06 13:38:49 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:25:42 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token_list	*ft_deal_dquoted(char *line, int *i, t_token_list **list)
+t_token_list	*ft_deal_dquoted(char *line, int *i, t_token_list **list, int x)
 {
 	t_token_list	*res;
 	int				tour;
@@ -24,7 +24,7 @@ t_token_list	*ft_deal_dquoted(char *line, int *i, t_token_list **list)
 	while (line[*i] && line[*i] != '\"')
 	{
 		if (ft_is_doll(line, *i))
-			res = ft_append_doll(line, i, list);
+			res = ft_append_doll(line, i, list, x);
 		else
 			res = ft_append_dquoted(line, i, list);
 		if (tour == 0)
@@ -40,7 +40,7 @@ t_token_list	*ft_deal_dquoted(char *line, int *i, t_token_list **list)
 	return (*list);
 }
 
-int	ft_append_tokens(char *line, t_token_list **list)
+int	ft_append_tokens(char *line, t_token_list **list, int nb_x)
 {
 	int				i;
 	t_token_list	*err;
@@ -50,14 +50,16 @@ int	ft_append_tokens(char *line, t_token_list **list)
 	while (line[i])
 	{
 		ft_skip_spaces(line, &i, *list);
+		if (!line[i])
+			return (1);
 		if (ft_is_operand(line, i) == 1)
 			err = ft_append_operand(line, &i, list);
 		else if (ft_is_in_dquotes(line, i))
-			err = ft_deal_dquoted(line, &i, list);
+			err = ft_deal_dquoted(line, &i, list, nb_x);
 		else if (ft_is_in_squotes(line, i))
 			err = ft_append_squoted(line, &i, list);
 		else if (ft_is_doll(line, i))
-			err = ft_append_doll(line, &i, list);
+			err = ft_append_doll(line, &i, list, nb_x);
 		else
 			err = ft_append_content(line, &i, list);
 		if (!err)
@@ -66,7 +68,7 @@ int	ft_append_tokens(char *line, t_token_list **list)
 	return (0);
 }
 
-t_token_list	**ft_build_token_list(char *line)
+t_token_list	**ft_build_token_list(char *line, int nb_x)
 {
 	t_token_list	**list;
 	int				err;
@@ -77,7 +79,7 @@ t_token_list	**ft_build_token_list(char *line)
 	if (!list)
 		return (NULL);
 	*list = NULL;
-	err = ft_append_tokens(line, list);
+	err = ft_append_tokens(line, list, nb_x);
 	if (err == 1)
 	{
 		ft_free_list(list);
@@ -94,14 +96,12 @@ int	ft_parse_line(t_var *var, char *prompt, t_shell *shell)
 		ft_putstr_fd("Command \'\' not found.\n", 2);
 		return (FAILURE);	
 	}
-	var->token_list = ft_build_token_list(prompt);
+	var->token_list = ft_build_token_list(prompt, var->exit_nb);
 	if (!var->token_list)
 		return (FAILURE);
+	//ft_print_info_list(*(var->token_list), var->env);
 	ft_expand_dolls(*(var->token_list), var);
 	var->cmd = ft_build_cmd_list(var, shell);
-	//ft_putchar_fd(prompt[0], 1);
-	//ft_putchar_fd(prompt[1], 1);
-	//ft_putchar_fd('\n', 1);
 	if (!var->cmd)
 		return (FAILURE);
 	return (SUCCESS);

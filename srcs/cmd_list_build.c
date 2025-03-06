@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list_build.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 21:35:42 by julien            #+#    #+#             */
-/*   Updated: 2025/03/05 21:51:08 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/06 17:17:28 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,13 @@ char	*ft_handle_node_type(t_token_list *node, char *str)
 {
 	if (node->type == CONTENT || node->type == DOLL)
 	{
-		if (node->type == DOLL && node->val[0] == '\0')
+		if (node->type == DOLL && node->next
+			&& (node->print_space_after == 0 && node->next->dq_start == 1))
+		{
+			str = ft_strjoin(str, node->next->val);
+			return (str);
+		}
+		else if (node->type == DOLL && node->val[0] == '\0')
 			return (NULL);
 		str = ft_strjoin(str, node->val);
 	}
@@ -36,10 +42,6 @@ char	*ft_fill_arg(t_token_list *node)
 	{
 		tmp = str;
 		str = ft_handle_node_type(node, str);
-		//if (str && node->next
-		//	&& (node->next->type >= 0
-		//		&& node->next->type <= 3))
-		//	return (str);
 		if (tmp != str)
 			free(tmp);
 		if (!str)
@@ -50,6 +52,9 @@ char	*ft_fill_arg(t_token_list *node)
 					&& node->next->type <= 3)))
 			break ;
 		node = node->next;
+		if (node && node->prev && node->prev->type == DOLL
+			&& node->prev->print_space_after == 0 && node->dq_start == 1)
+			node = node->next;
 	}
 	return (str);
 }
@@ -87,6 +92,7 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i, t_shell *shell)
 	cmd_node = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!cmd_node)
 		return (NULL);
+	cmd_node->heredoc = NULL;
 	token_node = ft_go_to_cmd_node(*(var->token_list), i);
 	cmd_node->raw = ft_token_list_to_char_array(token_node);
 	//ft_putchar_fd('\n', 1);
