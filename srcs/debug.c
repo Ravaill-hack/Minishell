@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:40:07 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/07 16:29:22 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:58:59 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	ft_print_info_list(t_token_list *list, char **env)
 		if (temp->type == CONTENT || temp->type == DOLL)
 			printf("content : %s\n", temp->val);
 		printf("is double quoted : %d %d\n", temp->dq_start, temp->dq_end);
+		printf("is simple quoted : %d\n", temp->sq);
 		printf("need for space after : %d\n\n", temp->print_space_after);
 		temp = temp->next;
 	}

@@ -5,34 +5,6 @@ TOTAL TEST COUNT: 59  TESTS PASSED: 31  LEAKING: 0
                                      ✅ 151  
 
 
-18   mand/1_variables.sh:46
-/bin/echo $'HOM'E$USER
-minishell :
-$HOMEjuduchar
-bash :
-HOMEjuduchar
-
-20   mand/1_variables.sh:50
-/bin/echo $'HOME'
-minishell :
-$HOME
-bash :
-HOME
-
-24   mand/1_variables.sh:58
-/bin/echo "$""$"
-minishell :
-$
-bash :
-$$
-
-28   mand/1_variables.sh:66
-/bin/echo $'$'
-minishell :
-$$
-bash :
-$
-
 34   mand/1_variables.sh:78
 /bin/echo $TESTNOTFOUND$HOME
 minishell :

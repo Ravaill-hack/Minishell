@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/07 15:44:36 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:53:03 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ typedef struct s_token_list
 	int						print_space_after;
 	int						dq_start;
 	int						dq_end;
+	int						sq;
 	struct s_token_list		*prev;
 	struct s_token_list		*next;
 }	t_token_list;
