@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:30:22 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/28 11:13:44 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:27:39 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*ft_exit_nb_join(char *str, t_var *var)
 char	*ft_replace_doll(char *str, t_var *var)
 {
 	if (!str[1])
-		return (str);
+		return (ft_strdup("$"));
 	if (str[1] == '?' && !str[2])
 		return (ft_itoa(var->exit_nb));
 	if (str[1] == '?' && str[2])

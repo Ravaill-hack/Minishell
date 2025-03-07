@@ -1,15 +1,9 @@
 TOTAL TEST COUNT: 59  TESTS PASSED: 31  LEAKING: 0 
                      STD_OUT: 26  STD_ERR: 2  EXIT_CODE: 2  
                          TOTAL FAILED AND PASSED CASES:
-                                     ❌ 29   
-                                     ✅ 148
+                                     ❌ 26   
+                                     ✅ 151  
 
-4   mand/1_variables.sh:12
-/bin/echo $HOME$NOTHING$USER$
-minishell :
-
-bash :
-/home/juducharjuduchar$
 
 18   mand/1_variables.sh:46
 /bin/echo $'HOM'E$USER
@@ -38,13 +32,6 @@ minishell :
 $$
 bash :
 $
-
-33   mand/1_variables.sh:76
-/bin/echo $HOME$TESTNOTFOUND
-minishell :
-
-bash :
-/home/juduchar
 
 34   mand/1_variables.sh:78
 /bin/echo $TESTNOTFOUND$HOME
@@ -82,13 +69,6 @@ minishell :
 bash :
 /home/juduchar/random_folder
 
-39   mand/1_variables.sh:91
-/bin/echo ""$?""
-/bin/echo " "$?" "
-/bin/echo $?"42"
-/bin/echo ''$?''"42"
-/bin/echo 'HELLO'$?:''"42"
-minishell :
 
 bash :
 43   mand/1_variables.sh:120

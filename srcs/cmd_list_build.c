@@ -6,57 +6,45 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 21:35:42 by julien            #+#    #+#             */
-/*   Updated: 2025/03/06 17:17:28 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:45:59 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_handle_node_type(t_token_list *node, char *str)
-{
-	if (node->type == CONTENT || node->type == DOLL)
-	{
-		if (node->type == DOLL && node->next
-			&& (node->print_space_after == 0 && node->next->dq_start == 1))
-		{
-			str = ft_strjoin(str, node->next->val);
-			return (str);
-		}
-		else if (node->type == DOLL && node->val[0] == '\0')
-			return (NULL);
-		str = ft_strjoin(str, node->val);
-	}
-	else if (node->type >= 0 && node->type <= 3)
-		str = ft_dup_operand(node->type);
-	return (str);
-}
-
-char	*ft_fill_arg(t_token_list *node)
+char	*ft_fill_arg(t_token_list **node)
 {
 	char	*str;
 	char	*tmp;
+	int		i;
 
 	str = NULL;
 	tmp = NULL;
-	while (node && (node->type != PIPE))
+	i = 0;
+	if ((*node)->type >= 4)
 	{
-		tmp = str;
-		str = ft_handle_node_type(node, str);
-		if (tmp != str)
-			free(tmp);
-		if (!str)
-			return (NULL);
-		if (node->print_space_after != 0
-			|| (node->next
-				&& (node->next->type >= 0
-					&& node->next->type <= 3)))
-			break ;
-		node = node->next;
-		if (node && node->prev && node->prev->type == DOLL
-			&& node->prev->print_space_after == 0 && node->dq_start == 1)
-			node = node->next;
+		while (i == 0 || ((*node) && (*node)->type != PIPE && (*node)->prev && (*node)->prev->print_space_after == 0 && (*node)->type >= 4))
+		{
+			tmp = str;
+			if ((*node)->type == DOLL && (*node)->val[0] == '$' && (*node)->next && (*node)->print_space_after == 0 && (*node)->next->dq_start == 1)
+				(*node) = (*node)->next;
+			if ((*node)->type == CONTENT || ((*node)->type == DOLL && (*node)->val))
+				str = ft_strjoin(str, (*node)->val);
+			if (tmp != str)
+				free(tmp);
+			(*node) = (*node)->next;
+			i++;
+			if (!str)
+				return (NULL);
+		}
+		return (str);
 	}
-	return (str);
+	else if ((*node))
+	{
+		(*node) = (*node)->next;
+		return (ft_dup_operand((*node)->type));
+	}
+	return (NULL);
 }
 
 char	**ft_token_list_to_char_array(t_token_list *node)
@@ -72,12 +60,10 @@ char	**ft_token_list_to_char_array(t_token_list *node)
 		return (NULL);
 	while (j < len)
 	{
-		array[j] = ft_fill_arg(node);
-		node = ft_go_to_next_node(node);
+		array[j] = ft_fill_arg(&node);
 		if (!node)
-			break ;
-		if (array[j])
-			j++;
+		 	break ;
+		j++;
 	}
 	array[len] = NULL;
 	return (array);

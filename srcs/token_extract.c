@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:31:43 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/06 17:29:49 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:18:48 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*ft_extract_doll(char *line, int *i, int nb_x)
 
 	nb_dq = 0;
 	len = ft_doll_len(line, *i, nb_x);
-	str = (char *)malloc((len + 1) * sizeof(char));
+	str = (char *)ft_calloc((len + 1), sizeof(char));
 	j = 0;
 	if (!str)
 		return (NULL);

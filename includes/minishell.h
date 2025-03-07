@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/07 10:30:56 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:44:36 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,6 @@ int				ft_expand_dolls(t_token_list *list, t_var *var);
 Cmd list - init
 */
 char			**ft_epure_args_array(char **old);
-t_token_list	*ft_go_to_next_node(t_token_list *node);
 /*
 Cmd list - len
 */
@@ -242,8 +241,7 @@ int				ft_doll_var_exists(char *str, char **env);
 /*
 Cmd list - build
 */
-char			*ft_fill_arg(t_token_list *node);
-char			*ft_handle_node_type(t_token_list *node, char *str);
+char			*ft_fill_arg(t_token_list **node);
 char			**ft_token_list_to_char_array(t_token_list *node);
 t_cmd			*ft_create_cmd_node(t_var *var, int i, t_shell *shell);
 t_cmd			**ft_build_cmd_list(t_var *var, t_shell *shell);
