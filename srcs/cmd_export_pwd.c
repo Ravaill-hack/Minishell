@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export_pwd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:15:56 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/03 15:30:41 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/07 10:25:39 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,24 @@ int	ft_cmd_export_with_no_args(char ***env_ptr)
 {
 	size_t	i;
 	size_t	len;
+	char	*key;
+	char	*value;
 
 	i = 0;
 	len = ft_strslen(*env_ptr);
 	while (i < len)
 	{
-		printf("declare -x ");
-		printf("%s", (*env_ptr)[i]);
-		printf("\n");
+		ft_putstr_fd("declare -x ", 1);
+		key = ft_extract_key_env((*env_ptr)[i]);
+		ft_putstr_fd(key, 1);
+		free(key);
+		ft_putchar_fd('=', 1);
+		ft_putchar_fd('"', 1);
+		value = ft_extract_value_env((*env_ptr)[i]);
+		ft_putstr_fd(value, 1);
+		free(value);
+		ft_putchar_fd('"', 1);
+		ft_putchar_fd('\n', 1);
 		i++;
 	}
 	return (SUCCESS);
