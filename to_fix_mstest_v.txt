@@ -1,144 +1,203 @@
-TOTAL TEST COUNT: 59  TESTS PASSED: 23  LEAKING: 0 
-                     STD_OUT: 32  STD_ERR: 6  EXIT_CODE: 2  
+TOTAL TEST COUNT: 59  TESTS PASSED: 26  LEAKING: 0 
+                     STD_OUT: 30  STD_ERR: 2  EXIT_CODE: 2  
                          TOTAL FAILED AND PASSED CASES:
-                                     ❌ 40   
-                                     ✅ 137
+                                     ❌ 34   
+                                     ✅ 143
 
 4   mand/1_variables.sh:12
 /bin/echo $HOME$NOTHING$USER$
+minishell :
 
-7   mand/1_variables.sh:18
-export miert ne lehetne ezt is
+bash :
+/home/juducharjuduchar$
 
-8   mand/1_variables.sh:20
-export a="asd"
-unset a
-
+bash :
 9   mand/1_variables.sh:23
 export a="asd" b="de" o= c="hellomi" X
 unset o
+minishell :
 
-10   mand/1_variables.sh:26
-export a="asd" b="de" o= c="hellomi" X
-unset X
-
+bash :
 11   mand/1_variables.sh:29
 export a="asd" b="de" o= c="hellomi" X
 unset o a X b c
+minishell :
 
+bash :
 12   mand/1_variables.sh:32
 export a="asd" b="de" o= c="hellomi" X
 unset o asd B x X wqd c
+minishell :
 
+bash :
 13   mand/1_variables.sh:35
 export T=a T=b T=c
 echo $T
+minishell :
 
-14   mand/1_variables.sh:38
-export miert ne lehetne ezt is
-
+bash :
 18   mand/1_variables.sh:46
 /bin/echo $'HOM'E$USER
+minishell :
 
+bash :
 
 20   mand/1_variables.sh:50
 /bin/echo $'HOME'
+minishell :
 
+bash :
 24   mand/1_variables.sh:58
 /bin/echo "$""$"
+minishell :
 
+bash :
 28   mand/1_variables.sh:66
 /bin/echo $'$'
+minishell :
 
+bash :
 33   mand/1_variables.sh:76
 /bin/echo $HOME$TESTNOTFOUND
+minishell :
 
+bash :
 34   mand/1_variables.sh:78
 /bin/echo $TESTNOTFOUND$HOME
+minishell :
 
+bash :
 35   mand/1_variables.sh:80
 /bin/echo $TESTNOTFOUND$HOME$
+minishell :
 
+bash :
 36   mand/1_variables.sh:82
 cd ..$PWD
+minishell :
+
+37   mand/1_variables.sh:84
+
+minishell :
+
+bash :
 
 38   mand/1_variables.sh:89
 /bin/echo $PWD/random_folder
+minishell :
 
+bash :
 39   mand/1_variables.sh:91
 /bin/echo ""$?""
 /bin/echo " "$?" "
 /bin/echo $?"42"
 /bin/echo ''$?''"42"
 /bin/echo 'HELLO'$?:''"42"
+minishell :
 
+bash :
 43   mand/1_variables.sh:120
 export tmp_test="/bin/echo 42"
 $tmp_test
 $tmp_test 42
 export tmp_test="/bin/echo"
 $tmp_test 42 42
+minishell :
 
+bash :
 44   mand/1_variables.sh:126
 export tmp_test="/bin/echo 42"
 "tmp_test"
+minishell :
 
+bash :
 45   mand/1_variables.sh:130
 export X="  A  B  "
 /bin/echo "1"$X'2'
+minishell :
 
+bash :
 46   mand/1_variables.sh:133
 export X=" A  B  "
 /bin/echo "1"$X'2'
+minishell :
 
+bash :
 47   mand/1_variables.sh:136
 export X="A  B  "
 /bin/echo "1"$X'2'
+minishell :
 
+bash :
 48   mand/1_variables.sh:139
 export X="  A  B "
 /bin/echo "1"$X'2'
+minishell :
 
+bash :
 49   mand/1_variables.sh:142
 export X="  A  B"
 /bin/echo "1"$X'2'
+minishell :
 
+bash :
 50   mand/1_variables.sh:145
 export X="  A B  "
 /bin/echo "1"$X'2'
+minishell :
 
+bash :
 51   mand/1_variables.sh:148
 export X="  AB  "
 /bin/echo "1"$X'2'
+minishell :
 
+bash :
 52   mand/1_variables.sh:151
 export X="  A  B  "
 /bin/echo $X'2'
+minishell :
 
+bash :
 53   mand/1_variables.sh:154
 export X="  A  B  "
 /bin/echo $X"1"
+minishell :
 
+bash :
 54   mand/1_variables.sh:157
 export X=""
 /bin/echo "1"$X'2'
+minishell :
 
+bash :
 55   mand/1_variables.sh:160
 export X=" "
 /bin/echo "1"$X'2'
+minishell :
 
+bash :
 56   mand/1_variables.sh:163
 export X="   "
 /bin/echo "1"$X'2'
+minishell :
 
+bash :
 57   mand/1_variables.sh:166
 export X="  A  B  "
 /bin/echo ?$X'2'
+minishell :
 
+bash :
 58   mand/1_variables.sh:169
 export X="  A  B  "
 /bin/echo "1"$X?
+minishell :
 
+bash :
 59   mand/1_variables.sh:172
 export X="  A  B  "
 /bin/echo "1"$X2?
+minishell :
+
+bash :

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:27:03 by julien            #+#    #+#             */
-/*   Updated: 2025/03/06 21:02:20 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/07 10:10:37 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	ft_print_msg_error(char *error_msg)
 
 void	ft_print_error(void)
 {
-	ft_putstr_fd("Error\n", 2);
+	//ft_putstr_fd("Error\n", 2);
+	return ;
 }
 
 void	ft_print_error_and_exit(t_var var, t_shell shell)
