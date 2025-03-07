@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:11:49 by juduchar          #+#    #+#             */
-/*   Updated: 2025/02/25 10:10:55 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/07 10:58:45 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_get_line_env(char **env, char *env_var_key)
 	while (env[i])
 	{
 		key = ft_extract_key_env(env[i]);
-		if (ft_strncmp(key, env_var_key, ft_strlen(env_var_key)) == 0)
+		if (ft_strncmp(key, env_var_key, ft_strlen(env[i])) == 0)
 		{
 			free(key);
 			return (i);

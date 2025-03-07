@@ -1,8 +1,8 @@
-TOTAL TEST COUNT: 59  TESTS PASSED: 26  LEAKING: 0 
-                     STD_OUT: 30  STD_ERR: 2  EXIT_CODE: 2  
+TOTAL TEST COUNT: 59  TESTS PASSED: 31  LEAKING: 0 
+                     STD_OUT: 26  STD_ERR: 2  EXIT_CODE: 2  
                          TOTAL FAILED AND PASSED CASES:
-                                     ❌ 34   
-                                     ✅ 143
+                                     ❌ 29   
+                                     ✅ 148
 
 4   mand/1_variables.sh:12
 /bin/echo $HOME$NOTHING$USER$
@@ -11,75 +11,68 @@ minishell :
 bash :
 /home/juducharjuduchar$
 
-bash :
-9   mand/1_variables.sh:23
-export a="asd" b="de" o= c="hellomi" X
-unset o
-minishell :
-
-bash :
-11   mand/1_variables.sh:29
-export a="asd" b="de" o= c="hellomi" X
-unset o a X b c
-minishell :
-
-bash :
-12   mand/1_variables.sh:32
-export a="asd" b="de" o= c="hellomi" X
-unset o asd B x X wqd c
-minishell :
-
-bash :
-13   mand/1_variables.sh:35
-export T=a T=b T=c
-echo $T
-minishell :
-
-bash :
 18   mand/1_variables.sh:46
 /bin/echo $'HOM'E$USER
 minishell :
-
+$HOMEjuduchar
 bash :
+HOMEjuduchar
 
 20   mand/1_variables.sh:50
 /bin/echo $'HOME'
 minishell :
-
+$HOME
 bash :
+HOME
+
 24   mand/1_variables.sh:58
 /bin/echo "$""$"
 minishell :
-
+$
 bash :
+$$
+
 28   mand/1_variables.sh:66
 /bin/echo $'$'
 minishell :
-
+$$
 bash :
+$
+
 33   mand/1_variables.sh:76
 /bin/echo $HOME$TESTNOTFOUND
 minishell :
 
 bash :
+/home/juduchar
+
 34   mand/1_variables.sh:78
 /bin/echo $TESTNOTFOUND$HOME
 minishell :
 
 bash :
+/home/juduchar
+
 35   mand/1_variables.sh:80
 /bin/echo $TESTNOTFOUND$HOME$
 minishell :
 
 bash :
+/home/juduchar$
+
 36   mand/1_variables.sh:82
 cd ..$PWD
 minishell :
+No such file or directory
+bash: cd: ../home/juduchar: No such file or directory
 
 37   mand/1_variables.sh:84
-
+mkdir test
+cd $PWD/test
+cd..
+rm -rf test
 minishell :
-
+cd $PWD/test => cd $PWD
 bash :
 
 38   mand/1_variables.sh:89
@@ -87,6 +80,8 @@ bash :
 minishell :
 
 bash :
+/home/juduchar/random_folder
+
 39   mand/1_variables.sh:91
 /bin/echo ""$?""
 /bin/echo " "$?" "
@@ -171,12 +166,7 @@ export X=""
 minishell :
 
 bash :
-55   mand/1_variables.sh:160
-export X=" "
-/bin/echo "1"$X'2'
-minishell :
 
-bash :
 56   mand/1_variables.sh:163
 export X="   "
 /bin/echo "1"$X'2'

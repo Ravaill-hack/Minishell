@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/06 16:07:37 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/07 10:30:56 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -360,7 +360,7 @@ int				ft_handle_exit_not_last_shlvl(char ***env);
 /*
 CMD - export
 */
-int				ft_cmd_export(char ***env_ptr, char **split_line);
+int				ft_cmd_export(char ***env_ptr, t_cmd *cmd_node);
 int				ft_cmd_export_with_no_args(char ***env_ptr);
 int				ft_cmd_export_with_args(char ***env_ptr, char *arg);
 /*

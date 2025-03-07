@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:44:08 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/07 10:14:30 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/07 11:04:01 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ int	ft_cmd_unset(char ***env_ptr, t_cmd *node)
 		return (FAILURE);
 	line_index = ft_get_line_env(*env_ptr, node->arg[1]);
 	if (line_index == -1)
-	{
-		ft_putstr_fd("on est ici\n", 1);
 		return (FAILURE);
-	}
 	else
 		return (ft_remove_env_var(env_ptr, line_index));
 }
