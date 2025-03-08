@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:07:11 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/06 14:36:33 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/08 14:48:07 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,26 @@ int	ft_need_to_grep_from_pipe(t_cmd **cmd_tab, int i_cmd)
 
 int	ft_interpret_status(int status)
 {
-	int	exit_nb;
+	// int	exit_nb;
 
-	if (status == 0) //succes
-		return (SUCCESS);
-	else if (status == 1) //erreur generale
-		return (FAILURE);
-	else if (status == 2) //mauvaise utilisation de la commande ex cd sans argument valide
-		return (FAILURE);
-	else if (status == 126) //commande trouvee mais non executable (droits)
-		return (FAILURE);
-	else if (status == 127) //commande n'a pas ete trouvee
-		return (FAILURE);
-	else if (status == 128) //commande interrompue avec CTRL D dans un eof
-		return (FAILURE);
-	else if (status == 130) //commande interrompue avec CTRL C dans un eof
-		return (FAILURE);
-	else if (status == 131) //commande interrompue avec CTRL \ dans un eof -->tue le processus salement
-		return (FAILURE);
-	exit_nb = SUCCESS;
-	return (exit_nb);
+	// if (status == 0) //succes
+	// 	return (SUCCESS);
+	// else if (status == 1) //erreur generale
+	// 	return (FAILURE);
+	// else if (status == 2) //mauvaise utilisation de la commande ex cd sans argument valide
+	// 	return (FAILURE);
+	// else if (status == 126) //commande trouvee mais non executable (droits)
+	// 	return (FAILURE);
+	// else if (status == 127) //commande n'a pas ete trouvee
+	// 	return (FAILURE);
+	// else if (status == 128) //commande interrompue avec CTRL D dans un eof
+	// 	return (FAILURE);
+	// else if (status == 130) //commande interrompue avec CTRL C dans un eof
+	// 	return (FAILURE);
+	// else if (status == 131) //commande interrompue avec CTRL \ dans un eof -->tue le processus salement
+	// 	return (FAILURE);
+	// exit_nb = status % 255;
+	return (status % 255);
 }
 
 int	ft_is_cmd(t_cmd *cmd, char **env)
@@ -91,8 +91,11 @@ void	ft_close_pipes(t_var *var, int i)
 int	ft_exec_one(t_var *var, t_shell *shell, int i)
 {
 	int	status;
+	int	saved_stdout;
+	//int	saved_stdin;
 
 	status = SUCCESS;
+	saved_stdout = dup(1);
 	if (i > 0 && var->cmd[i]->need_pipe_in == 1)
 		close (var->cmd[i - 1]->fd_out.fd);
 	if (i < var->nb_cmd - 1 && var->cmd[i]->need_pipe_out == 1)
@@ -111,6 +114,7 @@ int	ft_exec_one(t_var *var, t_shell *shell, int i)
 	}
 	ft_close_pipes(var, i);
 	status = ft_handle_cmd(var, shell, var->cmd[i]);
+	dup2(saved_stdout, 1);
 	return (status);
 }
 

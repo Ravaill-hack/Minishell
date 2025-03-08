@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/07 16:53:03 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/08 18:11:38 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,29 +68,11 @@ typedef enum s_line_token
 	D_LESS,
 	S_GREAT,
 	D_GREAT,
-	/*
-	O_PAR, --> pour les bonus
-	C_PAR, --> pour les bonus
-	AND, --> pour les bonus
-	OR, --> pour les bonus
-	*/
 	PIPE,
 	NL,
 	CONTENT,
 	DOLL,
 }	t_line_token;
-
-/*
-typedef enum	s_content_token
-{
-	STR,
-	CHAR,
-	INT,
-	DOL,
-	STAR,
-	SLSH,
-}	t_content_token;
-*/
 
 typedef enum s_type_fd
 {
@@ -142,6 +124,7 @@ typedef struct s_var
 	int						nb_cmd;
 	char					**env;
 	int						exit_nb;
+	int						shlvl0;
 }	t_var;
 
 typedef struct s_index
@@ -163,7 +146,8 @@ Init
 void			get_prompt(t_var *var, t_shell *shell);
 t_shell			*ft_init_shell(void);
 void			ft_init(t_var *var, char **env);
-int				ft_update_shlvl(char ***env, int level);
+int				ft_update_shlvl(char ***env, int level, t_var *var);
+char			**ft_create_empty_env(void);
 /*
 Token - append
 */
@@ -270,6 +254,8 @@ void			ft_print_msg_error(char *error_msg);
 void			ft_print_error(void);
 void			ft_print_error_and_exit(t_var var, t_shell shell);
 void			ft_error_cmd_not_found(char *cmd);
+void			ft_exec_error(char **split_cmd);
+void			ft_open_error(char *path);
 /*
 Extract env
 */
@@ -292,11 +278,11 @@ int				ft_remove_env_var(char ***env_ptr, int line_index);
 /*
 Handle signal
 */
-void	ft_set_sigquit_parent(void);
-void	ft_set_sigint_parent(void);
-void	ft_handle_sigint_parent(int signum);
-void	ft_set_sigint_sigquit_children(void);
-void	ft_set_sigint_sigquit_parent(void);
+void			ft_set_sigquit_parent(void);
+void			ft_set_sigint_parent(void);
+void			ft_handle_sigint_parent(int signum);
+void			ft_set_sigint_sigquit_children(void);
+void			ft_set_sigint_sigquit_parent(void);
 /*
 Termios
 */
@@ -348,14 +334,11 @@ int				ft_update_old_pwd(char ***env);
 int				ft_update_new_pwd(char ***env, char *new_pwd);
 int				ft_cmd_cd_home(char ***env);
 int				ft_cmd_cd_path(char ***env, char *path);
+int				ft_cmd_cd_minus(char ***env);
 /*
 CMD - exit
 */
-int				ft_cmd_exit(t_var *var, t_shell *shell, char ***env, t_cmd *node);
-int				ft_exec_exit_cmd(char **env);
-int				ft_handle_exit_last_shlvl(t_var *var, t_shell *shell,
-					char ***env);
-int				ft_handle_exit_not_last_shlvl(char ***env);
+int				ft_cmd_exit(t_var *var, t_shell *shell, t_cmd *node);
 /*
 CMD - export
 */

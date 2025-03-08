@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 21:35:42 by julien            #+#    #+#             */
-/*   Updated: 2025/03/07 18:38:01 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/08 14:24:04 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,14 @@ char	*ft_fill_arg(t_token_list **node)
 	}
 	else if ((*node))
 	{
+		str = ft_dup_operand((*node)->type);
+		tmp = str;
 		(*node) = (*node)->next;
-		return (ft_dup_operand((*node)->type));
+		if (*node && (*node)->val)
+			str = ft_strjoin(str, (*node)->val);
+		free(tmp);
+		(*node) = (*node)->next;
+		return (str);
 	}
 	return (NULL);
 }
@@ -63,6 +69,8 @@ char	**ft_token_list_to_char_array(t_token_list *node)
 	int		j;
 
 	len = ft_nb_str(node);
+	// ft_putnbr_fd(len, 1);
+	// ft_putchar_fd('\n', 1);
 	j = 0;
 	array = (char **)malloc((len + 1) * sizeof(char *));
 	if (!array)
@@ -93,6 +101,7 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i, t_shell *shell)
 	//ft_putchar_fd('\n', 1);
 	if (!cmd_node->raw)
 		return (NULL);
+	// ft_print_strs(cmd_node->raw);
 	cmd_node->arg = ft_epure_args_array(cmd_node->raw);
 	ft_init_fd(cmd_node);
 	if (ft_fill_fd(cmd_node, shell) == FAILURE)

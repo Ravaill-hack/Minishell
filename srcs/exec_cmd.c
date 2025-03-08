@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:14:19 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/06 13:30:58 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/08 18:21:30 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	ft_exec_cmd(char **env, char **split_cmd)
 	if (!path)
 		return (FAILURE);
 	status = execve(path, split_cmd, env);
-	printf("%s\n", strerror(errno));
+	//ft_exec_error(split_cmd);
 	free(path);
 	if (status == -1)
 		return (FAILURE);

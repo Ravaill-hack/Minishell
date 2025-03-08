@@ -6,12 +6,6 @@ TOTAL TEST COUNT: 213  TESTS PASSED: 96  LEAKING: 0
                                      ✅ 481
 
 COMPARE PARSING
-2	mand/0_compare_parsing.sh:8
-/bin/echo $?"42"
-minishell :
-42
-bash :
-042
 
 17	mand/0_compare_parsing.sh:38
 /bin/echo hi >./outfiles/outfile01 | /bin/echo bye

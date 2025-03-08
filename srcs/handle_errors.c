@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:27:03 by julien            #+#    #+#             */
-/*   Updated: 2025/03/07 10:10:37 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/08 18:33:15 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,28 @@ void	ft_error_cmd_not_found(char *cmd)
 {
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": command not found\n", 2);
+}
+
+void	ft_exec_error(char **split_cmd)
+{
+	ft_putstr_fd(split_cmd[0], 2);
+	ft_putstr_fd(": ", 2);
+	if (split_cmd[1])
+	{
+		ft_putstr_fd(split_cmd[1], 2);
+		ft_putstr_fd(": ", 2);
+	}
+	ft_putstr_fd(strerror(errno), 1);
+	ft_putchar_fd('\n', 1);
+}
+
+void	ft_open_error(char *path)
+{
+	if (path)
+	{
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": ", 2);
+	}
+	ft_putstr_fd(strerror(errno), 2);
+	ft_putchar_fd('\n', 2);
 }

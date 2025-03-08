@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:48:38 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/06 17:15:54 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/08 18:27:20 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,11 @@ int	ft_fill_fd(t_cmd *node, t_shell *shell)
 		else if (node->raw[i][0] == '>' && node->raw[i][1] != '>')
 			res = ft_set_outfile_trunc(node->raw[i], node);
 		if (res == FAILURE)
-			return (ft_close_fds(node));
+		{
+			ft_open_error(node->raw[i] + 1);
+			ft_close_fds(node);
+			return (SUCCESS);
+		}
 		i++;
 	}
 	return (SUCCESS);

@@ -1,23 +1,9 @@
 TOTAL TEST COUNT: 59  TESTS PASSED: 31  LEAKING: 0 
                      STD_OUT: 26  STD_ERR: 2  EXIT_CODE: 2  
                          TOTAL FAILED AND PASSED CASES:
-                                     ❌ 26   
-                                     ✅ 151  
+                                     ❌ 19   
+                                     ✅ 158 
 
-
-34   mand/1_variables.sh:78
-/bin/echo $TESTNOTFOUND$HOME
-minishell :
-
-bash :
-/home/juduchar
-
-35   mand/1_variables.sh:80
-/bin/echo $TESTNOTFOUND$HOME$
-minishell :
-
-bash :
-/home/juduchar$
 
 36   mand/1_variables.sh:82
 cd ..$PWD
@@ -109,12 +95,6 @@ bash :
 53   mand/1_variables.sh:154
 export X="  A  B  "
 /bin/echo $X"1"
-minishell :
-
-bash :
-54   mand/1_variables.sh:157
-export X=""
-/bin/echo "1"$X'2'
 minishell :
 
 bash :

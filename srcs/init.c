@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/03/06 11:28:09 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/08 18:00:16 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	get_prompt(t_var *var, t_shell *shell)
 	}
 }
 
-int	ft_update_shlvl(char ***env, int level)
+int	ft_update_shlvl(char ***env, int level, t_var *var)
 {
 	int		shlvl;
 	char	*new_shlvl;
@@ -38,6 +38,7 @@ int	ft_update_shlvl(char ***env, int level)
 	shlvl = ft_atoi(getenv("SHLVL"));
 	if (!shlvl)
 		return (FAILURE);
+	var->shlvl0 = shlvl;
 	new_shlvl = ft_itoa(shlvl + level);
 	status = ft_update_env_var_value_from_key(env, "SHLVL",
 			new_shlvl);
@@ -56,14 +57,44 @@ t_shell	*ft_init_shell(void)
 	return (shell);
 }
 
+char	**ft_create_empty_env(void)
+{
+	char	**env;
+	char	*pwd;
+
+	env = (char **)ft_calloc(4, sizeof(char *));
+	if (!env)
+		return (NULL);
+	pwd = NULL;
+	pwd = getcwd(pwd, 0);
+	if (!pwd)
+		return (NULL);
+	env[0] = ft_strjoin("PWD=", pwd);
+	free(pwd);
+	env[1] = ft_strdup("SHLVL=1");
+	env[2] = ft_strdup("_=/usr/bin/env");
+	env[3] = NULL;
+	return (env);
+}
+
 void	ft_init(t_var *var, char **env)
 {
 	var->exit_nb = 0;
-	var->env = ft_strsdup(env);
-	if (!var->env)
-		exit(EXIT_FAILURE);
-	if (ft_update_shlvl(&var->env, 1) == FAILURE)
-		exit(EXIT_FAILURE);
+	if (env && (*env))
+	{
+		var->env = ft_strsdup(env);
+		if (ft_update_shlvl(&var->env, 1, var) == FAILURE)
+			exit(EXIT_FAILURE);
+	}
+	else
+	{
+		var->env = ft_create_empty_env();
+		var->shlvl0 = 1;
+		if (!var->env)
+			exit(EXIT_FAILURE);
+	}
+	// if (!var->env)
+	// 	exit(EXIT_FAILURE);
 	ft_disable_echoctl();
 	ft_set_sigint_sigquit_parent();
 }

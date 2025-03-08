@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 21:28:54 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/05 12:00:43 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/08 15:07:27 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,6 @@ int	ft_cmd_echo(t_cmd *cmd, t_var *var)
 	}
 	if (opt == 0)
 		ft_putchar_fd('\n', 1);
+	//ft_exec_error(cmd->arg);
 	return (SUCCESS);
 }
