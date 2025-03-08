@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:09:21 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/07 19:02:13 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:18:30 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,20 +62,26 @@ int	ft_nb_str(t_token_list *list)
 			|| (list->next && list->next->type == PIPE)
 			|| !(list->next)
 			|| (list->next->type >= 0 && list->next->type <= 3)
-			|| (list->type == DOLL))
+			/*|| (list->type == DOLL)*/)
 			res ++;
 			
 		/*if (list->print_space_after == 0 && list->next
 			&& (list->next->type >= 0 && list->next->type <= 3))
 			res --;*/
-		if (list->type == DOLL && (!list->val || !list->val[0] || (list->prev && (list->prev->type == DOLL /*&& list->prev->val*/))))
-			res --;
-		if (list->type == CONTENT && (list->prev && list->prev->print_space_after == 0 && list->prev->type == DOLL))
-			res --;
+		// if (list->type == DOLL && (!list->val || !list->val[0] || (list->prev && (list->prev->type == DOLL && !list->prev->val))))
+		// {
+		// 	ft_putstr_fd("sortie 1\n", 1);
+		// 	res --;
+		// }
+		// if (list->type == CONTENT && (list->prev && list->prev->print_space_after == 0 && list->prev->type == DOLL))
+		// {
+		// 	ft_putstr_fd("sortie 2\n", 1);
+		// 	res --;
+		// }
 		list = list->next;
 	}
-	//ft_putnbr_fd(res, 1);
-	//ft_putchar_fd('\n', 1);
+	// ft_putnbr_fd(res, 1);
+	// ft_putchar_fd('\n', 1);
 	return (res);
 }
 
