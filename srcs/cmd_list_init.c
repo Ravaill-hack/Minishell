@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list_init.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:31:57 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/07 15:49:50 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/08 21:54:41 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ char	**ft_epure_args_array(char **old)
 		return (NULL);
 	while (old[i])
 	{
-		// ft_putstr_fd(old[i], 1);
-		// ft_putchar_fd('\n', 1);
 		if (old[i][0] != '<' && old[i][0] != '>')
 		{
 			new_array[j] = ft_strdup(old[i]);

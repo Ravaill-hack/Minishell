@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/08 18:11:38 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/08 22:26:58 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,13 @@ void			ft_init(t_var *var, char **env);
 int				ft_update_shlvl(char ***env, int level, t_var *var);
 char			**ft_create_empty_env(void);
 /*
+Token - errors
+*/
+int				ft_is_error_parsing(t_var *var, char *prompt, t_shell *shell);
+int				ft_is_empty_quotes_error(char *prompt);
+int				ft_quote_error(char *line);
+int				ft_token_redir_error(t_cmd *node, int i);
+/*
 Token - append
 */
 t_token_list	*ft_append_content(char *line, int *i, t_token_list **list);
@@ -173,10 +180,6 @@ char			*ft_extract_sq_content(char *line, int *i);
 char			*ft_extract_dq_content(char *line, int *i);
 char			*ft_extract_doll(char *line, int *i, int nb_x);
 char			*ft_extract_title_doll(char *str, int *i);
-/*
-Token - errors
-*/
-int				ft_quote_error(char *line);
 /*
 Token - len
 */

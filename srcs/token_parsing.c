@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:16:10 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/08 19:10:43 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/08 21:30:10 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,8 @@ t_token_list	**ft_build_token_list(char *line, int nb_x)
 
 int	ft_parse_line(t_var *var, char *prompt, t_shell *shell)
 {
-	if (((prompt[0] == 34 && prompt[1] == 34)
-		|| (prompt[0] == '\'' && prompt[1] == '\'')) && !prompt[2])
-	{
-		ft_putstr_fd("Command \'\' not found.\n", 2);
-		return (FAILURE);	
-	}
+	if (ft_is_error_parsing(var, prompt, shell) == 1)
+		return (FAILURE);
 	var->token_list = ft_build_token_list(prompt, var->exit_nb);
 	if (!var->token_list)
 		return (FAILURE);

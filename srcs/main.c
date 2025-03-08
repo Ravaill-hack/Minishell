@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:35:39 by julien            #+#    #+#             */
-/*   Updated: 2025/03/08 18:56:16 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/08 22:09:39 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	main(int argc, char **argv, char **env)
 		//ft_putchar_fd(shell->prompt[0],1);
 		if (shell->prompt[0] && ft_parse_line(&var, shell->prompt, shell) != FAILURE)
 		{
-			//ft_print_info_list(*(var.token_list), var.env);
-			//ft_print_info_cmd_list(var.nb_cmd, var.cmd);
+			ft_print_info_list(*(var.token_list), var.env);
+			ft_print_info_cmd_list(var.nb_cmd, var.cmd);
 			if (ft_handle_pipes(&var, shell) == FAILURE)
 				ft_print_error();
 			if (VALGRIND_DEBUG == 0)

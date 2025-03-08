@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list_build.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 21:35:42 by julien            #+#    #+#             */
-/*   Updated: 2025/03/08 14:24:04 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/08 21:53:18 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,12 @@ char	*ft_fill_arg(t_token_list **node)
 		str = ft_dup_operand((*node)->type);
 		tmp = str;
 		(*node) = (*node)->next;
-		if (*node && (*node)->val)
+		if (*node && (*node)->val && (*node)->val[0])
 			str = ft_strjoin(str, (*node)->val);
-		free(tmp);
-		(*node) = (*node)->next;
+		if (tmp != str)
+			free(tmp);
+		if (*node)
+			(*node) = (*node)->next;
 		return (str);
 	}
 	return (NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_build.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:48:38 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/08 18:27:20 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/08 22:26:11 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,9 @@ int	ft_fill_fd(t_cmd *node, t_shell *shell)
 	res = SUCCESS;
 	while (node->raw[i])
 	{
-		if ((node->raw[i][0] == '<' || node->raw[i][0] == '>')
-			&& !(node->raw[i][1]))
-			return (FAILURE);
-		if (node->raw[i][0] == '<' && node->raw[i][1] == '<')
+		if (ft_token_redir_error(node, i) == 1)
+		 	return (FAILURE);
+		else if (node->raw[i][0] == '<' && node->raw[i][1] == '<')
 			res = ft_set_heredoc(node->raw[i], node, shell);
 		else if (node->raw[i][0] == '<' && node->raw[i][1] != '<')
 			res = ft_set_infile(node->raw[i], node);
