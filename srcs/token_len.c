@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:37:31 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/06 17:29:26 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/08 19:09:08 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	ft_dquoted_len(char *str, int i)
 	int	len;
 
 	len = 0;
+	if (str[i] == '\"')
+		return (0);
 	while (str[i + len] && str[i + len] != '\"' && !ft_is_doll(str, i))
 		len ++;
 	return (len);
