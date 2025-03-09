@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:30:44 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/09 12:40:34 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:16:49 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	ft_is_empty_quotes_error(char *prompt)
 	if (prompt[i] == 34)
 	{
 		i++;
-		while (prompt[i])
+		while (ft_isspace(prompt[i]) || prompt[i] == 34)
 		{
 			if (prompt[i] == 34)
 			{
@@ -92,7 +92,7 @@ int	ft_is_empty_quotes_error(char *prompt)
 	else if (prompt[i] == 39)
 	{
 		i++;
-		while (prompt[i])
+		while (ft_isspace(prompt[i]) || prompt[i] == 39)
 		{
 			if (prompt[i] == 39)
 			{

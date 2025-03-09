@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:15:56 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/09 15:16:23 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:08:21 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_cmd_export(char ***env_ptr, t_cmd *cmd_node, t_var *var)
 		i = 1;
 		while (cmd_node->arg[i])
 		{
-			if (ft_is_valid_key(cmd_node->arg[i]) == 1)
+			if (ft_is_valid_key(cmd_node->arg[i]) == 1 && cmd_node->arg[i][0] != '=')
 			{
 				if (ft_cmd_export_with_args(env_ptr, cmd_node->arg[i], var) == FAILURE)
 					status = FAILURE;

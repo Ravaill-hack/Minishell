@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 22:38:47 by julien            #+#    #+#             */
-/*   Updated: 2025/03/06 11:37:07 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/09 17:56:20 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_clear_and_free_all_exit(t_var *var, t_shell *shell)
 	}
 	if (VALGRIND_DEBUG == 0)
 		rl_clear_history();
-	ft_enable_echoctl();
+	//ft_enable_echoctl();
 }
 
 void	ft_clear_and_free_all(t_var *var, t_shell *shell)
@@ -72,7 +72,7 @@ void	ft_clear_and_free_all(t_var *var, t_shell *shell)
 	}
 	if (VALGRIND_DEBUG == 0)
 		rl_clear_history();
-	ft_enable_echoctl();
+	//ft_enable_echoctl();
 }
 
 void	ft_clear_and_free_while(t_var *var, t_shell *shell)

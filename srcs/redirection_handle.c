@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:50:06 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/08 18:23:36 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 19:12:55 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,38 @@ int	ft_set_outfile_trunc(char *str, t_cmd *node)
 	return (SUCCESS);
 }
 
+int check_signal(void)
+{
+    if (g_while_hd == 0)
+        return 1; // Force readline à retourner
+    return 0;
+}
+
 int	ft_while_heredoc(char *line, char *heredoc, t_shell *shell)
 {
 	int		fd_pipe[2];
+	int		i;
 
+	(void)shell;
+	i = 0;
 	if (pipe(fd_pipe) == -1)
 		return (-1);
-	shell->while_hdc = 1;
-	while (1)
+	g_while_hd = 1;
+	rl_event_hook = check_signal;
+	while (g_while_hd == 1)
 	{
+		i++;
 		line = readline("> ");
-		if (!line)
+		if (!line || g_while_hd == 0)
+		{
+			ft_putstr_fd("warning: here-document at line ", 2);
+			ft_putnbr_fd(i, 2);
+			ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
+			ft_putstr_fd(heredoc, 2);
+			ft_putstr_fd("')\n", 2);
 			break ;
-		if (ft_strncmp(line, heredoc, ft_strlen(line)) == 0)
+		}
+		if (ft_strncmp(line, heredoc, ft_strlen(line)) == 0 || g_while_hd == 0)
 		{
 			free (line);
 			break ;
@@ -82,6 +101,8 @@ int	ft_while_heredoc(char *line, char *heredoc, t_shell *shell)
 		free(line);
 	}
 	close(fd_pipe[1]);
+	g_while_hd = 0;
+	rl_event_hook = NULL;
 	return (fd_pipe[0]);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:14:19 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/09 09:11:34 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:57:31 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ char	*ft_extract_path(char **env, char *cmd)
 	int		i;
 	char	*path_raw;
 	char	**raw;
-	char	**name_cmd;
 	char	*path;
 	char	*path_default;
 
@@ -26,26 +25,24 @@ char	*ft_extract_path(char **env, char *cmd)
 	if (path_raw)
 	{
 		raw = ft_split(path_raw, ':');
-		name_cmd = ft_split(cmd, ' ');
 		while (raw[i])
 		{
-			path = ft_strjoin_n(3, raw[i], "/", name_cmd[0]);
+			path = ft_strjoin_n(3, raw[i], "/", cmd);
 			if (!path)
 				return (NULL);
 			if (access(path, F_OK | X_OK) == 0)
-				return (ft_free_strs(raw), ft_free_strs(name_cmd), path);
+				return (ft_free_strs(raw), path);
 			if (path)
 				free(path);
 			i++;
 		}
-		path = ft_strjoin_n(3, ft_extract_env_value_from_key(env, "PWD"), "/", name_cmd[0]);
+		path = ft_strjoin_n(3, ft_extract_env_value_from_key(env, "PWD"), "/", cmd);
 		if (access(path, F_OK | X_OK) == 0)
-			return (ft_free_strs(raw), ft_free_strs(name_cmd), path);
+			return (ft_free_strs(raw), path);
 		if (path)
 			free(path);		
 		if (raw)
 			ft_free_strs(raw);
-		ft_free_strs(name_cmd);
 		return (NULL);
 	}
 	else
@@ -53,15 +50,13 @@ char	*ft_extract_path(char **env, char *cmd)
 		path_default = getcwd(NULL, 0);
 		if (!path_default)
 			return (NULL);
-		name_cmd = ft_split(cmd, ' ');
-		path = ft_strjoin_n(3, path_default, "/", name_cmd[0]);
+		path = ft_strjoin_n(3, path_default, "/", cmd);
 		if (!path)
 			return (NULL);
 		if (access(path, F_OK | X_OK) == 0)
-			return (ft_free_strs(name_cmd), path);
+			return (path);
 		if (path)
 			free(path);
-		ft_free_strs(name_cmd);
 	}
 	return (NULL);
 }
@@ -96,12 +91,18 @@ int	ft_exec_cmd(char **env, char **split_cmd)
 		if (access(path, F_OK | X_OK) == 0)
 			status = execve(split_cmd[0], split_cmd, env);
 		free(path);
-		return (FAILURE);
+		ft_putstr_fd(split_cmd[0], 2);
+		ft_putstr_fd(": command not found.\n", 2);
+		return (127);
 	}
 	else if (!path)
 		path = ft_extract_path(env, split_cmd[0]);
 	if (!path)
-		return (FAILURE);
+	{
+		ft_putstr_fd(split_cmd[0], 2);
+		ft_putstr_fd(": command not found.\n", 2);
+		return (127);
+	}
 	status = execve(path, split_cmd, env);
 	//ft_exec_error(split_cmd);
 	free(path);

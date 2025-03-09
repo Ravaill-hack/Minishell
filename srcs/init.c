@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/03/09 15:53:55 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 18:10:37 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	ft_init(t_var *var, char **env)
 	// var->declare[0] = ft_strdup("test");
 	// var->declare[1] = NULL;
 	var->declare = NULL;
-	ft_disable_echoctl();
-	ft_set_sigint_sigquit_parent();
+	//ft_disable_echoctl();
+	ft_set_signals();
+	rl_catch_signals = 0;
 }

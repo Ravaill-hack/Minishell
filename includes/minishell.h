@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/09 14:38:51 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 18:28:56 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@
 # include "libft.h"
 # include "get_next_line.h"
 # include <errno.h>
+
+extern int g_while_hd;
 
 typedef enum s_line_token
 {
@@ -150,6 +152,9 @@ t_shell			*ft_init_shell(void);
 void			ft_init(t_var *var, char **env);
 int				ft_update_shlvl(char ***env, int level, t_var *var);
 char			**ft_create_empty_env(void);
+void			ft_set_signals(void);
+void			ft_sigint(int signum);
+void			ft_sigquit(int signum);
 /*
 Token - errors
 */
@@ -283,11 +288,11 @@ int				ft_remove_env_var(char ***env_ptr, int line_index);
 /*
 Handle signal
 */
-void			ft_set_sigquit_parent(void);
-void			ft_set_sigint_parent(void);
-void			ft_handle_sigint_parent(int signum);
-void			ft_set_sigint_sigquit_children(void);
-void			ft_set_sigint_sigquit_parent(void);
+// void			ft_set_sigquit_parent(void);
+// void			ft_set_sigint_parent(void);
+// void			ft_handle_sigint_parent(int signum);
+// void			ft_set_sigint_sigquit_children(void);
+// void			ft_set_sigint_sigquit_parent(void);
 /*
 Termios
 */
