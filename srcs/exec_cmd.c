@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:14:19 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/09 00:11:21 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/09 09:11:34 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ char	*ft_extract_path(char **env, char *cmd)
 	}
 	else
 	{
-		path_default = NULL;
-		getcwd(path_default, 0);
+		path_default = getcwd(NULL, 0);
+		if (!path_default)
+			return (NULL);
 		name_cmd = ft_split(cmd, ' ');
 		path = ft_strjoin_n(3, path_default, "/", name_cmd[0]);
-		ft_putstr_fd(path, 1);
 		if (!path)
 			return (NULL);
 		if (access(path, F_OK | X_OK) == 0)
@@ -72,6 +72,8 @@ char *ft_sub_path(char *str)
 	char	*end;
 	char	*path;
 
+	if (!str)
+		return (NULL);
 	start = str;
 	end = ft_strrchr(str, '/');
 	if (!end)

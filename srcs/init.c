@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/03/08 22:57:38 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/09 10:14:50 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	**ft_create_empty_env(void)
 	if (!env)
 		return (NULL);
 	pwd = NULL;
-	pwd = getcwd(pwd, 0);
+	pwd = getcwd(NULL, 0);
 	if (!pwd)
 		return (NULL);
 	env[0] = ft_strjoin("PWD=", pwd);
@@ -80,19 +80,20 @@ char	**ft_create_empty_env(void)
 void	ft_init(t_var *var, char **env)
 {
 	var->exit_nb = 0;
-	if (env && (*env))
+	/*if (env && (*env))
 	{
 		var->env = ft_strsdup(env);
 		if (ft_update_shlvl(&var->env, 1, var) == FAILURE)
 			exit(EXIT_FAILURE);
 	}
 	else
-	{
+	{*/
+	(void)env;
 		var->env = ft_create_empty_env();
 		var->shlvl0 = 1;
 		if (!var->env)
 			exit(EXIT_FAILURE);
-	}
+	//}
 	ft_disable_echoctl();
 	ft_set_sigint_sigquit_parent();
 }
