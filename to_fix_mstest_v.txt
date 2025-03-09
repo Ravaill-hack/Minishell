@@ -1,8 +1,8 @@
-TOTAL TEST COUNT: 59  TESTS PASSED: 31  LEAKING: 0 
-                     STD_OUT: 26  STD_ERR: 2  EXIT_CODE: 2  
+                TOTAL TEST COUNT: 59  TESTS PASSED: 39  LEAKING: 0 
+                     STD_OUT: 17  STD_ERR: 4  EXIT_CODE: 2  
                          TOTAL FAILED AND PASSED CASES:
-                                     ❌ 19   
-                                     ✅ 158 
+                                     ❌ 23   
+                                     ✅ 154
 
 
 36   mand/1_variables.sh:82
@@ -27,8 +27,6 @@ minishell :
 bash :
 /home/juduchar/random_folder
 
-
-bash :
 43   mand/1_variables.sh:120
 export tmp_test="/bin/echo 42"
 $tmp_test
@@ -38,18 +36,25 @@ $tmp_test 42 42
 minishell :
 
 bash :
+42
+42 42
+
 44   mand/1_variables.sh:126
 export tmp_test="/bin/echo 42"
 "tmp_test"
 minishell :
 
 bash :
+tmp_test: command not found
+
 45   mand/1_variables.sh:130
 export X="  A  B  "
 /bin/echo "1"$X'2'
 minishell :
 
 bash :
+1 A B 2
+
 46   mand/1_variables.sh:133
 export X=" A  B  "
 /bin/echo "1"$X'2'

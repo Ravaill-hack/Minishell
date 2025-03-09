@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:14:19 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/08 18:21:30 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 00:11:21 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,54 @@
 char	*ft_extract_path(char **env, char *cmd)
 {
 	int		i;
+	char	*path_raw;
 	char	**raw;
 	char	**name_cmd;
 	char	*path;
+	char	*path_default;
 
 	i = 0;
-	raw = ft_split(ft_extract_env_value_from_key(env, "PATH"), ':');
-	name_cmd = ft_split(cmd, ' ');
-	while (raw[i])
+	path_raw = ft_extract_env_value_from_key(env, "PATH");
+	if (path_raw)
 	{
-		path = ft_strjoin_n(3, raw[i], "/", name_cmd[0]);
-		if (!path)
-			return (NULL);
+		raw = ft_split(path_raw, ':');
+		name_cmd = ft_split(cmd, ' ');
+		while (raw[i])
+		{
+			path = ft_strjoin_n(3, raw[i], "/", name_cmd[0]);
+			if (!path)
+				return (NULL);
+			if (access(path, F_OK | X_OK) == 0)
+				return (ft_free_strs(raw), ft_free_strs(name_cmd), path);
+			if (path)
+				free(path);
+			i++;
+		}
+		path = ft_strjoin_n(3, ft_extract_env_value_from_key(env, "PWD"), "/", name_cmd[0]);
 		if (access(path, F_OK | X_OK) == 0)
 			return (ft_free_strs(raw), ft_free_strs(name_cmd), path);
 		if (path)
-			free(path);
-		i++;
+			free(path);		
+		if (raw)
+			ft_free_strs(raw);
+		ft_free_strs(name_cmd);
+		return (NULL);
 	}
-	path = ft_strjoin_n(3, ft_extract_env_value_from_key(env, "PWD"), "/", name_cmd[0]);
-	if (access(path, F_OK | X_OK) == 0)
-			return (ft_free_strs(raw), ft_free_strs(name_cmd), path);
-	if (path)
-		free(path);		
-	if (raw)
-		ft_free_strs(raw);
-	ft_free_strs(name_cmd);
+	else
+	{
+		path_default = NULL;
+		getcwd(path_default, 0);
+		name_cmd = ft_split(cmd, ' ');
+		path = ft_strjoin_n(3, path_default, "/", name_cmd[0]);
+		ft_putstr_fd(path, 1);
+		if (!path)
+			return (NULL);
+		if (access(path, F_OK | X_OK) == 0)
+			return (ft_free_strs(name_cmd), path);
+		if (path)
+			free(path);
+		ft_free_strs(name_cmd);
+	}
 	return (NULL);
 }
 

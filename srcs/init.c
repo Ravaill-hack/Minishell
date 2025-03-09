@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/03/08 18:00:16 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/08 22:57:38 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ void	ft_init(t_var *var, char **env)
 		if (!var->env)
 			exit(EXIT_FAILURE);
 	}
-	// if (!var->env)
-	// 	exit(EXIT_FAILURE);
 	ft_disable_echoctl();
 	ft_set_sigint_sigquit_parent();
 }
