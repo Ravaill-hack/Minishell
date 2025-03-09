@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 21:35:42 by julien            #+#    #+#             */
-/*   Updated: 2025/03/09 10:33:33 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 10:40:09 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i, t_shell *shell)
 	cmd_node->heredoc = NULL;
 	token_node = ft_go_to_cmd_node(*(var->token_list), i);
 	cmd_node->raw = ft_token_list_to_char_array(token_node);
+	cmd_node->is_redir = ft_fill_redir_check(token_node);
 	//ft_putchar_fd('\n', 1);
 	if (!cmd_node->raw)
 		return (NULL);

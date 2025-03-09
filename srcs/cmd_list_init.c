@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list_init.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:31:57 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/08 21:54:41 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 10:36:59 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
