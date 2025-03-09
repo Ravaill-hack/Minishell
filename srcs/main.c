@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:35:39 by julien            #+#    #+#             */
-/*   Updated: 2025/03/08 22:09:39 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 12:33:21 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,16 @@ int	main(int argc, char **argv, char **env)
 		//ft_putstr_fd("je rentre dans la boucle main\n", 1);
 		//ft_print_error_and_exit(var, *shell);
 		//ft_putchar_fd(shell->prompt[0],1);
-		if (shell->prompt[0] && ft_parse_line(&var, shell->prompt, shell) != FAILURE)
+		var.exit_nb = ft_parse_line(&var, shell->prompt, shell);
+		if (shell->prompt[0] && var.exit_nb == SUCCESS)
 		{
-			ft_print_info_list(*(var.token_list), var.env);
-			ft_print_info_cmd_list(var.nb_cmd, var.cmd);
+			//ft_print_info_list(*(var.token_list), var.env);
+			//ft_print_info_cmd_list(var.nb_cmd, var.cmd);
 			if (ft_handle_pipes(&var, shell) == FAILURE)
+			{
 				ft_print_error();
+				var.exit_nb = FAILURE;
+			}
 			if (VALGRIND_DEBUG == 0)
 				add_history(shell->prompt);
 			ft_clear_and_free_while(&var, shell);
@@ -42,7 +46,7 @@ int	main(int argc, char **argv, char **env)
 		get_prompt(&var, shell);
 	}
 	ft_clear_and_free_all(&var, shell);
-	exit(EXIT_SUCCESS);
+	exit(var.exit_nb);
 }
 
 // FOR MISHELL TESTER 2

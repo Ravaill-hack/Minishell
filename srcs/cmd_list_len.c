@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list_len.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:57:12 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/08 21:54:53 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 11:13:41 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ size_t	ft_strlen_nb(int n)
 	return (len);
 }
 
-int	ft_len_new_array(char **old)
+int	ft_len_new_array(char **old, int *tab_redir)
 {
 	int	len;
 	int	i;
@@ -38,7 +38,7 @@ int	ft_len_new_array(char **old)
 	i = 0;
 	while (old[i])
 	{
-		if (old[i][0] != '<' && old[i][0] != '>')
+		if (/*old[i][0] != '<' && old[i][0] != '>'*/tab_redir[i] == 0)
 			len ++;
 		i++;
 	}

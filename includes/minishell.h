@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/09 10:38:07 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 11:13:02 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ typedef struct s_cmd
 //	char					*path;
 //	char					*name;
 	char					**raw;
-	int						**is_redir;
+	int						*is_redir;
 	char					**arg;
 	char					**chev;
 	t_fd					fd_in;
@@ -207,12 +207,12 @@ int				ft_expand_dolls(t_token_list *list, t_var *var);
 /*
 Cmd list - init
 */
-char			**ft_epure_args_array(char **old);
+char			**ft_epure_args_array(char **old, int *is_redir);
 /*
 Cmd list - len
 */
 size_t			ft_strlen_nb(int n);
-int				ft_len_new_array(char **old);
+int				ft_len_new_array(char **old, int *tab_redir);
 int				ft_find_special_len(t_token_list *node, char **env);
 int				ft_doll_val_len(char *doll, char **env);
 /*
@@ -231,7 +231,7 @@ int				ft_doll_var_exists(char *str, char **env);
 Cmd list - build
 */
 char			*ft_fill_arg(t_token_list **node);
-char			**ft_token_list_to_char_array(t_token_list *node);
+char			**ft_token_list_to_char_array(t_token_list *node, t_cmd **cmd_node);
 t_cmd			*ft_create_cmd_node(t_var *var, int i, t_shell *shell);
 t_cmd			**ft_build_cmd_list(t_var *var, t_shell *shell);
 t_cmd			**ft_free_cmd_list_until(t_cmd **cmd_list, int n);

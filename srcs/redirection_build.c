@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_build.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:48:38 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/08 22:26:11 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 11:49:14 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,21 @@ int	ft_fill_fd(t_cmd *node, t_shell *shell)
 	res = SUCCESS;
 	while (node->raw[i])
 	{
-		if (ft_token_redir_error(node, i) == 1)
+		if (node->is_redir[i] == 1 && ft_token_redir_error(node, i) == 1)
 		 	return (FAILURE);
-		else if (node->raw[i][0] == '<' && node->raw[i][1] == '<')
+		else if (node->is_redir[i] == 1 && (node->raw[i][0] == '<' && node->raw[i][1] == '<'))
 			res = ft_set_heredoc(node->raw[i], node, shell);
-		else if (node->raw[i][0] == '<' && node->raw[i][1] != '<')
+		else if (node->is_redir[i] == 1 && (node->raw[i][0] == '<' && node->raw[i][1] != '<'))
 			res = ft_set_infile(node->raw[i], node);
-		else if (node->raw[i][0] == '>' && node->raw[i][1] == '>')
+		else if (node->is_redir[i] == 1 && (node->raw[i][0] == '>' && node->raw[i][1] == '>'))
 			res = ft_set_outfile_append(node->raw[i], node);
-		else if (node->raw[i][0] == '>' && node->raw[i][1] != '>')
+		else if (node->is_redir[i] == 1 && (node->raw[i][0] == '>' && node->raw[i][1] != '>'))
 			res = ft_set_outfile_trunc(node->raw[i], node);
 		if (res == FAILURE)
 		{
 			ft_open_error(node->raw[i] + 1);
 			ft_close_fds(node);
-			return (SUCCESS);
+			return (FAILURE);
 		}
 		i++;
 	}

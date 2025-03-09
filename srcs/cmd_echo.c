@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 21:28:54 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/08 15:07:27 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 12:14:59 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_line_is_opt_n(char **chartab, int imax)
 	i = 0;
 	n_saw = 0;
 	opt = 0;
-	while (i <= imax)
+	while (i <= imax && chartab[i])
 	{
 		if (ft_line_is_str(chartab[i]) == 1 && n_saw == 1)
 			return (0);
@@ -60,34 +60,33 @@ int	ft_line_is_opt_n(char **chartab, int imax)
 
 int	ft_opt_n_enabled(char **chartab)
 {
-	int	i;
-
-	i = 0;
-	while (chartab[i])
-	{
-		if (ft_line_is_opt_n(chartab, i) == 1)
-			return (1);
-		i++;
-	}
+	if (ft_line_is_opt_n(chartab, 1) == 1)
+		return (1);
 	return (0);
+
 }
 
 int	ft_cmd_echo(t_cmd *cmd, t_var *var)
 {
 	int		i;
 	int		opt;
+	int		str_saw;
 
 	(void) var;
 	i = 1;
 	if (!cmd || !(cmd->arg) || !(cmd->arg[0]))
 		return (FAILURE);
+	str_saw = 0;
 	opt = ft_opt_n_enabled(cmd->arg);
 	if (cmd->arg[i])
 	{
 		while (cmd->arg[i])
 		{
-			if (ft_line_is_opt_n(cmd->arg, i) == 0)
+			if (ft_line_is_opt_n(cmd->arg, i) == 0 || str_saw == 1)
+			{
 				ft_putstr_fd(cmd->arg[i], 1);
+				str_saw = 1;
+			}
 			if (cmd->arg[i + 1] && !ft_is_valid_n(cmd->arg[i]))
 				ft_putchar_fd(' ', 1);
 			i++;
@@ -95,6 +94,5 @@ int	ft_cmd_echo(t_cmd *cmd, t_var *var)
 	}
 	if (opt == 0)
 		ft_putchar_fd('\n', 1);
-	//ft_exec_error(cmd->arg);
 	return (SUCCESS);
 }

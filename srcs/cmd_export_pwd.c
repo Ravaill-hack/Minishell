@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export_pwd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:15:56 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/07 10:45:21 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/09 12:58:23 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,12 @@ int	ft_cmd_export_with_args(char ***env_ptr, char *arg)
 
 int	ft_cmd_pwd(char **env, t_cmd *node)
 {
-	if (!node->arg[1])
-	{
+	(void)node;
+	// if (!node->arg[1])
+	// {
 		ft_putstr_fd(ft_extract_env_value_from_key(env, "PWD"), 1);
 		ft_putchar_fd('\n', 1);
 		return (SUCCESS);
-	}
-	return (FAILURE);
+	// }
+	// return (FAILURE);
 }

@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 21:35:42 by julien            #+#    #+#             */
-/*   Updated: 2025/03/09 10:40:09 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 11:54:58 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,21 +64,40 @@ char	*ft_fill_arg(t_token_list **node)
 	return (NULL);
 }
 
-char	**ft_token_list_to_char_array(t_token_list *node)
+int	*ft_init_redir_check(t_token_list *node)
+{
+	int	len;
+	int	*check_tab;
+	int	i;
+
+	len = ft_nb_str(node);
+	check_tab = (int *)malloc((len) * sizeof(int));
+	if (!check_tab)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		check_tab[i] = 0;
+		i++;
+	}
+	return (check_tab);
+}
+
+char	**ft_token_list_to_char_array(t_token_list *node, t_cmd **cmd_node)
 {
 	char	**array;
 	int		len;
 	int		j;
 
 	len = ft_nb_str(node);
-	// ft_putnbr_fd(len, 1);
-	// ft_putchar_fd('\n', 1);
 	j = 0;
 	array = (char **)malloc((len + 1) * sizeof(char *));
 	if (!array)
 		return (NULL);
 	while (j < len)
 	{
+		if (node->type <= 3)
+			(*cmd_node)->is_redir[j] = 1;
 		array[j] = ft_fill_arg(&node);
 		if (!node)
 		 	break ;
@@ -99,24 +118,19 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i, t_shell *shell)
 		return (NULL);
 	cmd_node->heredoc = NULL;
 	token_node = ft_go_to_cmd_node(*(var->token_list), i);
-	cmd_node->raw = ft_token_list_to_char_array(token_node);
-	cmd_node->is_redir = ft_fill_redir_check(token_node);
-	//ft_putchar_fd('\n', 1);
+	cmd_node->is_redir = ft_init_redir_check(token_node);
+	cmd_node->raw = ft_token_list_to_char_array(token_node, &cmd_node);
 	if (!cmd_node->raw)
 		return (NULL);
-	// ft_print_strs(cmd_node->raw);
-	cmd_node->arg = ft_epure_args_array(cmd_node->raw);
+	cmd_node->arg = ft_epure_args_array(cmd_node->raw, cmd_node->is_redir);
 	ft_init_fd(cmd_node);
 	if (ft_fill_fd(cmd_node, shell) == FAILURE)
 		return (NULL);
-	// ft_putstr_fd("fd_in : ", 1);
-	// ft_putnbr_fd(cmd_node->fd_in.fd, 1);
-	// ft_putchar_fd('\n', 1);
-	// ft_putstr_fd("fd_out : ", 1);
-	// ft_putnbr_fd(cmd_node->fd_out.fd, 1);
-	// ft_putchar_fd('\n', 1);
 	var->fd_pipe = ft_init_pipes(ft_nb_pipes(*(var->token_list)));
 	ft_free_strs_until(cmd_node->raw, -1);
+	if (cmd_node->is_redir)
+		free(cmd_node->is_redir);
+	var->exit_nb = SUCCESS;
 	return (cmd_node);
 }
 

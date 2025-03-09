@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:07:11 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/08 14:48:07 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 12:28:28 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	ft_interpret_status(int status)
 	// else if (status == 131) //commande interrompue avec CTRL \ dans un eof -->tue le processus salement
 	// 	return (FAILURE);
 	// exit_nb = status % 255;
-	return (status % 255);
+	return (status /*% 255*/);
 }
 
 int	ft_is_cmd(t_cmd *cmd, char **env)
@@ -90,11 +90,11 @@ void	ft_close_pipes(t_var *var, int i)
 
 int	ft_exec_one(t_var *var, t_shell *shell, int i)
 {
-	int	status;
+	//int	status;
 	int	saved_stdout;
 	//int	saved_stdin;
 
-	status = SUCCESS;
+	//status = SUCCESS;
 	saved_stdout = dup(1);
 	if (i > 0 && var->cmd[i]->need_pipe_in == 1)
 		close (var->cmd[i - 1]->fd_out.fd);
@@ -113,9 +113,9 @@ int	ft_exec_one(t_var *var, t_shell *shell, int i)
 		close(var->cmd[i]->fd_out.fd);
 	}
 	ft_close_pipes(var, i);
-	status = ft_handle_cmd(var, shell, var->cmd[i]);
+	var->exit_nb = ft_handle_cmd(var, shell, var->cmd[i]);
 	dup2(saved_stdout, 1);
-	return (status);
+	return (var->exit_nb);
 }
 
 int	ft_handle_regular_cmd(t_var *var, t_shell *shell, int i, pid_t *pid)
@@ -156,6 +156,8 @@ int	ft_single_cmd(t_var *var, t_shell *shell)
 		ft_set_sigint_sigquit_children();
 		res = ft_handle_regular_cmd(var, shell, 0, &pid[0]);
 		waitpid(pid[0], &res, 0);
+		if (res != 0)
+			return (EXIT_FAILURE);
 	}
 	return (ft_interpret_status(res));
 }
@@ -217,7 +219,7 @@ int	ft_handle_pipes(t_var *var, t_shell *shell)
 	{
 		status = ft_single_cmd(var, shell);
 		ft_set_sigint_sigquit_parent();
-		return (ft_interpret_status(status));
+		return (status);
 	}
 	pids = (pid_t *)ft_calloc(var->nb_cmd, sizeof(pid_t));
 	status = ft_handle_all_regular_cmds(var, shell, pids);

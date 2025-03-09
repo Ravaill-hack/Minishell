@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:30:44 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/08 22:41:24 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 12:40:34 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_quote_error(char *line)
 		return (1);
 	return (0);
 }
-
+/*
 int	ft_build_redir_string(t_cmd *node, int i)
 {
 	char	*tmp;
@@ -53,11 +53,12 @@ int	ft_build_redir_string(t_cmd *node, int i)
 	}
 	return (redir);
 }
+*/
 
 int	ft_token_redir_error(t_cmd *node, int i)
 {
 	char	*str;
-	char	*tmp;
+	//char	*tmp;
 
 	str = node->raw[i];
 	if (((str[0] == '<' || str[0] == '>') && !(str[1]))
@@ -71,21 +72,53 @@ int	ft_token_redir_error(t_cmd *node, int i)
 }
 
 int	ft_is_empty_quotes_error(char *prompt)
-{
-	if (((prompt[0] == 34 && prompt[1] == 34)
-		|| (prompt[0] == '\'' && prompt[1] == '\'')) && !prompt[2])
+{	
+	int	i;
+
+	i = 0;
+	if (prompt[i] == 34)
 	{
-		ft_putstr_fd("Command \'\' not found.\n", 2);
-		return (FAILURE);	
+		i++;
+		while (prompt[i])
+		{
+			if (prompt[i] == 34)
+			{
+				ft_putstr_fd("Command \'\' not found.\n", 2);
+				return (127);
+			}
+			i++;
+		}
+	}
+	else if (prompt[i] == 39)
+	{
+		i++;
+		while (prompt[i])
+		{
+			if (prompt[i] == 39)
+			{
+				ft_putstr_fd("Command \'\' not found.\n", 2);
+				return (127);
+			}
+			i++;
+		}
 	}
 	return (SUCCESS);
+	// if (((prompt[0] == 34 && prompt[1] == 34)
+	// 	|| (prompt[0] == '\'' && prompt[1] == '\'')) && !prompt[2])
+	// {
+	// 	ft_putstr_fd("Command \'\' not found.\n", 2);
+	// 	return (127);	
+	// }
+	// return (SUCCESS);
 }
 
 int	ft_is_error_parsing(t_var *var, char *prompt, t_shell *shell)
 {
 	(void)var;
 	(void)shell;
-	if (ft_quote_error(prompt) == 1 || ft_is_empty_quotes_error(prompt) == 1)
+	if (ft_quote_error(prompt) == 1)
 		return (FAILURE);
+	if (ft_is_empty_quotes_error(prompt) == 127)
+		return (127);
 	return (SUCCESS);
 }
