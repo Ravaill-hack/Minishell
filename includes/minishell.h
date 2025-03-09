@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/08 22:26:58 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 10:32:12 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -336,7 +336,7 @@ int				ft_cmd_cd(char ***env, t_cmd *node);
 int				ft_update_old_pwd(char ***env);
 int				ft_update_new_pwd(char ***env, char *new_pwd);
 int				ft_cmd_cd_home(char ***env);
-int				ft_cmd_cd_path(char ***env, char *path);
+int				ft_cmd_cd_path(char ***env, char *raw_path);
 int				ft_cmd_cd_minus(char ***env);
 /*
 CMD - exit

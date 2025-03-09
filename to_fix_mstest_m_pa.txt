@@ -9,7 +9,6 @@ COMPARE PARSING
 
 TOUT EST BON
 
-
 PARSING HELL
 1	/mand/10_parsing_hell.sh:5
 ">>" asd

@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 17:29:18 by juduchar          #+#    #+#             */
-/*   Updated: 2024/11/09 09:24:25 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/09 09:02:35 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,14 @@ char	*ft_strrchr(const char *s, int c)
 {
 	const char	*s_start;
 
+	if (!s)
+		return (NULL);
 	s_start = s;
 	while (*s)
 		s++;
 	if ((unsigned char) c == '\0')
 		return ((char *)s);
-	while (s >= s_start)
+	while (s > s_start)
 	{
 		s--;
 		if (*s == (unsigned char) c)

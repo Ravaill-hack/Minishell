@@ -17,6 +17,8 @@ env -i ./minishell
 cd /bin/
 ls
 
+
+
 12	/mand/2_path_check.sh:47
 touch tmp_x_file1
 tmp_x_file1

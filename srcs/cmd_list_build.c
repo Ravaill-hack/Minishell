@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list_build.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 21:35:42 by julien            #+#    #+#             */
-/*   Updated: 2025/03/08 21:53:18 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 10:33:33 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

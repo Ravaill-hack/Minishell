@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 16:06:24 by julien            #+#    #+#             */
-/*   Updated: 2025/03/08 17:42:56 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 10:13:49 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,22 @@ int ft_cmd_cd_minus(char ***env)
 int ft_update_old_pwd(char ***env)
 {
 	char *old_pwd;
+	char *old_pwd_raw;
+	int status;
 
 	old_pwd = ft_extract_env_value_from_key(*env, "PWD");
 	if (!old_pwd)
 		return (FAILURE);
-	return (ft_update_env_var_value_from_key(env, "OLDPWD", old_pwd));
+	if (ft_get_line_env(*env, "OLDPWD") != -1)
+		return (ft_update_env_var_value_from_key(env, "OLDPWD", old_pwd));
+	else
+	{
+		old_pwd_raw = ft_strjoin("OLDPWD=", old_pwd);
+		status = ft_add_env_var(env, old_pwd_raw);
+		free(old_pwd_raw);
+		return (status);
+	}
+	return (SUCCESS);
 }
 
 int ft_update_new_pwd(char ***env, char *new_pwd)
@@ -86,21 +97,32 @@ int ft_update_new_pwd(char ***env, char *new_pwd)
 	return (ft_update_env_var_value_from_key(env, "PWD", new_pwd));
 }
 
-int ft_cmd_cd_path(char ***env, char *path)
+int ft_cmd_cd_path(char ***env, char *raw_path)
 {
 	char *home;
 	char *old_pwd;
 	int status;
 	char *new_pwd;
+	char *path;
 
-	home = ft_extract_env_value_from_key(*env, "HOME");
-	if (!home)
-		return (FAILURE);
+	old_pwd = NULL;
 	old_pwd = ft_extract_env_value_from_key(*env, "PWD");
-	if (path[0] == '~')
-		path = ft_strjoin_n(3, home, "/", path + 1);
+	if (!old_pwd)
+		old_pwd = getcwd(NULL, 0);
+	if (raw_path[0] == '~')
+	{
+		home = ft_extract_env_value_from_key(*env, "HOME");
+		if (!home)
+			return (FAILURE);
+		path = ft_strjoin_n(3, home, "/", raw_path + 1);
+	}
 	else
-		path = ft_strjoin_n(3, old_pwd, "/", path);
+	{
+		if (raw_path[0] != '/')
+			path = ft_strjoin_n(3, old_pwd, "/", raw_path);
+		else
+			path = raw_path;
+	}
 	if (chdir(path) == -1)
 	{
 		if (errno == EACCES || errno == ENOENT || errno == ENOTDIR)
@@ -110,7 +132,7 @@ int ft_cmd_cd_path(char ***env, char *path)
 	if (ft_update_old_pwd(env) == FAILURE)
 		return (FAILURE);
 	new_pwd = NULL;
-	new_pwd = getcwd(new_pwd, 0);
+	new_pwd = getcwd(NULL, 0);
 	status = ft_update_new_pwd(env, new_pwd);
-	return (free(path), free(new_pwd), status);
+	return (status);
 }
