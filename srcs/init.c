@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/03/09 18:10:37 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 19:22:57 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,13 @@ void	get_prompt(t_var *var, t_shell *shell)
 {
 	// (void)var;
 	if (isatty(STDIN_FILENO) && VALGRIND_DEBUG == 0)
+	{
+		// rl_attempted_completion_function = NULL;
+		rl_attempted_completion_function = NULL;
+		rl_inhibit_completion = 1;
 		shell->prompt = readline(shell->terminal_prompt);
+		rl_attempted_completion_function = NULL;
+	}
 	else
 	{
 		var->line = get_next_line(fileno(stdin));
@@ -101,5 +107,6 @@ void	ft_init(t_var *var, char **env)
 	var->declare = NULL;
 	//ft_disable_echoctl();
 	ft_set_signals();
+	//rl_attempted_completion_function = NULL;
 	rl_catch_signals = 0;
 }
