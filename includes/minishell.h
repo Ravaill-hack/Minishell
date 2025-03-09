@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/09 11:13:02 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 14:38:51 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ typedef struct s_var
 	t_cmd					**cmd;
 	int						nb_cmd;
 	char					**env;
+	char					**declare;
 	int						exit_nb;
 	int						shlvl0;
 }	t_var;
@@ -346,9 +347,9 @@ int				ft_cmd_exit(t_var *var, t_shell *shell, t_cmd *node);
 /*
 CMD - export
 */
-int				ft_cmd_export(char ***env_ptr, t_cmd *cmd_node);
-int				ft_cmd_export_with_no_args(char ***env_ptr);
-int				ft_cmd_export_with_args(char ***env_ptr, char *arg);
+int				ft_cmd_export(char ***env_ptr, t_cmd *cmd_node, t_var *var);
+int				ft_cmd_export_with_no_args(char ***env_ptr, t_var *var);
+int				ft_cmd_export_with_args(char ***env_ptr, char *arg, t_var *var);
 /*
 CMD - env
 */

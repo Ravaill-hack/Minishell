@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:07:11 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/09 12:28:28 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 15:49:52 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,10 +200,10 @@ int	ft_wait_all_childrens(t_var *var, pid_t *pids)
 	while (i < var->nb_cmd)
 	{
 		waitpid(pids[i], &status, 0);
-		if (ft_interpret_status(status) == FAILURE)
+		if (ft_interpret_status(status) != SUCCESS)
 		{
 			ft_set_sigint_sigquit_parent();
-			return (FAILURE);
+			return (status);
 		}
 		i++;
 	}
@@ -224,8 +224,8 @@ int	ft_handle_pipes(t_var *var, t_shell *shell)
 	pids = (pid_t *)ft_calloc(var->nb_cmd, sizeof(pid_t));
 	status = ft_handle_all_regular_cmds(var, shell, pids);
 	ft_close_all_pipes(var);
-	ft_wait_all_childrens(var, pids);
+	status = ft_wait_all_childrens(var, pids);
 	free(pids);
 	ft_set_sigint_sigquit_parent();
-	return (SUCCESS);
+	return (status);
 }

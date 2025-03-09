@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:35:39 by julien            #+#    #+#             */
-/*   Updated: 2025/03/09 12:33:21 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 15:51:54 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@ int	main(int argc, char **argv, char **env)
 {
 	t_var	var;
 	t_shell	*shell;
+	int		status;
 
 	(void) argc;
 	(void) argv;
+	status = SUCCESS;
 	shell = ft_init_shell();
 	var.token_list = NULL;
 	ft_init(&var, env);
@@ -33,10 +35,11 @@ int	main(int argc, char **argv, char **env)
 		{
 			//ft_print_info_list(*(var.token_list), var.env);
 			//ft_print_info_cmd_list(var.nb_cmd, var.cmd);
-			if (ft_handle_pipes(&var, shell) == FAILURE)
+			status = ft_handle_pipes(&var, shell);
+			if (status != SUCCESS)
 			{
 				ft_print_error();
-				var.exit_nb = FAILURE;
+				var.exit_nb = status % 255;
 			}
 			if (VALGRIND_DEBUG == 0)
 				add_history(shell->prompt);

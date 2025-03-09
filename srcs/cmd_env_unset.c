@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_env_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:44:08 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/07 11:04:01 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/09 15:20:42 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int	ft_cmd_unset(char ***env_ptr, t_cmd *node)
 	int		line_index;
 
 	if (!node->arg[1])
-		return (FAILURE);
+		return (SUCCESS);
 	line_index = ft_get_line_env(*env_ptr, node->arg[1]);
 	if (line_index == -1)
-		return (FAILURE);
+		return (SUCCESS);
 	else
 		return (ft_remove_env_var(env_ptr, line_index));
 }

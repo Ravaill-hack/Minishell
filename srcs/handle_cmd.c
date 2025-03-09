@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 22:41:23 by julien            #+#    #+#             */
-/*   Updated: 2025/03/08 18:14:06 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/09 14:23:12 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_handle_cmd(t_var *var, t_shell *shell, t_cmd *node)
 	else if (ft_strncmp(node->arg[0], "env", ft_strlen(node->arg[0])) == 0)
 		return (ft_cmd_env(var->env, node));
 	else if (ft_strncmp(node->arg[0], "export", ft_strlen(node->arg[0])) == 0)
-		return (ft_cmd_export(&var->env, node));
+		return (ft_cmd_export(&var->env, node, var));
 	else if (ft_strncmp(node->arg[0], "exit", ft_strlen(node->arg[0])) == 0)
 		return (ft_cmd_exit(var, shell, node));
 	else if (ft_strncmp(node->arg[0], "unset", ft_strlen(node->arg[0])) == 0)

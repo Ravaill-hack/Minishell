@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsjoinstr.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 21:47:22 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/02/27 12:55:53 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/09 14:56:42 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	**ft_strsjoinstr(char **strs, char *str)
 	int		strs_len;
 
 	strs_len = ft_strslen(strs);
-	new_strs = (char **)ft_calloc(sizeof(char *), (strs_len + 2));
+	new_strs = (char **)ft_calloc((strs_len + 2), sizeof(char *));
 	if (!new_strs)
 		return (NULL);
 	ft_strslcpy(&new_strs, strs, strs_len + 1);
