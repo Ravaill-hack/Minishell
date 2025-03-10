@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/09 18:28:56 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/10 10:41:45 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@
 # include "get_next_line.h"
 # include <errno.h>
 
-extern int g_while_hd;
+extern int	g_while_hd;
 
 typedef enum s_line_token
 {
@@ -145,13 +145,17 @@ typedef struct s_shell
 }	t_shell;
 
 /*
-Init
+Init (init.c)
 */
 void			get_prompt(t_var *var, t_shell *shell);
-t_shell			*ft_init_shell(void);
-void			ft_init(t_var *var, char **env);
 int				ft_update_shlvl(char ***env, int level, t_var *var);
+t_shell			*ft_init_shell(void);
 char			**ft_create_empty_env(void);
+void			ft_init(t_var *var, char **env);
+
+/*
+Init 2
+*/
 void			ft_set_signals(void);
 void			ft_sigint(int signum);
 void			ft_sigquit(int signum);
@@ -194,11 +198,12 @@ int				ft_doll_len(char *str, int i, int nb_ex);
 int				ft_dquoted_len(char *str, int i);
 int				ft_squoted_len(char *str, int i);
 int				ft_strlen_content(char *str, int i);
-int				ft_exit_nb_len(int	nb_exit);
+int				ft_exit_nb_len(int nb_exit);
 /*
 Token - parsing
 */
-t_token_list	*ft_deal_dquoted(char *line, int *i, t_token_list **list, int x);
+t_token_list	*ft_deal_dquoted(char *line, int *i,
+					t_token_list **list, int x);
 int				ft_append_tokens(char *line, t_token_list **list, int nb_x);
 t_token_list	**ft_build_token_list(char *line, int nb_x);
 int				ft_parse_line(t_var *var, char *prompt, t_shell *shell);
@@ -234,13 +239,27 @@ int				ft_nb_dolls(t_token_list *list);
 int				ft_nb_str(t_token_list *list);
 int				ft_doll_var_exists(char *str, char **env);
 /*
-Cmd list - build
+Cmd list build (cmd_list_build.c)
 */
-char			*ft_fill_arg(t_token_list **node);
-char			**ft_token_list_to_char_array(t_token_list *node, t_cmd **cmd_node);
+int				*ft_init_redir_check(t_token_list *node);
+char			**ft_token_list_to_char_array(t_token_list *node,
+					t_cmd **cmd_node);
 t_cmd			*ft_create_cmd_node(t_var *var, int i, t_shell *shell);
 t_cmd			**ft_build_cmd_list(t_var *var, t_shell *shell);
 t_cmd			**ft_free_cmd_list_until(t_cmd **cmd_list, int n);
+/*
+Cmd fill arg (cmd_fill_arg.c)
+*/
+char			*ft_fill_arg_redirs(t_token_list **node);
+char			*ft_fill_arg_not_redirs(t_token_list **node);
+char			*ft_fill_arg(t_token_list **node);
+/*
+Cmd fill arg (cmd_fill_arg_utils.c)
+*/
+int				ft_node_is_doll(t_token_list *node);
+int				ft_go_to_next_node_condition(t_token_list **node);
+int				ft_node_is_not_redir(t_token_list **node);
+int				ft_node_is_content(t_token_list **node);
 /*
 Redirection - build
 */
@@ -328,12 +347,21 @@ Handle cmd
 int				ft_is_builtin_cmd(t_cmd *node);
 int				ft_handle_cmd(t_var *var, t_shell *shell, t_cmd *node);
 int				ft_is_cmd(t_cmd *cmd, char **env);
+
 /*
-Exec cmd
+Extract path (extract_path.c)
 */
+char			*ft_get_path_with_env_path(char *path_raw, char *cmd);
+char			*ft_get_path_with_env_pwd(char **env, char *cmd);
+char			*ft_get_path_without_env(char *cmd);
 char			*ft_extract_path(char **env, char *cmd);
+char			*ft_sub_path(char *str);
+/*
+Exec cmd (exec_cmd.c)
+*/
+int				ft_try_exec_with_path(char **env,
+					char **split_cmd, char *path, int *status);
 int				ft_exec_cmd(char **env, char **split_cmd);
-char 			*ft_sub_path(char *str);
 /*
 Cmds
 */

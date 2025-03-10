@@ -48,11 +48,13 @@ SRCS_FILES = \
 	redirection_handle.c \
 	cmd_list_init.c \
 	cmd_list_build.c \
-	cmd_list_build_2.c \
 	cmd_list_utils.c \
 	cmd_list_len.c \
 	utils.c \
 	handle_pipes.c \
+	extract_path.c \
+	cmd_fill_arg.c \
+	cmd_fill_arg_utils.c \
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS_FILES:.c=.o))
 

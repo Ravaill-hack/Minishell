@@ -3,25 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/03/09 19:22:57 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/10 09:01:15 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// DONE //
 
 #include "minishell.h"
 
 void	get_prompt(t_var *var, t_shell *shell)
 {
-	// (void)var;
 	if (isatty(STDIN_FILENO) && VALGRIND_DEBUG == 0)
 	{
-		// rl_attempted_completion_function = NULL;
 		rl_attempted_completion_function = NULL;
 		rl_inhibit_completion = 1;
 		shell->prompt = readline(shell->terminal_prompt);
-		rl_attempted_completion_function = NULL;
 	}
 	else
 	{
@@ -95,18 +94,12 @@ void	ft_init(t_var *var, char **env)
 	}
 	else
 	{
-	(void)env;
 		var->env = ft_create_empty_env();
 		var->shlvl0 = 1;
 		if (!var->env)
 			exit(EXIT_FAILURE);
 	}
-	// var->declare = (char **)ft_calloc(2, sizeof(char *));
-	// var->declare[0] = ft_strdup("test");
-	// var->declare[1] = NULL;
 	var->declare = NULL;
-	//ft_disable_echoctl();
 	ft_set_signals();
-	//rl_attempted_completion_function = NULL;
 	rl_catch_signals = 0;
 }

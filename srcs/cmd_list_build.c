@@ -3,66 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list_build.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 21:35:42 by julien            #+#    #+#             */
-/*   Updated: 2025/03/09 11:54:58 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/10 10:42:10 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+// DONE //
+
 #include "minishell.h"
-
-
-//|| ((*node) && (*node)->prev && (*node)->prev->type == DOLL && (!(*node)->prev->val))
-
-char	*ft_fill_arg(t_token_list **node)
-{
-	char	*str;
-	char	*tmp;
-	int		i;
-
-	str = NULL;
-	tmp = NULL;
-	i = 0;
-	if ((*node)->type >= 4)
-	{
-		while (i == 0 || ((*node) && (*node)->type != PIPE && (*node)->prev && (*node)->prev->print_space_after == 0 && (*node)->type >= 4))
-		{
-			tmp = str;
-			if (((*node)->type == DOLL || (*node)->type == CONTENT) && (*node)->val[0] == '$' && !(*node)->val[1]
-				&& (*node)->next && (*node)->print_space_after == 0 && ((*node)->next->dq_start == 1 || (*node)->next->sq == 1) && !((*node)->next->type == DOLL && (*node)->next->val[0] == '$' && !(*node)->next->val[1]))
-				(*node) = (*node)->next;
-			else if ((*node)->type == DOLL && (*node)->val[0] == '$' && !(*node)->val[1] && (*node)->prev && (*node)->prev->dq_start == 0 && (*node)->dq_start == 1 && (*node)->prev->print_space_after == 0 && (*node)->prev->type == DOLL && (*node)->prev->val[0] == '$'  && !(*node)->prev->val[1])	
-				(*node) = (*node)->next;
-			if ((*node) && ((*node)->type == CONTENT || ((*node)->type == DOLL && (*node)->val)))
-				str = ft_strjoin(str, (*node)->val);
-			if (!str && (*node) && (*node)->next)	
-				(*node) = (*node)->next;
-			if (tmp != str)
-				free(tmp);
-			if ((*node))
-				(*node) = (*node)->next;
-			i++;
-			if (!str && i != 1)
-				return (NULL);
-		}
-		return (str);
-	}
-	else if ((*node))
-	{
-		str = ft_dup_operand((*node)->type);
-		tmp = str;
-		(*node) = (*node)->next;
-		if (*node && (*node)->val && (*node)->val[0])
-			str = ft_strjoin(str, (*node)->val);
-		if (tmp != str)
-			free(tmp);
-		if (*node)
-			(*node) = (*node)->next;
-		return (str);
-	}
-	return (NULL);
-}
 
 int	*ft_init_redir_check(t_token_list *node)
 {
@@ -100,7 +50,7 @@ char	**ft_token_list_to_char_array(t_token_list *node, t_cmd **cmd_node)
 			(*cmd_node)->is_redir[j] = 1;
 		array[j] = ft_fill_arg(&node);
 		if (!node)
-		 	break ;
+			break ;
 		j++;
 	}
 	array[len] = NULL;
@@ -132,6 +82,32 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i, t_shell *shell)
 		free(cmd_node->is_redir);
 	var->exit_nb = SUCCESS;
 	return (cmd_node);
+}
+
+t_cmd	**ft_build_cmd_list(t_var *var, t_shell *shell)
+{
+	t_cmd	**cmd_list;
+	int		i;
+
+	i = 0;
+	var->nb_cmd = ft_nb_pipes(*(var->token_list)) + 1;
+	cmd_list = (t_cmd **)malloc((var->nb_cmd + 1) * sizeof(t_cmd *));
+	if (!cmd_list)
+		return (NULL);
+	while (i < var->nb_cmd)
+	{
+		cmd_list[i] = ft_create_cmd_node(var, i, shell);
+		if (!cmd_list[i] && i == 0)
+			return (NULL);
+		if (!cmd_list[i] && i != 0)
+			return (ft_free_cmd_list_until(cmd_list, i));
+		else if (!cmd_list[i] && i == 0)
+			return (NULL);
+		i++;
+	}
+	cmd_list[i] = NULL;
+	ft_set_pipes(cmd_list, var->nb_cmd, var->fd_pipe);
+	return (cmd_list);
 }
 
 t_cmd	**ft_free_cmd_list_until(t_cmd **cmd_list, int n)
