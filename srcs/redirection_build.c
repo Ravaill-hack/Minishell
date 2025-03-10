@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_build.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:48:38 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/09 11:49:14 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:07:29 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,22 @@ int	ft_fill_fd(t_cmd *node, t_shell *shell)
 	while (node->raw[i])
 	{
 		if (node->is_redir[i] == 1 && ft_token_redir_error(node, i) == 1)
-		 	return (FAILURE);
-		else if (node->is_redir[i] == 1 && (node->raw[i][0] == '<' && node->raw[i][1] == '<'))
+			return (FAILURE);
+		else if (node->is_redir[i] == 1
+			&& (node->raw[i][0] == '<'
+			&& node->raw[i][1] == '<'))
 			res = ft_set_heredoc(node->raw[i], node, shell);
-		else if (node->is_redir[i] == 1 && (node->raw[i][0] == '<' && node->raw[i][1] != '<'))
+		else if (node->is_redir[i] == 1
+			&& (node->raw[i][0] == '<'
+			&& node->raw[i][1] != '<'))
 			res = ft_set_infile(node->raw[i], node);
-		else if (node->is_redir[i] == 1 && (node->raw[i][0] == '>' && node->raw[i][1] == '>'))
+		else if (node->is_redir[i] == 1
+			&& (node->raw[i][0] == '>'
+			&& node->raw[i][1] == '>'))
 			res = ft_set_outfile_append(node->raw[i], node);
-		else if (node->is_redir[i] == 1 && (node->raw[i][0] == '>' && node->raw[i][1] != '>'))
+		else if (node->is_redir[i] == 1
+			&& (node->raw[i][0] == '>'
+			&& node->raw[i][1] != '>'))
 			res = ft_set_outfile_trunc(node->raw[i], node);
 		if (res == FAILURE)
 		{
@@ -76,10 +84,7 @@ int	**ft_init_pipes(int nb_pipes)
 	{
 		pipes[i] = (int *)malloc(2 * sizeof(int));
 		if (!pipes[i])
-		{
-			//ft_close_and_free_pipes(pipes, i);
 			return (NULL);
-		}
 		i++;
 	}
 	pipes[i] = NULL;

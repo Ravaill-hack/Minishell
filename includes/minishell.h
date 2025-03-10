@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/10 10:41:45 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/10 11:03:45 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,13 +152,6 @@ int				ft_update_shlvl(char ***env, int level, t_var *var);
 t_shell			*ft_init_shell(void);
 char			**ft_create_empty_env(void);
 void			ft_init(t_var *var, char **env);
-
-/*
-Init 2
-*/
-void			ft_set_signals(void);
-void			ft_sigint(int signum);
-void			ft_sigquit(int signum);
 /*
 Token - errors
 */
@@ -277,11 +270,8 @@ int				ft_set_outfile_trunc(char *str, t_cmd *node);
 int				ft_while_heredoc(char *line, char *heredoc, t_shell *shell);
 int				ft_set_heredoc(char *str, t_cmd *node, t_shell *shell);
 /*
-Handle errors
+Print error (print_error.c)
 */
-void			ft_print_msg_error(char *error_msg);
-void			ft_print_error(void);
-void			ft_print_error_and_exit(t_var var, t_shell shell);
 void			ft_error_cmd_not_found(char *cmd);
 void			ft_exec_error(char **split_cmd);
 void			ft_open_error(char *path);
@@ -305,18 +295,11 @@ int				ft_update_env_var_value_from_key(char ***env,
 int				ft_add_env_var(char ***env, char *env_var);
 int				ft_remove_env_var(char ***env_ptr, int line_index);
 /*
-Handle signal
+Handle signal (handle_signal.c)
 */
-// void			ft_set_sigquit_parent(void);
-// void			ft_set_sigint_parent(void);
-// void			ft_handle_sigint_parent(int signum);
-// void			ft_set_sigint_sigquit_children(void);
-// void			ft_set_sigint_sigquit_parent(void);
-/*
-Termios
-*/
-void			ft_disable_echoctl(void);
-void			ft_enable_echoctl(void);
+void			ft_sigint(int signum);
+void			ft_sigquit(int signum);
+void			ft_set_signals(void);
 /*
 Free
 */

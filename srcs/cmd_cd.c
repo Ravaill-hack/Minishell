@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 16:06:24 by julien            #+#    #+#             */
-/*   Updated: 2025/03/09 15:22:09 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:00:05 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_cmd_cd(char ***env, t_cmd *node)
+int	ft_cmd_cd(char ***env, t_cmd *node)
 {
-	int status;
+	int	status;
 
 	if (node->arg[2])
 		return (FAILURE);
@@ -27,9 +27,9 @@ int ft_cmd_cd(char ***env, t_cmd *node)
 	return (status);
 }
 
-int ft_cmd_cd_home(char ***env)
+int	ft_cmd_cd_home(char ***env)
 {
-	char *home;
+	char	*home;
 
 	home = ft_strdup(ft_extract_env_value_from_key(*env, "HOME"));
 	if (!home)
@@ -47,10 +47,10 @@ int ft_cmd_cd_home(char ***env)
 	return (free(home), SUCCESS);
 }
 
-int ft_cmd_cd_minus(char ***env)
+int	ft_cmd_cd_minus(char ***env)
 {
-	char *tmp_old;
-	char *tmp_current;
+	char	*tmp_old;
+	char	*tmp_current;
 
 	tmp_old = ft_strdup(ft_extract_env_value_from_key(*env, "OLDPWD"));
 	if (!tmp_old)
@@ -73,11 +73,11 @@ int ft_cmd_cd_minus(char ***env)
 	return (free(tmp_old), free(tmp_current), SUCCESS);
 }
 
-int ft_update_old_pwd(char ***env)
+int	ft_update_old_pwd(char ***env)
 {
-	char *old_pwd;
-	char *old_pwd_raw;
-	int status;
+	char	*old_pwd;
+	char	*old_pwd_raw;
+	int		status;
 
 	old_pwd = ft_extract_env_value_from_key(*env, "PWD");
 	if (!old_pwd)
@@ -94,18 +94,18 @@ int ft_update_old_pwd(char ***env)
 	return (SUCCESS);
 }
 
-int ft_update_new_pwd(char ***env, char *new_pwd)
+int	ft_update_new_pwd(char ***env, char *new_pwd)
 {
 	return (ft_update_env_var_value_from_key(env, "PWD", new_pwd));
 }
 
-int ft_cmd_cd_path(char ***env, char *raw_path)
+int	ft_cmd_cd_path(char ***env, char *raw_path)
 {
-	char *home;
-	char *old_pwd;
-	int status;
-	char *new_pwd;
-	char *path;
+	char	*home;
+	char	*old_pwd;
+	int		status;
+	char	*new_pwd;
+	char	*path;
 
 	old_pwd = NULL;
 	old_pwd = ft_extract_env_value_from_key(*env, "PWD");

@@ -19,8 +19,7 @@ LIBRARIES = -L$(LIBFT_DIR) -lft
 SRCS_FILES = \
 	main.c \
 	init.c \
-	handle_errors.c \
-	handle_errors_1.c \
+	print_errors.c \
 	token_append.c \
 	token_check.c \
 	token_error.c \
@@ -33,7 +32,6 @@ SRCS_FILES = \
 	free_2.c \
 	handle_cmd.c \
 	handle_signal.c \
-	termios_utils.c \
 	debug.c \
 	cmd_exit.c \
 	cmd_env_unset.c \

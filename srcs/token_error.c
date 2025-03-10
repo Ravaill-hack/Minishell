@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:30:44 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/09 16:16:49 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/10 10:58:21 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,32 +33,10 @@ int	ft_quote_error(char *line)
 		return (1);
 	return (0);
 }
-/*
-int	ft_build_redir_string(t_cmd *node, int i)
-{
-	char	*tmp;
-	char	*redir;
-
-	redir = NULL;
-	while (node->raw[i] && ((node->raw[i][0] == '<' && !node->raw[i][1])
-		|| (node->raw[i][0] == '>' && !node->raw[i][1])
-		|| (node->raw[i][0] == '<' && node->raw[i][1] == '<' && !node->raw[i][2])
-		|| (node->raw[i][0] == '>' && node->raw[i][1] == '>' && !node->raw[i][2])))
-	{
-		tmp = node->raw[i];
-		redir = ft_strjoin(redir, tmp);
-		if (tmp != redir)
-			free(tmp);
-		i++;
-	}
-	return (redir);
-}
-*/
 
 int	ft_token_redir_error(t_cmd *node, int i)
 {
 	char	*str;
-	//char	*tmp;
 
 	str = node->raw[i];
 	if (((str[0] == '<' || str[0] == '>') && !(str[1]))
@@ -72,7 +50,7 @@ int	ft_token_redir_error(t_cmd *node, int i)
 }
 
 int	ft_is_empty_quotes_error(char *prompt)
-{	
+{
 	int	i;
 
 	i = 0;
@@ -103,13 +81,6 @@ int	ft_is_empty_quotes_error(char *prompt)
 		}
 	}
 	return (SUCCESS);
-	// if (((prompt[0] == 34 && prompt[1] == 34)
-	// 	|| (prompt[0] == '\'' && prompt[1] == '\'')) && !prompt[2])
-	// {
-	// 	ft_putstr_fd("Command \'\' not found.\n", 2);
-	// 	return (127);	
-	// }
-	// return (SUCCESS);
 }
 
 int	ft_is_error_parsing(t_var *var, char *prompt, t_shell *shell)

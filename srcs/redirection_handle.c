@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_handle.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:50:06 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/09 19:12:55 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:06:46 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ int	ft_set_outfile_trunc(char *str, t_cmd *node)
 	return (SUCCESS);
 }
 
-int check_signal(void)
+int	check_signal(void)
 {
-    if (g_while_hd == 0)
-        return 1; // Force readline à retourner
-    return 0;
+	if (g_while_hd == 0)
+		return (1);
+	return (0);
 }
 
 int	ft_while_heredoc(char *line, char *heredoc, t_shell *shell)

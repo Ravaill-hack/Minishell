@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export_pwd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:15:56 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/09 16:08:21 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:01:13 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,11 @@ int	ft_cmd_export(char ***env_ptr, t_cmd *cmd_node, t_var *var)
 		i = 1;
 		while (cmd_node->arg[i])
 		{
-			if (ft_is_valid_key(cmd_node->arg[i]) == 1 && cmd_node->arg[i][0] != '=')
+			if (ft_is_valid_key(cmd_node->arg[i]) == 1
+				&& cmd_node->arg[i][0] != '=')
 			{
-				if (ft_cmd_export_with_args(env_ptr, cmd_node->arg[i], var) == FAILURE)
+				if (ft_cmd_export_with_args(env_ptr,
+						cmd_node->arg[i], var) == FAILURE)
 					status = FAILURE;
 			}
 			else
@@ -103,7 +105,8 @@ int	ft_add_to_declare(char *arg, char **env, char ***declare)
 		return (0);
 	while ((*declare) && (*declare)[i])
 	{
-		if ((ft_strncmp(arg, (*declare)[i], ft_strlen(arg)) == 0) && ((*declare)[i][ft_strlen(arg)] == '\0'))
+		if ((ft_strncmp(arg, (*declare)[i], ft_strlen(arg)) == 0)
+			&& ((*declare)[i][ft_strlen(arg)] == '\0'))
 			return (0);
 		i++;
 	}
@@ -136,12 +139,7 @@ int	ft_cmd_export_with_args(char ***env_ptr, char *arg, t_var *var)
 
 int	ft_cmd_pwd(char **env, t_cmd *node)
 {
-	(void)node;
-	// if (!node->arg[1])
-	// {
-		ft_putstr_fd(ft_extract_env_value_from_key(env, "PWD"), 1);
-		ft_putchar_fd('\n', 1);
-		return (SUCCESS);
-	// }
-	// return (FAILURE);
+	ft_putstr_fd(ft_extract_env_value_from_key(env, "PWD"), 1);
+	ft_putchar_fd('\n', 1);
+	return (SUCCESS);
 }

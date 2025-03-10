@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:09:21 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/08 11:18:30 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:02:17 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,28 +61,9 @@ int	ft_nb_str(t_token_list *list)
 		if ((list->print_space_after == 1)
 			|| (list->next && list->next->type == PIPE)
 			|| !(list->next)
-			|| (list->next->type >= 0 && list->next->type <= 3)
-			/*|| (list->type == DOLL)*/)
+			|| (list->next->type >= 0 && list->next->type <= 3))
 			res ++;
-			
-		/*if (list->print_space_after == 0 && list->next
-			&& (list->next->type >= 0 && list->next->type <= 3))
-			res --;*/
-		// if (list->type == DOLL && (!list->val || !list->val[0] || (list->prev && (list->prev->type == DOLL && !list->prev->val))))
-		// {
-		// 	ft_putstr_fd("sortie 1\n", 1);
-		// 	res --;
-		// }
-		// if (list->type == CONTENT && (list->prev && list->prev->print_space_after == 0 && list->prev->type == DOLL))
-		// {
-		// 	ft_putstr_fd("sortie 2\n", 1);
-		// 	res --;
-		// }
 		list = list->next;
 	}
-	// ft_putnbr_fd(res, 1);
-	// ft_putchar_fd('\n', 1);
 	return (res);
 }
-
-// (list->type == DOLL && list->prev && list->prev->type != DOLL)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:35:39 by julien            #+#    #+#             */
-/*   Updated: 2025/03/09 18:29:03 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/10 10:48:56 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,9 @@ int	main(int argc, char **argv, char **env)
 		var.exit_nb = ft_parse_line(&var, shell->prompt, shell);
 		if (shell->prompt[0] && var.exit_nb == SUCCESS)
 		{
-			//ft_print_info_list(*(var.token_list), var.env);
-			//ft_print_info_cmd_list(var.nb_cmd, var.cmd);
 			status = ft_handle_pipes(&var, shell);
 			if (status != SUCCESS)
-			{
-				ft_print_error();
 				var.exit_nb = status % 255;
-			}
 			if (VALGRIND_DEBUG == 0)
 				add_history(shell->prompt);
 			ft_clear_and_free_while(&var, shell);
@@ -49,44 +44,3 @@ int	main(int argc, char **argv, char **env)
 	ft_clear_and_free_all(&var, shell);
 	exit(var.exit_nb);
 }
-
-// FOR MISHELL TESTER 2
-// /!\ DOESN'T WORK FOR NOW
-// TO DO : ADD EXIT STATUS BEFORE
-/*
-int	ft_launch_minishell(char *line, char **env)
-{
-	t_var	var;
-	t_shell	*shell;
-	char	*val;
-
-	ft_init(&var, &shell, env);
-	shell->prompt = line;
-	while (shell->prompt)
-	{
-		if (!ft_parse_line(&var, shell->prompt))
-			ft_print_error_and_exit(var, *shell);
-		if (*(var.token_list))
-		{
-			val = var.token_list[0]->val;
-			if (ft_handle_cmd(&var, *shell, val) == FAILURE)
-				ft_print_error();
-			add_history(shell->prompt);
-			ft_clear_and_free_while(*shell);
-			ft_free_token_list(var.token_list);
-		}
-		shell->prompt = line;
-	}
-	ft_clear_and_free_all(var, *shell);
-	exit(EXIT_SUCCESS);
-}
-
-int	main(int argc, char **argv, char **env)
-{
-	if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
-	{
-		int exit_status = ft_launch_minishell(argv[2], env);
-		exit(exit_status);
-	}
-}
-*/

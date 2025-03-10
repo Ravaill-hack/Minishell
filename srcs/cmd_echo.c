@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_echo.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 21:28:54 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/09 12:14:59 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/10 10:56:04 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	ft_opt_n_enabled(char **chartab)
 	if (ft_line_is_opt_n(chartab, 1) == 1)
 		return (1);
 	return (0);
-
 }
 
 int	ft_cmd_echo(t_cmd *cmd, t_var *var)

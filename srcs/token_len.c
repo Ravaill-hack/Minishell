@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_len.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:37:31 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/08 19:09:08 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:08:03 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	ft_strlen_content(char *str, int i)
 	return (len);
 }
 
-int	ft_exit_nb_len(int	nb_exit)
+int	ft_exit_nb_len(int nb_exit)
 {
 	char	*tmp;
 	int		len;
@@ -90,5 +90,5 @@ int	ft_exit_nb_len(int	nb_exit)
 		return (FAILURE);
 	len = ft_strlen(tmp);
 	free(tmp);
-	return(len);
+	return (len);
 }

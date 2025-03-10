@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list_init.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:31:57 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/09 11:13:56 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/10 10:47:08 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// DONE //
 
 #include "minishell.h"
 
@@ -27,7 +29,7 @@ char	**ft_epure_args_array(char **old, int *tab_redir)
 		return (NULL);
 	while (old[i])
 	{
-		if (/*old[i][0] != '<' && old[i][0] != '>'*/tab_redir[i] == 0)
+		if (tab_redir[i] == 0)
 		{
 			new_array[j] = ft_strdup(old[i]);
 			if (!new_array[j])
@@ -39,4 +41,3 @@ char	**ft_epure_args_array(char **old, int *tab_redir)
 	new_array[j] = NULL;
 	return (new_array);
 }
-

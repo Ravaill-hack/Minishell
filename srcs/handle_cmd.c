@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 22:41:23 by julien            #+#    #+#             */
-/*   Updated: 2025/03/10 08:37:31 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/10 10:57:15 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	ft_handle_cmd(t_var *var, t_shell *shell, t_cmd *node)
 {
-	// if (!node->arg[0] && shell->while_hdc == 1)
-	// 	return (SUCCESS);
 	if (!node->arg[0])
 		return (FAILURE);
 	if (ft_strncmp(node->arg[0], "echo", ft_strlen(node->arg[0])) == 0)

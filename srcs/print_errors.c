@@ -1,34 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_errors.c                                    :+:      :+:    :+:   */
+/*   print_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 17:27:03 by julien            #+#    #+#             */
-/*   Updated: 2025/03/08 18:33:15 by lmatkows         ###   ########.fr       */
+/*   Created: 2025/03/10 10:51:41 by julien            #+#    #+#             */
+/*   Updated: 2025/03/10 10:54:29 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+// DONE //
+
 #include "minishell.h"
-
-void	ft_print_msg_error(char *error_msg)
-{
-	ft_putstr_fd(error_msg, 2);
-}
-
-void	ft_print_error(void)
-{
-	//ft_putstr_fd("Error\n", 2);
-	return ;
-}
-
-void	ft_print_error_and_exit(t_var var, t_shell shell)
-{
-	ft_print_error();
-	ft_clear_and_free_all(&var, &shell);
-	exit(EXIT_FAILURE);
-}
 
 void	ft_error_cmd_not_found(char *cmd)
 {
