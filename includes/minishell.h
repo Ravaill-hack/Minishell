@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/10 20:03:15 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/10 20:27:16 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,6 @@ typedef struct s_fd
 
 typedef struct s_cmd
 {
-//	char					*path;
-//	char					*name;
 	char					**raw;
 	int						*is_redir;
 	char					**arg;
