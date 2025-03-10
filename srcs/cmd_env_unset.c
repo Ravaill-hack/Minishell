@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_env_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:44:08 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/09 15:20:42 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/10 19:31:12 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// DONE //
 
 #include "minishell.h"
 

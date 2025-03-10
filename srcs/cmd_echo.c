@@ -6,9 +6,11 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 21:28:54 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/10 10:56:04 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/10 18:41:47 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// DONE //
 
 #include "minishell.h"
 
@@ -65,31 +67,27 @@ int	ft_opt_n_enabled(char **chartab)
 	return (0);
 }
 
-int	ft_cmd_echo(t_cmd *cmd, t_var *var)
+int	ft_cmd_echo(t_cmd *cmd)
 {
 	int		i;
 	int		opt;
 	int		str_saw;
 
-	(void) var;
-	i = 1;
 	if (!cmd || !(cmd->arg) || !(cmd->arg[0]))
 		return (FAILURE);
 	str_saw = 0;
 	opt = ft_opt_n_enabled(cmd->arg);
-	if (cmd->arg[i])
+	i = 1;
+	while (cmd->arg[i])
 	{
-		while (cmd->arg[i])
+		if (ft_line_is_opt_n(cmd->arg, i) == 0 || str_saw == 1)
 		{
-			if (ft_line_is_opt_n(cmd->arg, i) == 0 || str_saw == 1)
-			{
-				ft_putstr_fd(cmd->arg[i], 1);
-				str_saw = 1;
-			}
-			if (cmd->arg[i + 1] && !ft_is_valid_n(cmd->arg[i]))
-				ft_putchar_fd(' ', 1);
-			i++;
+			ft_putstr_fd(cmd->arg[i], 1);
+			str_saw = 1;
 		}
+		if (cmd->arg[i + 1] && !ft_is_valid_n(cmd->arg[i]))
+			ft_putchar_fd(' ', 1);
+		i++;
 	}
 	if (opt == 0)
 		ft_putchar_fd('\n', 1);

@@ -6,30 +6,21 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:16:10 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/10 10:55:34 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/10 19:57:00 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+// DONE //
+
 #include "minishell.h"
 
-t_token_list	*ft_deal_dquoted(char *line, int *i, t_token_list **list, int x)
+void	ft_handle_dquoted_content(char *line, int *i,
+		t_token_list **list, int x)
 {
-	t_token_list	*res;
 	int				tour;
+	t_token_list	*res;
 
-	res = NULL;
 	tour = 0;
-	if (line[*i] == '\"' && line[*i + 1] == '\"')
-	{
-		(*i)++;
-		res = ft_append_dquoted(line, i, list);
-		res->dq_start = 1;
-		res->dq_end = 1;
-		(*i)++;
-		return (res);
-	}
-	if (line[*i] == '\"')
-		(*i)++;
 	while (line[*i] && line[*i] != '\"')
 	{
 		if (ft_is_doll(line, *i))
@@ -41,9 +32,28 @@ t_token_list	*ft_deal_dquoted(char *line, int *i, t_token_list **list, int x)
 		if (line[*i] == '\"')
 			res->dq_end = 1;
 		if (!res)
-			return (NULL);
-		tour ++;
+			return ;
+		tour++;
 	}
+}
+
+t_token_list	*ft_deal_dquoted(char *line, int *i, t_token_list **list, int x)
+{
+	t_token_list	*res;
+
+	res = NULL;
+	if (line[*i] == '\"' && line[*i + 1] == '\"')
+	{
+		(*i)++;
+		res = ft_append_dquoted(line, i, list);
+		res->dq_start = 1;
+		res->dq_end = 1;
+		(*i)++;
+		return (res);
+	}
+	if (line[*i] == '\"')
+		(*i)++;
+	ft_handle_dquoted_content(line, i, list, x);
 	if (line[*i] == '\"')
 		(*i)++;
 	return (*list);
@@ -101,7 +111,7 @@ int	ft_parse_line(t_var *var, char *prompt, t_shell *shell)
 {
 	int	status;
 
-	status = ft_is_error_parsing(var, prompt, shell);
+	status = ft_is_error_parsing(prompt);
 	if (status != 0)
 		return (status);
 	var->token_list = ft_build_token_list(prompt, var->exit_nb);

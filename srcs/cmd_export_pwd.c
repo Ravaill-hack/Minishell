@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:15:56 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/10 11:01:13 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/10 11:34:13 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int	ft_cmd_export_with_args(char ***env_ptr, char *arg, t_var *var)
 	return (status);
 }
 
-int	ft_cmd_pwd(char **env, t_cmd *node)
+int	ft_cmd_pwd(char **env)
 {
 	ft_putstr_fd(ft_extract_env_value_from_key(env, "PWD"), 1);
 	ft_putchar_fd('\n', 1);

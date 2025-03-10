@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_parsing_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:30:22 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/07 16:27:39 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/10 19:04:37 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// DONE //
 
 #include "minishell.h"
 

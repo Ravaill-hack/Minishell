@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 22:38:47 by julien            #+#    #+#             */
-/*   Updated: 2025/03/10 11:02:36 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/10 19:15:36 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,6 @@ void	ft_free_token_list_until(t_token_list **list, int n)
 	*list = NULL;
 }
 
-void	ft_clear_and_free_all_exit(t_var *var, t_shell *shell)
-{
-	if (var->env)
-		ft_free_strs(var->env);
-	if (shell)
-	{
-		if (shell->terminal_prompt)
-			free(shell->terminal_prompt);
-		free(shell);
-	}
-	if (VALGRIND_DEBUG == 0)
-		rl_clear_history();
-}
-
 void	ft_clear_and_free_all(t_var *var, t_shell *shell)
 {
 	if (var->env)
@@ -67,6 +53,20 @@ void	ft_clear_and_free_all(t_var *var, t_shell *shell)
 			free(shell->terminal_prompt);
 		if (shell->prompt)
 			free(shell->prompt);
+		free(shell);
+	}
+	if (VALGRIND_DEBUG == 0)
+		rl_clear_history();
+}
+
+void	ft_clear_and_free_all_exit(t_var *var, t_shell *shell)
+{
+	if (var->env)
+		ft_free_strs(var->env);
+	if (shell)
+	{
+		if (shell->terminal_prompt)
+			free(shell->terminal_prompt);
 		free(shell);
 	}
 	if (VALGRIND_DEBUG == 0)

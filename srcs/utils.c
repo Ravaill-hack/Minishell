@@ -6,22 +6,13 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:09:21 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/10 11:02:17 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/10 19:23:53 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+// DONE //
+
 #include "minishell.h"
-
-char	*ft_strjoin3(char *s1, char *s2, char *s3)
-{
-	char	*temp;
-	char	*res;
-
-	temp = ft_strjoin(s1, s2);
-	res = ft_strjoin(temp, s3);
-	free(temp);
-	return (res);
-}
 
 int	ft_nb_pipes(t_token_list *list)
 {

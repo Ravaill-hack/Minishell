@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_append.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:26:37 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/07 16:54:34 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/10 18:44:29 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// DONE //
 
 #include "minishell.h"
 

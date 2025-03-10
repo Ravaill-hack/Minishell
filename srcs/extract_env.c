@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   extract_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:11:49 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/07 10:58:45 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/10 20:00:03 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// DONE //
 
 #include "minishell.h"
 

@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:30:44 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/10 10:58:21 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/10 19:56:37 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,39 +54,22 @@ int	ft_is_empty_quotes_error(char *prompt)
 	int	i;
 
 	i = 0;
-	if (prompt[i] == 34)
-	{
+	if (prompt[i] == 34 || prompt[i] == 39)
 		i++;
-		while (ft_isspace(prompt[i]) || prompt[i] == 34)
-		{
-			if (prompt[i] == 34)
-			{
-				ft_putstr_fd("Command \'\' not found.\n", 2);
-				return (127);
-			}
-			i++;
-		}
-	}
-	else if (prompt[i] == 39)
+	while (ft_isspace(prompt[i]) || prompt[i] == 34 || prompt[i] == 39)
 	{
-		i++;
-		while (ft_isspace(prompt[i]) || prompt[i] == 39)
+		if (prompt[i] == 34)
 		{
-			if (prompt[i] == 39)
-			{
-				ft_putstr_fd("Command \'\' not found.\n", 2);
-				return (127);
-			}
-			i++;
+			ft_putstr_fd("Command \'\' not found.\n", 2);
+			return (127);
 		}
+		i++;
 	}
 	return (SUCCESS);
 }
 
-int	ft_is_error_parsing(t_var *var, char *prompt, t_shell *shell)
+int	ft_is_error_parsing(char *prompt)
 {
-	(void)var;
-	(void)shell;
 	if (ft_quote_error(prompt) == 1)
 		return (FAILURE);
 	if (ft_is_empty_quotes_error(prompt) == 127)
