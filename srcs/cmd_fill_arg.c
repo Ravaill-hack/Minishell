@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_fill_arg.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 10:33:05 by julien            #+#    #+#             */
-/*   Updated: 2025/03/10 19:08:08 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/11 12:37:40 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ char	*ft_fill_arg_redirs(t_token_list **node)
 		free(tmp);
 	if (*node)
 		(*node) = (*node)->next;
+	if (*node && (*node)->type > 4 && (*node)->prev
+		&& (*node)->prev->print_space_after == 0)
+	{
+		tmp = ft_fill_arg_not_redirs(node);
+		str = ft_strjoin(str, tmp);
+		free(tmp);
+	}
 	return (str);
 }
 
