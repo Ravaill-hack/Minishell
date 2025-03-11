@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 10:35:50 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/11 10:48:10 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/11 11:13:28 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_cmd_cd_get_path(char *raw_path, char *old_pwd)
 	if (raw_path[0] != '/')
 		path = ft_strjoin_n(3, old_pwd, "/", raw_path);
 	else
-		path = /*ft_strdup(*/raw_path/*)*/;
+		path = ft_strdup(raw_path);
 	return (path);
 }
 

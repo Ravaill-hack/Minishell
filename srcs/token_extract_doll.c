@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:31:43 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/11 11:05:52 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/11 11:12:10 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ char	*ft_extract_doll(char *line, int *i, int nb_x)
 	char	*str;
 	int		j;
 
-	len = ft_doll_len(line, *i, nb_x);
+	(void) nb_x;
+	len = ft_doll_len(line, *i);
 	str = (char *)ft_calloc((len + 1), sizeof(char));
 	j = 0;
 	if (!str)
@@ -66,7 +67,7 @@ char	*ft_extract_title_doll(char *str, int *i)
 	char	*title;
 
 	j = 0;
-	title = (char *)malloc((ft_doll_len(str, *i, 0) + 1) * sizeof(char));
+	title = (char *)malloc((ft_doll_len(str, *i) + 1) * sizeof(char));
 	if (!title)
 		return (NULL);
 	while (str[*i] && str[*i] != ' ' && str[*i] != '\"'

@@ -3,23 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   token_len.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:37:31 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/10 11:08:03 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/11 11:11:18 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_doll_len(char *str, int i, int nb_ex)
+int	ft_doll_len(char *str, int i)
 {
 	int	len;
 	int	nb_dq;
 
 	len = 0;
 	nb_dq = 0;
-	(void) nb_ex;
 	while (str[i + len] && str[i + len] != ' '
 		&& str[i + len] != '\"' && str[i] != '\''
 		&& (str[i + len] != '$' || len == 0))

@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/03/11 11:01:55 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/11 11:12:48 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,3 @@ int	ft_cmd_exit(t_var *var, t_shell *shell, t_cmd *node)
 	var->exit_nb = FAILURE;
 	return (FAILURE);
 }
-

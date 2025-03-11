@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/11 11:01:23 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/11 11:15:54 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,13 @@ typedef struct s_token_list
 	struct s_token_list		*next;
 }	t_token_list;
 
+typedef struct s_shell
+{
+	char					*terminal_prompt;
+	char					*prompt;
+	int						while_hdc;
+}	t_shell;
+
 typedef struct s_var
 {
 	char					*line;
@@ -144,13 +151,6 @@ typedef struct s_index
 	int						i;
 	int						j;
 }	t_index;
-
-typedef struct s_shell
-{
-	char					*terminal_prompt;
-	char					*prompt;
-	int						while_hdc;
-}	t_shell;
 
 /*
 Debug (debug.c)
@@ -221,7 +221,7 @@ int				ft_is_in_quotes(char *line, int ind);
 /*
 Token - len (token_len.c)
 */
-int				ft_doll_len(char *str, int i, int nb_ex);
+int				ft_doll_len(char *str, int i);
 int				ft_dquoted_len(char *str, int i);
 int				ft_squoted_len(char *str, int i);
 int				ft_strlen_content(char *str, int i);

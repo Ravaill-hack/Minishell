@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/03/10 18:59:23 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/11 11:17:23 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ char	**ft_create_empty_env(void)
 
 void	ft_init(t_var *var, char **env)
 {
+	var->token_list = NULL;
 	var->exit_nb = 0;
 	if (env && (*env))
 	{

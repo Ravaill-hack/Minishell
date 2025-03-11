@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:35:39 by julien            #+#    #+#             */
-/*   Updated: 2025/03/11 09:30:36 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/11 11:17:32 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	main(int argc, char **argv, char **env)
 	(void) argv;
 	var.status = SUCCESS;
 	shell = ft_init_shell();
-	var.token_list = NULL;
 	ft_init(&var, env);
 	get_prompt(&var, shell);
 	while (shell->prompt)
