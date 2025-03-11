@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:30:44 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/10 19:56:37 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/11 17:03:07 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ int	ft_quote_error(char *line)
 		i++;
 	}
 	if (nd != 0 || ns != 0)
+	{
+		ft_putstr_fd("syntax error : a quote is still open\n", 2);
 		return (1);
+	}
 	return (0);
 }
 
@@ -68,11 +71,43 @@ int	ft_is_empty_quotes_error(char *prompt)
 	return (SUCCESS);
 }
 
-int	ft_is_error_parsing(char *prompt)
+int	ft_print_err_near_tok(t_line_token tok_id)
 {
-	if (ft_quote_error(prompt) == 1)
+	ft_putstr_fd("syntax error near unexpected token '", 2);
+	if (tok_id == 0)
+		ft_putstr_fd("<'\n", 2);
+	else if (tok_id == 1)
+		ft_putstr_fd("<<'\n", 2);
+	else if (tok_id == 2)
+		ft_putstr_fd(">'\n", 2);
+	else if (tok_id == 3)
+		ft_putstr_fd(">>'\n", 2);
+	else if (tok_id == 4)
+		ft_putstr_fd("|'\n", 2);
+	else if (tok_id >= 5)
+		ft_putstr_fd("newline'\n", 2);
+	return (127);
+}
+
+int	ft_is_valid_token_list(t_token_list **token_list)
+{
+	t_token_list	*node;
+
+	node = *token_list;
+	if (!node)
 		return (FAILURE);
-	if (ft_is_empty_quotes_error(prompt) == 127)
-		return (127);
+	while (node && node->next)
+	{
+		if (node->type <= 4 && node->next->type == 4)
+			return (ft_print_err_near_tok(node->type));
+		node = node->next;
+	}
+	if (node->type <= 4)
+	{
+		if (!node->prev)
+			return (ft_print_err_near_tok(5));
+		else
+			return (ft_print_err_near_tok(node->prev->type));
+	}
 	return (SUCCESS);
 }

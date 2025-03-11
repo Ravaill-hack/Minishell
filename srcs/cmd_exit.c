@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/03/11 14:18:57 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:02:15 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,8 @@ int	ft_exit_num_arg_rq(char **args)
 	return (2);
 }
 
-int	ft_exit_too_many_args(char **args)
+int	ft_exit_too_many_args(void)
 {
-	(void)args;
-
 	ft_putstr_fd("exit: too many arguments\n", 2);
 	return (1);
 }
@@ -42,7 +40,7 @@ int	ft_cmd_exit(t_var *var, t_shell *shell, t_cmd *node)
 	else if (node->arg[1][0] == '\0')
 		ft_exit_clear_and_exit(var, shell, ft_exit_num_arg_rq(node->arg));
 	else if (node->arg[2])
-		return (ft_exit_too_many_args(node->arg));
+		return (ft_exit_too_many_args());
 	else if (ft_atol(node->arg[1]) == -1)
 		ft_exit_clear_and_exit(var, shell, ft_exit_num_arg_rq(node->arg));
 	else if (ft_atol(node->arg[1]) == -2)

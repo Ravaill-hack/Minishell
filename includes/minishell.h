@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/11 13:15:53 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:58:27 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,10 +236,11 @@ void			ft_skip_spaces(char *str, int *i, t_token_list *list);
 /*
 Token - error (token_error.c)
 */
+int				ft_token_redir_error(t_cmd *node, int i);
 int				ft_quote_error(char *line);
-int				ft_token_redir_error(t_cmd *node, int i); // a faire
 int				ft_is_empty_quotes_error(char *prompt);
-int				ft_is_error_parsing(char *prompt);
+int				ft_print_err_near_tok(t_line_token tok_id);
+int				ft_is_valid_token_list(t_token_list **token_list);
 /*
 Cmd list - init (cmd_list_init.c)
 */
@@ -417,7 +418,7 @@ Cmd - exit (cmd_exit.c)
 */
 void			ft_exit_clear_and_exit(t_var *var, t_shell *shell, int nb_ex);
 int				ft_exit_num_arg_rq(char **args);
-int				ft_exit_too_many_args(char **args);
+int				ft_exit_too_many_args(void);
 int				ft_cmd_exit(t_var *var, t_shell *shell, t_cmd *node);
 /*
 Cmd - cd (cmd_cd.c)
