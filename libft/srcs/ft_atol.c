@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 09:05:42 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/11 12:46:18 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/11 14:16:14 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,26 @@
 // unless the value would underflow or overflow.
 long	ft_atol(const char *nptr)
 {
-	long	result;
-	long	sign;
-
+	long long	result;
+	
 	result = 0;
-	sign = 1;
-	while (ft_isspace((int)*nptr))
+	if (ft_strlen(nptr) > 20)
+		return (-1);
+	while (ft_isspace(*nptr))
 		nptr++;
-	if (*nptr == '+' || *nptr == '-')
+	if (*nptr == '-')
+		return (-2);
+	if (*nptr == '+')
+		nptr++;
+	while (ft_isdigit(*nptr))
 	{
-		if (*nptr == '-')
-			sign = -1;
+		if (result > (9223372036854775807LL / 10)
+			|| (result == 9223372036854775807LL / 10 && (*nptr - '0') > 7))
+			return (-1);
+		result = (result * (long long)10) + (*nptr - 48);
 		nptr++;
 	}
-	while (ft_isdigit((int)*nptr))
-	{
-		result = (result * 10) + ((int)(*nptr) - 48);
-		nptr++;
-	}
-	return (sign * result);
+	if (*nptr != '\0' || result > 9223372036854775807LL)
+		return (-1);
+	return ((long)result);
 }

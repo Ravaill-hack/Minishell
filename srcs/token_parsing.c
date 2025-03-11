@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:16:10 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/10 19:57:00 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/11 13:30:33 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_append_tokens(char *line, t_token_list **list, int nb_x)
 	while (line[i])
 	{
 		ft_skip_spaces(line, &i, *list);
-		if (!line[i])
+		if (!line[i] && i == 0)
 			return (1);
 		if (ft_is_operand(line, i) == 1)
 			err = ft_append_operand(line, &i, list);

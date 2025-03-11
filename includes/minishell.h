@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/11 11:55:42 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/11 13:15:53 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -416,8 +416,7 @@ int				ft_cmd_unset(char ***env_ptr, t_cmd *node);
 Cmd - exit (cmd_exit.c)
 */
 void			ft_exit_clear_and_exit(t_var *var, t_shell *shell, int nb_ex);
-int				ft_exit_numeric_arg_err(int i, char **args);
-int				ft_exit_numeric_arg_rq(char **args);
+int				ft_exit_num_arg_rq(char **args);
 int				ft_exit_too_many_args(char **args);
 int				ft_cmd_exit(t_var *var, t_shell *shell, t_cmd *node);
 /*
