@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/11 16:58:27 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:56:24 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,8 +266,8 @@ Cmd list - build (cmd_list_build.c)
 int				*ft_init_redir_check(t_token_list *node);
 char			**ft_token_list_to_char_array(t_token_list *node,
 					t_cmd **cmd_node);
-t_cmd			*ft_create_cmd_node(t_var *var, int i, t_shell *shell);
-t_cmd			**ft_build_cmd_list(t_var *var, t_shell *shell);
+t_cmd			*ft_create_cmd_node(t_var *var, int i);
+t_cmd			**ft_build_cmd_list(t_var *var);
 t_cmd			**ft_free_cmd_list_until(t_cmd **cmd_list, int n);
 /*
 Cmd fill arg (cmd_fill_arg.c)
@@ -287,7 +287,7 @@ Redirection - build (redirection_build.c)
 */
 void			ft_init_fd(t_cmd *node);
 int				ft_close_fds(t_cmd *node);
-int				ft_fill_fd(t_cmd *node, t_shell *shell);
+int				ft_fill_fd(t_cmd *node, t_var *var);
 int				**ft_init_pipes(int nb_pipes);
 int				ft_set_pipes(t_cmd **cmd, int nb_cmd, int **pipes);
 /*
@@ -296,13 +296,15 @@ Redirection - handle (redirection_handle.c)
 int				ft_set_infile(char *str, t_cmd *node);
 int				ft_set_outfile_append(char *str, t_cmd *node);
 int				ft_set_outfile_trunc(char *str, t_cmd *node);
-int				ft_while_heredoc(char *line, char *heredoc, t_shell *shell);
-int				ft_set_heredoc(char *str, t_cmd *node, t_shell *shell);
+int				ft_while_heredoc(char *line, char *heredoc, t_var *var);
+int				ft_set_heredoc(char *str, t_cmd *node, t_var *var);
 /*
 Redirection - handle 2 (redirection_handle_2.c)
 */
-int				ft_read_while_heredoc(char *line, int i, char *heredoc,
-					int pipe1);
+int				ft_read_while_heredoc(char *line, int i, char *hdc, int pipe1,
+					t_var *var);
+int				ft_putdoll_fd(char *str, int i, int fd, t_var *var);
+void			ft_special_write(int fd, char *raw, t_var *var);
 /*
 Redirection - utils (redirection_utils.c)
 */

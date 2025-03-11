@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list_build.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 21:35:42 by julien            #+#    #+#             */
-/*   Updated: 2025/03/10 18:59:46 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/11 17:56:13 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	**ft_token_list_to_char_array(t_token_list *node, t_cmd **cmd_node)
 	return (array);
 }
 
-t_cmd	*ft_create_cmd_node(t_var *var, int i, t_shell *shell)
+t_cmd	*ft_create_cmd_node(t_var *var, int i)
 {
 	t_token_list	*token_node;
 	t_cmd			*cmd_node;
@@ -74,7 +74,7 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i, t_shell *shell)
 		return (NULL);
 	cmd_node->arg = ft_epure_args_array(cmd_node->raw, cmd_node->is_redir);
 	ft_init_fd(cmd_node);
-	if (ft_fill_fd(cmd_node, shell) == FAILURE)
+	if (ft_fill_fd(cmd_node, var) == FAILURE)
 		return (NULL);
 	var->fd_pipe = ft_init_pipes(ft_nb_pipes(*(var->token_list)));
 	ft_free_strs_until(cmd_node->raw, -1);
@@ -84,7 +84,7 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i, t_shell *shell)
 	return (cmd_node);
 }
 
-t_cmd	**ft_build_cmd_list(t_var *var, t_shell *shell)
+t_cmd	**ft_build_cmd_list(t_var *var)
 {
 	t_cmd	**cmd_list;
 	int		i;
@@ -96,7 +96,7 @@ t_cmd	**ft_build_cmd_list(t_var *var, t_shell *shell)
 		return (NULL);
 	while (i < var->nb_cmd)
 	{
-		cmd_list[i] = ft_create_cmd_node(var, i, shell);
+		cmd_list[i] = ft_create_cmd_node(var, i);
 		if (!cmd_list[i] && i == 0)
 			return (NULL);
 		if (!cmd_list[i] && i != 0)

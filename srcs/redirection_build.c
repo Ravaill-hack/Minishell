@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:48:38 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/11 09:53:56 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:20:40 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_close_fds(t_cmd *node)
 	return (FAILURE);
 }
 
-int	ft_fill_fd(t_cmd *node, t_shell *shell)
+int	ft_fill_fd(t_cmd *node, t_var *var)
 {
 	int	i;
 	int	res;
@@ -45,7 +45,7 @@ int	ft_fill_fd(t_cmd *node, t_shell *shell)
 		if (node->is_redir[i] == 1 && ft_token_redir_error(node, i) == 1)
 			return (FAILURE);
 		else if (ft_is_redir_hdc(node->is_redir, node->raw, i) == 1)
-			res = ft_set_heredoc(node->raw[i], node, shell);
+			res = ft_set_heredoc(node->raw[i], node, var);
 		else if (ft_is_redir_in(node->is_redir, node->raw, i) == 1)
 			res = ft_set_infile(node->raw[i], node);
 		else if (ft_is_redir_out_append(node->is_redir, node->raw, i) == 1)

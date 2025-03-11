@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:50:06 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/11 10:15:13 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:54:48 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,25 +60,24 @@ int	ft_set_outfile_trunc(char *str, t_cmd *node)
 	return (SUCCESS);
 }
 
-int	ft_while_heredoc(char *line, char *heredoc, t_shell *shell)
+int	ft_while_heredoc(char *line, char *heredoc, t_var *var)
 {
 	int		fd_pipe[2];
 	int		i;
 
-	(void)shell;
 	i = 0;
 	if (pipe(fd_pipe) == -1)
 		return (-1);
 	g_while_hd = 1;
 	rl_event_hook = check_signal;
-	ft_read_while_heredoc(line, i, heredoc, fd_pipe[1]);
+	ft_read_while_heredoc(line, i, heredoc, fd_pipe[1], var);
 	close(fd_pipe[1]);
 	g_while_hd = 0;
 	rl_event_hook = NULL;
 	return (fd_pipe[0]);
 }
 
-int	ft_set_heredoc(char *str, t_cmd *node, t_shell *shell)
+int	ft_set_heredoc(char *str, t_cmd *node, t_var *var)
 {
 	char	*line;
 
@@ -93,7 +92,7 @@ int	ft_set_heredoc(char *str, t_cmd *node, t_shell *shell)
 	node->heredoc = ft_strdup(str + 2);
 	if (!(node->heredoc))
 		return (FAILURE);
-	node->fd_in.fd = ft_while_heredoc(line, node->heredoc, shell);
+	node->fd_in.fd = ft_while_heredoc(line, node->heredoc, var);
 	if (node->fd_in.fd == -1)
 		return (FAILURE);
 	node->fd_in.is_def = 1;
