@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   update_env_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 13:58:43 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/10 19:14:11 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/11 09:06:42 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// DONE //
 
 #include "minishell.h"
 

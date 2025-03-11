@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 16:06:24 by julien            #+#    #+#             */
-/*   Updated: 2025/03/10 11:00:05 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/11 10:37:20 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,44 +97,4 @@ int	ft_update_old_pwd(char ***env)
 int	ft_update_new_pwd(char ***env, char *new_pwd)
 {
 	return (ft_update_env_var_value_from_key(env, "PWD", new_pwd));
-}
-
-int	ft_cmd_cd_path(char ***env, char *raw_path)
-{
-	char	*home;
-	char	*old_pwd;
-	int		status;
-	char	*new_pwd;
-	char	*path;
-
-	old_pwd = NULL;
-	old_pwd = ft_extract_env_value_from_key(*env, "PWD");
-	if (!old_pwd)
-		old_pwd = getcwd(NULL, 0);
-	if (raw_path[0] == '~')
-	{
-		home = ft_extract_env_value_from_key(*env, "HOME");
-		if (!home)
-			return (FAILURE);
-		path = ft_strjoin_n(3, home, "/", raw_path + 1);
-	}
-	else
-	{
-		if (raw_path[0] != '/')
-			path = ft_strjoin_n(3, old_pwd, "/", raw_path);
-		else
-			path = raw_path;
-	}
-	if (chdir(path) == -1)
-	{
-		if (errno == EACCES || errno == ENOENT || errno == ENOTDIR)
-			perror(NULL);
-		return (free(path), FAILURE);
-	}
-	if (ft_update_old_pwd(env) == FAILURE)
-		return (FAILURE);
-	new_pwd = NULL;
-	new_pwd = getcwd(NULL, 0);
-	status = ft_update_new_pwd(env, new_pwd);
-	return (status);
 }

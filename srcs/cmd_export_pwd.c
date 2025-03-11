@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export_pwd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:15:56 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/10 11:34:13 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/11 11:01:13 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_is_valid_key(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (ft_isdigit(str[0]) == 1)
-		return (0);
-	while (str[i] && str[i] != '=')
-	{
-		if (ft_strchr("-+*&@#!?:", str[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 int	ft_cmd_export(char ***env_ptr, t_cmd *cmd_node, t_var *var)
 {
@@ -49,40 +33,31 @@ int	ft_cmd_export(char ***env_ptr, t_cmd *cmd_node, t_var *var)
 					status = FAILURE;
 			}
 			else
-			{
-				ft_putstr_fd("export: '", 2);
-				ft_putstr_fd(cmd_node->arg[i], 2);
-				ft_putstr_fd("' is not a valid identifier\n", 2);
-				status = FAILURE;
-			}
+				status = ft_cmd_export_invalid_id(cmd_node->arg, i);
 			i++;
 		}
 	}
 	return (status);
 }
 
+int	ft_cmd_export_invalid_id(char **args, int i)
+{
+	ft_putstr_fd("export: '", 2);
+	ft_putstr_fd(args[i], 2);
+	ft_putstr_fd("' is not a valid identifier\n", 2);
+	return (FAILURE);
+}
+
 int	ft_cmd_export_with_no_args(char ***env_ptr, t_var *var)
 {
 	size_t	i;
 	size_t	len;
-	char	*key;
-	char	*value;
 
 	i = 0;
 	len = ft_strslen(*env_ptr);
 	while (i < len)
 	{
-		ft_putstr_fd("declare -x ", 1);
-		key = ft_extract_key_env((*env_ptr)[i]);
-		ft_putstr_fd(key, 1);
-		free(key);
-		ft_putchar_fd('=', 1);
-		ft_putchar_fd('"', 1);
-		value = ft_extract_value_env((*env_ptr)[i]);
-		ft_putstr_fd(value, 1);
-		free(value);
-		ft_putchar_fd('"', 1);
-		ft_putchar_fd('\n', 1);
+		ft_cmd_export_print_declare(*env_ptr, i);
 		i++;
 	}
 	i = 0;
@@ -94,24 +69,6 @@ int	ft_cmd_export_with_no_args(char ***env_ptr, t_var *var)
 		i++;
 	}
 	return (SUCCESS);
-}
-
-int	ft_add_to_declare(char *arg, char **env, char ***declare)
-{
-	int	i;
-
-	i = 0;
-	if (ft_get_line_env(env, arg) != -1)
-		return (0);
-	while ((*declare) && (*declare)[i])
-	{
-		if ((ft_strncmp(arg, (*declare)[i], ft_strlen(arg)) == 0)
-			&& ((*declare)[i][ft_strlen(arg)] == '\0'))
-			return (0);
-		i++;
-	}
-	*declare = ft_strsjoinstr(*declare, arg);
-	return (0);
 }
 
 int	ft_cmd_export_with_args(char ***env_ptr, char *arg, t_var *var)

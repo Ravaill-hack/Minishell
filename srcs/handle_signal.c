@@ -3,16 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   handle_signal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:17:24 by julien            #+#    #+#             */
-/*   Updated: 2025/03/10 19:00:08 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/11 09:55:05 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // DONE // 
 
 #include "minishell.h"
+
+int	check_signal(void)
+{
+	if (g_while_hd == 0)
+		return (1);
+	return (0);
+}
 
 void	ft_sigint(int signum)
 {

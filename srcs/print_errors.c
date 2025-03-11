@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 10:51:41 by julien            #+#    #+#             */
-/*   Updated: 2025/03/10 10:54:29 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/11 09:59:31 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,13 @@ void	ft_open_error(char *path)
 	}
 	ft_putstr_fd(strerror(errno), 2);
 	ft_putchar_fd('\n', 2);
+}
+
+void	ft_print_error_hdc(int i, char *heredoc)
+{
+	ft_putstr_fd("warning: here-document at line ", 2);
+	ft_putnbr_fd(i, 2);
+	ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
+	ft_putstr_fd(heredoc, 2);
+	ft_putstr_fd("')\n", 2);
 }

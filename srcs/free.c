@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 22:38:47 by julien            #+#    #+#             */
-/*   Updated: 2025/03/10 19:15:36 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/11 09:11:19 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// DONE //
 
 #include "minishell.h"
 

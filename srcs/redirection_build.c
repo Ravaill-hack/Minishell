@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_build.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:48:38 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/10 20:25:18 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/11 09:53:56 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,28 +44,16 @@ int	ft_fill_fd(t_cmd *node, t_shell *shell)
 	{
 		if (node->is_redir[i] == 1 && ft_token_redir_error(node, i) == 1)
 			return (FAILURE);
-		else if (node->is_redir[i] == 1
-			&& (node->raw[i][0] == '<'
-			&& node->raw[i][1] == '<'))
+		else if (ft_is_redir_hdc(node->is_redir, node->raw, i) == 1)
 			res = ft_set_heredoc(node->raw[i], node, shell);
-		else if (node->is_redir[i] == 1
-			&& (node->raw[i][0] == '<'
-			&& node->raw[i][1] != '<'))
+		else if (ft_is_redir_in(node->is_redir, node->raw, i) == 1)
 			res = ft_set_infile(node->raw[i], node);
-		else if (node->is_redir[i] == 1
-			&& (node->raw[i][0] == '>'
-			&& node->raw[i][1] == '>'))
+		else if (ft_is_redir_out_append(node->is_redir, node->raw, i) == 1)
 			res = ft_set_outfile_append(node->raw[i], node);
-		else if (node->is_redir[i] == 1
-			&& (node->raw[i][0] == '>'
-			&& node->raw[i][1] != '>'))
+		else if (ft_is_redir_out_trunc(node->is_redir, node->raw, i) == 1)
 			res = ft_set_outfile_trunc(node->raw[i], node);
 		if (res == FAILURE)
-		{
-			ft_open_error(node->raw[i] + 1);
-			ft_close_fds(node);
-			return (FAILURE);
-		}
+			return (ft_redir_failure(node, i));
 		i++;
 	}
 	return (SUCCESS);

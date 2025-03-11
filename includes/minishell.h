@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/10 20:27:16 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/11 11:01:23 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,15 @@ typedef enum s_type_fd
 	NONE,
 }	t_type_fd;
 
+typedef struct s_cd
+{
+	char					*home;
+	char					*old_pwd;
+	int						status;
+	char					*new_pwd;
+	char					*path;
+}	t_cd;
+
 typedef struct s_fd
 {
 	int						fd;
@@ -127,6 +136,7 @@ typedef struct s_var
 	char					**declare;
 	int						exit_nb;
 	int						shlvl0;
+	int						status;
 }	t_var;
 
 typedef struct s_index
@@ -191,7 +201,7 @@ int				ft_expand_dolls(t_token_list *list, t_var *var);
 /*
 Token - extract doll (token_extract_doll.c)
 */
-char			*ft_handle_question_mark(char *str, int j, char *line, int i);
+char			*ft_handle_question_mark(char *str, int i, int j, char *line);
 char			*ft_extract_doll(char *line, int *i, int nb_x);
 char			*ft_extract_title_doll(char *str, int *i);
 /*
@@ -209,6 +219,14 @@ int				ft_is_in_squotes(char *line, int ind);
 int				ft_is_in_dquotes(char *line, int ind);
 int				ft_is_in_quotes(char *line, int ind);
 /*
+Token - len (token_len.c)
+*/
+int				ft_doll_len(char *str, int i, int nb_ex);
+int				ft_dquoted_len(char *str, int i);
+int				ft_squoted_len(char *str, int i);
+int				ft_strlen_content(char *str, int i);
+int				ft_exit_nb_len(int nb_exit);
+/*
 Token - utils (token_utils.c)
 */
 t_line_token	ft_find_token_type(char *str, int i);
@@ -219,7 +237,7 @@ void			ft_skip_spaces(char *str, int *i, t_token_list *list);
 Token - error (token_error.c)
 */
 int				ft_quote_error(char *line);
-int				ft_token_redir_error(t_cmd *node, int i);
+int				ft_token_redir_error(t_cmd *node, int i); // a faire
 int				ft_is_empty_quotes_error(char *prompt);
 int				ft_is_error_parsing(char *prompt);
 /*
@@ -264,11 +282,41 @@ int				ft_go_to_next_node_condition(t_token_list **node);
 int				ft_node_is_not_redir(t_token_list **node);
 int				ft_node_is_content(t_token_list **node);
 /*
+Redirection - build (redirection_build.c)
+*/
+void			ft_init_fd(t_cmd *node);
+int				ft_close_fds(t_cmd *node);
+int				ft_fill_fd(t_cmd *node, t_shell *shell);
+int				**ft_init_pipes(int nb_pipes);
+int				ft_set_pipes(t_cmd **cmd, int nb_cmd, int **pipes);
+/*
+Redirection - handle (redirection_handle.c)
+*/
+int				ft_set_infile(char *str, t_cmd *node);
+int				ft_set_outfile_append(char *str, t_cmd *node);
+int				ft_set_outfile_trunc(char *str, t_cmd *node);
+int				ft_while_heredoc(char *line, char *heredoc, t_shell *shell);
+int				ft_set_heredoc(char *str, t_cmd *node, t_shell *shell);
+/*
+Redirection - handle 2 (redirection_handle_2.c)
+*/
+int				ft_read_while_heredoc(char *line, int i, char *heredoc,
+					int pipe1);
+/*
+Redirection - utils (redirection_utils.c)
+*/
+int				ft_is_redir_in(int *is_redir, char **raw, int i);
+int				ft_is_redir_hdc(int *is_redir, char **raw, int i);
+int				ft_is_redir_out_trunc(int *is_redir, char **raw, int i);
+int				ft_is_redir_out_append(int *is_redir, char **raw, int i);
+int				ft_redir_failure(t_cmd *node, int i);
+/*
 Print errors (print_errors.c)
 */
 void			ft_error_cmd_not_found(char *cmd);
 void			ft_exec_error(char **split_cmd);
 void			ft_open_error(char *path);
+void			ft_print_error_hdc(int i, char *heredoc);
 /*
 Extract env (extract_env.c)
 */
@@ -297,6 +345,7 @@ Handle signal (handle_signal.c)
 void			ft_sigint(int signum);
 void			ft_sigquit(int signum);
 void			ft_set_signals(void);
+int				check_signal(void);
 /*
 Free (free.c)
 */
@@ -363,5 +412,41 @@ Cmd - env - unset (cmd_env_unset.c)
 */
 int				ft_cmd_env(char **env, t_cmd *cmd_node);
 int				ft_cmd_unset(char ***env_ptr, t_cmd *node);
+/*
+Cmd - exit (cmd_exit.c)
+*/
+void			ft_exit_clear_and_exit(t_var *var, t_shell *shell, int nb_ex);
+int				ft_exit_numeric_arg_err(int i, char **args);
+int				ft_exit_numeric_arg_rq(char **args);
+int				ft_exit_too_many_args(char **args);
+int				ft_cmd_exit(t_var *var, t_shell *shell, t_cmd *node);
+/*
+Cmd - cd (cmd_cd.c)
+*/
+int				ft_cmd_cd(char ***env, t_cmd *node);
+int				ft_cmd_cd_home(char ***env);
+int				ft_cmd_cd_minus(char ***env);
+int				ft_update_old_pwd(char ***env);
+int				ft_update_new_pwd(char ***env, char *new_pwd);
+/*
+Cmd - cd 2 (cmd_cd_2.c)
+*/
+char			*ft_cmd_cd_get_path(char *raw_path, char *old_pwd);
+char			*ft_cmd_cd_get_old_pwd(char **env);
+int				ft_cmd_cd_path(char ***env, char *raw_path);
+/*
+Cmd - export (cmd_export.c)
+*/
+int				ft_cmd_export(char ***env_ptr, t_cmd *cmd_node, t_var *var);
+int				ft_cmd_export_invalid_id(char **args, int i);
+int				ft_cmd_export_with_no_args(char ***env_ptr, t_var *var);
+int				ft_cmd_export_with_args(char ***env_ptr, char *arg, t_var *var);
+int				ft_cmd_pwd(char **env);
+/*
+Cmd - export 2 (cmd_export_2.c)
+*/
+int				ft_is_valid_key(char *str);
+int				ft_add_to_declare(char *arg, char **env, char ***declare);
+int				ft_cmd_export_print_declare(char **env, int i);
 
 #endif

@@ -1,0 +1,31 @@
+lmatkows$
+LIBFT = libft.a
+CFLAGS = -Wall -Wextra -Werror -g
+	cmd_fill_arg_utils.c \
+	cmd_fill_arg.c \
+	extract_env.c \
+	extract_path.c \
+	handle_cmd.c \
+	handle_pipes_2.c \
+	handle_pipes_3.c \
+	handle_pipes.c \
+	handle_signal.c \
+	main.c \
+	redirection_handle.c \
+	redirection_handle_2.c \
+	token_append.c \
+	token_extract_content.c \
+	token_extract_doll.c \
+	token_parsing_2.c \
+	token_parsing.c \
+	update_env_2.c \
+	update_env.c \
+OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS_FILES:.c=.o))
+all: $(LIBFT) $(NAME)
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBRARIES) -o $(NAME) -lncurses -lreadline
+clean:
+	$(MAKE) -C $(LIBFT_DIR) clean
+fclean: clean
+	$(MAKE) -C $(LIBFT_DIR) fclean
+re: fclean all
+.PHONY: all clean fclean re
