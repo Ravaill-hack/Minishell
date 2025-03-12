@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/03/11 11:17:23 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:27:35 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,5 @@ void	ft_init(t_var *var, char **env)
 	var->declare = NULL;
 	ft_set_signals();
 	rl_catch_signals = 0;
+	var->is_empt_line = 0;
 }

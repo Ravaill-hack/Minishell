@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_array2d.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 13:36:08 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/03 18:48:36 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/12 16:38:37 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,5 @@ void	ft_free_array2d(int **array2d)
 		i++;
 	}
 	free(array2d);
+	array2d = NULL;
 }

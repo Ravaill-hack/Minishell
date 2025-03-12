@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 21:35:42 by julien            #+#    #+#             */
-/*   Updated: 2025/03/12 14:33:15 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:52:14 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i)
 		return (NULL);
 	var->fd_pipe = ft_init_pipes(ft_nb_pipes(*(var->token_list)));
 	ft_free_strs_until(cmd_node->raw, -1);
-	// if (cmd_node->raw)
-	// 	free(cmd_node->raw);
 	if (cmd_node->is_redir)
 		free(cmd_node->is_redir);
 	return (cmd_node);

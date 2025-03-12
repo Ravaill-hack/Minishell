@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:16:10 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/12 14:07:27 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:26:42 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ int	ft_parse_line(t_var *var, char *prompt, t_shell *shell)
 	int	status;
 
 	(void)shell;
+	if (var->is_empt_line == 1)
+		free(var->token_list);
 	var->is_empt_line = 0;
 	status = ft_quote_error(prompt);
 	if (status != SUCCESS)

@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 22:38:47 by julien            #+#    #+#             */
-/*   Updated: 2025/03/12 14:18:22 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:03:44 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,26 @@ void	ft_clear_and_free_all_exit(t_var *var, t_shell *shell)
 {
 	if (var->env)
 		ft_free_strs(var->env);
+	if (var->token_list)
+	{
+		ft_free_token_list(var->token_list);
+		free(var->token_list);
+	}
 	if (shell)
 	{
 		if (shell->terminal_prompt)
 			free(shell->terminal_prompt);
 		free(shell);
+	}
+	if (var->cmd)
+		ft_free_cmd_list(var->cmd);
+	if (var->fd_pipe)
+	{
+		//ft_putstr_fd("\nvar fd pipe existe\n", 1);
+		ft_free_array2d(var->fd_pipe);
+		//if (var->fd_pipe)
+			//ft_putstr_fd("\nvar fd pipe existe encore\n", 1);
+		//	free (var->fd_pipe);
 	}
 	if (VALGRIND_DEBUG == 0)
 		rl_clear_history();
