@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 16:06:24 by julien            #+#    #+#             */
-/*   Updated: 2025/03/11 10:37:20 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:47:09 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ int	ft_cmd_cd(char ***env, t_cmd *node)
 	int	status;
 
 	if (node->arg[2])
+	{
+		ft_putstr_fd( "cd: too many arguments\n", 2);
 		return (FAILURE);
+	}
 	if (!node->arg[1])
 		status = ft_cmd_cd_home(env);
 	else if (node->arg[1][0] == '-' && !node->arg[1][1])
