@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:16:10 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/12 12:11:05 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:07:27 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,10 @@ int	ft_parse_line(t_var *var, char *prompt, t_shell *shell)
 	var->is_empt_line = 0;
 	status = ft_quote_error(prompt);
 	if (status != SUCCESS)
-		return (status);
+		return (var->exit_nb = status, status);
 	status = ft_is_empty_quotes_error(prompt);
 	if (status != SUCCESS)
-		return (status);
+		return (var->exit_nb = status, status);
 	var->token_list = ft_build_token_list(prompt, var->exit_nb);
 	if (!var->token_list)
 		return (FAILURE);
@@ -127,7 +127,7 @@ int	ft_parse_line(t_var *var, char *prompt, t_shell *shell)
 	{
 		if (status == -1)
 			return (var->is_empt_line = 1, SUCCESS);
-		return (status);
+		return (var->exit_nb = status, status);
 	}
 	ft_expand_dolls(*(var->token_list), var);
 	var->cmd = ft_build_cmd_list(var);

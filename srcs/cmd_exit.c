@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/03/11 16:02:15 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:02:01 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_cmd_exit(t_var *var, t_shell *shell, t_cmd *node)
 {
 	ft_putstr_fd("exit\n", 2);
 	if (!(node->arg[1]))
-		ft_exit_clear_and_exit(var, shell, 0);
+		ft_exit_clear_and_exit(var, shell, var->exit_nb);
 	else if (node->arg[1][0] == '\0')
 		ft_exit_clear_and_exit(var, shell, ft_exit_num_arg_rq(node->arg));
 	else if (node->arg[2])

@@ -1,0 +1,32 @@
+==1376790== 8 bytes in 1 blocks are still reachable in loss record 6 of 71
+==1376790==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1376790==    by 0x111827: ft_calloc (in /home/lmatkows/Ecole42/Work/Minishell/minishell)
+==1376790==    by 0x110588: ft_build_token_list (token_parsing.c:97)
+==1376790==    by 0x11064F: ft_parse_line (token_parsing.c:122)
+==1376790==    by 0x10D872: main (main.c:30)
+ 
+==1376790== 8 bytes in 1 blocks are still reachable in loss record 7 of 71
+==1376790==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1376790==    by 0x10DDB5: ft_init_pipes (redirection_build.c:68)
+==1376790==    by 0x10AF0E: ft_create_cmd_node (cmd_list_build.c:79)
+==1376790==    by 0x10AFFC: ft_build_cmd_list (cmd_list_build.c:99)
+==1376790==    by 0x1106C7: ft_parse_line (token_parsing.c:133)
+==1376790==    by 0x10D872: main (main.c:30)
+
+==1376790==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1376790==    by 0x10F536: ft_extract_content (token_extract_content.c:22)
+==1376790==    by 0x10E9F5: ft_append_content (token_append.c:25)
+==1376790==    by 0x110509: ft_append_tokens (token_parsing.c:83)
+==1376790==    by 0x1105BB: ft_build_token_list (token_parsing.c:101)
+==1376790==    by 0x11064F: ft_parse_line (token_parsing.c:122)
+==1376790==    by 0x10D872: main (main.c:30)
+
+==1376790== 5 bytes in 1 blocks are still reachable in loss record 2 of 71
+==1376790==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1376790==    by 0x111827: ft_calloc (in /home/lmatkows/Ecole42/Work/Minishell/minishell)
+==1376790==    by 0x11189D: ft_strdup (in /home/lmatkows/Ecole42/Work/Minishell/minishell)
+==1376790==    by 0x10B23C: ft_epure_args_array (cmd_list_init.c:34)
+==1376790==    by 0x10AEC5: ft_create_cmd_node (cmd_list_build.c:75)
+==1376790==    by 0x10AFFC: ft_build_cmd_list (cmd_list_build.c:99)
+==1376790==    by 0x1106C7: ft_parse_line (token_parsing.c:133)
+==1376790==    by 0x10D872: main (main.c:30)

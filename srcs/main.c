@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:35:39 by julien            #+#    #+#             */
-/*   Updated: 2025/03/12 12:08:08 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:01:40 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	main(int argc, char **argv, char **env)
 	get_prompt(&var, shell);
 	while (shell->prompt)
 	{
-		var.exit_nb = ft_parse_line(&var, shell->prompt, shell);
-		if (shell->prompt[0] && var.exit_nb == SUCCESS && var.is_empt_line == 0)
+		var.status = ft_parse_line(&var, shell->prompt, shell);
+		if (shell->prompt[0] && var.status == SUCCESS && var.is_empt_line == 0)
 		{
 			var.status = ft_handle_pipes(&var, shell);
 			if (var.status != SUCCESS)
