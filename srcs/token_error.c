@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:30:44 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/11 17:03:07 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 12:05:36 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	ft_is_valid_token_list(t_token_list **token_list)
 
 	node = *token_list;
 	if (!node)
-		return (FAILURE);
+		return (-1);
 	while (node && node->next)
 	{
 		if (node->type <= 4 && node->next->type == 4)
