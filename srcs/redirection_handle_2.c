@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_handle_2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 10:14:52 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/11 18:00:17 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:29:18 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_read_while_heredoc(char *line, int i, char *hdc, int pipe1, t_var *var)
+int	ft_read_while_heredoc(char *line, t_hdc hd, char *hdc, t_var *var)
 {
 	while (g_while_hd == 1)
 	{
-		i++;
+		(hd.i)++;
 		line = readline("> ");
 		if (!line || g_while_hd == 0)
 		{
-			ft_print_error_hdc(i, hdc);
+			ft_print_error_hdc(hd.i, hdc);
 			break ;
 		}
 		if (ft_strncmp(line, hdc, ft_strlen(line)) == 0 || g_while_hd == 0)
@@ -28,8 +28,8 @@ int	ft_read_while_heredoc(char *line, int i, char *hdc, int pipe1, t_var *var)
 			free (line);
 			break ;
 		}
-		ft_special_write(pipe1, line, var);
-		ft_putchar_fd('\n', pipe1);
+		ft_special_write(hd.fd, line, var);
+		ft_putchar_fd('\n', hd.fd);
 		free(line);
 	}
 	return (0);
@@ -51,11 +51,11 @@ int	ft_putdoll_fd(char *str, int i, int fd, t_var *var)
 		tmp = ft_itoa(var->exit_nb);
 		len = 1;
 	}
-	else if (ft_doll_var_exists(&(str[i + 1]), var->env))
+	else if (ft_doll_var_exists_hd(&(str[i + 1]), var->env))
 	{
-		tmp = ft_strdup(ft_extract_env_value_from_key(var->env, &(str[i + 1])));
-		while (str[i + len] && !ft_isspace(str[i + len]) && str[i + len] != '\"'
-			&& str[i + len] != '\'')
+		tmp = ft_strdup(ft_extract_env_value_hd(var->env, &(str[i + 1])));
+		while (str[i + len] && !ft_isspace(str[i + len + 1]) && str[i + len + 1] != '\"'
+			&& str[i + len + 1] != '\'' && (str[i + len + 1] != '$' || len == 0))
 			len ++;
 	}
 	else

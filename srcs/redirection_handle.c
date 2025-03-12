@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_handle.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:50:06 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/11 17:54:48 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 08:46:17 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,16 @@ int	ft_set_outfile_trunc(char *str, t_cmd *node)
 int	ft_while_heredoc(char *line, char *heredoc, t_var *var)
 {
 	int		fd_pipe[2];
-	int		i;
+	t_hdc	hdc;
 
-	i = 0;
+	hdc.i = 0;
 	if (pipe(fd_pipe) == -1)
 		return (-1);
+	hdc.fd = fd_pipe[1];
 	g_while_hd = 1;
 	rl_event_hook = check_signal;
-	ft_read_while_heredoc(line, i, heredoc, fd_pipe[1], var);
-	close(fd_pipe[1]);
+	ft_read_while_heredoc(line, hdc, heredoc, var);
+	close(hdc.fd);
 	g_while_hd = 0;
 	rl_event_hook = NULL;
 	return (fd_pipe[0]);

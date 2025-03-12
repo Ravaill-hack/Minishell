@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/11 17:56:24 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:14:21 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,12 @@ typedef struct s_index
 	int						j;
 }	t_index;
 
+typedef struct s_hdc
+{
+	int						fd;
+	int						i;
+}	t_hdc;
+
 /*
 Debug (debug.c)
 */
@@ -173,6 +179,13 @@ Utils (utils.c)
 int				ft_nb_pipes(t_token_list *list);
 int				ft_nb_dolls(t_token_list *list);
 int				ft_nb_str(t_token_list *list);
+/*
+Utils 2 (utils_2.c)
+*/
+int				ft_len_doll_hd(char *str);
+int				ft_doll_var_exists_hd(char *str, char **env);
+char			*ft_extract_env_value_hd(char **env, char *env_var_key);
+int				ft_get_line_env_hd(char **env, char *env_var_key);
 /*
 Token - append (token_append.c)
 */
@@ -301,7 +314,7 @@ int				ft_set_heredoc(char *str, t_cmd *node, t_var *var);
 /*
 Redirection - handle 2 (redirection_handle_2.c)
 */
-int				ft_read_while_heredoc(char *line, int i, char *hdc, int pipe1,
+int				ft_read_while_heredoc(char *line, t_hdc hd, char *hdc,
 					t_var *var);
 int				ft_putdoll_fd(char *str, int i, int fd, t_var *var);
 void			ft_special_write(int fd, char *raw, t_var *var);
