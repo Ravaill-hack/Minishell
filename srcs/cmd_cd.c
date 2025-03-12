@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 16:06:24 by julien            #+#    #+#             */
-/*   Updated: 2025/03/12 09:47:09 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:11:25 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ int	ft_cmd_cd_minus(char ***env)
 
 	tmp_old = ft_strdup(ft_extract_env_value_from_key(*env, "OLDPWD"));
 	if (!tmp_old)
+	{
+		ft_putstr_fd("cd: OLDPWD not set\n", 2);
 		return (FAILURE);
+	}
 	tmp_current = ft_strdup(ft_extract_env_value_from_key(*env, "PWD"));
 	if (!tmp_current)
 		return (FAILURE);

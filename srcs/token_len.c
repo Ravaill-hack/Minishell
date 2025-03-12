@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_len.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:37:31 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/11 11:11:18 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:21:23 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	ft_doll_len(char *str, int i)
 
 	len = 0;
 	nb_dq = 0;
-	while (str[i + len] && str[i + len] != ' '
-		&& str[i + len] != '\"' && str[i] != '\''
+	while (str[i + len] && str[i + len] != ' ' && str[i + len] != '\"'
+		&& str[i] != '\'' && str[i] != '/'
 		&& (str[i + len] != '$' || len == 0))
 		len ++;
 	if (str[i + 1] == '?' && str[i + 2] == '\"')

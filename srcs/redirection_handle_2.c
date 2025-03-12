@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 10:14:52 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/12 09:40:46 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:34:56 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@ int	ft_read_while_heredoc(char *line, t_hdc hd, char *hdc, t_var *var)
 	{
 		(hd.i)++;
 		line = readline("> ");
-		if (!line || g_while_hd == 0)
+		if (!line)
 		{
 			ft_print_error_hdc(hd.i, hdc);
 			break ;
 		}
-		if (ft_strncmp(line, hdc, ft_strlen(line)) == 0 || g_while_hd == 0)
+		if ((line && line[0] && ft_strncmp(line, hdc, ft_strlen(line)) == 0)
+			|| g_while_hd == 0)
 		{
 			free (line);
 			break ;

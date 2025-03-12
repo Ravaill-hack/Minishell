@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_extract_doll.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:31:43 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/11 11:12:10 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:21:43 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ char	*ft_extract_doll(char *line, int *i, int nb_x)
 	if (line[*i + 1] == '?' && line[*i + 2] == '\"')
 		return (ft_handle_question_mark(str, *i, j, line));
 	while (line[*i] && line[*i] != '\"' && line[*i] != ' '
-		&& line[*i] != '\'' && (line[*i] != '$' || j == 0))
+		&& line[*i] != '\'' && line[*i] != '/'
+		&& (line[*i] != '$' || j == 0))
 	{
 		str[j] = line[*i];
 		j++;
@@ -71,7 +72,7 @@ char	*ft_extract_title_doll(char *str, int *i)
 	if (!title)
 		return (NULL);
 	while (str[*i] && str[*i] != ' ' && str[*i] != '\"'
-		&& (str[*i] != '$' || j == 0))
+		&& str[*i] != '/' && (str[*i] != '$' || j == 0))
 	{
 		title[j] = str[*i];
 		j++;
