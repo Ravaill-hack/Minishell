@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 10:14:52 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/12 09:29:18 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:40:46 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,22 @@ int	ft_read_while_heredoc(char *line, t_hdc hd, char *hdc, t_var *var)
 	return (0);
 }
 
+int	ft_heredoc_cond1(char *str, int i)
+{
+	if (!str[i + 1] || ft_isspace(str[i + 1]) == 1 || str[i + 1] == '\"'
+		|| str[i + 1] == '\'')
+		return (1);
+	return (0);
+}
+
+int	ft_heredoc_cond2(char *str, int i)
+{
+	if (str[i + 1] == '?' && (!str[2] || ft_isspace(str[i + 2]) == 1
+			|| str[i + 2] == '\"' || str[i + 2] == '\''))
+		return (1);
+	return (0);
+}
+
 int	ft_putdoll_fd(char *str, int i, int fd, t_var *var)
 {
 	char	*tmp;
@@ -42,11 +58,9 @@ int	ft_putdoll_fd(char *str, int i, int fd, t_var *var)
 
 	tmp = NULL;
 	len = 0;
-	if (!str[i + 1] || ft_isspace(str[i + 1]) == 1 || str[i + 1] == '\"'
-		|| str[i + 1] == '\'')
+	if (ft_heredoc_cond1(str, i) == 1)
 		tmp = ft_strdup("$");
-	else if (str[i + 1] == '?' && (!str[2] || ft_isspace(str[i + 2]) == 1
-			|| str[i + 2] == '\"' || str[i + 2] == '\''))
+	else if (ft_heredoc_cond2(str, i) == 1)
 	{
 		tmp = ft_itoa(var->exit_nb);
 		len = 1;
@@ -54,9 +68,7 @@ int	ft_putdoll_fd(char *str, int i, int fd, t_var *var)
 	else if (ft_doll_var_exists_hd(&(str[i + 1]), var->env))
 	{
 		tmp = ft_strdup(ft_extract_env_value_hd(var->env, &(str[i + 1])));
-		while (str[i + len] && !ft_isspace(str[i + len + 1]) && str[i + len + 1] != '\"'
-			&& str[i + len + 1] != '\'' && (str[i + len + 1] != '$' || len == 0))
-			len ++;
+		len = ft_heredoc_find_len(str, i, len);
 	}
 	else
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/12 09:14:21 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:41:32 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ int				ft_len_doll_hd(char *str);
 int				ft_doll_var_exists_hd(char *str, char **env);
 char			*ft_extract_env_value_hd(char **env, char *env_var_key);
 int				ft_get_line_env_hd(char **env, char *env_var_key);
+int				ft_heredoc_find_len(char *str, int i, int len);
 /*
 Token - append (token_append.c)
 */
@@ -318,6 +319,8 @@ int				ft_read_while_heredoc(char *line, t_hdc hd, char *hdc,
 					t_var *var);
 int				ft_putdoll_fd(char *str, int i, int fd, t_var *var);
 void			ft_special_write(int fd, char *raw, t_var *var);
+int				ft_heredoc_cond1(char *str, int i);
+int				ft_heredoc_cond2(char *str, int i);
 /*
 Redirection - utils (redirection_utils.c)
 */

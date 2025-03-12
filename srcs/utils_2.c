@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 09:09:27 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/12 09:31:28 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:40:19 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,13 @@ int	ft_get_line_env_hd(char **env, char *env_var_key)
 	if (!env[i])
 		return (-1);
 	return (i);
+}
+
+int	ft_heredoc_find_len(char *str, int i, int len)
+{
+	while (str[i + len] && !ft_isspace(str[i + len + 1])
+		&& str[i + len + 1] != '\"' && str[i + len + 1] != '\''
+		&& (str[i + len + 1] != '$' || len == 0))
+		len ++;
+	return (len);
 }
