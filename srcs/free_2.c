@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:12:19 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/12 13:32:39 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:49:47 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,10 @@
 
 void	ft_free_cmd_node(t_cmd *node)
 {
-	//if (node->arg)
-	//	ft_free_strs(node->arg);
-	//if (node->raw)
-	//	ft_free_strs(node->arg);
-	//if (node->chev)
-	//	ft_free_strs(node->chev);
-	if (node->heredoc)
-		free(node->heredoc);
+	if (node->arg)
+		ft_free_strs(node->arg);
+	//if (node->heredoc)
+	//	free(node->heredoc);
 	if (node)
 		free(node);
 }

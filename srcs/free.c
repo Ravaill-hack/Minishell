@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 22:38:47 by julien            #+#    #+#             */
-/*   Updated: 2025/03/11 09:11:19 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:18:22 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ void	ft_clear_and_free_while(t_var *var, t_shell *shell)
 		ft_free_token_list(var->token_list);
 		free(var->token_list);
 	}
-	if (var->cmd[0])
-		ft_free_strs(var->cmd[0]->arg);
+	// if (var->cmd[0])
+	// 	ft_free_strs(var->cmd[0]->arg);
 	if (var->cmd)
 		ft_free_cmd_list(var->cmd);
 	if (var->fd_pipe)

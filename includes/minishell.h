@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/12 12:06:55 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:23:23 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ typedef struct s_cmd
 	char					**raw;
 	int						*is_redir;
 	char					**arg;
-	char					**chev;
 	t_fd					fd_in;
 	t_fd					fd_out;
 	int						need_pipe_in;
