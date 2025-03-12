@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 09:05:42 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/11 14:16:14 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:37:21 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 long	ft_atol(const char *nptr)
 {
 	long long	result;
-	
+
 	result = 0;
 	if (ft_strlen(nptr) > 20)
 		return (-1);

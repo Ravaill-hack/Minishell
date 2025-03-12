@@ -6,7 +6,7 @@
 /*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 16:06:24 by julien            #+#    #+#             */
-/*   Updated: 2025/03/12 10:11:25 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:36:53 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_cmd_cd(char ***env, t_cmd *node)
 
 	if (node->arg[2])
 	{
-		ft_putstr_fd( "cd: too many arguments\n", 2);
+		ft_putstr_fd("cd: too many arguments\n", 2);
 		return (FAILURE);
 	}
 	if (!node->arg[1])
