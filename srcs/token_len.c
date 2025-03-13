@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_len.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:37:31 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/12 10:21:23 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:14:41 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

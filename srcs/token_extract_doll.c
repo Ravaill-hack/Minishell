@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_extract_doll.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:31:43 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/12 10:21:43 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:39:32 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 #include "minishell.h"
 
-char	*ft_handle_question_mark(char *str, int i, int j, char *line)
+char	*ft_handle_question_mark(char *str, int *i, int j, char *line)
 {
 	int	nb_dq;
 
 	nb_dq = 0;
-	while (line[i] && line[i] != ' '
-		&& (line[i] != '\"' && nb_dq == 0)
-		&& line[i] != '\'' && (line[i] != '$' || j == 0))
+	while (line[*i] && line[*i] != ' '
+		&& (line[*i] != '\"' && nb_dq == 0)
+		&& line[*i] != '\'' && (line[*i] != '$' || j == 0))
 	{
-		if (line[i] == '\"')
+		if (line[*i] == '\"')
 		{
 			nb_dq = 1;
-			i++;
+			(*i)++;
 		}
-		str[j] = line[i];
-		i++;
+		str[j] = line[*i];
+		(*i)++;
 		j++;
 	}
 	str[j] = '\0';
@@ -42,14 +42,14 @@ char	*ft_extract_doll(char *line, int *i, int nb_x)
 	char	*str;
 	int		j;
 
-	(void) nb_x;
+	(void)nb_x;
 	len = ft_doll_len(line, *i);
 	str = (char *)ft_calloc((len + 1), sizeof(char));
 	j = 0;
 	if (!str)
 		return (NULL);
 	if (line[*i + 1] == '?' && line[*i + 2] == '\"')
-		return (ft_handle_question_mark(str, *i, j, line));
+		return (ft_handle_question_mark(str, i, j, line));
 	while (line[*i] && line[*i] != '\"' && line[*i] != ' '
 		&& line[*i] != '\'' && line[*i] != '/'
 		&& (line[*i] != '$' || j == 0))

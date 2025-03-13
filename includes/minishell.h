@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/13 10:27:00 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/13 15:30:17 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,7 @@ int				ft_expand_dolls(t_token_list *list, t_var *var);
 /*
 Token - extract doll (token_extract_doll.c)
 */
-char			*ft_handle_question_mark(char *str, int i, int j, char *line);
+char			*ft_handle_question_mark(char *str, int *i, int j, char *line);
 char			*ft_extract_doll(char *line, int *i, int nb_x);
 char			*ft_extract_title_doll(char *str, int *i);
 /*

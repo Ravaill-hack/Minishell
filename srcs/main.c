@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:35:39 by julien            #+#    #+#             */
-/*   Updated: 2025/03/13 10:47:51 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/13 16:25:32 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,10 @@ int	main(int argc, char **argv, char **env)
 		var.status = ft_parse_line(&var, shell->prompt, shell);
 		if (shell->prompt[0] && var.status == SUCCESS && var.is_empty_line == 0)
 		{
+			//ft_print_info_list(*var.token_list, var.env);
+			//ft_print_info_cmd_list(var.nb_cmd, var.cmd);
 			var.status = ft_handle_pipes(&var, shell);
-			if (var.status != SUCCESS)
-				var.exit_nb = var.status % 255;
+			var.exit_nb = var.status % 255;
 			if (VALGRIND_DEBUG == 0)
 				add_history(shell->prompt);
 			ft_clear_and_free_while(&var, shell);
