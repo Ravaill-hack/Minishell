@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/03/13 15:30:03 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/13 17:16:39 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,4 +104,5 @@ void	ft_init(t_var *var, char **env)
 	var->declare = NULL;
 	ft_set_signals();
 	rl_catch_signals = 0;
+	var->is_empty_line = 0;
 }
