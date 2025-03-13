@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_fill_arg_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 10:31:13 by julien            #+#    #+#             */
-/*   Updated: 2025/03/13 16:26:54 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/13 21:01:49 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int	ft_node_is_doll(t_token_list *node)
 {
-	return (node->val[0] == '$' && !node->val[1]);
+	return (node->val[0] && node->val[0] == '$' && !node->val[1]);
 }
 
 int	ft_go_to_next_node_condition(t_token_list **node)
