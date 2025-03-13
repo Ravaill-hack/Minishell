@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:35:39 by julien            #+#    #+#             */
-/*   Updated: 2025/03/12 14:01:40 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/13 10:47:51 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char **argv, char **env)
 	while (shell->prompt)
 	{
 		var.status = ft_parse_line(&var, shell->prompt, shell);
-		if (shell->prompt[0] && var.status == SUCCESS && var.is_empt_line == 0)
+		if (shell->prompt[0] && var.status == SUCCESS && var.is_empty_line == 0)
 		{
 			var.status = ft_handle_pipes(&var, shell);
 			if (var.status != SUCCESS)
