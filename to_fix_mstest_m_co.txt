@@ -1,0 +1,74 @@
+17 : exit
+/!\ bug du tester : exit doit afficher exit
+
+18 : exit 42
+/!\ idem
+
+30 :
+/bin/cat 42
+expr $? + $?
+
+60 : echo $"HOME"
+
+
+61 : echo $'HOME'
+
+
+65 : echo $"HOME"$USER
+
+
+66 : echo $"HOM"E$USER
+
+
+67 : echo $"'HOM'E"$USER
+
+
+68 : echo $'HOM'E$USER
+
+
+69 : echo $"HOME"
+
+
+70 : echo $'HOME'
+
+
+75 : echo $"$"
+
+
+76 : echo $"42$"
+
+
+99 :
+cd /notsuchdir
+/bin/ls
+
+// exit code 1 au lieu de 0
+
+101 :
+cd "cmds/"
+/bin/ls
+
+// exit code 1 au lieu de 0
+
+102 :
+cd cmds/
+/bin/ls
+
+// exit code 1 au lieu de 0
+
+
+103 :
+cd ./cmds/
+/bin/ls
+
+// exit code 1 au lieu de 0
+
+
+104 :
+mkdir bla_test
+chmod -wrx bla_test
+cd bla_test
+chmod +wrx bla_test
+rm -r bla_test
+
+// exit code 1 au lieu de 0

@@ -1,0 +1,18 @@
+1 : /bin/ls
+/!\ bug du tester (le tester doit creer des fichiers temporaires durant les tests, d'ou l'erreur de ls)
+
+11 : env -i ./minishell
+cd /bin 
+ls
+/!\ bug du tester (en bash, cd /bin/ change de repertoire vers /bin, mais chdir suit le lien symbolique et renvoie vers /usr/bin)
+
+12 :
+touch tmp_x_file1
+tmp_x_file1
+echo $?
+./tmp_x_file1
+echo $?
+/bin/rm -f tmp_x_file1
+
+bash : ./tmp_x_file1: Permission denied
+minishell : error code 1 au lieu de 126
