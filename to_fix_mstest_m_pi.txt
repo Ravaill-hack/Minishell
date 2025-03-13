@@ -20,4 +20,7 @@ ifconfig | grep nothing
 
 minishell : code d'ereur 13 au lieu de 127
 
+24 : 53
+
+25 :
 ...

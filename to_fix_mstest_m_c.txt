@@ -1,8 +1,8 @@
-TOTAL TEST COUNT: 42  TESTS PASSED: 34  LEAKING: 0 
-                     STD_OUT: 2  STD_ERR: 5  EXIT_CODE: 7  
+TOTAL TEST COUNT: 42  TESTS PASSED: 35  LEAKING: 0 
+                     STD_OUT: 2  STD_ERR: 4  EXIT_CODE: 6  
                          TOTAL FAILED AND PASSED CASES:
-                                     ❌ 14   
-                                     ✅ 112
+                                     ❌ 12   
+                                     ✅ 114
 
   # **************************************************************************** #
   #                                     SCMD                                     #
@@ -16,11 +16,6 @@ touch "
 "
 /bin/rm -f "
 "
-
-9 :
-asd
-expr $? + $?
-
 
   # **************************************************************************** #
   #                                  BROKEN SCMD                                 #

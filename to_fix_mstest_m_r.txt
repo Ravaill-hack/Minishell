@@ -30,6 +30,8 @@ echo <"./test_files/infile_big" | cat "./test_files/infile"
 10 :
 echo hi | cat <"./test_files/infile"
 
+12 : 26
+
 13 :
 cat <"./test_files/infile" | grep hello
 
@@ -180,4 +182,5 @@ echo hi >>./test_files/invalid_permission >./outfiles/outfile01 | echo bye
 58 :
 cat <minishell.h|ls
 
+80 :
 ...

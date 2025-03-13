@@ -22,6 +22,18 @@ bash: .: filename argument required
 .. : command not found
 // minishell n'affiche rien dans ce cas (code d'erreur 1 au lieu de 127)
 
+20 :
+>echo>
+/bin/rm -f echo
+
+21 :
+<echo<
+/bin/rm -f echo
+
+22 :
+>>echo>>
+/bin/rm -f echo
+
 26 : | test
 bash: syntax error near unexpected token `|' (code d'erreur 2)
 // minishell n'affiche dans ce cas (code d'erreur 1 au lieu de 2)
@@ -37,16 +49,3 @@ bash: /: Is a directory
 
 38 : | echo -n oui
 bash: syntax error near unexpected token `|'
-
-// minishell affiche oui
-
-42 : >| echo wtf
-minishell : syntax error near unexpected token '>'
-
-Command 'wtf' not found, but can be installed with:
-sudo apt install bsdgames
-
-/bin/rm -rf echo
-
-minishell : code erreur 2
-bash : code erreur 0

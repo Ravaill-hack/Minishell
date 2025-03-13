@@ -1,3 +1,8 @@
+TOTAL TEST COUNT: 59  TESTS PASSED: 38  LEAKING: 0 
+                     STD_OUT: 21  STD_ERR: 1  EXIT_CODE: ✓   
+                         TOTAL FAILED AND PASSED CASES:
+                                     ❌ 22   
+                                     ✅ 155
 
 15 :
 /bin/echo $"HOME"$USER
@@ -17,13 +22,64 @@
 20 :
 /bin/echo $'HOME'
 
-37 :
-mkdir test
-cd $PWD/test
-cd..
-rm -rf test
+26 :
+/bin/echo $"42$"
 
-// minishell : code d'erreur 127 au lieu de 0
+43 : 120
+export tmp_test="/bin/echo 42"
+$tmp_test
+$tmp_test 42
+export tmp_test="/bin/echo"
+$tmp_test 42 42
 
+45 :
+export X="  A  B  "
+/bin/echo "1"$X'2'
 
-...
+46 :
+export X=" A  B  "
+/bin/echo "1"$X'2'
+
+47 :
+export X="A  B  "
+/bin/echo "1"$X'2'
+
+48 :
+export X="  A  B "
+/bin/echo "1"$X'2'
+
+49 :
+export X="  A  B"
+/bin/echo "1"$X'2'
+
+50 :
+export X="  A B  "
+/bin/echo "1"$X'2'
+
+51 :
+export X="  AB  "
+/bin/echo "1"$X'2'
+
+52 :
+export X="  A  B  "
+/bin/echo $X'2'
+
+53 :
+export X="  A  B  "
+/bin/echo $X"1"
+
+56 :
+export X="   "
+/bin/echo "1"$X'2'
+
+57 :
+export X="  A  B  "
+/bin/echo ?$X'2'
+
+58 :
+export X="  A  B  "
+/bin/echo "1"$X?
+
+59 :
+export X="  A  B  "
+/bin/echo "1"$X2?
