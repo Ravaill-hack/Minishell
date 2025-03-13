@@ -1,7 +1,3 @@
-2 :
-unset PATH
-env
-
 4 :
 export
 

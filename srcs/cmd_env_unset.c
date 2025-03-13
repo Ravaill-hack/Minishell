@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_env_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:44:08 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/12 09:53:55 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/13 19:40:47 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,18 @@
 
 int	ft_cmd_env(char **env, t_cmd *cmd_node)
 {
+	char	*path;
+
 	if (!cmd_node->arg[1])
 	{
+		path = ft_extract_env_value_from_key(env, "PATH");
+		if (!path)
+		{
+			ft_putstr_fd("env: No such file or directory\n", 2);
+			return (127);
+		}
 		ft_print_strs(env);
+		free(path);
 		return (SUCCESS);
 	}
 	else
