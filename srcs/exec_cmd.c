@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:14:19 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/10 08:53:32 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/12 20:04:38 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,24 @@
 int	ft_try_exec_with_path(char **env, char **split_cmd, char *path, int *status)
 {
 	if (access(path, F_OK | X_OK) == 0)
+	{
 		*status = execve(split_cmd[0], split_cmd, env);
-	free(path);
-	ft_putstr_fd(split_cmd[0], 2);
-	ft_putstr_fd(": command not found.\n", 2);
-	return (127);
+	}
+	if (*status == -1)
+	{
+		ft_putstr_fd(split_cmd[0], 2);
+		if (errno == EACCES)
+		{
+			ft_putstr_fd(": permission denied.\n", 2);
+			return (126);
+		}
+		else if (errno == ENOENT)
+		{
+			ft_putstr_fd(": command not found.\n", 2);
+			return (127);
+		}
+	}
+	return (FAILURE);
 }
 
 int	ft_exec_cmd(char **env, char **split_cmd)

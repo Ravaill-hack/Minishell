@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/03/12 14:02:01 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/13 07:45:53 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ int	ft_cmd_exit(t_var *var, t_shell *shell, t_cmd *node)
 		ft_exit_clear_and_exit(var, shell, var->exit_nb);
 	else if (node->arg[1][0] == '\0')
 		ft_exit_clear_and_exit(var, shell, ft_exit_num_arg_rq(node->arg));
-	else if (node->arg[2])
-		return (ft_exit_too_many_args());
 	else if (ft_atol(node->arg[1]) == -1)
 		ft_exit_clear_and_exit(var, shell, ft_exit_num_arg_rq(node->arg));
+	else if (node->arg[2])
+		return (ft_exit_too_many_args());
 	else if (ft_atol(node->arg[1]) == -2)
 		ft_exit_clear_and_exit(var, shell, 244);
 	else if (ft_atol(node->arg[1]) >= 0)
