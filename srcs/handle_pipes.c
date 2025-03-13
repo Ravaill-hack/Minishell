@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:07:11 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/10 18:54:49 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/13 13:36:07 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	ft_single_cmd(t_var *var, t_shell *shell)
 
 	if (ft_is_cmd(var->cmd[0], var->env) == 0)
 	{
+		// TO DO : is a directory
 		ft_putstr_fd(var->cmd[0]->arg[0], 2);
 		ft_putstr_fd(": command not found.\n", 2);
 		return (127);

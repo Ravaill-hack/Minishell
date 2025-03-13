@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:14:19 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/12 20:04:38 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/13 13:17:21 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ int	ft_try_exec_with_path(char **env, char **split_cmd, char *path, int *status)
 	if (*status == -1)
 	{
 		ft_putstr_fd(split_cmd[0], 2);
+		if (errno == EISDIR)
+		{
+			ft_putstr_fd(": is a directory.\n", 2);
+			return (126);
+		}
 		if (errno == EACCES)
 		{
 			ft_putstr_fd(": permission denied.\n", 2);
