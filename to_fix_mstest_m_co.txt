@@ -1,3 +1,9 @@
+TOTAL TEST COUNT: 114  TESTS PASSED: 96  LEAKING: 0 
+                     STD_OUT: 10  STD_ERR: 2  EXIT_CODE: 6  
+                         TOTAL FAILED AND PASSED CASES:
+                                     ❌ 18   
+                                     ✅ 324
+
 17 : exit
 /!\ bug du tester : exit doit afficher exit
 

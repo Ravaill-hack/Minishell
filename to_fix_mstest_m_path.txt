@@ -1,3 +1,9 @@
+TOTAL TEST COUNT: 15  TESTS PASSED: 12  LEAKING: 0 
+                     STD_OUT: 3  STD_ERR: ✓   EXIT_CODE: ✓   
+                         TOTAL FAILED AND PASSED CASES:
+                                     ❌ 3   
+                                     ✅ 42
+
 1 : /bin/ls
 /!\ bug du tester (le tester doit creer des fichiers temporaires durant les tests, d'ou l'erreur de ls)
 

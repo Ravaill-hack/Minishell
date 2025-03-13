@@ -1,0 +1,29 @@
+
+15 :
+/bin/echo $"HOME"$USER
+
+16 :
+/bin/echo $"HOM"E$USER
+
+17 :
+/bin/echo $"'HOM'E"$USER
+
+18 :
+/bin/echo $'HOM'E$USER
+
+19 :
+/bin/echo $"HOME"
+
+20 :
+/bin/echo $'HOME'
+
+37 :
+mkdir test
+cd $PWD/test
+cd..
+rm -rf test
+
+// minishell : code d'erreur 127 au lieu de 0
+
+
+...

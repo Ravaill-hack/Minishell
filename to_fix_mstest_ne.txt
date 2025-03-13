@@ -1,0 +1,35 @@
+2 :
+unset PATH
+env
+
+4 :
+export
+
+15 :
+exit 5
+/!\ bug du tester
+
+18 :
+cd
+cd ~
+
+28 :
+unset PATH
+pwd
+cd
+pwd
+// std err
+
+30 :
+unset PATH
+pwd
+cd ~
+pwd
+
+31 :
+unset PATH
+pwd
+cd ~
+pwd
+cd -
+pwd
