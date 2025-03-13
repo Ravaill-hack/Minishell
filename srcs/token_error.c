@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:30:44 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/12 12:05:36 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/13 10:45:03 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	ft_print_err_near_tok(t_line_token tok_id)
 		ft_putstr_fd("|'\n", 2);
 	else if (tok_id >= 5)
 		ft_putstr_fd("newline'\n", 2);
-	return (127);
+	return (2);
 }
 
 int	ft_is_valid_token_list(t_token_list **token_list)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:16:10 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/12 14:07:27 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/13 10:44:49 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	ft_parse_line(t_var *var, char *prompt, t_shell *shell)
 	int	status;
 
 	(void)shell;
-	var->is_empt_line = 0;
+	var->is_empty_line = 0;
 	status = ft_quote_error(prompt);
 	if (status != SUCCESS)
 		return (var->exit_nb = status, status);
@@ -126,7 +126,7 @@ int	ft_parse_line(t_var *var, char *prompt, t_shell *shell)
 	if (status != SUCCESS)
 	{
 		if (status == -1)
-			return (var->is_empt_line = 1, SUCCESS);
+			return (var->is_empty_line = 1, SUCCESS);
 		return (var->exit_nb = status, status);
 	}
 	ft_expand_dolls(*(var->token_list), var);
