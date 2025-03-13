@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/03/13 17:16:39 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/13 20:39:21 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	**ft_create_empty_env(void)
 	char	**env;
 	char	*pwd;
 
-	env = (char **)ft_calloc(4, sizeof(char *));
+	env = (char **)ft_calloc(5, sizeof(char *));
 	if (!env)
 		return (NULL);
 	pwd = NULL;
@@ -79,8 +79,9 @@ char	**ft_create_empty_env(void)
 	env[0] = ft_strjoin("PWD=", pwd);
 	free(pwd);
 	env[1] = ft_strdup("SHLVL=1");
-	env[2] = ft_strdup("_=/usr/bin/env");
-	env[3] = NULL;
+	env[2] = ft_strdup("PATH=");
+	env[3] = ft_strdup("_=/usr/bin/env");
+	env[4] = NULL;
 	return (env);
 }
 

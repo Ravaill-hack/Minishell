@@ -1,3 +1,11 @@
+TOTAL TEST COUNT: 44  TESTS PASSED: 30  LEAKING: 0 
+                     STD_OUT: 8  STD_ERR: 7  EXIT_CODE: 9  
+                         TOTAL FAILED AND PASSED CASES:
+                                     ❌ 24   
+                                     ✅ 108
+
+3 : env
+
 4 :
 export
 
