@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 22:38:47 by julien            #+#    #+#             */
-/*   Updated: 2025/03/12 14:18:22 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:38:28 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	ft_free_token_list(t_token_list **token_list)
 		next = current->next;
 		free(current);
 		current = next;
+		*token_list = NULL;
 	}
 }
 
@@ -36,13 +37,14 @@ void	ft_free_token_list_until(t_token_list **list, int n)
 {
 	t_token_list	*current;
 
-	while (n--)
+	while (n-- && *list)
 	{
 		current = *list;
 		*list = (*list)->next;
 		free(current);
 	}
-	*list = NULL;
+	if (*list)
+		*list = NULL;
 }
 
 void	ft_clear_and_free_all(t_var *var, t_shell *shell)
@@ -63,6 +65,8 @@ void	ft_clear_and_free_all(t_var *var, t_shell *shell)
 
 void	ft_clear_and_free_all_exit(t_var *var, t_shell *shell)
 {
+	if (var->line)
+		var->line = NULL;
 	if (var->env)
 		ft_free_strs(var->env);
 	if (shell)
@@ -78,11 +82,15 @@ void	ft_clear_and_free_all_exit(t_var *var, t_shell *shell)
 void	ft_clear_and_free_while(t_var *var, t_shell *shell)
 {
 	if (shell->prompt)
+	{
 		free(shell->prompt);
+		shell->prompt = NULL;
+	}
 	if (var->token_list)
 	{
 		ft_free_token_list(var->token_list);
 		free(var->token_list);
+		var->token_list = NULL;
 	}
 	// if (var->cmd[0])
 	// 	ft_free_strs(var->cmd[0]->arg);

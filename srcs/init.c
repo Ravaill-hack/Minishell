@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/03/11 11:17:23 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:30:03 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	get_prompt(t_var *var, t_shell *shell)
 		{
 			shell->prompt = ft_strtrim(var->line, "\n");
 			free(var->line);
+			var->line = NULL;
 		}
 		else
 			shell->prompt = NULL;
