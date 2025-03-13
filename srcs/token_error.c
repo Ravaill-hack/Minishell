@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:30:44 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/13 10:45:03 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/13 12:05:20 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,10 @@ int	ft_is_valid_token_list(t_token_list **token_list)
 	node = *token_list;
 	if (!node)
 		return (-1);
+	if (node->type == CONTENT && node->val[0] == '.' && !node->val[1]
+		&& (node->print_space_after == 1 || !node->next
+		|| node->next->type <= 3))
+		return (ft_putstr_fd(".: filename argument required\n", 2), 2);
 	while (node && node->next)
 	{
 		if (node->type <= 4 && node->next->type == 4)

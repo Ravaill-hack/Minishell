@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parsing_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:30:22 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/12 09:03:49 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/13 11:22:16 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ char	*ft_exit_nb_join(char *str, t_var *var)
 
 char	*ft_replace_doll(char *str, t_var *var)
 {
+	if (str[0] == '~' && !str[1])
+		return (ft_strdup(ft_extract_env_value_from_key(var->env, "HOME")));
 	if (!str[1])
 		return (ft_strdup("$"));
 	if (str[1] == '?' && !str[2])
@@ -68,6 +70,12 @@ int	ft_expand_dolls(t_token_list *list, t_var *var)
 			if (tmp != list->val)
 				free(tmp);
 		}
+		else if (list->type == CONTENT && list->dq_end == 0
+			&& list->dq_start == 0 && list->sq == 0 && list->val[0] == '~'
+			&& !(list->val[1])
+			&& (list->print_space_after == 1 || !list->next
+			|| (list->next->type <= 3)))
+			list->val = ft_replace_doll("~", var);
 		list = list->next;
 	}
 	return (1);
