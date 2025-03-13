@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/03/13 21:00:23 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/13 21:18:35 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,19 +90,19 @@ void	ft_init(t_var *var, char **env)
 	(void)env;
 	var->token_list = NULL;
 	var->exit_nb = 0;
-	/*if (env && (*env))
+	if (env && (*env))
 	{
 		var->env = ft_strsdup(env);
 		if (ft_update_shlvl(&var->env, 1, var) == FAILURE)
 			exit(EXIT_FAILURE);
 	}
 	else
-	{*/
+	{
 		var->env = ft_create_empty_env();
 		var->shlvl0 = 1;
 		if (!var->env)
 			exit(EXIT_FAILURE);
-	//}
+	}
 	var->declare = NULL;
 	ft_set_signals();
 	rl_catch_signals = 0;
