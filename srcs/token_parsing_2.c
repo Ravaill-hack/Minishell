@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parsing_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:30:22 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/13 11:22:16 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/13 21:19:38 by Lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,16 @@ char	*ft_exit_nb_join(char *str, t_var *var)
 
 char	*ft_replace_doll(char *str, t_var *var)
 {
+	char	*res;
+
 	if (str[0] == '~' && !str[1])
-		return (ft_strdup(ft_extract_env_value_from_key(var->env, "HOME")));
+	{
+		res = ft_strdup(ft_extract_env_value_from_key(var->env, "HOME"));
+		if (!res)
+			return (ft_strdup(""));
+		else
+			return (res);
+	}
 	if (!str[1])
 		return (ft_strdup("$"));
 	if (str[1] == '?' && !str[2])
