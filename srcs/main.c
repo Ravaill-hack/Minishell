@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:35:39 by julien            #+#    #+#             */
-/*   Updated: 2025/03/13 16:25:32 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/14 09:23:13 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char **argv, char **env)
 			//ft_print_info_cmd_list(var.nb_cmd, var.cmd);
 			var.status = ft_handle_pipes(&var, shell);
 			var.exit_nb = var.status % 255;
-			if (VALGRIND_DEBUG == 0)
+			if (isatty(STDIN_FILENO) && VALGRIND_DEBUG == 0)
 				add_history(shell->prompt);
 			ft_clear_and_free_while(&var, shell);
 		}

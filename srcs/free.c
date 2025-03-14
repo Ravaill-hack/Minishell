@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 22:38:47 by julien            #+#    #+#             */
-/*   Updated: 2025/03/14 08:03:02 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/14 09:23:29 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ft_clear_and_free_all(t_var *var, t_shell *shell)
 		free(var->token_list);
 		var->token_list = NULL;
 	}
-	if (VALGRIND_DEBUG == 0)
+	if (isatty(STDIN_FILENO) && VALGRIND_DEBUG == 0)
 		rl_clear_history();
 }
 
