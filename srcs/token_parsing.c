@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:16:10 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/13 17:17:39 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/14 08:59:56 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int	ft_parse_line(t_var *var, char *prompt, t_shell *shell)
 
 	(void)shell;
 	if (var->is_empty_line == 1)
-		free(var->token_list);
+	 	free(var->token_list);
 	var->is_empty_line = 0;
 	status = ft_quote_error(prompt);
 	if (status != SUCCESS)
