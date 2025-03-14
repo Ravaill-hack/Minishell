@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 22:38:47 by julien            #+#    #+#             */
-/*   Updated: 2025/03/14 08:03:02 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/14 10:23:45 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	ft_clear_and_free_all(t_var *var, t_shell *shell)
 		free(var->token_list);
 		var->token_list = NULL;
 	}
+	if (var->fd_pipe)
+		ft_free_array2d(var->fd_pipe);
 	if (VALGRIND_DEBUG == 0)
 		rl_clear_history();
 }

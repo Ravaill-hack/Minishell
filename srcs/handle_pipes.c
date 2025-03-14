@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:07:11 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/13 14:43:29 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/14 10:10:20 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_single_cmd(t_var *var, t_shell *shell)
 		res = ft_exec_one(var, shell, 0);
 	else
 	{
-		res = ft_handle_regular_cmd(var, shell, 0, &pid[0]);
+		res = ft_handle_regular_cmd(var, shell, 0, pid);
 		waitpid(pid[0], &res, 0);
 		if (res != 0)
 			return (res % 255);
@@ -46,7 +46,7 @@ int	ft_handle_all_regular_cmds(t_var *var, t_shell *shell, pid_t *pids)
 	i = 0;
 	while (i < var->nb_cmd)
 	{
-		status = ft_handle_regular_cmd(var, shell, i, &pids[i]);
+		status = ft_handle_regular_cmd(var, shell, i, pids);
 		i++;
 	}
 	return (status);
