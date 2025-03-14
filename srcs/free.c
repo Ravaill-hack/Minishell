@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 22:38:47 by julien            #+#    #+#             */
-/*   Updated: 2025/03/13 17:14:42 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/14 08:03:02 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,12 @@ void	ft_clear_and_free_all(t_var *var, t_shell *shell)
 			free(shell->prompt);
 		free(shell);
 	}
+	if (var->token_list)
+	{
+		ft_free_token_list(var->token_list);
+		free(var->token_list);
+		var->token_list = NULL;
+	}
 	if (VALGRIND_DEBUG == 0)
 		rl_clear_history();
 }
@@ -71,6 +77,7 @@ void	ft_clear_and_free_all_exit(t_var *var, t_shell *shell)
 	{
 		ft_free_token_list(var->token_list);
 		free(var->token_list);
+		var->token_list = NULL;
 	}
 	if (shell)
 	{
