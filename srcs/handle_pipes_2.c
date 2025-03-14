@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 18:47:38 by julien            #+#    #+#             */
-/*   Updated: 2025/03/14 10:14:41 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:02:17 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	ft_exec_one(t_var *var, t_shell *shell, int i)
 	ft_close_pipes(var, i);
 	var->exit_nb = ft_handle_cmd(var, shell, var->cmd[i]);
 	dup2(saved_stdout, 1);
+	close (saved_stdout);
 	return (var->exit_nb);
 }
 

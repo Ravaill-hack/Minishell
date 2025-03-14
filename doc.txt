@@ -1,5 +1,5 @@
 
-valgrind --trace-children=yes --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
+valgrind --track-fds=yes --trace-children=yes --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
 
 ////////////////////// MACROS //////////////////////////////////////////
 

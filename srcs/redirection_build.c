@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:48:38 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/11 17:20:40 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:45:27 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,23 +84,20 @@ int	ft_set_pipes(t_cmd **cmd, int nb_cmd, int **pipes)
 	int	i;
 
 	i = 0;
-	while (i < nb_cmd)
-	{
-		cmd[i]->need_pipe_in = ft_need_to_grep_from_pipe(cmd, i);
-		cmd[i]->need_pipe_out = ft_need_to_send_in_pipe(cmd, i, nb_cmd);
-		i++;
-	}
-	i = 0;
+	ft_set_pipes_needs(cmd, nb_cmd);
 	while (i < nb_cmd - 1)
 	{
-		if (cmd[i]->need_pipe_out == 1)
+		if (cmd[i]->need_pipe_out == 1 || cmd[i + 1]->need_pipe_in == 1)
 		{
 			if (pipe(pipes[i]) == -1)
 				return (FAILURE);
-			cmd[i]->fd_out.fd = pipes[i][1];
+			if (cmd[i]->need_pipe_out == 1)
+				cmd[i]->fd_out.fd = pipes[i][1];
 			if (cmd[i + 1]->need_pipe_in == 1)
 				cmd[i + 1]->fd_in.fd = pipes[i][0];
-			else
+			if (cmd[i]->need_pipe_out == 0)
+				close(pipes[i][1]);
+			if (cmd[i + 1]->need_pipe_in == 0)
 				close(pipes[i][0]);
 		}
 		i++ ;

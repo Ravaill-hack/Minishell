@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:09:21 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/10 19:23:53 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/14 15:45:32 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,17 @@ int	ft_nb_str(t_token_list *list)
 		list = list->next;
 	}
 	return (res);
+}
+
+void	ft_set_pipes_needs(t_cmd **cmd, int nb_cmd)
+{
+	int	i;
+
+	i = 0;
+	while (i < nb_cmd)
+	{
+		cmd[i]->need_pipe_in = ft_need_to_grep_from_pipe(cmd, i);
+		cmd[i]->need_pipe_out = ft_need_to_send_in_pipe(cmd, i, nb_cmd);
+		i++;
+	}
 }
