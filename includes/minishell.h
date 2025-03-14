@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/14 12:30:56 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/14 20:45:59 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ Utils (utils.c)
 int				ft_nb_pipes(t_token_list *list);
 int				ft_nb_dolls(t_token_list *list);
 int				ft_nb_str(t_token_list *list);
+void			ft_set_pipes_needs(t_cmd **cmd, int nb_cmd);
 /*
 Utils 2 (utils_2.c)
 */
