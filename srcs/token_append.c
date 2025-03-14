@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:26:37 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/10 18:44:29 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/14 08:45:25 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ t_token_list	*ft_append_doll(char *line, int *i, t_token_list **list, int x)
 t_token_list	*ft_append_operand(char *line, int *i, t_token_list **list)
 {
 	t_token_list	*token;
+	t_token_list	*tmp;
 
 	token = (t_token_list *)ft_calloc(1, sizeof(t_token_list));
 	if (!token)
@@ -153,8 +154,9 @@ t_token_list	*ft_append_operand(char *line, int *i, t_token_list **list)
 	}
 	else
 	{
-		token->prev = ft_last_token(*list);
-		ft_last_token(*list)->next = token;
+		tmp = ft_last_token(*list);
+		tmp->next = token;
+		token->prev = tmp;
 	}
 	return (token);
 }
