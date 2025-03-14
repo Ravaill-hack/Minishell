@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:16:10 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/13 17:17:39 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/14 08:46:12 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,10 @@ int	ft_parse_line(t_var *var, char *prompt, t_shell *shell)
 
 	(void)shell;
 	if (var->is_empty_line == 1)
-		free(var->token_list);
+	{
+		ft_free_token_list(var->token_list);
+		var->token_list = NULL;
+	}
 	var->is_empty_line = 0;
 	status = ft_quote_error(prompt);
 	if (status != SUCCESS)
@@ -121,6 +124,11 @@ int	ft_parse_line(t_var *var, char *prompt, t_shell *shell)
 	status = ft_is_empty_quotes_error(prompt);
 	if (status != SUCCESS)
 		return (var->exit_nb = status, status);
+	if (var->token_list)
+	{
+		ft_free_token_list(var->token_list);
+		var->token_list = NULL;
+	}
 	var->token_list = ft_build_token_list(prompt, var->exit_nb);
 	if (!var->token_list)
 		return (FAILURE);
