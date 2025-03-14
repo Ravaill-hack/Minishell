@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/03/13 21:22:29 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/14 09:40:34 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	get_prompt(t_var *var, t_shell *shell)
 		rl_attempted_completion_function = NULL;
 		rl_inhibit_completion = 1;
 		shell->prompt = readline(shell->terminal_prompt);
+		if (shell->prompt[0])
+			add_history(shell->prompt);
 	}
 	else
 	{
