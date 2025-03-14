@@ -6,13 +6,35 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:35:39 by julien            #+#    #+#             */
-/*   Updated: 2025/03/14 09:23:13 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/14 12:29:45 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_while_hd = 0;
+
+void	ft_add_history_and_clear(t_shell *shell, t_var *var)
+{
+	if (VALGRIND_DEBUG == 0)
+		add_history(shell->prompt);
+	if (shell->prompt)
+	{
+		free(shell->prompt);
+		shell->prompt = NULL;
+	}
+	if (var->token_list)
+	{
+		ft_free_token_list(var->token_list);
+		free(var->token_list);
+		var->token_list = NULL;
+	}
+	if (var->cmd)
+		ft_free_cmd_list(var->cmd);
+	if (var->fd_pipe)
+		ft_free_array2d(var->fd_pipe);
+	
+}
 
 int	main(int argc, char **argv, char **env)
 {
