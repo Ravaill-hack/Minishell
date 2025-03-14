@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:07:11 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/14 10:10:20 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/14 21:24:40 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ int	ft_single_cmd(t_var *var, t_shell *shell)
 	if (ft_is_cmd(var->cmd[0], var->env) == 0)
 	{
 		// TO DO : is a directory
-		ft_putstr_fd(var->cmd[0]->arg[0], 2);
-		ft_putstr_fd(": command not found.\n", 2);
+		if (var->cmd[0]->arg[0])
+		{
+			ft_putstr_fd(var->cmd[0]->arg[0], 2);
+			ft_putstr_fd(": command not found.\n", 2);
+		}
 		return (127);
 	}
 	else if (ft_is_builtin_cmd(var->cmd[0]) == 1)

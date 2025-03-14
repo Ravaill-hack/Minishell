@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipes_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 18:47:38 by julien            #+#    #+#             */
-/*   Updated: 2025/03/14 15:02:17 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/14 20:47:50 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	ft_handle_regular_cmd(t_var *var, t_shell *shell, int i, pid_t *pid)
 	{
 		status = ft_exec_one(var, shell, i);
 		ft_clear_and_free_all(var, shell);
-		ft_free_cmd_list(var->cmd);
+		//ft_free_cmd_list(var->cmd);
 		free(pid);
 		exit(status);
 	}
