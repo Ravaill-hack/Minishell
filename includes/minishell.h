@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/14 20:45:59 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/15 09:59:32 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,6 +290,7 @@ Cmd fill arg (cmd_fill_arg.c)
 char			*ft_fill_arg_redirs(t_token_list **node);
 char			*ft_fill_arg_not_redirs(t_token_list **node);
 char			*ft_fill_arg(t_token_list **node);
+t_token_list	*ft_go_to_next_node(t_token_list **node);
 /*
 Cmd fill arg utils (cmd_fill_arg_utils.c)
 */
@@ -297,6 +298,7 @@ int				ft_node_is_doll(t_token_list *node);
 int				ft_go_to_next_node_condition(t_token_list **node);
 int				ft_node_is_not_redir(t_token_list **node);
 int				ft_node_is_content(t_token_list **node);
+int				ft_cond_go_to_next(t_token_list *node);
 /*
 Redirection - build (redirection_build.c)
 */

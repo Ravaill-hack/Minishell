@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 10:33:05 by julien            #+#    #+#             */
-/*   Updated: 2025/03/11 12:37:40 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/15 10:00:34 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,15 @@ char	*ft_fill_arg_redirs(t_token_list **node)
 	return (str);
 }
 
+t_token_list	*ft_go_to_next_node(t_token_list **node)
+{
+	if (ft_go_to_next_node_condition(node) == 1)
+		*node = (*node)->next;
+	if (ft_cond_go_to_next(* node) == 1)
+		*node = (*node)->next;
+	return (*node);
+}
+
 char	*ft_fill_arg_not_redirs(t_token_list **node)
 {
 	int		i;
@@ -52,8 +61,7 @@ char	*ft_fill_arg_not_redirs(t_token_list **node)
 	while (i == 0 || ft_node_is_not_redir(node))
 	{
 		tmp = str;
-		if (ft_go_to_next_node_condition(node))
-			(*node) = (*node)->next;
+		(*node) = ft_go_to_next_node(node);
 		if ((*node) && ft_node_is_content(node))
 			str = ft_strjoin(str, (*node)->val);
 		if (!str && (*node) && (*node)->next)
