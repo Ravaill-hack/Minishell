@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/14 20:45:59 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/15 11:07:40 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ typedef struct s_token_list
 {
 	t_line_token			type;
 	char					*val;
-	int						print_space_after;
+	int						psa;
 	int						dq_start;
 	int						dq_end;
 	int						sq;
@@ -248,6 +248,7 @@ t_line_token	ft_find_token_type(char *str, int i);
 t_token_list	*ft_last_token(t_token_list *token);
 void			ft_free_list(t_token_list **list);
 void			ft_skip_spaces(char *str, int *i, t_token_list *list);
+int				ft_cond_token_synt(t_token_list *node);
 /*
 Token - error (token_error.c)
 */
@@ -290,6 +291,7 @@ Cmd fill arg (cmd_fill_arg.c)
 char			*ft_fill_arg_redirs(t_token_list **node);
 char			*ft_fill_arg_not_redirs(t_token_list **node);
 char			*ft_fill_arg(t_token_list **node);
+t_token_list	*ft_go_to_next_node(t_token_list **node);
 /*
 Cmd fill arg utils (cmd_fill_arg_utils.c)
 */
@@ -297,6 +299,7 @@ int				ft_node_is_doll(t_token_list *node);
 int				ft_go_to_next_node_condition(t_token_list **node);
 int				ft_node_is_not_redir(t_token_list **node);
 int				ft_node_is_content(t_token_list **node);
+int				ft_cond_go_to_next(t_token_list *node);
 /*
 Redirection - build (redirection_build.c)
 */
@@ -419,6 +422,7 @@ Exec cmd (exec_cmd.c)
 int				ft_try_exec_with_path(char **env,
 					char **split_cmd, char *path, int *status);
 int				ft_exec_cmd(char **env, char **split_cmd);
+int				ft_check_for_dir(char *path, char *cmd);
 /*
 Cmd - echo (cmd_echo.c)
 */

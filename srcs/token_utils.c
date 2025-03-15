@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:36:11 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/10 19:06:30 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/15 11:07:13 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,15 @@ void	ft_skip_spaces(char *str, int *i, t_token_list *list)
 	last = ft_last_token(list);
 	if (last && ft_isspace(str[*i]) == 1
 		&& !(last->type >= 0 && last->type <= 3))
-		last->print_space_after = 1;
+		last->psa = 1;
 	while (ft_isspace(str[*i]) == 1)
 		(*i)++;
+}
+
+int	ft_cond_token_synt(t_token_list *node)
+{
+	if (node->type == 6 && node->val[0] == '.' && !node->val[1]
+		&& (node->psa == 1 || !node->next || node->next->type <= 3))
+		return (1);
+	return (0);
 }

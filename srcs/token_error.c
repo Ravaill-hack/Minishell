@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:30:44 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/13 12:05:20 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/15 11:07:56 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,15 @@ int	ft_is_valid_token_list(t_token_list **token_list)
 	node = *token_list;
 	if (!node)
 		return (-1);
-	if (node->type == CONTENT && node->val[0] == '.' && !node->val[1]
-		&& (node->print_space_after == 1 || !node->next
-		|| node->next->type <= 3))
+	if (ft_cond_token_synt(node) == 1)
 		return (ft_putstr_fd(".: filename argument required\n", 2), 2);
+	if (node->type == 6 && !ft_strncmp("..", node->val, ft_strlen(node->val))
+		&& (node->psa == 1 || !node->next || node->next->type <= 3))
+		return (ft_putstr_fd("..: command not found\n", 2), 127);
 	while (node && node->next)
 	{
-		if (node->type <= 4 && node->next->type == 4)
+		if ((node->type <= 4 && node->next->type == 4)
+			|| (node->type == 4 && !node->prev))
 			return (ft_print_err_near_tok(node->type));
 		node = node->next;
 	}

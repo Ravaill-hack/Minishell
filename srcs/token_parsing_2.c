@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parsing_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:30:22 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/13 21:19:38 by Lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/15 10:56:55 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	ft_expand_dolls(t_token_list *list, t_var *var)
 		else if (list->type == CONTENT && list->dq_end == 0
 			&& list->dq_start == 0 && list->sq == 0 && list->val[0] == '~'
 			&& !(list->val[1])
-			&& (list->print_space_after == 1 || !list->next
+			&& (list->psa == 1 || !list->next
 			|| (list->next->type <= 3)))
 			list->val = ft_replace_doll("~", var);
 		list = list->next;

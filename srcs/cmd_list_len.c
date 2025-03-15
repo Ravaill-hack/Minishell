@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list_len.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:57:12 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/10 19:10:41 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/15 10:56:55 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_find_special_len(t_token_list *node, char **env)
 	len = 0;
 	len_doll = 0;
 	while (node
-		&& (node->print_space_after == 0
+		&& (node->psa == 0
 			|| node->type != CONTENT
 			|| node->type != DOLL))
 	{

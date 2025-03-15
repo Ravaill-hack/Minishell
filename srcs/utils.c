@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:09:21 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/14 15:45:32 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/15 10:56:55 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	ft_nb_str(t_token_list *list)
 	res = 0;
 	while (list && (list->type != PIPE))
 	{
-		if ((list->print_space_after == 1)
+		if ((list->psa == 1)
 			|| (list->next && list->next->type == PIPE)
 			|| !(list->next)
 			|| (list->next->type >= 0 && list->next->type <= 3))
