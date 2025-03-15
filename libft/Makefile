@@ -55,6 +55,7 @@ SRCS_FILES = \
 	ft_lstclear.c \
 	ft_lstiter.c \
 	ft_lstmap.c \
+	ft_check_and_free.c \
 	ft_free_strs.c \
 	ft_free_strs_until.c \
 	ft_free_array2d.c \

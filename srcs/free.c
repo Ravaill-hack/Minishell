@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 22:38:47 by julien            #+#    #+#             */
-/*   Updated: 2025/03/14 21:11:19 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/15 15:48:19 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,33 @@
 
 #include "minishell.h"
 
-void	ft_free_token_list(t_token_list **token_list)
+t_token_list	**ft_free_token_list(t_token_list **token_list)
 {
 	t_token_list	*current;
 	t_token_list	*next;
 
-	if (!token_list)
-		return ;
+	if (!token_list || !*token_list)
+		return (NULL);
 	current = *token_list;
 	while (current)
 	{
 		if (current->val)
+		{
 			free(current->val);
+			current->val = NULL;
+		}
 		next = current->next;
 		free(current);
 		current = next;
-		*token_list = NULL;
 	}
+	if (*token_list)
+		*token_list = NULL;
+	if (token_list)
+		free(token_list);
+	return (NULL);
 }
 
-void	ft_free_token_list_until(t_token_list **list, int n)
+t_token_list	**ft_free_token_list_until(t_token_list **list, int n)
 {
 	t_token_list	*current;
 
@@ -42,82 +49,63 @@ void	ft_free_token_list_until(t_token_list **list, int n)
 		current = *list;
 		*list = (*list)->next;
 		free(current);
+		current = NULL;
 	}
 	if (*list)
 		*list = NULL;
+	if (list)
+		free(list);
+	return (NULL);
 }
 
-void	ft_clear_and_free_all(t_var *var, t_shell *shell)
+void	ft_clear_and_free_all(t_var *var, t_shell **shell)
 {
 	if (var->env)
 		ft_free_strs(var->env);
-	if (shell)
+	if (*shell)
 	{
-		if (shell->terminal_prompt)
-			free(shell->terminal_prompt);
-		if (shell->prompt)
-			free(shell->prompt);
-		free(shell);
+		ft_check_and_free((void **)(&((*shell)->tp)));
+		ft_check_and_free((void **)(&((*shell)->prompt)));
+		(*shell) = ft_check_and_free((void **)shell);
 	}
 	if (var->token_list)
-	{
-		ft_free_token_list(var->token_list);
-		free(var->token_list);
-		var->token_list = NULL;
-	}
-	//if (var->fd_pipe)
-		//ft_free_array2d(var->fd_pipe);
+		var->token_list = ft_free_token_list(var->token_list);
+	if (var->fd_pipe)
+		var->fd_pipe = ft_free_array2d(var->fd_pipe);
 	if (isatty(STDIN_FILENO) && VALGRIND_DEBUG == 0)
 		rl_clear_history();
 }
 
-void	ft_clear_and_free_all_exit(t_var *var, t_shell *shell)
+void	ft_clear_and_free_all_exit(t_var *var, t_shell **shell)
 {
 	if (var->env)
-		ft_free_strs(var->env);
+		var->env = ft_free_strs(var->env);
 	if (var->token_list)
+		var->token_list = ft_free_token_list(var->token_list);
+	if (*shell)
 	{
-		ft_free_token_list(var->token_list);
-		free(var->token_list);
-		var->token_list = NULL;
-	}
-	if (shell)
-	{
-		if (shell->terminal_prompt)
-			free(shell->terminal_prompt);
-		free(shell);
+		ft_check_and_free((void **)(&((*shell)->tp)));
+		ft_check_and_free((void **)(&((*shell)->prompt)));
+		(*shell) = ft_check_and_free((void **)shell);
 	}
 	if (var->cmd)
-		ft_free_cmd_list(var->cmd);
+		var->cmd = ft_free_cmd_list(var->cmd);
 	if (var->fd_pipe)
-	{
-		////ft_putstr_fd("\nvar fd pipe existe\n", 1);
-		//ft_free_array2d(var->fd_pipe);
-		//if (var->fd_pipe)
-			////ft_putstr_fd("\nvar fd pipe existe encore\n", 1);
-		//	free (var->fd_pipe);
-	}
+		var->fd_pipe = ft_free_array2d(var->fd_pipe);
 	if (VALGRIND_DEBUG == 0)
 		rl_clear_history();
 }
 
-void	ft_clear_and_free_while(t_var *var, t_shell *shell)
+void	ft_clear_and_free_while(t_var *var, t_shell **shell)
 {
-	if (shell->prompt)
-	{
-		free(shell->prompt);
-		shell->prompt = NULL;
-	}
+	if (*shell)
+		ft_check_and_free((void **)(&((*shell)->prompt)));
 	if (var->token_list)
-	{
-		ft_free_token_list(var->token_list);
-		free(var->token_list);
-		var->token_list = NULL;
-	}
+		var->token_list = ft_free_token_list(var->token_list);
 	// if (var->cmd[0])
 	// 	ft_free_strs(var->cmd[0]->arg);
 	if (var->cmd)
-		ft_free_cmd_list(var->cmd);
+		var->cmd = ft_free_cmd_list(var->cmd);
 	if (var->fd_pipe)
-		ft_free_array2d(var->fd_pipe);
+		var->fd_pipe = ft_free_array2d(var->fd_pipe);
 }

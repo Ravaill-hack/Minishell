@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:26:01 by julien            #+#    #+#             */
-/*   Updated: 2025/03/14 12:30:09 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/15 14:57:17 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	get_prompt(t_var *var, t_shell *shell)
 	{
 		rl_attempted_completion_function = NULL;
 		rl_inhibit_completion = 1;
-		shell->prompt = readline(shell->terminal_prompt);
+		shell->prompt = readline(shell->tp);
 		if (shell->prompt && shell->prompt[0])
 			add_history(shell->prompt);
 	}
@@ -61,7 +61,7 @@ t_shell	*ft_init_shell(void)
 	shell = ft_calloc(1, sizeof(t_shell));
 	if (!shell)
 		exit(EXIT_FAILURE);
-	shell->terminal_prompt = ft_strdup("minishell$ ");
+	shell->tp = ft_strdup("minishell$ ");
 	shell->while_hdc = 0;
 	return (shell);
 }

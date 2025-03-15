@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipes_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 18:47:38 by julien            #+#    #+#             */
-/*   Updated: 2025/03/15 09:21:41 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/15 15:36:39 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_close_pipes(t_var *var, int i)
 	}
 }
 
-int	ft_exec_one(t_var *var, t_shell *shell, int i)
+int	ft_exec_one(t_var *var, t_shell **shell, int i)
 {
 	int	saved_stdout;
 
@@ -76,7 +76,7 @@ int	ft_exec_one(t_var *var, t_shell *shell, int i)
 	return (var->exit_nb);
 }
 
-int	ft_handle_regular_cmd(t_var *var, t_shell *shell, int i, pid_t *pid)
+int	ft_handle_regular_cmd(t_var *var, t_shell **shell, int i, pid_t *pid)
 {
 	int		status;
 

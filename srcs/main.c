@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:35:39 by julien            #+#    #+#             */
-/*   Updated: 2025/03/15 11:15:22 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/15 15:40:01 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ int	main(int argc, char **argv, char **env)
 		{
 			//ft_print_info_list(*var.token_list, var.env);
 			//ft_print_info_cmd_list(var.nb_cmd, var.cmd);
-			var.status = ft_handle_pipes(&var, shell);
+			var.status = ft_handle_pipes(&var, &shell);
 			var.exit_nb = var.status % 255;
 			if (isatty(STDIN_FILENO) && VALGRIND_DEBUG == 0)
 				add_history(shell->prompt);
-			ft_clear_and_free_while(&var, shell);
+			ft_clear_and_free_while(&var, &shell);
 		}
 		get_prompt(&var, shell);
 	}
-	ft_clear_and_free_all(&var, shell);
+	ft_clear_and_free_all(&var, &shell);
 	exit(var.exit_nb);
 }

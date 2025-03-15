@@ -3,33 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_strs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 10:43:19 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/06 11:21:22 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/15 15:31:47 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "libft.h"
 
 // free an array of strings
-void	ft_free_strs(char **strs)
+char	**ft_free_strs(char **strs)
 {
 	size_t	i;
 
 	if (!strs)
-		return ;
+		return (NULL);
 	if (!*strs)
 	{
 		free(strs);
-		return ;
+		return (NULL);
 	}
 	i = 0;
 	while (strs[i])
 	{
-		free(strs[i]);
-		strs[i] = NULL;
+		ft_check_and_free((void **)&(strs[i]));
 		i++;
 	}
 	free(strs);
+	return (NULL);
 }

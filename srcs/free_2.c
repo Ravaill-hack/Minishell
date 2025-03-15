@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:12:19 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/14 10:17:29 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/15 15:48:58 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,30 @@
 
 #include "minishell.h"
 
-void	ft_free_cmd_node(t_cmd *node)
+t_cmd	*ft_free_cmd_node(t_cmd *node)
 {
 	if (node->arg)
-		ft_free_strs(node->arg);
+		node->arg = ft_free_strs(node->arg);
 	//if (node->heredoc)
 	//	free(node->heredoc);
-	//if (node->fd_in)
 	if (node)
 		free(node);
+	return (NULL);
 }
 
-void	ft_free_cmd_list(t_cmd **cmd)
+t_cmd	**ft_free_cmd_list(t_cmd **cmd)
 {
 	int	i;
 
 	if (!cmd)
-		return ;
+		return (NULL);
 	i = 0;
 	while (cmd[i])
 	{
-		ft_free_cmd_node(cmd[i]);
+		cmd[i] = ft_free_cmd_node(cmd[i]);
 		i++;
 	}
-	free(cmd);
+	if (cmd)
+		free(cmd);
+	return (NULL);
 }
