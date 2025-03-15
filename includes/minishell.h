@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/15 09:59:32 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/15 10:56:55 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ typedef struct s_token_list
 {
 	t_line_token			type;
 	char					*val;
-	int						print_space_after;
+	int						psa;
 	int						dq_start;
 	int						dq_end;
 	int						sq;
@@ -421,6 +421,7 @@ Exec cmd (exec_cmd.c)
 int				ft_try_exec_with_path(char **env,
 					char **split_cmd, char *path, int *status);
 int				ft_exec_cmd(char **env, char **split_cmd);
+int				ft_check_for_dir(char *path, char *cmd);
 /*
 Cmd - echo (cmd_echo.c)
 */

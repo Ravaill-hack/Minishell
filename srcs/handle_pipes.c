@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:07:11 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/15 09:32:45 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/15 10:39:37 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	ft_single_cmd(t_var *var, t_shell *shell)
 	pid = (pid_t *)ft_calloc(2, sizeof(pid_t));
 	if (ft_is_cmd(var->cmd[0], var->env) == 0)
 	{
-		// TO DO : is a directory
 		if (var->cmd[0]->arg[0])
 		{
 			ft_putstr_fd(var->cmd[0]->arg[0], 2);

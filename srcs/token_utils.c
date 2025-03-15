@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:36:11 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/10 19:06:30 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/15 10:56:55 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_skip_spaces(char *str, int *i, t_token_list *list)
 	last = ft_last_token(list);
 	if (last && ft_isspace(str[*i]) == 1
 		&& !(last->type >= 0 && last->type <= 3))
-		last->print_space_after = 1;
+		last->psa = 1;
 	while (ft_isspace(str[*i]) == 1)
 		(*i)++;
 }

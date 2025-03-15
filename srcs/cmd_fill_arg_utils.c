@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 10:31:13 by julien            #+#    #+#             */
-/*   Updated: 2025/03/15 10:21:19 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/15 10:56:55 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_go_to_next_node_condition(t_token_list **node)
 	if ((*node) && ((*node)->type == DOLL || (*node)->type == CONTENT))
 	{
 		if (ft_node_is_doll(*node)
-			&& (*node)->print_space_after == 0
+			&& (*node)->psa == 0
 			&& (*node)->next
 			&& ((*node)->next->dq_start == 1 || (*node)->next->sq == 1)
 			&& !((*node)->next->type == DOLL)
@@ -38,7 +38,7 @@ int	ft_go_to_next_node_condition(t_token_list **node)
 			&& (*node)->prev
 			&& (*node)->prev->type == DOLL
 			&& (*node)->prev->dq_start == 0
-			&& (*node)->prev->print_space_after == 0
+			&& (*node)->prev->psa == 0
 			&& (ft_node_is_doll((*node)->prev)))
 			return (1);
 	}
@@ -49,7 +49,7 @@ int	ft_cond_go_to_next(t_token_list *node)
 {
 	if ((node->type == DOLL || node->type == CONTENT)
 		&& ft_node_is_doll(node)
-		&& node->print_space_after == 0
+		&& node->psa == 0
 		&& node->next
 		&& (node->next->dq_start == 1 || node->next->sq == 1)
 		&& node->next->type != DOLL
@@ -57,7 +57,7 @@ int	ft_cond_go_to_next(t_token_list *node)
 		return (1);
 	if ((node->type == DOLL || node->type == CONTENT)
 		&& ft_node_is_doll(node)
-		&& node->print_space_after == 0
+		&& node->psa == 0
 		&& (node->dq_start == 0 && node->dq_end == 0 && node->sq == 0)
 		&& node->next
 		&& (node->next->dq_start == 1 || node->next->sq == 1)
@@ -70,7 +70,7 @@ int	ft_cond_go_to_next(t_token_list *node)
 int	ft_node_is_not_redir(t_token_list **node)
 {
 	return ((*node) && (*node)->type > 4
-		&& (*node)->prev && (*node)->prev->print_space_after == 0);
+		&& (*node)->prev && (*node)->prev->psa == 0);
 }
 
 int	ft_node_is_content(t_token_list **node)
@@ -81,7 +81,7 @@ int	ft_node_is_content(t_token_list **node)
 	// 	|| (*node)->prev->type == 7) && (*node)->prev->val
 	// 	&& (*node)->prev->val[0] == '$' && !(*node)->prev->val[1]
 	// 	&& (*node)->prev->sq == 0 && (*node)->prev->dq_start == 0
-	// 	&& (*node)->prev->print_space_after == 0 && (*node)->dq_start == 1)
+	// 	&& (*node)->prev->psa == 0 && (*node)->dq_start == 1)
 	// 	return (0);
 	return (cond);
 }

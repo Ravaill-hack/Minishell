@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_append.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:26:37 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/14 08:45:25 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/15 10:56:55 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_token_list	*ft_append_content(char *line, int *i, t_token_list **list)
 	token->dq_end = 0;
 	token->dq_start = 0;
 	token->sq = 0;
-	token->print_space_after = 0;
+	token->psa = 0;
 	token->next = NULL;
 	if (!(token->val))
 		return (NULL);
@@ -55,7 +55,7 @@ t_token_list	*ft_append_squoted(char *line, int *i, t_token_list **list)
 	token->dq_end = 0;
 	token->dq_start = 0;
 	token->sq = 1;
-	token->print_space_after = 0;
+	token->psa = 0;
 	token->next = NULL;
 	if (!(token->val))
 		return (NULL);
@@ -80,7 +80,7 @@ t_token_list	*ft_append_dquoted(char *line, int *i, t_token_list **list)
 	if (!token)
 		return (NULL);
 	token->val = ft_extract_dq_content(line, i);
-	token->print_space_after = 0;
+	token->psa = 0;
 	token->dq_start = 0;
 	token->dq_end = 0;
 	token->sq = 0;
@@ -109,7 +109,7 @@ t_token_list	*ft_append_doll(char *line, int *i, t_token_list **list, int x)
 	if (!token)
 		return (NULL);
 	token->val = ft_extract_doll(line, i, x);
-	token->print_space_after = 0;
+	token->psa = 0;
 	token->dq_start = 0;
 	token->dq_end = 0;
 	token->sq = 0;
@@ -139,7 +139,7 @@ t_token_list	*ft_append_operand(char *line, int *i, t_token_list **list)
 	if (!token)
 		return (NULL);
 	token->type = ft_find_token_type(line, *i);
-	token->print_space_after = 0;
+	token->psa = 0;
 	token->dq_end = 0;
 	token->dq_start = 0;
 	if (token->type == 1 || token->type == 3)
