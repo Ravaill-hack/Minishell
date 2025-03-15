@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:36:11 by Lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/15 10:56:55 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/15 11:07:13 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,12 @@ void	ft_skip_spaces(char *str, int *i, t_token_list *list)
 		last->psa = 1;
 	while (ft_isspace(str[*i]) == 1)
 		(*i)++;
+}
+
+int	ft_cond_token_synt(t_token_list *node)
+{
+	if (node->type == 6 && node->val[0] == '.' && !node->val[1]
+		&& (node->psa == 1 || !node->next || node->next->type <= 3))
+		return (1);
+	return (0);
 }
