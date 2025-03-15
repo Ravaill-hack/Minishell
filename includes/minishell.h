@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/15 15:39:02 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/15 16:57:23 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,7 +307,7 @@ void			ft_init_fd(t_cmd *node);
 int				ft_close_fds(t_cmd *node);
 int				ft_fill_fd(t_cmd *node, t_var *var);
 int				**ft_init_pipes(int nb_pipes);
-int				ft_set_pipes(t_cmd **cmd, int nb_cmd, int **pipes);
+int				ft_set_pipes(t_cmd **cmd, int nb_cmd, int ***pipes);
 /*
 Redirection - handle (redirection_handle.c)
 */

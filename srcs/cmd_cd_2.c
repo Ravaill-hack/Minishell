@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 10:35:50 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/11 11:13:28 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/15 17:32:23 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,7 @@ int	ft_cmd_cd_path(char ***env, char *raw_path)
 	cd.new_pwd = NULL;
 	cd.new_pwd = getcwd(NULL, 0);
 	cd.status = ft_update_new_pwd(env, cd.new_pwd);
+	free(cd.new_pwd);
+	free(cd.path);
 	return (cd.status);
 }

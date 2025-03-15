@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 22:38:47 by julien            #+#    #+#             */
-/*   Updated: 2025/03/15 15:48:19 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/15 16:52:20 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,6 @@ void	ft_clear_and_free_all(t_var *var, t_shell **shell)
 	}
 	if (var->token_list)
 		var->token_list = ft_free_token_list(var->token_list);
-	if (var->fd_pipe)
-		var->fd_pipe = ft_free_array2d(var->fd_pipe);
 	if (isatty(STDIN_FILENO) && VALGRIND_DEBUG == 0)
 		rl_clear_history();
 }
@@ -89,9 +87,7 @@ void	ft_clear_and_free_all_exit(t_var *var, t_shell **shell)
 		(*shell) = ft_check_and_free((void **)shell);
 	}
 	if (var->cmd)
-		var->cmd = ft_free_cmd_list(var->cmd);
-	if (var->fd_pipe)
-		var->fd_pipe = ft_free_array2d(var->fd_pipe);
+	 	var->cmd = ft_free_cmd_list(var->cmd);
 	if (VALGRIND_DEBUG == 0)
 		rl_clear_history();
 }
@@ -106,6 +102,4 @@ void	ft_clear_and_free_while(t_var *var, t_shell **shell)
 	// 	ft_free_strs(var->cmd[0]->arg);
 	if (var->cmd)
 		var->cmd = ft_free_cmd_list(var->cmd);
-	if (var->fd_pipe)
-		var->fd_pipe = ft_free_array2d(var->fd_pipe);
 }
