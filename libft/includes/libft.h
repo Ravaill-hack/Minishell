@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:41:05 by julien            #+#    #+#             */
-/*   Updated: 2025/03/14 21:11:48 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/15 15:29:57 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 char	*ft_strndup(const char *src, size_t size);
 char	*ft_strnjoin(char *dst, const char *src,
 			size_t dst_len, size_t src_len);
-void	ft_free_strs(char **strs);
+char	**ft_free_strs(char **strs);
 char	**ft_free_strs_until(char **strs, int n);
 int		**ft_free_array2d_until(int **array2D, size_t n);
-void	ft_free_array2d(int **array2D);
+int		**ft_free_array2d(int **array2D);
 int		ft_abs(int nb);
 char	**ft_strsdup(char *const *strs);
 size_t	ft_strslen(char *const *strs);
@@ -82,4 +82,5 @@ size_t	ft_strslen(char *const *strs);
 size_t	ft_strslcpy(char ***dst, char *const *src, size_t size);
 char	**ft_strsjoinstr(char **strs, char *str);
 char	*ft_strjoin_n(int count, ...);
+void	*ft_check_and_free(void **ptr);
 #endif

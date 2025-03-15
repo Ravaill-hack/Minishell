@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 22:41:23 by julien            #+#    #+#             */
-/*   Updated: 2025/03/12 16:32:58 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/15 15:35:02 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "minishell.h"
 
-int	ft_handle_cmd(t_var *var, t_shell *shell, t_cmd *node)
+int	ft_handle_cmd(t_var *var, t_shell **shell, t_cmd *node)
 {
 	if (!node->arg[0])
 		return (FAILURE);

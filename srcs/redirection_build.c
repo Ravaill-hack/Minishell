@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:48:38 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/14 15:45:27 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/15 16:57:06 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,12 @@ int	**ft_init_pipes(int nb_pipes)
 	int	**pipes;
 
 	i = 0;
-	pipes = (int **)malloc((nb_pipes + 1) * sizeof(int *));
+	pipes = (int **)ft_calloc((nb_pipes + 1), sizeof(int *));
 	if (!pipes)
 		return (NULL);
 	while (i < nb_pipes)
 	{
-		pipes[i] = (int *)malloc(2 * sizeof(int));
+		pipes[i] = (int *)ft_calloc(2, sizeof(int));
 		if (!pipes[i])
 			return (NULL);
 		i++;
@@ -79,7 +79,7 @@ int	**ft_init_pipes(int nb_pipes)
 	return (pipes);
 }
 
-int	ft_set_pipes(t_cmd **cmd, int nb_cmd, int **pipes)
+int	ft_set_pipes(t_cmd **cmd, int nb_cmd, int ***pipes)
 {
 	int	i;
 
@@ -89,18 +89,19 @@ int	ft_set_pipes(t_cmd **cmd, int nb_cmd, int **pipes)
 	{
 		if (cmd[i]->need_pipe_out == 1 || cmd[i + 1]->need_pipe_in == 1)
 		{
-			if (pipe(pipes[i]) == -1)
+			if (pipe((*pipes)[i]) == -1)
 				return (FAILURE);
 			if (cmd[i]->need_pipe_out == 1)
-				cmd[i]->fd_out.fd = pipes[i][1];
+				cmd[i]->fd_out.fd = (*pipes)[i][1];
 			if (cmd[i + 1]->need_pipe_in == 1)
-				cmd[i + 1]->fd_in.fd = pipes[i][0];
+				cmd[i + 1]->fd_in.fd = (*pipes)[i][0];
 			if (cmd[i]->need_pipe_out == 0)
-				close(pipes[i][1]);
+				close((*pipes)[i][1]);
 			if (cmd[i + 1]->need_pipe_in == 0)
-				close(pipes[i][0]);
+				close((*pipes)[i][0]);
 		}
 		i++ ;
 	}
+	ft_free_array2d(*pipes);
 	return (SUCCESS);
 }

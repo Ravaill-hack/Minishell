@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:26:27 by julien            #+#    #+#             */
-/*   Updated: 2025/03/13 07:45:53 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/15 15:33:43 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_exit_clear_and_exit(t_var *var, t_shell *shell, int nb_ex)
+void	ft_exit_clear_and_exit(t_var *var, t_shell **shell, int nb_ex)
 {
 	ft_clear_and_free_all_exit(var, shell);
 	exit(nb_ex);
@@ -32,7 +32,7 @@ int	ft_exit_too_many_args(void)
 	return (1);
 }
 
-int	ft_cmd_exit(t_var *var, t_shell *shell, t_cmd *node)
+int	ft_cmd_exit(t_var *var, t_shell **shell, t_cmd *node)
 {
 	ft_putstr_fd("exit\n", 2);
 	if (!(node->arg[1]))

@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 21:35:42 by julien            #+#    #+#             */
-/*   Updated: 2025/03/12 14:52:14 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/15 17:21:35 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i)
 	t_token_list	*token_node;
 	t_cmd			*cmd_node;
 
-	(void) var;
 	cmd_node = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!cmd_node)
 		return (NULL);
@@ -75,8 +74,10 @@ t_cmd	*ft_create_cmd_node(t_var *var, int i)
 	cmd_node->arg = ft_epure_args_array(cmd_node->raw, cmd_node->is_redir);
 	ft_init_fd(cmd_node);
 	if (ft_fill_fd(cmd_node, var) == FAILURE)
+	{
+		var->exit_nb = 1;
 		return (NULL);
-	var->fd_pipe = ft_init_pipes(ft_nb_pipes(*(var->token_list)));
+	}
 	ft_free_strs_until(cmd_node->raw, -1);
 	if (cmd_node->is_redir)
 		free(cmd_node->is_redir);
@@ -105,7 +106,9 @@ t_cmd	**ft_build_cmd_list(t_var *var)
 		i++;
 	}
 	cmd_list[i] = NULL;
-	ft_set_pipes(cmd_list, var->nb_cmd, var->fd_pipe);
+	var->fd_pipe = ft_init_pipes(ft_nb_pipes(*(var->token_list)));
+	ft_set_pipes(cmd_list, var->nb_cmd, &(var->fd_pipe));
+	var->fd_pipe = NULL;
 	return (cmd_list);
 }
 

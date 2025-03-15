@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:25:36 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/15 11:07:40 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/15 16:57:23 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ typedef struct s_token_list
 
 typedef struct s_shell
 {
-	char					*terminal_prompt;
+	char					*tp;
 	char					*prompt;
 	int						while_hdc;
 }	t_shell;
@@ -307,7 +307,7 @@ void			ft_init_fd(t_cmd *node);
 int				ft_close_fds(t_cmd *node);
 int				ft_fill_fd(t_cmd *node, t_var *var);
 int				**ft_init_pipes(int nb_pipes);
-int				ft_set_pipes(t_cmd **cmd, int nb_cmd, int **pipes);
+int				ft_set_pipes(t_cmd **cmd, int nb_cmd, int ***pipes);
 /*
 Redirection - handle (redirection_handle.c)
 */
@@ -372,32 +372,33 @@ int				check_signal(void);
 /*
 Free (free.c)
 */
-void			ft_free_token_list(t_token_list **token_list);
-void			ft_free_token_list_until(t_token_list **list, int n);
-void			ft_clear_and_free_all(t_var *var, t_shell *shell);
-void			ft_clear_and_free_all_exit(t_var *var, t_shell *shell);
-void			ft_clear_and_free_while(t_var *var, t_shell *shell);
+t_token_list	**ft_free_token_list(t_token_list **token_list);
+t_token_list	**ft_free_token_list_until(t_token_list **list, int n);
+void			ft_clear_and_free_all(t_var *var, t_shell **shell);
+void			ft_clear_and_free_all_exit(t_var *var, t_shell **shell);
+void			ft_clear_and_free_while(t_var *var, t_shell **shell);
 /*
 Free (free_2.c)
 */
-void			ft_free_cmd_list(t_cmd **cmd);
+t_cmd			**ft_free_cmd_list(t_cmd **cmd);
+t_cmd			*ft_free_cmd_node(t_cmd *node);
 /*
 Handle pipes (handle_pipes.c)
 */
-int				ft_single_cmd(t_var *var, t_shell *shell);
-int				ft_handle_all_regular_cmds(t_var *var, t_shell *shell,
+int				ft_single_cmd(t_var *var, t_shell **shell);
+int				ft_handle_all_regular_cmds(t_var *var, t_shell **shell,
 					pid_t *pids);
 void			ft_close_all_pipes(t_var *var);
 int				ft_wait_all_childrens(t_var *var, pid_t *pids);
-int				ft_handle_pipes(t_var *var, t_shell *shell);
+int				ft_handle_pipes(t_var *var, t_shell **shell);
 /*
 Handle pipes (handle_pipes_2.c)
 */
 int				ft_need_to_send_in_pipe(t_cmd **cmd_tab, int i_cmd, int nb_cmd);
 int				ft_need_to_grep_from_pipe(t_cmd **cmd_tab, int i_cmd);
 void			ft_close_pipes(t_var *var, int i);
-int				ft_exec_one(t_var *var, t_shell *shell, int i);
-int				ft_handle_regular_cmd(t_var *var, t_shell *shell,
+int				ft_exec_one(t_var *var, t_shell **shell, int i);
+int				ft_handle_regular_cmd(t_var *var, t_shell **shell,
 					int i, pid_t *pid);
 /*
 Handle pipes (handle_pipes_3.c)
@@ -406,7 +407,7 @@ int				ft_is_cmd(t_cmd *cmd, char **env);
 /*
 Handle cmd (handle_cmd.c)
 */
-int				ft_handle_cmd(t_var *var, t_shell *shell, t_cmd *node);
+int				ft_handle_cmd(t_var *var, t_shell **shell, t_cmd *node);
 int				ft_is_builtin_cmd(t_cmd *node);
 /*
 Extract path (extract_path.c)
@@ -439,10 +440,10 @@ int				ft_cmd_unset(char ***env_ptr, t_cmd *node);
 /*
 Cmd - exit (cmd_exit.c)
 */
-void			ft_exit_clear_and_exit(t_var *var, t_shell *shell, int nb_ex);
+void			ft_exit_clear_and_exit(t_var *var, t_shell **shell, int nb_ex);
 int				ft_exit_num_arg_rq(char **args);
 int				ft_exit_too_many_args(void);
-int				ft_cmd_exit(t_var *var, t_shell *shell, t_cmd *node);
+int				ft_cmd_exit(t_var *var, t_shell **shell, t_cmd *node);
 /*
 Cmd - cd (cmd_cd.c)
 */

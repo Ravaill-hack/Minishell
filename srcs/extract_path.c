@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:35:01 by julien            #+#    #+#             */
-/*   Updated: 2025/03/10 18:45:02 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/15 17:48:22 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,12 @@ char	*ft_get_path_without_env(char *cmd)
 		return (NULL);
 	path = ft_strjoin_n(3, pwd, "/", cmd);
 	if (!path)
-		return (NULL);
+		return (free(pwd), NULL);
 	if (access(path, F_OK | X_OK) == 0)
-		return (path);
+		return (free(pwd), path);
 	if (path)
 		free(path);
+	free(pwd);
 	return (NULL);
 }
 

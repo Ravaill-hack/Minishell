@@ -6,7 +6,7 @@
 /*   By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:07:11 by lmatkows          #+#    #+#             */
-/*   Updated: 2025/03/15 10:39:37 by lmatkows         ###   ########.fr       */
+/*   Updated: 2025/03/15 16:09:26 by lmatkows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 #include "minishell.h"
 
-int	ft_single_cmd(t_var *var, t_shell *shell)
+int	ft_single_cmd(t_var *var, t_shell **shell)
 {
 	int		res;
 	pid_t	*pid;
 
-	pid = (pid_t *)ft_calloc(2, sizeof(pid_t));
+	pid = NULL;
 	if (ft_is_cmd(var->cmd[0], var->env) == 0)
 	{
 		if (var->cmd[0]->arg[0])
@@ -30,18 +30,22 @@ int	ft_single_cmd(t_var *var, t_shell *shell)
 		return (127);
 	}
 	else if (ft_is_builtin_cmd(var->cmd[0]) == 1)
+	{
 		res = ft_exec_one(var, shell, 0);
+	}
 	else
 	{
+		pid = (pid_t *)ft_calloc(2, sizeof(pid_t));
 		res = ft_handle_regular_cmd(var, shell, 0, pid);
 		waitpid(pid[0], &res, 0);
+		free(pid);
 		if (res != 0)
 			return (res % 255);
 	}
 	return (res);
 }
 
-int	ft_handle_all_regular_cmds(t_var *var, t_shell *shell, pid_t *pids)
+int	ft_handle_all_regular_cmds(t_var *var, t_shell **shell, pid_t *pids)
 {
 	int	i;
 	int	status;
@@ -87,12 +91,13 @@ int	ft_wait_all_childrens(t_var *var, pid_t *pids)
 	return (status);
 }
 
-int	ft_handle_pipes(t_var *var, t_shell *shell)
+int	ft_handle_pipes(t_var *var, t_shell **shell)
 {
 	int		status;
 	pid_t	*pids;
 
 	status = SUCCESS;
+	pids = NULL;
 	if (var->nb_cmd == 1)
 		return (ft_single_cmd(var, shell));
 	pids = (pid_t *)ft_calloc(var->nb_cmd, sizeof(pid_t));

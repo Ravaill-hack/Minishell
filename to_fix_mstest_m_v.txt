@@ -4,27 +4,6 @@ TOTAL TEST COUNT: 59  TESTS PASSED: 38  LEAKING: 0
                                      ❌ 22   
                                      ✅ 155
 
-15 :
-/bin/echo $"HOME"$USER
-
-16 :
-/bin/echo $"HOM"E$USER
-
-17 :
-/bin/echo $"'HOM'E"$USER
-
-18 :
-/bin/echo $'HOM'E$USER
-
-19 :
-/bin/echo $"HOME"
-
-20 :
-/bin/echo $'HOME'
-
-26 :
-/bin/echo $"42$"
-
 43 : 120
 export tmp_test="/bin/echo 42"
 $tmp_test
