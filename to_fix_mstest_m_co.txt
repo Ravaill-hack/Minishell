@@ -9,8 +9,6 @@ TOTAL TEST COUNT: 114  TESTS PASSED: 103  LEAKING: 0
 18 : exit 42
 /!\ idem
 
-27 :
-
 60 : echo $"HOME"
 
 
