@@ -1,0 +1,33 @@
+TOTAL TEST COUNT: 49  TESTS PASSED: 40  LEAKING: 0 
+                     STD_OUT: 2  STD_ERR: 6  EXIT_CODE: 8  
+                         TOTAL FAILED AND PASSED CASES:
+                                     ❌ 16   
+                                     ✅ 131
+
+
+15 : .
+// /!\ bug du tester : code d'erreur 127 au lieu de 2
+
+20 :
+>echo>
+/bin/rm -f echo
+
+// /!\ bug du tester : code d'erreur 0 au lieu de 2
+
+21 :
+<echo<
+/bin/rm -f echo
+
+// /!\ bug du tester : code d'erreur 0 au lieu de 2
+
+22 :
+>>echo>>
+/bin/rm -f echo
+
+// /!\ bug du tester : code d'erreur 0 au lieu de 2
+
+42 : 
+>| echo wtf
+/bin/rm -rf echo
+
+non gere
